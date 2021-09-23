@@ -1,0 +1,40 @@
+:global {
+  .ant-menu-item {
+    margin-right: 10px;
+  }
+
+  .ant-menu-item:hover {
+    background-color: @light-grey-color !important;
+  }
+}
+
+.Container {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: @header-height;
+  line-height: @header-height;
+  background-color: @header-bg-color;
+}
+
+.MenuContainer {
+  background-color: @header-bg-color;
+  border-bottom: none;
+  color: @dark-grey-color;
+}
+
+.Logo {
+  float: left;
+  font-size: 18px;
+  font-weight: 400;
+  margin-right: 20px;
+  a {
+    color: @dark-grey-color;
+  }
+
+  .LogoIcon {
+    color: @dark-grey-color;
+    margin: 0 5px 0 0;
+    font-size: 22px;
+  }
+}
