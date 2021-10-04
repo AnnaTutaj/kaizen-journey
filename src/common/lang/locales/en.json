@@ -1,5 +1,22 @@
 {
   "header.dashboard": "Dashboard",
   "header.habits": "Habits",
-  "header.gratitude": "Gratitude"
+  "header.gratitude": "Gratitude",
+  "header.signIn": "Sign In",
+  "header.register": "Register",
+
+  "common.defaultErrorMessage": "Something went wrong... please try again later",
+  "common.form.field.required.error": "This field is required",
+  
+  "auth/invalid-email": "The email address is badly formatted",
+  "auth/weak-password": "Password should be at least 6 characters",
+  "auth/email-already-in-use": "The email address is already in use by another account",
+  "auth/requires-recent-login": "This operation is sensitive and requires recent authentication. Log in again before retrying this request",
+
+  "register.form.title": "Register",
+  "register.form.field.username": "Username",
+  "register.form.field.password": "Password",
+  "register.form.field.email": "Email",
+  "register.form.or": "Or",
+  "register.form.submit": "Register"
 }

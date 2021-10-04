@@ -1,5 +1,22 @@
 {
   "header.dashboard": "Dashboard",
   "header.habits": "Nawyki",
-  "header.gratitude": "Dziękuję za"
+  "header.gratitude": "Dziękuję za",
+  "header.signIn": "Zaloguj się",
+  "header.register": "Zarejestuj się",
+  
+  "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
+  "common.form.field.required.error": "To pole jest wymagane",
+
+  "auth/invalid-email": "Wprowadź poprawny adres email",
+  "auth/weak-password": "Hasło powinno mieć przynajmniej 6 znaków",
+  "auth/email-already-in-use": "Adres email już jest w użyciu",
+  "auth/requires-recent-login": "Wymagane jest ponowne zalogowanie się",
+
+  "register.form.title": "Zarejestruj się",
+  "register.form.field.username": "Nazwa użytkownika",
+  "register.form.field.password": "Hasło",
+  "register.form.field.email": "Email",
+  "register.form.or": "Albo",
+  "register.form.submit": "Zarejestruj się"
 }
