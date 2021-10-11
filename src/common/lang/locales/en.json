@@ -4,7 +4,10 @@
   "header.gratitude": "Gratitude",
   "header.signIn": "Sign In",
   "header.register": "Register",
+  "header.logout": "Log out",
+  "header.settings": "Settings",
 
+  "common.or": "Or",
   "common.defaultErrorMessage": "Something went wrong... please try again later",
   "common.form.field.required.error": "This field is required",
   
@@ -17,6 +20,10 @@
   "register.form.field.username": "Username",
   "register.form.field.password": "Password",
   "register.form.field.email": "Email",
-  "register.form.or": "Or",
-  "register.form.submit": "Register"
+  "register.form.submit": "Register",
+
+  "login.form.title": "Sign in",
+  "login.form.field.password": "Password",
+  "login.form.field.email": "Email",
+  "login.form.submit": "Sign in"
 }

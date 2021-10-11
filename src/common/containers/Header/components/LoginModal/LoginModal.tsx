@@ -1,12 +1,10 @@
 import { Modal, Form, Input, Button, Divider, message } from 'antd';
 import React from 'react';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-
 import { useIntl } from 'react-intl';
 import FederatedLogin from '../FederatedLogin';
 import { serverTimestamp, doc, setDoc } from 'firebase/firestore';
-import { db } from '@common/util/firebase';
 import { FirebaseError } from '@firebase/util';
+import { useAuth } from '@common/contexts/AuthContext';
 
 interface IProps {
   isModalVisible: boolean;
@@ -14,28 +12,20 @@ interface IProps {
   handleCancel: () => void;
 }
 
-interface IRegisterFormProps {
-  username: string;
+interface ILoginFormProps {
   email: string;
   password: string;
 }
 
-const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCancel }) => {
+const LoginModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCancel }) => {
   const intl = useIntl();
-  const auth = getAuth();
+  const { signInWithGoogle, login } = useAuth();
 
-  const onFinish = async (values: IRegisterFormProps) => {
+  const onFinish = async (values: ILoginFormProps) => {
     try {
-      const createdUser = await createUserWithEmailAndPassword(auth, values.email, values.password);
-
-      console.log(  createdUser.user);
-      
-      const newUser = {
-        username: values.username,
-        createdAt: serverTimestamp()
-      };
-
-      await setDoc(doc(db, `users/${createdUser.user.uid}`), { ...newUser });
+      if (login) {
+        await login(values.email, values.password);
+      }
 
       handleSubmit();
     } catch (error) {
@@ -51,26 +41,12 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
 
   return (
     <Modal
-      title={intl.formatMessage({ id: 'register.form.title' })}
+      title={intl.formatMessage({ id: 'login.form.title' })}
       visible={isModalVisible}
       onCancel={handleCancel}
       footer={false}
     >
-      <Form
-        name="basic"
-        initialValues={{}}
-        onFinish={onFinish}
-        autoComplete="off"
-        layout={'vertical'}
-      >
-        <Form.Item
-          label={intl.formatMessage({ id: 'register.form.field.username' })}
-          name="username"
-          rules={[{ required: true, message: intl.formatMessage({ id: 'common.form.field.required.error' }) }]}
-        >
-          <Input />
-        </Form.Item>
-
+      <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
         <Form.Item
           label={intl.formatMessage({ id: 'register.form.field.email' })}
           name="email"
@@ -89,7 +65,7 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            {intl.formatMessage({ id: 'register.form.submit' })}
+            {intl.formatMessage({ id: 'login.form.submit' })}
           </Button>
         </Form.Item>
 
@@ -100,4 +76,4 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
   );
 };
 
-export default RegisterModal;
+export default LoginModal;

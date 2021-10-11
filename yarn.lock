@@ -10371,15 +10371,6 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-redux-firebase@^3.10.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-3.10.0.tgz#f4c69145292fd8d0c5f44f53b37a6b307dbf3c56"
-  integrity sha512-reEPqUgNQRR2IHsNHPvyMXRZRZUvbQmA9oWzDBOK1FCxd/MiE9py6R7ezEtKs5iLEH55eDRpVPl2n3bYsndEiQ==
-  dependencies:
-    hoist-non-react-statics "^3.3.2"
-    lodash "^4.17.20"
-    prop-types "^15.7.2"
-
 react-redux@^7.2.5:
   version "7.2.5"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.5.tgz#213c1b05aa1187d9c940ddfc0b29450957f6a3b8"
@@ -10581,11 +10572,6 @@ recursive-readdir@2.2.2:
   dependencies:
     minimatch "3.0.4"
 
-reduce-reducers@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-1.0.4.tgz#fb77e751a9eb0201760ac5a605ca8c9c2d0537f8"
-  integrity sha512-Mb2WZ2bJF597exiqX7owBzrqJ74DHLK3yOQjCyPAaNifRncE8OD0wFIuoMhXxTnHK07+8zZ2SJEKy/qtiyR7vw==
-
 redux-devtools-extension@^2.13.7:
   version "2.13.9"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.9.tgz#6b764e8028b507adcb75a1cae790f71e6be08ae7"
@@ -10625,15 +10611,6 @@ redux-dynamic-modules@^5.2.3:
   dependencies:
     redux-dynamic-modules-core "^5.2.3"
     redux-dynamic-modules-react "^5.2.3"
-
-redux-firestore@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/redux-firestore/-/redux-firestore-0.15.0.tgz#643280ed5dad84bc38ad64eb17155c88d703988f"
-  integrity sha512-t93CL6UIoycpg/zIQy7ZkZkvX0IUjlOLG9xtCrcStydoNijzv8rAMzEJmLxHh1RKzsQ8RBH4G556/zlxR1dXcA==
-  dependencies:
-    immer "8.0.1"
-    lodash "^4.17.20"
-    reduce-reducers "^1.0.4"
 
 redux-thunk@^2.3.0:
   version "2.3.0"

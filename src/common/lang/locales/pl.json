@@ -4,7 +4,10 @@
   "header.gratitude": "Dziękuję za",
   "header.signIn": "Zaloguj się",
   "header.register": "Zarejestuj się",
+  "header.logout": "Wyloguj się",
+  "header.settings": "Ustawienia",
   
+  "common.or": "Albo",
   "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
   "common.form.field.required.error": "To pole jest wymagane",
 
@@ -17,6 +20,10 @@
   "register.form.field.username": "Nazwa użytkownika",
   "register.form.field.password": "Hasło",
   "register.form.field.email": "Email",
-  "register.form.or": "Albo",
-  "register.form.submit": "Zarejestruj się"
+  "register.form.submit": "Zarejestruj się",
+
+  "login.form.title": "Zaloguj się",
+  "login.form.field.password": "Hasło",
+  "login.form.field.email": "Email",
+  "login.form.submit": "Zaloguj się"
 }

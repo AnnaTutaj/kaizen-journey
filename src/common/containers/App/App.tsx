@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { IntlProvider } from 'react-intl';
 import Main from '@common/routes/Main';
-import { ConfigProvider, DatePicker, Layout } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
 import { AppLocale } from '@common/lang';
 import moment from 'moment';
 import enUS from 'antd/lib/locale/en_US';
