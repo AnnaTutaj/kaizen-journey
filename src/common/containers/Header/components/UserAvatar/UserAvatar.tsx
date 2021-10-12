@@ -14,14 +14,16 @@ const onClick = () => {};
 
 const UserAvatar: React.FC<IProps> = ({ user }) => {
   const intl = useIntl();
-  const { logout } = useAuth();
+  const { logout, userProfile } = useAuth();
 
   const menu = (
     <Menu onClick={onClick}>
-      <Menu.Item key="1" onClick={() => logout()}>
-        {intl.formatMessage({ id: 'header.logout' })}
-      </Menu.Item>
-      <Menu.Item key="2">{intl.formatMessage({ id: 'header.settings' })}</Menu.Item>
+      <Menu.ItemGroup title={userProfile?.username}>
+        <Menu.Item key="1" onClick={() => logout()}>
+          {intl.formatMessage({ id: 'header.logout' })}
+        </Menu.Item>
+        <Menu.Item key="2">{intl.formatMessage({ id: 'header.settings' })}</Menu.Item>
+      </Menu.ItemGroup>
     </Menu>
   );
 

@@ -28,8 +28,6 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
     try {
       const createdUser = await createUserWithEmailAndPassword(auth, values.email, values.password);
 
-      console.log(  createdUser.user);
-      
       const newUser = {
         username: values.username,
         createdAt: serverTimestamp()
@@ -55,14 +53,9 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
       visible={isModalVisible}
       onCancel={handleCancel}
       footer={false}
+      width={400}
     >
-      <Form
-        name="basic"
-        initialValues={{}}
-        onFinish={onFinish}
-        autoComplete="off"
-        layout={'vertical'}
-      >
+      <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
         <Form.Item
           label={intl.formatMessage({ id: 'register.form.field.username' })}
           name="username"
@@ -94,7 +87,8 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
         </Form.Item>
 
         <Divider>{intl.formatMessage({ id: 'common.or' })}</Divider>
-        {/* <FederatedLogin federatedLogin={federatedLogin} /> */}
+
+        <FederatedLogin closeModal={handleCancel} />
       </Form>
     </Modal>
   );

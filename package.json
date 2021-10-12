@@ -32,7 +32,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "set HTTPS=true&&react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "format": "prettier --write \"**/*.{json,less,md,html,js,jsx,tsx,ts}\"",

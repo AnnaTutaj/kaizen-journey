@@ -25,5 +25,8 @@
   "login.form.title": "Sign in",
   "login.form.field.password": "Password",
   "login.form.field.email": "Email",
-  "login.form.submit": "Sign in"
+  "login.form.submit": "Sign in",
+
+  "federatedLogin.google": "Sign in with Google",
+  "federatedLogin.facebook": "Sign in with Facebook"
 }

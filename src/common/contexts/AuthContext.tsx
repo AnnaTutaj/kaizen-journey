@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '@common/util/firebase';
+import { auth, db } from '@common/util/firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -7,15 +7,30 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signOut,
-  confirmPasswordReset
+  confirmPasswordReset,
+  getAdditionalUserInfo,
+  AdditionalUserInfo
 } from 'firebase/auth';
 import { User as FirebaseUser } from 'firebase/auth';
 import { UserCredential as FirebaseUserCredential } from 'firebase/auth';
+import { serverTimestamp, doc, setDoc, getDoc } from 'firebase/firestore';
 
+export interface IUserProfile {
+  uid: string;
+  createdAt: {
+    nanoseconds: number;
+    seconds: number;
+  };
+  pictureURL: string;
+  username: string;
+}
 export interface IAuthContext {
   currentUser: FirebaseUser | null;
+  userProfile: IUserProfile | null;
   signInWithGoogle: () => void;
+  signInWithFacebook: () => void;
   login?: (email: string, password: string) => Promise<FirebaseUserCredential>;
   register: (email: string, password: string) => void;
   logout: () => void;
@@ -23,7 +38,9 @@ export interface IAuthContext {
 
 export const AuthContext = createContext<IAuthContext>({
   currentUser: null,
+  userProfile: null,
   signInWithGoogle: () => {},
+  signInWithFacebook: () => {},
   register: () => {},
   logout: () => {}
 });
@@ -32,10 +49,28 @@ export const useAuth = () => useContext(AuthContext);
 
 export default function AuthContextProvider({ children }: any) {
   const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
+  const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user: FirebaseUser | null) => {
       setCurrentUser(user ? user : null);
+
+      if (user?.uid) {
+        const snap = await getDoc(doc(db, 'users', user.uid));
+
+        if (snap.exists()) {
+          const userSnap = snap.data();
+
+          setUserProfile({
+            uid: user.uid,
+            createdAt: userSnap.createdAt,
+            pictureURL: userSnap.pictureURL,
+            username: userSnap.username
+          });
+        } else {
+          setCurrentUser(null);
+        }
+      }
     });
     return () => {
       unsubscribe();
@@ -64,14 +99,43 @@ export default function AuthContextProvider({ children }: any) {
     return signOut(auth);
   }
 
-  function signInWithGoogle() {
+  const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
-  }
+    const userCredential = await signInWithPopup(auth, provider);
+
+    const details: AdditionalUserInfo | null = getAdditionalUserInfo(userCredential);
+    if (details?.isNewUser) {
+      const newUser = {
+        username: userCredential.user.displayName,
+        pictureURL: userCredential.user.photoURL,
+        createdAt: serverTimestamp()
+      };
+
+      await setDoc(doc(db, `users/${userCredential.user.uid}`), { ...newUser });
+    }
+  };
+
+  const signInWithFacebook = async () => {
+    const provider = new FacebookAuthProvider();
+    const userCredential = await signInWithPopup(auth, provider);
+
+    const details: AdditionalUserInfo | null = getAdditionalUserInfo(userCredential);
+    if (details?.isNewUser) {
+      const newUser = {
+        username: userCredential.user.displayName,
+        pictureURL: userCredential.user.photoURL,
+        createdAt: serverTimestamp()
+      };
+
+      await setDoc(doc(db, `users/${userCredential.user.uid}`), { ...newUser });
+    }
+  };
 
   const value = {
     currentUser,
+    userProfile,
     signInWithGoogle,
+    signInWithFacebook,
     login,
     register,
     logout

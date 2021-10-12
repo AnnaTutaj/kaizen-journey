@@ -2,7 +2,6 @@ import { Modal, Form, Input, Button, Divider, message } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import FederatedLogin from '../FederatedLogin';
-import { serverTimestamp, doc, setDoc } from 'firebase/firestore';
 import { FirebaseError } from '@firebase/util';
 import { useAuth } from '@common/contexts/AuthContext';
 
@@ -19,7 +18,7 @@ interface ILoginFormProps {
 
 const LoginModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCancel }) => {
   const intl = useIntl();
-  const { signInWithGoogle, login } = useAuth();
+  const { login } = useAuth();
 
   const onFinish = async (values: ILoginFormProps) => {
     try {
@@ -45,6 +44,7 @@ const LoginModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCanc
       visible={isModalVisible}
       onCancel={handleCancel}
       footer={false}
+      width={400}
     >
       <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
         <Form.Item
@@ -69,8 +69,9 @@ const LoginModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCanc
           </Button>
         </Form.Item>
 
-        <Divider>{intl.formatMessage({ id: 'common.or' })}</Divider>
-        {/* <FederatedLogin federatedLogin={federatedLogin} /> */}
+        <Divider>{intl.formatMessage({ id: 'common.or' }).toUpperCase()}</Divider>
+
+        <FederatedLogin closeModal={handleCancel} />
       </Form>
     </Modal>
   );
