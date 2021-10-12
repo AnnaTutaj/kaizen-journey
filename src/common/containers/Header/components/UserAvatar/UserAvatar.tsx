@@ -1,23 +1,16 @@
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Dropdown, Menu } from 'antd';
 import React from 'react';
-import { User as FirebaseUser } from 'firebase/auth';
 import { useIntl } from 'react-intl';
 import styles from './UserAvatar.module.less';
 import { useAuth } from '@common/contexts/AuthContext';
 
-interface IProps {
-  user: FirebaseUser | null;
-}
-
-const onClick = () => {};
-
-const UserAvatar: React.FC<IProps> = ({ user }) => {
+const UserAvatar: React.FC = () => {
   const intl = useIntl();
   const { logout, userProfile } = useAuth();
 
   const menu = (
-    <Menu onClick={onClick}>
+    <Menu>
       <Menu.ItemGroup title={userProfile?.username}>
         <Menu.Item key="1" onClick={() => logout()}>
           {intl.formatMessage({ id: 'header.logout' })}
@@ -29,7 +22,7 @@ const UserAvatar: React.FC<IProps> = ({ user }) => {
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
-      <Avatar className={styles.Avatar} size={32} icon={<UserOutlined />} />
+      <Avatar className={styles.Avatar} size={32} icon={<UserOutlined />} src={userProfile?.pictureURL} />
     </Dropdown>
   );
 };

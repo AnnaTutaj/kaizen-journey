@@ -54,7 +54,11 @@ const Header: React.FC = () => {
           <FontAwesomeIcon icon={faRoute} className={styles.LogoIcon} />
           <a href="http://www.google.com">Kaizen Journey</a>
         </div>
-        <div className={styles.Avatar}>{currentUser ? <UserAvatar user={currentUser} /> : null}</div>
+        {currentUser ? (
+          <div className={styles.Avatar}>
+            <UserAvatar />
+          </div>
+        ) : null}
         <Menu mode="horizontal" defaultSelectedKeys={['1']} className={styles.MenuContainer}>
           <Menu.Item key="1">{intl.formatMessage({ id: 'header.dashboard' })}</Menu.Item>
           <Menu.Item key="2">{intl.formatMessage({ id: 'header.habits' })}</Menu.Item>
