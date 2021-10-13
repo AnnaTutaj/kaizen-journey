@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 import styles from './Header.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRoute } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faRoute } from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
 import RegisterModal from './components/RegisterModal';
 import LoginModal from './components/LoginModal';
@@ -59,7 +59,12 @@ const Header: React.FC = () => {
             <UserAvatar />
           </div>
         ) : null}
-        <Menu mode="horizontal" defaultSelectedKeys={['1']} className={styles.MenuContainer}>
+        <Menu
+          mode="horizontal"
+          defaultSelectedKeys={['1']}
+          className={styles.MenuContainer}
+          overflowedIndicator={<FontAwesomeIcon icon={faBars} className={styles.OverflowIcon} />}
+        >
           <Menu.Item key="1">{intl.formatMessage({ id: 'header.dashboard' })}</Menu.Item>
           <Menu.Item key="2">{intl.formatMessage({ id: 'header.habits' })}</Menu.Item>
           <Menu.Item key="3">{intl.formatMessage({ id: 'header.gratitude' })}</Menu.Item>
