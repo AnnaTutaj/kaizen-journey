@@ -27,7 +27,7 @@ export interface IUserProfile {
   username: string;
 }
 export interface IAuthContext {
-  currentUser: FirebaseUser | null;
+  userAuth: FirebaseUser | null;
   userProfile: IUserProfile | null;
   isUserLoading: boolean;
   signInWithGoogle: () => void;
@@ -38,7 +38,7 @@ export interface IAuthContext {
 }
 
 export const AuthContext = createContext<IAuthContext>({
-  currentUser: null,
+  userAuth: null,
   userProfile: null,
   isUserLoading: false,
   signInWithGoogle: () => {},
@@ -50,14 +50,14 @@ export const AuthContext = createContext<IAuthContext>({
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthContextProvider({ children }: any) {
-  const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
+  const [userAuth, setUserAuth] = useState<FirebaseUser | null>(null);
   const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user: FirebaseUser | null) => {
       setIsUserLoading(true);
-      setCurrentUser(user ? user : null);
+      setUserAuth(user ? user : null);
 
       if (user?.uid) {
         const snap = await getDoc(doc(db, 'users', user.uid));
@@ -72,7 +72,7 @@ export default function AuthContextProvider({ children }: any) {
             username: userSnap.username
           });
         } else {
-          setCurrentUser(null);
+          setUserAuth(null);
         }
       }
       setIsUserLoading(false);
@@ -137,7 +137,7 @@ export default function AuthContextProvider({ children }: any) {
   };
 
   const value = {
-    currentUser,
+    userAuth,
     userProfile,
     isUserLoading,
     signInWithGoogle,

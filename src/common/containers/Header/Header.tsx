@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   const intl = useIntl();
   const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-  const { currentUser } = useAuth();
+  const { userAuth } = useAuth();
 
   const showRegisterModal = () => {
     setIsRegisterModalVisible(true);
@@ -54,21 +54,23 @@ const Header: React.FC = () => {
           <FontAwesomeIcon icon={faRoute} className={styles.LogoIcon} />
           <a href="http://www.google.com">Kaizen Journey</a>
         </div>
-        {currentUser ? (
+        {userAuth ? (
           <div className={styles.Avatar}>
             <UserAvatar />
           </div>
         ) : null}
         <Menu
           mode="horizontal"
-          defaultSelectedKeys={['1']}
           className={styles.MenuContainer}
           overflowedIndicator={<FontAwesomeIcon icon={faBars} className={styles.OverflowIcon} />}
         >
-          <Menu.Item key="1">{intl.formatMessage({ id: 'header.dashboard' })}</Menu.Item>
-          <Menu.Item key="2">{intl.formatMessage({ id: 'header.habits' })}</Menu.Item>
-          <Menu.Item key="3">{intl.formatMessage({ id: 'header.gratitude' })}</Menu.Item>
-          {!currentUser ? (
+          {userAuth ? (
+            <>
+              <Menu.Item key="1">{intl.formatMessage({ id: 'header.dashboard' })}</Menu.Item>
+              <Menu.Item key="2">{intl.formatMessage({ id: 'header.habits' })}</Menu.Item>
+              <Menu.Item key="3">{intl.formatMessage({ id: 'header.gratitude' })}</Menu.Item>
+            </>
+          ) : (
             <>
               <Menu.Item key="4" onClick={openLoginModal}>
                 {intl.formatMessage({ id: 'header.signIn' })}
@@ -77,7 +79,7 @@ const Header: React.FC = () => {
                 {intl.formatMessage({ id: 'header.register' })}
               </Menu.Item>
             </>
-          ) : null}
+          )}
         </Menu>
       </Layout.Header>
       <RegisterModal
