@@ -29,6 +29,7 @@ export interface IUserProfile {
 export interface IAuthContext {
   currentUser: FirebaseUser | null;
   userProfile: IUserProfile | null;
+  isUserLoading: boolean;
   signInWithGoogle: () => void;
   signInWithFacebook: () => void;
   login?: (email: string, password: string) => Promise<FirebaseUserCredential>;
@@ -39,6 +40,7 @@ export interface IAuthContext {
 export const AuthContext = createContext<IAuthContext>({
   currentUser: null,
   userProfile: null,
+  isUserLoading: false,
   signInWithGoogle: () => {},
   signInWithFacebook: () => {},
   register: () => {},
@@ -50,9 +52,11 @@ export const useAuth = () => useContext(AuthContext);
 export default function AuthContextProvider({ children }: any) {
   const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
   const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
+  const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user: FirebaseUser | null) => {
+      setIsUserLoading(true);
       setCurrentUser(user ? user : null);
 
       if (user?.uid) {
@@ -71,6 +75,7 @@ export default function AuthContextProvider({ children }: any) {
           setCurrentUser(null);
         }
       }
+      setIsUserLoading(false);
     });
     return () => {
       unsubscribe();
@@ -134,6 +139,7 @@ export default function AuthContextProvider({ children }: any) {
   const value = {
     currentUser,
     userProfile,
+    isUserLoading,
     signInWithGoogle,
     signInWithFacebook,
     login,
