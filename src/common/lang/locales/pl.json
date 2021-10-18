@@ -1,4 +1,7 @@
 {
+  "pageUnderConstruction.title": "Ta strona jest w budowie",
+
+  "header.home": "Strona główna",
   "header.dashboard": "Dashboard",
   "header.habits": "Nawyki",
   "header.gratitude": "Dziękuję za",
@@ -6,7 +9,7 @@
   "header.register": "Zarejestuj się",
   "header.logout": "Wyloguj się",
   "header.settings": "Ustawienia",
-  
+
   "common.or": "Albo",
   "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
   "common.form.field.required.error": "To pole jest wymagane",

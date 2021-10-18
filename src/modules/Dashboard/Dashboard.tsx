@@ -1,7 +1,11 @@
 import React from 'react';
+import PageUnderConstruction from '@common/components/PageUnderConstruction';
+import { useIntl } from 'react-intl';
 
 const Dashboard: React.FC = () => {
-  return <h1>Dashboard</h1>;
+  const intl = useIntl();
+
+  return <PageUnderConstruction title={intl.formatMessage({ id: 'header.dashboard' })} />;
 };
 
 export default Dashboard;

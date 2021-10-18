@@ -7,6 +7,10 @@ import styles from './Main.module.less';
 import Dashboard from '@modules/Dashboard';
 import { useAuth } from '@common/contexts/AuthContext';
 import PageLoading from '@common/components/PageLoading';
+import Home from '@modules/Home';
+import Gratitude from '@modules/Gratitude';
+import PrivateRoute from '@common/containers/PrivateRoute';
+import Habit from '@modules/Habit';
 
 const { Content } = Layout;
 // import AccessDenied from '@common/routes/AccessDenied';
@@ -25,7 +29,11 @@ const Main: React.FC = () => {
       <Content className={styles.Content}>
         <Switch>
           {/* //todo check permissions, LoadableComponent */}
-          <Route exact path={Paths.Dashboard} component={Dashboard} />
+
+          <PrivateRoute path={Paths.Dashboard} component={Dashboard} />
+          <PrivateRoute path={Paths.Gratitude} component={Gratitude} />
+          <PrivateRoute path={Paths.Habit} component={Habit} />
+          <Route path={Paths.Home} component={Home} />
 
           {/* <Route path={Paths.AccessDenied} component={AccessDenied} /> */}
           {/* <Route path={Paths.PageNotFound} component={PageNotFound} /> */}

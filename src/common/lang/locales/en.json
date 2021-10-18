@@ -1,4 +1,7 @@
 {
+  "pageUnderConstruction.title": "This page is under construction",
+
+  "header.home": "Home",
   "header.dashboard": "Dashboard",
   "header.habits": "Habits",
   "header.gratitude": "Gratitude",
