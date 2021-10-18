@@ -1,5 +1,6 @@
 module.exports = {
   // Basic Colors
+  '@primary-color': '#9544ED',
   '@white-color': '#ffffff',
   '@dark-grey-color': '#6b6b6b',
   '@light-grey-color': '#e6e6e6',
@@ -8,5 +9,5 @@ module.exports = {
   '@header-bg-color': '#f0f2f5',
 
   //Dimensions
-  '@header-height': '60px',
+  '@header-height': '60px'
 };
