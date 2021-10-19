@@ -11,6 +11,8 @@
   "header.settings": "Ustawienia",
 
   "common.or": "Albo",
+  "common.language.polish": "Polski",
+  "common.language.english": "English",
   "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
   "common.form.field.required.error": "To pole jest wymagane",
 
@@ -31,5 +33,10 @@
   "login.form.submit": "Zaloguj się",
 
   "federatedLogin.google": "Zaloguj się przez Google",
-  "federatedLogin.facebook": "Zaloguj się przez Facebook"
+  "federatedLogin.facebook": "Zaloguj się przez Facebook",
+
+  "settings.form.title": "Ustawienia",
+  "settings.form.field.username": "Nazwa użytkownika",
+  "settings.form.field.language": "Język",
+  "settings.form.submit": "Zapisz"
 }

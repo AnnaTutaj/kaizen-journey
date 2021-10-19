@@ -11,6 +11,8 @@
   "header.settings": "Settings",
 
   "common.or": "Or",
+  "common.language.polish": "Polski",
+  "common.language.english": "English",
   "common.defaultErrorMessage": "Something went wrong... please try again later",
   "common.form.field.required.error": "This field is required",
   
@@ -31,5 +33,10 @@
   "login.form.submit": "Sign in",
 
   "federatedLogin.google": "Sign in with Google",
-  "federatedLogin.facebook": "Sign in with Facebook"
+  "federatedLogin.facebook": "Sign in with Facebook",
+
+  "settings.form.title": "Settings",
+  "settings.form.field.username": "Username",
+  "settings.form.field.language": "Language",
+  "settings.form.submit": "Save"
 }

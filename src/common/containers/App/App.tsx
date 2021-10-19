@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMemo } from 'react';
 import { IntlProvider } from 'react-intl';
 import Main from '@common/routes/Main';
@@ -9,13 +9,25 @@ import enUS from 'antd/lib/locale/en_US';
 import plPL from 'antd/lib/locale/pl_PL';
 import 'moment/locale/pl';
 import { ITranslationConfig } from '@common/lang/config/types';
+import { Language, useAuth } from '@common/contexts/AuthContext';
+import { Locale } from 'antd/lib/locale-provider';
 
 const App: React.FC = () => {
-  //todo load languages from redux
-  const [language, setLanguage] = React.useState<ITranslationConfig['locale']>('en');
+  const { userProfile } = useAuth();
+
+  const [language, setLanguage] = useState<ITranslationConfig['locale']>(Language.en);
+  const [locale, setLocale] = useState<Locale>(enUS);
+
   const appLocale = useMemo(() => (AppLocale as any)[language], [language]);
   moment.locale(language);
-  const locale = language === 'en' ? enUS : plPL;
+
+  useEffect(() => {
+    setLanguage(userProfile?.language ? userProfile?.language : Language.en);
+  }, [userProfile?.language]);
+
+  useEffect(() => {
+    setLocale(language === Language.en ? enUS : plPL);
+  }, [language]);
 
   return (
     <ConfigProvider componentSize="large" locale={locale}>

@@ -15,7 +15,12 @@ import {
 } from 'firebase/auth';
 import { User as FirebaseUser } from 'firebase/auth';
 import { UserCredential as FirebaseUserCredential } from 'firebase/auth';
-import { serverTimestamp, doc, setDoc, getDoc } from 'firebase/firestore';
+import { serverTimestamp, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+
+export enum Language {
+  pl = 'pl',
+  en = 'en'
+}
 
 export interface IUserProfile {
   uid: string;
@@ -25,6 +30,7 @@ export interface IUserProfile {
   };
   pictureURL: string;
   username: string;
+  language: Language | undefined;
 }
 export interface IAuthContext {
   userAuth: FirebaseUser | null;
@@ -35,6 +41,7 @@ export interface IAuthContext {
   login?: (email: string, password: string) => Promise<FirebaseUserCredential>;
   register: (email: string, password: string) => void;
   logout: () => void;
+  updateProfile: (values: Partial<IUserProfile>) => void;
 }
 
 export const AuthContext = createContext<IAuthContext>({
@@ -44,7 +51,8 @@ export const AuthContext = createContext<IAuthContext>({
   signInWithGoogle: () => {},
   signInWithFacebook: () => {},
   register: () => {},
-  logout: () => {}
+  logout: () => {},
+  updateProfile: (values: Partial<IUserProfile>) => {}
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -69,11 +77,15 @@ export default function AuthContextProvider({ children }: any) {
             uid: user.uid,
             createdAt: userSnap.createdAt,
             pictureURL: userSnap.pictureURL,
-            username: userSnap.username
+            username: userSnap.username,
+            language: userSnap?.language || Language.en
           });
         } else {
+          setUserProfile(null);
           setUserAuth(null);
         }
+      } else {
+        setUserProfile(null);
       }
       setIsUserLoading(false);
     });
@@ -82,13 +94,41 @@ export default function AuthContextProvider({ children }: any) {
     };
   }, []);
 
-  function login(email: string, password: string) {
+  const login = (email: string, password: string) => {
     return signInWithEmailAndPassword(auth, email, password);
-  }
+  };
 
-  function register(email: string, password: string) {
+  const register = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
-  }
+  };
+
+  const updateProfile = async (values: Partial<IUserProfile>) => {
+    if (userAuth) {
+      const userRef = doc(db, 'users', userAuth.uid);
+
+      await updateDoc(userRef, {
+        username: values.username,
+        language: values.language
+      });
+
+      setIsUserLoading(true);
+
+      const snap = await getDoc(doc(db, 'users', userAuth.uid));
+
+      if (snap.exists()) {
+        const userSnap = snap.data();
+
+        setUserProfile({
+          uid: userAuth.uid,
+          createdAt: userSnap.createdAt,
+          pictureURL: userSnap.pictureURL,
+          username: userSnap.username,
+          language: userSnap?.language || Language.en
+        });
+      }
+      setIsUserLoading(false);
+    }
+  };
 
   //   function forgotPassword(email) {
   //     return sendPasswordResetEmail(auth, email, {
@@ -100,9 +140,9 @@ export default function AuthContextProvider({ children }: any) {
   //     return confirmPasswordReset(auth, oobCode, newPassword);
   //   }
 
-  function logout() {
+  const logout = () => {
     return signOut(auth);
-  }
+  };
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -144,7 +184,8 @@ export default function AuthContextProvider({ children }: any) {
     signInWithFacebook,
     login,
     register,
-    logout
+    logout,
+    updateProfile
     // forgotPassword,
     // resetPassword
   };
