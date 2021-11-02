@@ -15,7 +15,8 @@
   "common.language.english": "English",
   "common.defaultErrorMessage": "Something went wrong... please try again later",
   "common.form.field.required.error": "This field is required",
-  
+  "common.list.loadMore": "Load more",
+
   "auth/invalid-email": "The email address is badly formatted",
   "auth/weak-password": "Password should be at least 6 characters",
   "auth/email-already-in-use": "The email address is already in use by another account",
@@ -38,5 +39,9 @@
   "settings.form.title": "Settings",
   "settings.form.field.username": "Username",
   "settings.form.field.language": "Language",
-  "settings.form.submit": "Save"
+  "settings.form.submit": "Save",
+
+  "gratitude.create.button": "I'm grateful for",
+  "gratitude.my.list.title": "My gratitude list",
+  "gratitude.my.list.empty": "Keep a journal and finds these entries here"
 }

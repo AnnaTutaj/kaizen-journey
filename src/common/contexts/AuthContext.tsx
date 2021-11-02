@@ -3,13 +3,11 @@ import { auth, db } from '@common/util/firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail,
   onAuthStateChanged,
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
   signOut,
-  confirmPasswordReset,
   getAdditionalUserInfo,
   AdditionalUserInfo
 } from 'firebase/auth';

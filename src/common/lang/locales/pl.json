@@ -15,6 +15,7 @@
   "common.language.english": "English",
   "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
   "common.form.field.required.error": "To pole jest wymagane",
+  "common.list.loadMore": "Załaduj więcej",
 
   "auth/invalid-email": "Wprowadź poprawny adres email",
   "auth/weak-password": "Hasło powinno mieć przynajmniej 6 znaków",
@@ -38,5 +39,11 @@
   "settings.form.title": "Ustawienia",
   "settings.form.field.username": "Nazwa użytkownika",
   "settings.form.field.language": "Język",
-  "settings.form.submit": "Zapisz"
+  "settings.form.submit": "Zapisz",
+
+  
+  "gratitude.create.button": "Jestem wdzięczny/a za",
+  "gratitude.my.list.title": "Moja lista wdzięczności",
+  "gratitude.my.list.empty": "Zacznij uzupełniać dziennik i znajdź te wpisy tutaj"
+
 }
