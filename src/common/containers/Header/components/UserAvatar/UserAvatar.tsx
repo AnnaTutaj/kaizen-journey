@@ -30,11 +30,11 @@ const UserAvatar: React.FC = () => {
   const menu = (
     <Menu>
       <Menu.ItemGroup title={userProfile?.username}>
-        <Menu.Item key="1" onClick={() => logout()}>
-          {intl.formatMessage({ id: 'header.logout' })}
-        </Menu.Item>
-        <Menu.Item key="2" onClick={openSettingsModal}>
+        <Menu.Item key="1" onClick={openSettingsModal}>
           {intl.formatMessage({ id: 'header.settings' })}
+        </Menu.Item>
+        <Menu.Item key="2" onClick={() => logout()}>
+          {intl.formatMessage({ id: 'header.logout' })}
         </Menu.Item>
       </Menu.ItemGroup>
     </Menu>
