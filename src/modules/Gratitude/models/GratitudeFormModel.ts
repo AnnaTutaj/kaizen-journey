@@ -1,4 +1,3 @@
-import { QueryDocumentSnapshot } from '@firebase/firestore';
 import { Moment } from 'moment';
 
 export interface IGratitudeFormModel {
