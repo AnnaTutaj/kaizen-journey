@@ -7,21 +7,12 @@ import { collection, query, where, getDocs, orderBy, limit, startAfter, getDoc, 
 import { db } from '@common/util/firebase';
 import { useAuth } from '@common/contexts/AuthContext';
 import _ from 'lodash';
-
-export interface IGratitudeModel {
-  id: string;
-  title: string;
-  description?: string;
-  date: {
-    nanoseconds: number;
-    seconds: number;
-  };
-  createdByUid: string;
-  createdByPictureURL?: string;
-  createdBy?: string;
+import GratitudeModel, { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
+interface IProps {
+  newGratitude: IGratitudeModel | undefined;
 }
 
-const GratitudeMyList: React.FC = () => {
+const GratitudeMyList: React.FC<IProps> = ({ newGratitude }) => {
   const intl = useIntl();
   const { userProfile } = useAuth();
 
@@ -42,14 +33,14 @@ const GratitudeMyList: React.FC = () => {
     const limitCount: number = 20;
     const q = startAfterGratitude
       ? query(
-          collection(db, 'gratitude'),
+          collection(db, 'gratitude').withConverter(GratitudeModel.converter),
           where('createdByUid', '==', userProfile?.uid),
           orderBy('date', 'desc'),
           startAfter(startAfterGratitude),
           limit(limitCount)
         )
       : query(
-          collection(db, 'gratitude'),
+          collection(db, 'gratitude').withConverter(GratitudeModel.converter),
           where('createdByUid', '==', userProfile?.uid),
           orderBy('date', 'desc'),
           limit(limitCount)
@@ -62,20 +53,8 @@ const GratitudeMyList: React.FC = () => {
       return [];
     }
 
-    const gratitudes = [];
+    const gratitudes = querySnap.docs.map((i) => GratitudeModel.build(i.data()));
 
-    for (let i = 0; i < querySnap.docs.length; i++) {
-      const gratitude: IGratitudeModel = {
-        id: querySnap.docs[i].id,
-        title: querySnap.docs[i].data()?.title,
-        description: querySnap.docs[i].data()?.description || '',
-        date: querySnap.docs[i].data()?.date,
-        createdByUid: querySnap.docs[i].data()?.createdByUid,
-        createdByPictureURL: querySnap.docs[i].data()?.createdByPictureURL
-      };
-
-      gratitudes.push(gratitude);
-    }
     setLoading(false);
 
     return gratitudes;
@@ -96,8 +75,22 @@ const GratitudeMyList: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setLoadedGratitudes((value) => _.uniqBy([...value, ...nextGratitudes], 'id'));
+    setLoadedGratitudes((value) => {
+      const array = _.uniqBy([...value, ...nextGratitudes], 'id');
+      const sortedArray = _.orderBy(array, [(item) => item.date.seconds], ['desc']);
+      return sortedArray;
+    });
   }, [nextGratitudes]);
+
+  useEffect(() => {
+    if (newGratitude) {
+      setLoadedGratitudes((value) => {
+        const array = _.uniqBy([...value, newGratitude], 'id');
+        const sortedArray = _.orderBy(array, [(item) => item.date.seconds], ['desc']);
+        return sortedArray;
+      });
+    }
+  }, [newGratitude]);
 
   const getNextGratitudes = async () => {
     const lastFetchedGratitude =

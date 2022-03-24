@@ -1,6 +1,6 @@
 import { Avatar, Button } from 'antd';
 import React from 'react';
-import { IGratitudeModel } from '../GratitudeMyList/GratitudeMyList';
+import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { List, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import moment from 'moment';

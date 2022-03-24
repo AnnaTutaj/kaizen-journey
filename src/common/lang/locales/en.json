@@ -15,6 +15,7 @@
   "common.language.english": "English",
   "common.defaultErrorMessage": "Something went wrong... please try again later",
   "common.form.field.required.error": "This field is required",
+  "common.form.field.max.error": "Character limit is {max}",
   "common.list.loadMore": "Load more",
 
   "auth/invalid-email": "The email address is badly formatted",
@@ -43,5 +44,12 @@
 
   "gratitude.create.button": "I'm grateful for",
   "gratitude.my.list.title": "My gratitude list",
-  "gratitude.my.list.empty": "Keep a journal and find its entries here"
+  "gratitude.my.list.empty": "Keep a journal and find its entries here",
+
+  "gratitude.form.title": "I'm grateful for...",
+  "gratitude.form.field.title": "Title",
+  "gratitude.form.field.description": "Description",
+  "gratitude.form.field.date": "Date",
+  "gratitude.form.field.isPublic": "Public",
+  "gratitude.form.submit": "Save"
 }

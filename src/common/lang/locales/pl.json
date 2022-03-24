@@ -15,6 +15,7 @@
   "common.language.english": "English",
   "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
   "common.form.field.required.error": "To pole jest wymagane",
+  "common.form.field.max.error": "Limit znaków wynosi {max}",
   "common.list.loadMore": "Załaduj więcej",
 
   "auth/invalid-email": "Wprowadź poprawny adres email",
@@ -41,9 +42,14 @@
   "settings.form.field.language": "Język",
   "settings.form.submit": "Zapisz",
 
-  
   "gratitude.create.button": "Jestem wdzięczny/a za",
   "gratitude.my.list.title": "Moja lista wdzięczności",
-  "gratitude.my.list.empty": "Zacznij uzupełniać dziennik i znajdź te wpisy tutaj"
+  "gratitude.my.list.empty": "Zacznij uzupełniać dziennik i znajdź te wpisy tutaj",
 
+  "gratitude.form.title": "Jestem wdzięczny/a za...",
+  "gratitude.form.field.title": "Tytuł",
+  "gratitude.form.field.description": "Opis",
+  "gratitude.form.field.date": "Data",
+  "gratitude.form.field.isPublic": "Publiczny",
+  "gratitude.form.submit": "Zapisz"
 }

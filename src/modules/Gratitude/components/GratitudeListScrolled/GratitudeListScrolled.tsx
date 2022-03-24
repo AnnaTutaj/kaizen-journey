@@ -1,7 +1,7 @@
 import { Button, Spin } from 'antd';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import { IGratitudeModel } from '../GratitudeMyList/GratitudeMyList';
+import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import GratitudeList from '../GratitudeList';
 import styles from './GratitudeListScrolled.module.less';
 import { useIntl } from 'react-intl';
