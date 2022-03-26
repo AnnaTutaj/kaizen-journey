@@ -6,15 +6,17 @@ import { UserOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Spin } from 'antd';
 
 const { Title } = Typography;
 
 interface IProps {
   gratitudes: IGratitudeModel[];
   headerText: string;
+  hideManageOptions?: boolean;
 }
 
-const GratitudeList: React.FC<IProps> = ({ gratitudes, headerText }) => {
+const GratitudeList: React.FC<IProps> = ({ gratitudes, headerText, hideManageOptions }) => {
   return (
     <List
       header={<Title level={5}>{headerText}</Title>}
@@ -25,10 +27,14 @@ const GratitudeList: React.FC<IProps> = ({ gratitudes, headerText }) => {
 
         return (
           <List.Item
-            actions={[
-              <Button size="small" type="link" icon={<FontAwesomeIcon icon={faPen} />}></Button>,
-              <Button size="small" type="link" danger icon={<FontAwesomeIcon icon={faTrash} />}></Button>
-            ]}
+            actions={
+              !hideManageOptions
+                ? [
+                    <Button size="small" type="link" icon={<FontAwesomeIcon icon={faPen} />}></Button>,
+                    <Button size="small" type="link" danger icon={<FontAwesomeIcon icon={faTrash} />}></Button>
+                  ]
+                : []
+            }
           >
             <List.Item.Meta
               avatar={<Avatar icon={<UserOutlined />} src={item?.createdByPictureURL} />}

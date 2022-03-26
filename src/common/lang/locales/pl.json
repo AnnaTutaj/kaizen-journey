@@ -42,6 +42,10 @@
   "settings.form.field.language": "Język",
   "settings.form.submit": "Zapisz",
 
+  "home.header.text": "Ciągłe doskonalenie?",
+  "home.publicGratitude.list.title": "Ostatnio użytkownicy byli wdzięczni za",
+  "home.publicGratitude.list.empty": "Nikt ostatnio nie podzielili się tym, za co był wdzięczny",
+
   "gratitude.create.button": "Jestem wdzięczny/a za",
   "gratitude.my.list.title": "Moja lista wdzięczności",
   "gratitude.my.list.empty": "Zacznij uzupełniać dziennik i znajdź te wpisy tutaj",

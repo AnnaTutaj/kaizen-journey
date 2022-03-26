@@ -42,6 +42,10 @@
   "settings.form.field.language": "Language",
   "settings.form.submit": "Save",
 
+  "home.header.text": "Continuous improvement?",
+  "home.publicGratitude.list.title": "Lately users were grateful for",
+  "home.publicGratitude.list.empty": "No one shared for what they were grateful for",
+
   "gratitude.create.button": "I'm grateful for",
   "gratitude.my.list.title": "My gratitude list",
   "gratitude.my.list.empty": "Keep a journal and find its entries here",

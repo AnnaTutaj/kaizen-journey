@@ -3,18 +3,15 @@ import { Empty } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import GratitudeListScrolled from '../GratitudeListScrolled';
-import { collection, query, where, getDocs, orderBy, limit, startAfter, getDoc, doc } from 'firebase/firestore';
-import { db } from '@common/util/firebase';
-import { useAuth } from '@common/contexts/AuthContext';
 import _ from 'lodash';
-import GratitudeModel, { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
+import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
+import useGratitudeListFetch from '@modules/Gratitude/hooks/useGratitudeListFetch';
 interface IProps {
   newGratitude: IGratitudeModel | undefined;
 }
 
 const GratitudeMyList: React.FC<IProps> = ({ newGratitude }) => {
   const intl = useIntl();
-  const { userProfile } = useAuth();
 
   const [loadedGratitudes, setLoadedGratitudes] = useState<IGratitudeModel[]>([]);
   const [nextGratitudes, setNextGratitudes] = useState<IGratitudeModel[]>([]);
@@ -23,42 +20,7 @@ const GratitudeMyList: React.FC<IProps> = ({ newGratitude }) => {
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
   const [moreGratitudes, setMoreGratitudes] = useState<boolean>(false);
 
-  const getGratitudes = async (lastFetchedGratitude?: IGratitudeModel) => {
-    setLoading(true);
-
-    const startAfterGratitude = lastFetchedGratitude
-      ? await getDoc(doc(db, 'gratitude', lastFetchedGratitude.id))
-      : null;
-
-    const limitCount: number = 20;
-    const q = startAfterGratitude
-      ? query(
-          collection(db, 'gratitude').withConverter(GratitudeModel.converter),
-          where('createdByUid', '==', userProfile?.uid),
-          orderBy('date', 'desc'),
-          startAfter(startAfterGratitude),
-          limit(limitCount)
-        )
-      : query(
-          collection(db, 'gratitude').withConverter(GratitudeModel.converter),
-          where('createdByUid', '==', userProfile?.uid),
-          orderBy('date', 'desc'),
-          limit(limitCount)
-        );
-
-    const querySnap = await getDocs(q);
-
-    if (querySnap.docs.length === 0) {
-      setLoading(false);
-      return [];
-    }
-
-    const gratitudes = querySnap.docs.map((i) => GratitudeModel.build(i.data()));
-
-    setLoading(false);
-
-    return gratitudes;
-  };
+  const { getGratitudes } = useGratitudeListFetch({ setLoading, mode: 'myList' });
 
   //init - runs only once
   useEffect(() => {
