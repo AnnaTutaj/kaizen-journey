@@ -1,8 +1,6 @@
-import PageLoading from '@common/components/PageLoading';
-import { Empty, Row, Spin, Space } from 'antd';
+import { Empty, Spin, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import _ from 'lodash';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import useGratitudeListFetch from '@modules/Gratitude/hooks/useGratitudeListFetch';
 import GratitudeList from '@modules/Gratitude/components/GratitudeList';

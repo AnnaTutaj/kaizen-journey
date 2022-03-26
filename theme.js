@@ -12,6 +12,7 @@ module.exports = {
 
   //Background Colors
   '@header-bg-color': '#f0f2f5',
+  '@layout-body-background': '@white-color',
 
   //Dimensions
   '@header-height': '60px'

@@ -6,7 +6,6 @@ import { UserOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Spin } from 'antd';
 
 const { Title } = Typography;
 

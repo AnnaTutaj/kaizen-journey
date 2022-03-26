@@ -1,0 +1,15 @@
+{
+  "plugins": ["stylelint-declaration-block-no-ignored-properties"],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-css-modules",
+    "stylelint-config-prettier",
+    "stylelint-config-rational-order",
+    "stylelint-declaration-block-no-ignored-properties"
+  ],
+  "rules": {
+    "plugin/declaration-block-no-ignored-properties": true,
+    "selector-class-pattern": null,
+    "function-no-unknown": [true, { "ignoreFunctions": ["lighten", "darken"] }]
+  }
+}
