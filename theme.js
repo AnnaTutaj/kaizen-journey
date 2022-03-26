@@ -15,5 +15,6 @@ module.exports = {
   '@layout-body-background': '@white-color',
 
   //Dimensions
-  '@header-height': '60px'
+  '@header-height': '60px',
+  '@content-padding-vertical': '20px'
 };

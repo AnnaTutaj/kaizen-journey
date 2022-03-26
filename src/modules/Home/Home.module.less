@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - @header-height);
+  height: calc(100vh - @header-height - 2 * @content-padding-vertical);
+  padding-bottom: calc(@content-padding-vertical + @header-height);
 }
 
 .HeaderText {
@@ -11,16 +12,11 @@
   font-size: min(10vw, 10vh);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  transition: all 0.25s ease-out;
   user-select: none;
 }
 
 .HeaderTextShadow {
-  text-shadow: 3px 5px 1px @gradient-keppel-color, -4px -5px 1px @gradient-viola-color;
-
-  &:hover {
-    text-shadow: 3px 5px 1px @gradient-viola-color, -4px -5px 1px @gradient-keppel-color;
-  }
+  text-shadow: 0.05em 0.07em 1px @gradient-keppel-color, -0.05em -0.07em 1px @gradient-viola-color;
 }
 
 .HeaderTextAnimate {
