@@ -3,38 +3,55 @@
   align-items: center;
   justify-content: center;
   height: calc(100vh - @header-height - 2 * @content-padding-vertical);
+  margin-bottom: @content-padding-vertical;
   padding-bottom: calc(@content-padding-vertical + @header-height);
+  text-align: center;
 }
 
 .HeaderText {
-  color: darken(@layout-body-background, 4%);
   font-weight: 900;
-  font-size: min(10vw, 12vh);
+  font-size: min(10vw, 10vh);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   user-select: none;
 }
 
-.HeaderTextShadow {
-  text-shadow: 0.05em 0.07em 1px @gradient-keppel-color, -0.05em -0.07em 1px @gradient-viola-color;
+.HeaderTextDiscoverMore {
+  margin-top: 2 * @content-padding-vertical;
+  color: @dark-grey-color;
+  font-weight: 500;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+}
+
+.HeaderIconDiscoverMore {
+  font-size: 1em;
 }
 
 .HeaderTextAnimate {
   color: transparent;
   background-image: linear-gradient(
-    45deg,
+    90deg,
     @gradient-keppel-color 0%,
-    @gradient-viola-color 29%,
-    @gradient-japonica-color 67%,
-    @gradient-confetti-color 100%
+    @gradient-viola-color 25%,
+    @gradient-japonica-color 50%,
+    @gradient-confetti-color 75%,
+    @gradient-keppel-color 100%
   );
   background-size: 200% auto;
   background-clip: text;
-  animation: textclip 2s linear infinite;
+  animation: textclip 3s linear infinite;
 }
 
 @keyframes textclip {
   to {
     background-position: 200% center;
   }
+}
+
+.FeaturesDiv {
+  scroll-margin-top: @header-height;
+  margin-bottom: @margin-vertical;
 }

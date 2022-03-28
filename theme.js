@@ -16,5 +16,6 @@ module.exports = {
 
   //Dimensions
   '@header-height': '60px',
-  '@content-padding-vertical': '20px'
+  '@margin-vertical': '24px',
+  '@content-padding-vertical': '40px'
 };
