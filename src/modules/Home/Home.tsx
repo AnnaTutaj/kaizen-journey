@@ -39,10 +39,10 @@ const Home: React.FC = () => {
     <>
       <div className={styles.HeaderContainer}>
         <Space direction="vertical">
-          <div className={cn(styles.HeaderText, styles.HeaderTextAnimate)}>
+          <div className={cn(styles.HeaderText, styles.HeaderSubtitle, styles.HeaderTextAnimate)}>
             {intl.formatMessage({ id: 'home.header.text' })}
           </div>
-          <div className={cn(styles.HeaderText, styles.HeaderTextAnimate)}>Kaizen Journey!</div>
+          <div className={cn(styles.HeaderText, styles.HeaderTitle, styles.HeaderTextAnimate)}>Kaizen Journey!</div>
           <Space direction="vertical" size={5} className={styles.HeaderTextDiscoverMore} onClick={executeScroll}>
             <span>{intl.formatMessage({ id: 'home.header.discoverMore' })}</span>
             <FontAwesomeIcon className={styles.HeaderIconDiscoverMore} icon={faChevronDown} />
