@@ -56,8 +56,8 @@ const GratitudeMyList: React.FC<IProps> = ({ newGratitude }) => {
 
   const getNextGratitudes = async () => {
     const lastFetchedGratitude =
-      nextGratitudes && nextGratitudes.length && nextGratitudes[nextGratitudes.length - 1]
-        ? nextGratitudes[nextGratitudes.length - 1]
+      loadedGratitudes && loadedGratitudes.length && loadedGratitudes[loadedGratitudes.length - 1]
+        ? loadedGratitudes[loadedGratitudes.length - 1]
         : undefined;
 
     const gratitudes = await getGratitudes(lastFetchedGratitude);
@@ -66,6 +66,10 @@ const GratitudeMyList: React.FC<IProps> = ({ newGratitude }) => {
     if (gratitudes && gratitudes.length <= 1) {
       setMoreGratitudes(false);
     }
+  };
+
+  const removeGratitude = (id: string) => {
+    setLoadedGratitudes((prevState) => _.remove(prevState, (i) => i.id !== id));
   };
 
   if (loadingInitial) {
@@ -81,6 +85,7 @@ const GratitudeMyList: React.FC<IProps> = ({ newGratitude }) => {
           loading={loading}
           getNextGratitudes={getNextGratitudes}
           moreGratitudes={moreGratitudes}
+          removeGratitude={removeGratitude}
         />
       ) : (
         <Empty description={intl.formatMessage({ id: 'gratitude.my.list.empty' })} />
