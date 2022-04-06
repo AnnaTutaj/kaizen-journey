@@ -13,6 +13,7 @@ interface IProps {
   loading: boolean;
   moreGratitudes: boolean;
   removeGratitude: (id: string) => void;
+  updateGratitude: (gratitude: IGratitudeModel) => void;
 }
 
 const GratitudeListScrolled: React.FC<IProps> = ({
@@ -21,7 +22,8 @@ const GratitudeListScrolled: React.FC<IProps> = ({
   getNextGratitudes,
   loading,
   moreGratitudes,
-  removeGratitude
+  removeGratitude,
+  updateGratitude
 }) => {
   const intl = useIntl();
 
@@ -35,7 +37,12 @@ const GratitudeListScrolled: React.FC<IProps> = ({
             hasMore={!loading && moreGratitudes}
             initialLoad={false}
           >
-            <GratitudeList gratitudes={gratitudes} headerText={headerText} removeGratitude={removeGratitude} />
+            <GratitudeList
+              gratitudes={gratitudes}
+              headerText={headerText}
+              removeGratitude={removeGratitude}
+              updateGratitude={updateGratitude}
+            />
           </InfiniteScroll>
           <div className={styles.Footer}>
             {!loading && moreGratitudes ? (

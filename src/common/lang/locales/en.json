@@ -51,7 +51,8 @@
   "gratitude.my.list.title": "My gratitude list",
   "gratitude.my.list.empty": "Keep a journal and find its entries here",
 
-  "gratitude.form.title": "I'm grateful for...",
+  "gratitude.create.title": "Create gratitude",
+  "gratitude.update.title": "Edit gratitude",
   "gratitude.form.field.title": "Title",
   "gratitude.form.field.description": "Description",
   "gratitude.form.field.date": "Date",

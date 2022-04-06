@@ -1,4 +1,5 @@
-import { Moment } from 'moment';
+import { IGratitudeModel } from './GratitudeModel';
+import moment, { Moment } from 'moment';
 
 export interface IGratitudeFormModel {
   title: string;
@@ -18,7 +19,7 @@ export interface IGratitudeFormModelDTO {
 }
 
 class GratitudeFormModel {
-  static serialize({
+  static serializeToCreate({
     createdByUid,
     createdBy,
     createdByPictureURL,
@@ -39,6 +40,24 @@ class GratitudeFormModel {
       description: description || '',
       date: date.toDate(),
       isPublic: isPublic || false
+    };
+  }
+
+  static serializeToUpdate({ title, description, date, isPublic }: IGratitudeFormModel): Partial<IGratitudeFormModelDTO> {
+    return {
+      title: title,
+      description: description || '',
+      date: date.toDate(),
+      isPublic: isPublic || false
+    };
+  }
+
+  static build(dto: IGratitudeModel): IGratitudeFormModel {
+    return {
+      title: dto.title,
+      description: dto.description || '',
+      date: moment(dto.date.seconds * 1000),
+      isPublic: dto.isPublic ?? false
     };
   }
 }

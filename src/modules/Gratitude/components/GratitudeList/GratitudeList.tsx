@@ -16,13 +16,26 @@ interface IProps {
   headerText: string;
   hideManageOptions?: boolean;
   removeGratitude?: (id: string) => void;
+  updateGratitude?: (item: IGratitudeModel) => void;
 }
 
-const GratitudeList: React.FC<IProps> = ({ gratitudes, headerText, hideManageOptions, removeGratitude }) => {
+const GratitudeList: React.FC<IProps> = ({
+  gratitudes,
+  headerText,
+  hideManageOptions,
+  removeGratitude,
+  updateGratitude
+}) => {
   const handleDelete = async (item: IGratitudeModel) => {
     if (removeGratitude) {
       await deleteDoc(doc(db, 'gratitude', item.id));
       removeGratitude(item.id);
+    }
+  };
+
+  const handleUpdate = async (item: IGratitudeModel) => {
+    if (updateGratitude) {
+      updateGratitude(item);
     }
   };
 
@@ -39,7 +52,12 @@ const GratitudeList: React.FC<IProps> = ({ gratitudes, headerText, hideManageOpt
             actions={
               !hideManageOptions
                 ? [
-                    <Button size="small" type="link" icon={<FontAwesomeIcon icon={faPen} />}></Button>,
+                    <Button
+                      size="small"
+                      type="link"
+                      onClick={() => handleUpdate(item)}
+                      icon={<FontAwesomeIcon icon={faPen} />}
+                    ></Button>,
                     <Button
                       size="small"
                       type="link"

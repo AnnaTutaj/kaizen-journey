@@ -7,19 +7,15 @@ import GratitudeMyList from './components/GratitudeMyList';
 import styles from './Gratitude.module.less';
 import { db } from '@common/util/firebase';
 import GratitudeModel, { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
+import { IGratitudeCreateModalProps } from '@modules/Gratitude/components/GratitudeCreateModal/GratitudeCreateModal';
 
 const Gratitude: React.FC = () => {
   const intl = useIntl();
 
-  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
+  const [gratitudeCreateModalConfig, setGratitudeCreateModalConfig] = useState<IGratitudeCreateModalProps>();
   const [newGratitude, setNewGratitude] = useState<IGratitudeModel>();
 
-  const handleCreateCancel = () => {
-    setIsCreateModalVisible(false);
-  };
-
   const handleCreateSubmit = async (gratitudeId: string) => {
-    setIsCreateModalVisible(false);
     if (gratitudeId) {
       const snap = await getDoc(doc(db, 'gratitude', gratitudeId).withConverter(GratitudeModel.converter));
 
@@ -29,23 +25,27 @@ const Gratitude: React.FC = () => {
     }
   };
 
+  const handleCreateGratitude = () => {
+    setGratitudeCreateModalConfig({
+      handleCancel: () => setGratitudeCreateModalConfig(undefined),
+      handleSubmit: async (gratitudeId) => {
+        setGratitudeCreateModalConfig(undefined);
+        await handleCreateSubmit(gratitudeId);
+      }
+    });
+  };
+
   return (
     <>
       <div className={styles.Header}>
-        <Button type="primary" onClick={() => setIsCreateModalVisible(true)}>
+        <Button type="primary" onClick={() => handleCreateGratitude()}>
           {intl.formatMessage({ id: 'gratitude.create.button' })}
         </Button>
       </div>
 
       <GratitudeMyList newGratitude={newGratitude} />
 
-      {isCreateModalVisible ? (
-        <GratitudeCreateModal
-          isModalVisible={isCreateModalVisible}
-          handleCancel={handleCreateCancel}
-          handleSubmit={handleCreateSubmit}
-        />
-      ) : null}
+      {gratitudeCreateModalConfig ? <GratitudeCreateModal {...gratitudeCreateModalConfig} /> : null}
     </>
   );
 };

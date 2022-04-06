@@ -52,7 +52,8 @@
   "gratitude.my.list.title": "Moja lista wdzięczności",
   "gratitude.my.list.empty": "Zacznij uzupełniać dziennik i znajdź te wpisy tutaj",
 
-  "gratitude.form.title": "Jestem wdzięczny/a za...",
+  "gratitude.create.title": "Utwórz wdzięczność",
+  "gratitude.update.title": "Edytuj wdzięczność",
   "gratitude.form.field.title": "Tytuł",
   "gratitude.form.field.description": "Opis",
   "gratitude.form.field.date": "Data",

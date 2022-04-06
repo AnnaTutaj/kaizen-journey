@@ -1,35 +1,31 @@
 import { message } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { collection, addDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { FirebaseError } from '@firebase/util';
-import { useAuth } from '@common/contexts/AuthContext';
 import GratitudeFormModel, { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import GratitudeForm from '@modules/Gratitude/components/GratitudeForm';
-import moment from 'moment';
+import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 
-export interface IGratitudeCreateModalProps {
-  handleSubmit: (gratitudeId: string) => void;
+export interface IGratitudeUpdateModalProps {
+  handleSubmit: () => void;
   handleCancel: () => void;
+  gratitude: IGratitudeModel;
 }
 
-const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubmit, handleCancel }) => {
+const GratitudeUpdateModal: React.FC<IGratitudeUpdateModalProps> = ({ handleSubmit, handleCancel, gratitude }) => {
   const intl = useIntl();
-  const { userProfile } = useAuth();
 
   const onFinish = async (values: IGratitudeFormModel) => {
     try {
-      const finalValues = GratitudeFormModel.serializeToCreate({
-        createdByUid: userProfile?.uid || '',
-        createdBy: userProfile?.username || '',
-        createdByPictureURL: userProfile?.pictureURL || '',
+      const finalValues = GratitudeFormModel.serializeToUpdate({
         ...values
       });
 
-      const gratitudeRef = await addDoc(collection(db, 'gratitude'), finalValues);
+      await updateDoc(doc(db, 'gratitude', gratitude.id), finalValues);
 
-      handleSubmit(gratitudeRef?.id);
+      handleSubmit();
     } catch (error) {
       if (error instanceof FirebaseError) {
         const errorMessage = intl.formatMessage({
@@ -46,13 +42,11 @@ const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubm
   return (
     <GratitudeForm
       onFinish={onFinish}
+      initialValues={GratitudeFormModel.build(gratitude)}
       handleCancel={handleCancel}
-      title={intl.formatMessage({ id: 'gratitude.create.title' })}
-      initialValues={{
-        date: moment()
-      }}
+      title={intl.formatMessage({ id: 'gratitude.update.title' })}
     />
   );
 };
 
-export default GratitudeCreateModal;
+export default GratitudeUpdateModal;
