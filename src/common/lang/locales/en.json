@@ -10,6 +10,8 @@
   "header.logout": "Log out",
   "header.settings": "Settings",
 
+  "common.edit": "Edit",
+  "common.delete": "Delete",
   "common.or": "Or",
   "common.language.polish": "Polski",
   "common.language.english": "English",

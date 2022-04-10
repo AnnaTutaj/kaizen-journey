@@ -1,13 +1,8 @@
-import { Avatar, Button } from 'antd';
 import React from 'react';
 import { List, Typography } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import moment from 'moment';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { doc, deleteDoc } from 'firebase/firestore';
-import { db } from '@common/util/firebase';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
+import styles from '@modules/Gratitude/components/GratitudeList/GratitudeList.module.less';
+import GratitudeListItem from './GratitudeListItem/GratitudeListItem';
 
 const { Title } = Typography;
 
@@ -26,56 +21,19 @@ const GratitudeList: React.FC<IProps> = ({
   removeGratitude,
   updateGratitude
 }) => {
-  const handleDelete = async (item: IGratitudeModel) => {
-    if (removeGratitude) {
-      await deleteDoc(doc(db, 'gratitude', item.id));
-      removeGratitude(item.id);
-    }
-  };
-
-  const handleUpdate = async (item: IGratitudeModel) => {
-    if (updateGratitude) {
-      updateGratitude(item);
-    }
-  };
-
   return (
     <List
+      className={styles.GratitudeList}
       header={<Title level={5}>{headerText}</Title>}
-      bordered
       dataSource={gratitudes}
       renderItem={(item) => {
-        const date = moment(item.date.seconds * 1000).format('ll');
-
         return (
-          <List.Item
-            actions={
-              !hideManageOptions
-                ? [
-                    <Button
-                      size="small"
-                      type="link"
-                      onClick={() => handleUpdate(item)}
-                      icon={<FontAwesomeIcon icon={faPen} />}
-                    ></Button>,
-                    <Button
-                      size="small"
-                      type="link"
-                      danger
-                      icon={<FontAwesomeIcon icon={faTrash} />}
-                      onClick={() => handleDelete(item)}
-                    ></Button>
-                  ]
-                : []
-            }
-          >
-            <List.Item.Meta
-              avatar={<Avatar icon={<UserOutlined />} src={item?.createdByPictureURL} />}
-              title={item.title}
-              description={item.description}
-            />
-            <div>{date}</div>
-          </List.Item>
+          <GratitudeListItem
+            gratitude={item}
+            hideManageOptions={hideManageOptions}
+            removeGratitude={removeGratitude}
+            updateGratitude={updateGratitude}
+          />
         );
       }}
     />

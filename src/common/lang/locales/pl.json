@@ -10,6 +10,8 @@
   "header.logout": "Wyloguj się",
   "header.settings": "Ustawienia",
 
+  "common.edit": "Edytuj",
+  "common.delete": "Usuń",
   "common.or": "Albo",
   "common.language.polish": "Polski",
   "common.language.english": "English",
@@ -57,6 +59,6 @@
   "gratitude.form.field.title": "Tytuł",
   "gratitude.form.field.description": "Opis",
   "gratitude.form.field.date": "Data",
-  "gratitude.form.field.isPublic": "Publiczny",
+  "gratitude.form.field.isPublic": "Publiczne",
   "gratitude.form.submit": "Zapisz"
 }

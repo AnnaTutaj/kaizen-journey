@@ -18,7 +18,7 @@ const useGratitudeListFetch = ({ setLoading, mode }: IProps) => {
       ? await getDoc(doc(db, 'gratitude', lastFetchedGratitude.id))
       : null;
 
-    const limitCount: number = mode === 'myList' ? 20 : 10;
+    const limitCount: number = mode === 'myList' ? 10 : 5;
 
     const whereCondition =
       mode === 'myList' ? where('createdByUid', '==', userProfile?.uid) : where('isPublic', '==', true);

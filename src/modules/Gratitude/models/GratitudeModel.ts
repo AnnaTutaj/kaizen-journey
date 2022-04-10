@@ -1,3 +1,5 @@
+import { CategoryColorsDTO, CategoryColorsLighten } from '@common/constants/CategoryColors';
+import { CategoryColors } from '@common/constants/CategoryColors';
 import { QueryDocumentSnapshot } from '@firebase/firestore';
 import { db } from '@common/util/firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -14,6 +16,8 @@ export interface IGratitudeModel {
   createdByPictureURL: string | undefined;
   createdBy: string | undefined;
   isPublic: boolean;
+  color: CategoryColors;
+  colorLighten: CategoryColorsLighten;
 }
 
 export interface IGratitudeModelDTO {
@@ -28,6 +32,7 @@ export interface IGratitudeModelDTO {
   createdByPictureURL?: string;
   createdBy?: string;
   isPublic: boolean;
+  color?: CategoryColorsDTO;
 }
 
 class GratitudeModel implements IGratitudeModel {
@@ -42,7 +47,9 @@ class GratitudeModel implements IGratitudeModel {
     public createdByUid: string,
     public createdByPictureURL: string | undefined,
     public createdBy: string | undefined,
-    public isPublic: boolean
+    public isPublic: boolean,
+    public color: CategoryColors,
+    public colorLighten: CategoryColorsLighten
   ) {}
 
   static build(dto: IGratitudeModelDTO): IGratitudeModel {
@@ -54,12 +61,14 @@ class GratitudeModel implements IGratitudeModel {
       dto.createdByUid,
       dto.createdByPictureURL || undefined,
       dto.createdBy || undefined,
-      dto.isPublic
+      dto.isPublic,
+      dto.color ? CategoryColors[dto.color] : CategoryColors.default,
+      dto.color ? CategoryColorsLighten[dto.color] : CategoryColorsLighten.default
     );
   }
 
   static converter = {
-    toFirestore: (data: GratitudeModel) => data,
+    toFirestore: (data: IGratitudeModelDTO) => data,
     fromFirestore: (snap: QueryDocumentSnapshot) => {
       return { id: snap.id, ...snap.data() } as IGratitudeModelDTO;
     }
