@@ -49,7 +49,8 @@ const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubm
       handleCancel={handleCancel}
       title={intl.formatMessage({ id: 'gratitude.create.title' })}
       initialValues={{
-        date: moment()
+        date: moment(),
+        color: 'default'
       }}
     />
   );

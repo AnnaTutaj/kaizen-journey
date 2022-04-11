@@ -20,6 +20,12 @@
   "common.form.field.max.error": "Limit znaków wynosi {max}",
   "common.list.loadMore": "Załaduj więcej",
 
+  "common.color.default": "Domyślny",
+  "common.color.red": "Malinowy",
+  "common.color.green": "Pistacjowy",
+  "common.color.purple": "Lawendowy",
+  "common.color.brown": "Cappuccino",
+
   "auth/invalid-email": "Wprowadź poprawny adres email",
   "auth/weak-password": "Hasło powinno mieć przynajmniej 6 znaków",
   "auth/email-already-in-use": "Adres email już jest w użyciu",
@@ -58,6 +64,7 @@
   "gratitude.update.title": "Edytuj wdzięczność",
   "gratitude.form.field.title": "Tytuł",
   "gratitude.form.field.description": "Opis",
+  "gratitude.form.field.color": "Kolor",
   "gratitude.form.field.date": "Data",
   "gratitude.form.field.isPublic": "Publiczne",
   "gratitude.form.submit": "Zapisz"

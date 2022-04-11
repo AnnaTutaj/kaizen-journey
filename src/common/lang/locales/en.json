@@ -20,6 +20,12 @@
   "common.form.field.max.error": "Character limit is {max}",
   "common.list.loadMore": "Load more",
 
+  "common.color.default": "Default",
+  "common.color.red": "Raspberry",
+  "common.color.green": "Pistachio",
+  "common.color.purple": "Lavender",
+  "common.color.brown": "Cappuccino",
+
   "auth/invalid-email": "The email address is badly formatted",
   "auth/weak-password": "Password should be at least 6 characters",
   "auth/email-already-in-use": "The email address is already in use by another account",
@@ -57,6 +63,7 @@
   "gratitude.update.title": "Edit gratitude",
   "gratitude.form.field.title": "Title",
   "gratitude.form.field.description": "Description",
+  "gratitude.form.field.color": "Color",
   "gratitude.form.field.date": "Date",
   "gratitude.form.field.isPublic": "Public",
   "gratitude.form.submit": "Save"

@@ -1,3 +1,4 @@
+import { CategoryColorsDTO, CategoryColors } from '@common/constants/CategoryColors';
 import { IGratitudeModel } from './GratitudeModel';
 import moment, { Moment } from 'moment';
 
@@ -6,6 +7,7 @@ export interface IGratitudeFormModel {
   description: string;
   date: Moment;
   isPublic: boolean;
+  color: CategoryColorsDTO;
 }
 
 export interface IGratitudeFormModelDTO {
@@ -16,6 +18,7 @@ export interface IGratitudeFormModelDTO {
   createdByUid: string;
   createdBy: string;
   createdByPictureURL: string;
+  color: CategoryColorsDTO;
 }
 
 class GratitudeFormModel {
@@ -26,7 +29,8 @@ class GratitudeFormModel {
     title,
     description,
     date,
-    isPublic
+    isPublic,
+    color
   }: IGratitudeFormModel & {
     createdByUid: string;
     createdBy: string;
@@ -39,25 +43,36 @@ class GratitudeFormModel {
       title: title,
       description: description || '',
       date: date.toDate(),
-      isPublic: isPublic || false
+      isPublic: isPublic || false,
+      color: color || 'default'
     };
   }
 
-  static serializeToUpdate({ title, description, date, isPublic }: IGratitudeFormModel): Partial<IGratitudeFormModelDTO> {
+  static serializeToUpdate({
+    title,
+    description,
+    date,
+    isPublic,
+    color
+  }: IGratitudeFormModel): Partial<IGratitudeFormModelDTO> {
     return {
       title: title,
       description: description || '',
       date: date.toDate(),
-      isPublic: isPublic || false
+      isPublic: isPublic || false,
+      color: color || 'default'
     };
   }
 
-  static build(dto: IGratitudeModel): IGratitudeFormModel {
+  static build(data: IGratitudeModel): IGratitudeFormModel {
+    const categoryColorKey = Object.keys(CategoryColors)[Object.values(CategoryColors).indexOf(data.color)];
+
     return {
-      title: dto.title,
-      description: dto.description || '',
-      date: moment(dto.date.seconds * 1000),
-      isPublic: dto.isPublic ?? false
+      title: data.title,
+      description: data.description || '',
+      date: moment(data.date.seconds * 1000),
+      isPublic: data.isPublic ?? false,
+      color: categoryColorKey ? (categoryColorKey as CategoryColorsDTO) : 'default'
     };
   }
 }
