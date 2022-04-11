@@ -1,4 +1,4 @@
-import { CategoryColorsDTO, CategoryColors } from '@common/constants/CategoryColors';
+import { CategoryColorsDTO } from '@common/constants/CategoryColors';
 import { IGratitudeModel } from './GratitudeModel';
 import moment, { Moment } from 'moment';
 
@@ -65,14 +65,12 @@ class GratitudeFormModel {
   }
 
   static build(data: IGratitudeModel): IGratitudeFormModel {
-    const categoryColorKey = Object.keys(CategoryColors)[Object.values(CategoryColors).indexOf(data.color)];
-
     return {
       title: data.title,
       description: data.description || '',
       date: moment(data.date.seconds * 1000),
       isPublic: data.isPublic ?? false,
-      color: categoryColorKey ? (categoryColorKey as CategoryColorsDTO) : 'default'
+      color: data.color ? data.color.name : 'default'
     };
   }
 }

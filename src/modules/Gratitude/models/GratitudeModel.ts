@@ -16,8 +16,8 @@ export interface IGratitudeModel {
   createdByPictureURL: string | undefined;
   createdBy: string | undefined;
   isPublic: boolean;
-  color: CategoryColors;
-  colorLighten: CategoryColorsLighten;
+  color: { name: CategoryColorsDTO; value: CategoryColors };
+  colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten };
 }
 
 export interface IGratitudeModelDTO {
@@ -48,8 +48,8 @@ class GratitudeModel implements IGratitudeModel {
     public createdByPictureURL: string | undefined,
     public createdBy: string | undefined,
     public isPublic: boolean,
-    public color: CategoryColors,
-    public colorLighten: CategoryColorsLighten
+    public color: { name: CategoryColorsDTO; value: CategoryColors },
+    public colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten }
   ) {}
 
   static build(dto: IGratitudeModelDTO): IGratitudeModel {
@@ -62,8 +62,12 @@ class GratitudeModel implements IGratitudeModel {
       dto.createdByPictureURL || undefined,
       dto.createdBy || undefined,
       dto.isPublic,
-      dto.color ? CategoryColors[dto.color] : CategoryColors.default,
-      dto.color ? CategoryColorsLighten[dto.color] : CategoryColorsLighten.default
+      dto.color
+        ? { name: dto.color, value: CategoryColors[dto.color] }
+        : { name: 'default', value: CategoryColors.default },
+      dto.color
+        ? { name: dto.color, value: CategoryColorsLighten[dto.color] }
+        : { name: 'default', value: CategoryColorsLighten.default }
     );
   }
 

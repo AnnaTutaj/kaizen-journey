@@ -39,7 +39,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
   };
 
   const dropdownIconContainer = () => ({
-    backgroundColor: dropdownHover ? gratitude.colorLighten : 'unset'
+    backgroundColor: dropdownHover ? gratitude.colorLighten.value : 'unset'
   });
 
   const menu = (
@@ -68,7 +68,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
     <List.Item
       className={styles.ListItem}
       style={{
-        backgroundColor: gratitude.color
+        backgroundColor: gratitude.color.value
       }}
     >
       <Row wrap={false} className={styles.ListItemRow}>
