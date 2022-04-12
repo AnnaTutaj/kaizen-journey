@@ -1,4 +1,4 @@
-import { Avatar, Col, Dropdown, Menu, Row, Space } from 'antd';
+import { Avatar, Col, Dropdown, Menu, Modal, Row, Space } from 'antd';
 import React, { useState } from 'react';
 import { List, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -25,6 +25,20 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
 
   const [dropdownHover, setDropdownHover] = useState<boolean>(false);
 
+  const confirmDelete = async () => {
+    Modal.confirm({
+      centered: true,
+      closable: true,
+      title: intl.formatMessage({ id: 'gratitude.confirmModal.delete.title' }),
+      content: intl.formatMessage({ id: 'gratitude.confirmModal.delete.content' }),
+      okText: intl.formatMessage({ id: 'gratitude.confirmModal.delete.okText' }),
+      cancelText: intl.formatMessage({ id: 'gratitude.confirmModal.delete.cancelText' }),
+      onOk: async () => {
+        await handleDelete();
+      }
+    });
+  };
+
   const handleDelete = async () => {
     if (removeGratitude) {
       await deleteDoc(doc(db, 'gratitude', gratitude.id));
@@ -50,7 +64,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
           {intl.formatMessage({ id: 'common.edit' })}
         </Space>
       </Menu.Item>
-      <Menu.Item key={2} className={styles.DropdownMenuItem} onClick={() => handleDelete()}>
+      <Menu.Item key={2} className={styles.DropdownMenuItem} onClick={confirmDelete}>
         <Space size={16}>
           <FontAwesomeIcon icon={faTrash} className={styles.DropdownMenuItemIcon} />
           {intl.formatMessage({ id: 'common.delete' })}

@@ -66,5 +66,10 @@
   "gratitude.form.field.color": "Color",
   "gratitude.form.field.date": "Date",
   "gratitude.form.field.isPublic": "Public",
-  "gratitude.form.submit": "Save"
+  "gratitude.form.submit": "Save",
+
+  "gratitude.confirmModal.delete.title": "Delete gratitude?",
+  "gratitude.confirmModal.delete.content": "Gratitudes that you delete can't be restored.",
+  "gratitude.confirmModal.delete.okText": "Delete",
+  "gratitude.confirmModal.delete.cancelText": "Cancel"
 }

@@ -67,5 +67,10 @@
   "gratitude.form.field.color": "Kolor",
   "gratitude.form.field.date": "Data",
   "gratitude.form.field.isPublic": "Publiczne",
-  "gratitude.form.submit": "Zapisz"
+  "gratitude.form.submit": "Zapisz",
+
+  "gratitude.confirmModal.delete.title": "Usunąć wdzięczność?",
+  "gratitude.confirmModal.delete.content": "Wdzięczności, które usuniesz, nie będzie można przywrócić.",
+  "gratitude.confirmModal.delete.okText": "Usuń",
+  "gratitude.confirmModal.delete.cancelText": "Anuluj"
 }
