@@ -1,5 +1,5 @@
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 .Layout {
@@ -7,9 +7,9 @@ body {
 }
 
 .Content {
-  margin-top: @header-height;
+  margin-top: @header-height !important;
   padding: @content-padding-vertical 50px;
-  background-color: @layout-body-background;
+  background-color: var(--layout-body-background) !important;
 }
 
 @media (max-width: 767.98px) {

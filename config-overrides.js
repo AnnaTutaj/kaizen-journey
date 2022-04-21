@@ -19,7 +19,8 @@ module.exports = override(
   addWebpackAlias({
     ['@common']: path.resolve(__dirname, 'src', 'common'),
     ['@modules']: path.resolve(__dirname, 'src', 'modules'),
-    ['@assets']: path.resolve(__dirname, 'src', 'assets')
+    ['@assets']: path.resolve(__dirname, 'src', 'assets'),
+    ['@themes']: path.resolve(__dirname, 'src', 'themes')
   }),
   fixBabelImports('import', {
     libraryName: 'antd',

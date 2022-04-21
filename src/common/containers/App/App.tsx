@@ -11,6 +11,7 @@ import 'moment/locale/pl';
 import { ITranslationConfig } from '@common/lang/config/types';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import { Locale } from 'antd/lib/locale-provider';
+import { ThemeProvider } from '@themes/theme-provider';
 
 const App: React.FC = () => {
   const { userProfile } = useAuth();
@@ -30,13 +31,15 @@ const App: React.FC = () => {
   }, [language]);
 
   return (
-    <ConfigProvider componentSize="large" locale={locale}>
-      <IntlProvider locale={language} messages={appLocale.messages}>
-        <Layout>
-          <Main />
-        </Layout>
-      </IntlProvider>
-    </ConfigProvider>
+    <ThemeProvider>
+      <ConfigProvider componentSize="large" locale={locale}>
+        <IntlProvider locale={language} messages={appLocale.messages}>
+          <Layout>
+            <Main />
+          </Layout>
+        </IntlProvider>
+      </ConfigProvider>
+    </ThemeProvider>
   );
 };
 

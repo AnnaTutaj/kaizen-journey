@@ -10,10 +10,6 @@ module.exports = {
   '@gradient-japonica-color': '#dd7f65',
   '@gradient-confetti-color': '#e6e167',
 
-  //Background Colors
-  '@header-bg-color': '#f0f2f5',
-  '@layout-body-background': '@white-color',
-
   //Dimensions
   '@header-height': '60px',
   '@margin-vertical': '24px',

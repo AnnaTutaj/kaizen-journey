@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Switch } from 'antd';
 import styles from './Header.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faRoute } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +10,8 @@ import UserAvatar from './components/UserAvatar';
 import { useAuth } from '@common/contexts/AuthContext';
 import { useHistory } from 'react-router';
 import { Paths } from '@common/constants/Paths';
+import { useTheme } from '@themes/use-theme';
+import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 
 const Header: React.FC = () => {
   const intl = useIntl();
@@ -17,6 +19,7 @@ const Header: React.FC = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const { userAuth } = useAuth();
   const history = useHistory();
+  const { darkMode, setDarkMode } = useTheme();
 
   const showRegisterModal = () => {
     setIsRegisterModalVisible(true);
@@ -67,6 +70,16 @@ const Header: React.FC = () => {
             <UserAvatar />
           </div>
         ) : null}
+
+        <div className={styles.DarkModeSwitchContainer}>
+          <Switch
+            checkedChildren={<FontAwesomeIcon icon={faMoon} />}
+            unCheckedChildren={<FontAwesomeIcon icon={faSun} />}
+            checked={darkMode}
+            onChange={setDarkMode}
+          />
+        </div>
+
         <Menu
           mode="horizontal"
           className={styles.MenuContainer}

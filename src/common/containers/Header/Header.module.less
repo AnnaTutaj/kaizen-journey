@@ -16,15 +16,15 @@
   position: fixed;
   z-index: 1;
   width: 100%;
-  height: @header-height;
+  height: @header-height !important;
   padding: 0 50px;
-  line-height: @header-height;
-  background-color: @header-bg-color;
+  line-height: @header-height !important;
+  background-color: var(--header-bg-color) !important;
 }
 
 .MenuContainer {
   color: @dark-grey-color;
-  background-color: @header-bg-color;
+  background-color: var(--header-bg-color) !important;
   border-bottom: none;
 }
 
@@ -44,6 +44,11 @@
 
 .Avatar {
   float: right;
+}
+
+.DarkModeSwitchContainer {
+  float: right;
+  margin: 0 20px;
 }
 
 .OverflowIcon {
