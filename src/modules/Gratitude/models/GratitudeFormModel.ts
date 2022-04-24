@@ -8,6 +8,7 @@ export interface IGratitudeFormModel {
   date: Moment;
   isPublic: boolean;
   color: CategoryColorsDTO;
+  tags: string[];
 }
 
 export interface IGratitudeFormModelDTO {
@@ -19,10 +20,11 @@ export interface IGratitudeFormModelDTO {
   createdBy: string;
   createdByPictureURL: string;
   color: CategoryColorsDTO;
+  tags: string[];
 }
 
 class GratitudeFormModel {
-  static serializeToCreate({
+  static  serializeToCreate({
     createdByUid,
     createdBy,
     createdByPictureURL,
@@ -30,7 +32,8 @@ class GratitudeFormModel {
     description,
     date,
     isPublic,
-    color
+    color,
+    tags
   }: IGratitudeFormModel & {
     createdByUid: string;
     createdBy: string;
@@ -44,7 +47,8 @@ class GratitudeFormModel {
       description: description || '',
       date: date.toDate(),
       isPublic: isPublic || false,
-      color: color || 'default'
+      color: color || 'default',
+      tags: tags || []
     };
   }
 
@@ -53,14 +57,16 @@ class GratitudeFormModel {
     description,
     date,
     isPublic,
-    color
+    color,
+    tags
   }: IGratitudeFormModel): Partial<IGratitudeFormModelDTO> {
     return {
       title: title,
       description: description || '',
       date: date.toDate(),
       isPublic: isPublic || false,
-      color: color || 'default'
+      color: color || 'default',
+      tags: tags || []
     };
   }
 
@@ -70,7 +76,8 @@ class GratitudeFormModel {
       description: data.description || '',
       date: moment(data.date.seconds * 1000),
       isPublic: data.isPublic ?? false,
-      color: data.color ? data.color.name : 'default'
+      color: data.color ? data.color.name : 'default',
+      tags: data.tags ? data.tags : []
     };
   }
 }

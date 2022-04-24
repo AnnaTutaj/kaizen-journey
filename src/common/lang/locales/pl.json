@@ -64,6 +64,7 @@
   "gratitude.update.title": "Edytuj wdzięczność",
   "gratitude.form.field.title": "Tytuł",
   "gratitude.form.field.description": "Opis",
+  "gratitude.form.field.tags": "Tagi",
   "gratitude.form.field.color": "Kolor",
   "gratitude.form.field.date": "Data",
   "gratitude.form.field.isPublic": "Publiczne",

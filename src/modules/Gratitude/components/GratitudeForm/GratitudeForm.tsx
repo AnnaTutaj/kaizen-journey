@@ -19,14 +19,14 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
   const intl = useIntl();
 
   return (
-    <Modal title={title} visible onCancel={handleCancel} footer={false} width={400}>
+    <Modal title={title} visible onCancel={handleCancel} footer={false} width={500}>
       <Form name="basic" initialValues={initialValues} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
         <Form.Item
           label={intl.formatMessage({ id: 'gratitude.form.field.title' })}
           name="title"
           rules={[
             { required: true, message: intl.formatMessage({ id: 'common.form.field.required.error' }) },
-            { max: 50, message: intl.formatMessage({ id: 'common.form.field.max.error' }, { max: 100 }) }
+            { max: 50, message: intl.formatMessage({ id: 'common.form.field.max.error' }, { max: 200 }) }
           ]}
         >
           <Input />
@@ -35,9 +35,13 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
         <Form.Item
           label={intl.formatMessage({ id: 'gratitude.form.field.description' })}
           name="description"
-          rules={[{ max: 5000, message: intl.formatMessage({ id: 'common.form.field.max.error' }, { max: 5000 }) }]}
+          rules={[{ max: 5000, message: intl.formatMessage({ id: 'common.form.field.max.error' }, { max: 2000 }) }]}
         >
-          <TextArea rows={2} showCount maxLength={200} />
+          <TextArea rows={2} showCount maxLength={2000} />
+        </Form.Item>
+
+        <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
+          <Select mode="tags" style={{ width: '100%' }} tokenSeparators={['#', ' ']} />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.color' })} name="color">

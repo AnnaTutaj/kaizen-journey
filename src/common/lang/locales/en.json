@@ -63,6 +63,7 @@
   "gratitude.update.title": "Edit gratitude",
   "gratitude.form.field.title": "Title",
   "gratitude.form.field.description": "Description",
+  "gratitude.form.field.tags": "Tags",
   "gratitude.form.field.color": "Color",
   "gratitude.form.field.date": "Date",
   "gratitude.form.field.isPublic": "Public",
