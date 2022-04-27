@@ -108,9 +108,10 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
             {gratitude.title}
           </Title>
           <Paragraph className={styles.Description}>{gratitude.description}</Paragraph>
-          {gratitude.tags.map((tag, index) => (
-            //todo: style
-            <small className={styles.Tag}>{tag}</small>
+          {gratitude.tags.map((tag) => (
+            <small key={tag} className={styles.Tag}>
+              #{tag}
+            </small>
           ))}
         </Col>
         {!hideManageOptions ? (
