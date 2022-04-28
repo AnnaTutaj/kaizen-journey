@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout, Menu, Switch } from 'antd';
 import styles from './Header.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faRoute } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
 import RegisterModal from './components/RegisterModal';
 import LoginModal from './components/LoginModal';
@@ -12,6 +12,7 @@ import { useHistory } from 'react-router';
 import { Paths } from '@common/constants/Paths';
 import { useTheme } from '@themes/use-theme';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
+import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
 
 const Header: React.FC = () => {
   const intl = useIntl();
@@ -57,13 +58,12 @@ const Header: React.FC = () => {
     <>
       <Layout.Header className={styles.Container}>
         <div
-          className={styles.Logo}
+          className={styles.LogoContainer}
           onClick={() => {
             history.push(Paths.Home);
           }}
         >
-          <FontAwesomeIcon icon={faRoute} className={styles.LogoIcon} />
-          <span>Kaizen Journey</span>
+          <img src={kaizenJourneyLogo} className={styles.LogoImage} alt="Kaizen Journey Logo" />
         </div>
         {userAuth ? (
           <div className={styles.Avatar}>
