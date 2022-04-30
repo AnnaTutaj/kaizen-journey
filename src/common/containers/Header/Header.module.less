@@ -12,6 +12,14 @@
   }
 }
 
+.MenuDrawer {
+  :global {
+    .ant-drawer-body {
+      padding-top: 15px;
+    }
+  }
+}
+
 .Container {
   position: fixed;
   z-index: 1;
@@ -22,23 +30,13 @@
   background-color: var(--header-bg-color) !important;
 }
 
-.MenuContainer {
-  color: @dark-grey-color;
-  background-color: var(--header-bg-color) !important;
-  border-bottom: none;
-
-  :hover {
-    background-color: var(--header-bg-color-hover) !important;
-  }
-}
-
 .LogoContainer {
   float: left;
   margin-right: 20px;
   cursor: pointer;
 
   .LogoImage {
-    height: 50px;
+    height: 40px;
   }
 }
 
@@ -51,13 +49,32 @@
   margin: 0 20px;
 }
 
-.OverflowIcon {
-  font-size: 22px;
-  vertical-align: -6px;
+.HamburgerMenuIconContainer {
+  float: right;
+  width: 35px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.HamburgerMenuIcon {
+  color: @dark-grey-color;
+  font-size: 30px;
+  vertical-align: -10px;
+}
+
+.MenuDrawerCloseIconContainer {
+  float: right;
+  cursor: pointer;
+}
+
+.MenuDrawerCloseIcon {
+  color: @dark-grey-color;
+  font-size: 40px;
+  vertical-align: -10px;
 }
 
 @media (max-width: 767.98px) {
   .Container {
-    padding: 0 16px;
+    padding: 0 16px !important;
   }
 }

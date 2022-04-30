@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Switch } from 'antd';
+import { Button, Drawer, Grid, Layout, Menu, Switch } from 'antd';
 import styles from './Header.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
 import RegisterModal from './components/RegisterModal';
 import LoginModal from './components/LoginModal';
@@ -13,6 +13,9 @@ import { Paths } from '@common/constants/Paths';
 import { useTheme } from '@themes/use-theme';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
+import PageMenu from './components/PageMenu';
+
+const { useBreakpoint } = Grid;
 
 const Header: React.FC = () => {
   const intl = useIntl();
@@ -21,6 +24,10 @@ const Header: React.FC = () => {
   const { userAuth } = useAuth();
   const history = useHistory();
   const { darkMode, setDarkMode } = useTheme();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const screens = useBreakpoint();
+  const isMobile = !screens.md;
 
   const showRegisterModal = () => {
     setIsRegisterModalVisible(true);
@@ -65,6 +72,13 @@ const Header: React.FC = () => {
         >
           <img src={kaizenJourneyLogo} className={styles.LogoImage} alt="Kaizen Journey Logo" />
         </div>
+
+        {isMobile ? (
+          <div className={styles.HamburgerMenuIconContainer} onClick={() => setIsMenuOpen(true)}>
+            <FontAwesomeIcon className={styles.HamburgerMenuIcon} icon={faBars} />
+          </div>
+        ) : null}
+
         {userAuth ? (
           <div className={styles.Avatar}>
             <UserAvatar />
@@ -80,49 +94,9 @@ const Header: React.FC = () => {
           />
         </div>
 
-        <Menu
-          mode="horizontal"
-          className={styles.MenuContainer}
-          overflowedIndicator={<FontAwesomeIcon icon={faBars} className={styles.OverflowIcon} />}
-        >
-          {userAuth ? (
-            <>
-              <Menu.Item
-                key="1"
-                onClick={() => {
-                  history.push(Paths.Dashboard);
-                }}
-              >
-                {intl.formatMessage({ id: 'header.dashboard' })}
-              </Menu.Item>
-              <Menu.Item
-                key="2"
-                onClick={() => {
-                  history.push(Paths.Habit);
-                }}
-              >
-                {intl.formatMessage({ id: 'header.habits' })}
-              </Menu.Item>
-              <Menu.Item
-                key="3"
-                onClick={() => {
-                  history.push(Paths.Gratitude);
-                }}
-              >
-                {intl.formatMessage({ id: 'header.gratitude' })}
-              </Menu.Item>
-            </>
-          ) : (
-            <>
-              <Menu.Item key="4" onClick={openLoginModal}>
-                {intl.formatMessage({ id: 'header.signIn' })}
-              </Menu.Item>
-              <Menu.Item key="5" onClick={openRegisterModal}>
-                {intl.formatMessage({ id: 'header.register' })}
-              </Menu.Item>
-            </>
-          )}
-        </Menu>
+        {!isMobile ? (
+          <PageMenu userAuth={userAuth} openLoginModal={openLoginModal} openRegisterModal={openRegisterModal} />
+        ) : null}
       </Layout.Header>
       <RegisterModal
         isModalVisible={isRegisterModalVisible}
@@ -134,6 +108,19 @@ const Header: React.FC = () => {
         handleCancel={handleLoginCancel}
         handleSubmit={handleLoginSubmit}
       />
+
+      <Drawer placement="right" closable={false} visible={isMenuOpen} width="100vw" className={styles.MenuDrawer}>
+        <div className={styles.MenuDrawerCloseIconContainer} onClick={() => setIsMenuOpen(false)}>
+          <FontAwesomeIcon className={styles.MenuDrawerCloseIcon} icon={faTimes} />
+        </div>
+        <PageMenu
+          userAuth={userAuth}
+          openLoginModal={openLoginModal}
+          openRegisterModal={openRegisterModal}
+          isMobile
+          hideDrawer={() => setIsMenuOpen(false)}
+        />
+      </Drawer>
     </>
   );
 };
