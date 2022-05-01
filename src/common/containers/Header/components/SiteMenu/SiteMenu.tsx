@@ -1,22 +1,21 @@
 import React from 'react';
 import { Menu } from 'antd';
-import styles from './PageMenu.module.less';
+import styles from './SiteMenu.module.less';
 import { useIntl } from 'react-intl';
 import { User as FirebaseUser } from 'firebase/auth';
-
 import { Paths } from '@common/constants/Paths';
 import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 
-export interface IPageMenuProps {
+export interface ISiteMenuProps {
+  isMobile?: boolean;
   userAuth: FirebaseUser | null;
   openLoginModal: () => void;
   openRegisterModal: () => void;
-  isMobile?: boolean;
   hideDrawer?: () => void;
 }
 
-const PageMenu: React.FC<IPageMenuProps> = ({ userAuth, openLoginModal, openRegisterModal, isMobile, hideDrawer }) => {
+const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal, openRegisterModal, hideDrawer }) => {
   const intl = useIntl();
   const history = useHistory();
 
@@ -28,7 +27,7 @@ const PageMenu: React.FC<IPageMenuProps> = ({ userAuth, openLoginModal, openRegi
       {userAuth ? (
         <>
           <Menu.Item
-            key="1"
+            key="dashboard"
             onClick={() => {
               history.push(Paths.Dashboard);
               if (hideDrawer) {
@@ -39,7 +38,7 @@ const PageMenu: React.FC<IPageMenuProps> = ({ userAuth, openLoginModal, openRegi
             {intl.formatMessage({ id: 'header.dashboard' })}
           </Menu.Item>
           <Menu.Item
-            key="2"
+            key="habit"
             onClick={() => {
               history.push(Paths.Habit);
               if (hideDrawer) {
@@ -50,7 +49,7 @@ const PageMenu: React.FC<IPageMenuProps> = ({ userAuth, openLoginModal, openRegi
             {intl.formatMessage({ id: 'header.habits' })}
           </Menu.Item>
           <Menu.Item
-            key="3"
+            key="gratitude"
             onClick={() => {
               history.push(Paths.Gratitude);
               if (hideDrawer) {
@@ -64,7 +63,7 @@ const PageMenu: React.FC<IPageMenuProps> = ({ userAuth, openLoginModal, openRegi
       ) : (
         <>
           <Menu.Item
-            key="4"
+            key="signIn"
             onClick={() => {
               openLoginModal();
               if (hideDrawer) {
@@ -75,7 +74,7 @@ const PageMenu: React.FC<IPageMenuProps> = ({ userAuth, openLoginModal, openRegi
             {intl.formatMessage({ id: 'header.signIn' })}
           </Menu.Item>
           <Menu.Item
-            key="5"
+            key="register"
             onClick={() => {
               openRegisterModal();
               if (hideDrawer) {
@@ -91,4 +90,4 @@ const PageMenu: React.FC<IPageMenuProps> = ({ userAuth, openLoginModal, openRegi
   );
 };
 
-export default PageMenu;
+export default SiteMenu;

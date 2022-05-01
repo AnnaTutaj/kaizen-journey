@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Drawer, Grid, Layout, Menu, Switch } from 'antd';
+import { Drawer, Grid, Layout, Switch } from 'antd';
 import styles from './Header.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useIntl } from 'react-intl';
 import RegisterModal from './components/RegisterModal';
 import LoginModal from './components/LoginModal';
 import UserAvatar from './components/UserAvatar';
@@ -13,12 +12,11 @@ import { Paths } from '@common/constants/Paths';
 import { useTheme } from '@themes/use-theme';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
-import PageMenu from './components/PageMenu';
+import SiteMenu from './components/SiteMenu';
 
 const { useBreakpoint } = Grid;
 
 const Header: React.FC = () => {
-  const intl = useIntl();
   const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const { userAuth } = useAuth();
@@ -95,7 +93,7 @@ const Header: React.FC = () => {
         </div>
 
         {!isMobile ? (
-          <PageMenu userAuth={userAuth} openLoginModal={openLoginModal} openRegisterModal={openRegisterModal} />
+          <SiteMenu userAuth={userAuth} openLoginModal={openLoginModal} openRegisterModal={openRegisterModal} />
         ) : null}
       </Layout.Header>
       <RegisterModal
@@ -113,7 +111,7 @@ const Header: React.FC = () => {
         <div className={styles.MenuDrawerCloseIconContainer} onClick={() => setIsMenuOpen(false)}>
           <FontAwesomeIcon className={styles.MenuDrawerCloseIcon} icon={faTimes} />
         </div>
-        <PageMenu
+        <SiteMenu
           userAuth={userAuth}
           openLoginModal={openLoginModal}
           openRegisterModal={openRegisterModal}

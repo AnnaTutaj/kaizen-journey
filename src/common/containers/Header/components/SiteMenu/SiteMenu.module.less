@@ -4,8 +4,16 @@
   border-right: none !important;
   border-bottom: none;
 
-  :hover {
-    background-color: var(--header-bg-color-hover) !important;
+  &:global {
+    &.ant-menu-horizontal {
+      border-bottom: none !important;
+    }
+  }
+
+  :global {
+    .ant-menu-item:hover {
+      background-color: var(--header-bg-color-hover) !important;
+    }
   }
 }
 
