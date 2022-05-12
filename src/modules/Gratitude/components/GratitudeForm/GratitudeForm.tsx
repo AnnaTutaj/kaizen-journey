@@ -17,10 +17,18 @@ interface IProps {
 
 const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCancel }) => {
   const intl = useIntl();
+  const [form] = Form.useForm();
 
   return (
     <Modal title={title} visible onCancel={handleCancel} footer={false} width={500}>
-      <Form name="basic" initialValues={initialValues} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
+      <Form
+        name="basic"
+        form={form}
+        initialValues={initialValues}
+        onFinish={onFinish}
+        autoComplete="off"
+        layout={'vertical'}
+      >
         <Form.Item
           label={intl.formatMessage({ id: 'gratitude.form.field.title' })}
           name="title"
@@ -41,7 +49,12 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
-          <Select mode="tags" style={{ width: '100%' }} tokenSeparators={['#', ' ']} />
+          <Select<string[]>
+            mode="tags"
+            style={{ width: '100%' }}
+            tokenSeparators={['#', ' ']}
+            onChange={(value) => form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) })}
+          />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.color' })} name="color">

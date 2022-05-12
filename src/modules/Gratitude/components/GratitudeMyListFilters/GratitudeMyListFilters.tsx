@@ -28,7 +28,15 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
       <Row gutter={30}>
         <Col lg={9} span={24}>
           <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
-            <Select mode="tags" style={{ width: '100%' }} tokenSeparators={['#', ' ']} onChange={() => form.submit()} />
+            <Select<string[]>
+              mode="tags"
+              style={{ width: '100%' }}
+              tokenSeparators={['#', ' ']}
+              onChange={(value) => {
+                form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) });
+                form.submit();
+              }}
+            />
           </Form.Item>
         </Col>
         <Col lg={9} span={24}>
