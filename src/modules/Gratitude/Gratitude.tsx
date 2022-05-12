@@ -1,5 +1,5 @@
 import { getDoc, doc } from '@firebase/firestore';
-import { Button } from 'antd';
+import { Button, Space } from 'antd';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import GratitudeCreateModal from './components/GratitudeCreateModal';
@@ -8,12 +8,20 @@ import styles from './Gratitude.module.less';
 import { db } from '@common/util/firebase';
 import GratitudeModel, { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { IGratitudeCreateModalProps } from '@modules/Gratitude/components/GratitudeCreateModal/GratitudeCreateModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter, faPlus } from '@fortawesome/free-solid-svg-icons';
+import GratitudeMyListFilters from '@modules/Gratitude/components/GratitudeMyListFilters/GratitudeMyListFilters';
+import cn from 'classnames';
+import GratitudeMyListFiltersModel, {
+  IGratitudeMyListFiltersModelDTO
+} from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
 
 const Gratitude: React.FC = () => {
   const intl = useIntl();
-
+  const [showFilters, setShowFilters] = useState<boolean>(false);
   const [gratitudeCreateModalConfig, setGratitudeCreateModalConfig] = useState<IGratitudeCreateModalProps>();
   const [newGratitude, setNewGratitude] = useState<IGratitudeModel>();
+  const [filters, setFilters] = useState<IGratitudeMyListFiltersModelDTO>();
 
   const handleCreateSubmit = async (gratitudeId: string) => {
     if (gratitudeId) {
@@ -38,12 +46,35 @@ const Gratitude: React.FC = () => {
   return (
     <>
       <div className={styles.Header}>
+        <Button
+          onClick={() => {
+            setShowFilters((prevState) => !prevState);
+          }}
+        >
+          <Space size={10}>
+            <FontAwesomeIcon icon={faFilter} />
+            {intl.formatMessage({ id: 'common.filters' })}
+          </Space>
+        </Button>
+
         <Button type="primary" onClick={() => handleCreateGratitude()}>
-          {intl.formatMessage({ id: 'gratitude.create.button' })}
+          <Space size={10}>
+            <FontAwesomeIcon icon={faPlus} />
+            {intl.formatMessage({ id: 'gratitude.create.button' })}
+          </Space>
         </Button>
       </div>
 
-      <GratitudeMyList newGratitude={newGratitude} />
+      <div className={cn(styles.FilersContainer, { [styles.FilersContainerVisible]: showFilters })}>
+        <GratitudeMyListFilters
+          onFinish={(values) => {
+            const finalValues = GratitudeMyListFiltersModel.serialize(values);
+            setFilters(finalValues);
+          }}
+        />
+      </div>
+
+      <GratitudeMyList newGratitude={newGratitude} filters={filters} />
 
       {gratitudeCreateModalConfig ? <GratitudeCreateModal {...gratitudeCreateModalConfig} /> : null}
     </>

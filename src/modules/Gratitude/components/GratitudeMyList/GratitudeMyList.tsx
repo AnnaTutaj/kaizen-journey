@@ -8,24 +8,27 @@ import GratitudeModel, { IGratitudeModel } from '@modules/Gratitude/models/Grati
 import useGratitudeListFetch from '@modules/Gratitude/hooks/useGratitudeListFetch';
 import { IGratitudeUpdateModalProps } from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
 import GratitudeUpdateModal from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
+import { IGratitudeMyListFiltersModelDTO } from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
 
 interface IProps {
   newGratitude: IGratitudeModel | undefined;
+  filters: IGratitudeMyListFiltersModelDTO | undefined;
 }
 
-const GratitudeMyList: React.FC<IProps> = ({ newGratitude }) => {
+const GratitudeMyList: React.FC<IProps> = ({ newGratitude, filters }) => {
   const intl = useIntl();
 
   const [loadedGratitudes, setLoadedGratitudes] = useState<IGratitudeModel[]>([]);
   const [nextGratitudes, setNextGratitudes] = useState<IGratitudeModel[]>([]);
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingReload, setLoadingReload] = useState<boolean>(false); //set after add gratitude or set filter -
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
   const [moreGratitudes, setMoreGratitudes] = useState<boolean>(false);
 
   const [gratitudeUpdateModalConfig, setGratitudeUpdateModalConfig] = useState<IGratitudeUpdateModalProps>();
 
-  const { getGratitudes } = useGratitudeListFetch({ setLoading, mode: 'myList' });
+  const { getGratitudes } = useGratitudeListFetch({ setLoading, mode: 'myList', filters });
 
   //init - runs only once
   useEffect(() => {
@@ -42,22 +45,27 @@ const GratitudeMyList: React.FC<IProps> = ({ newGratitude }) => {
   }, []);
 
   useEffect(() => {
+    async function fetchGratitudes() {
+      setLoadingReload(true);
+      const gratitudes = await getGratitudes();
+      setLoadedGratitudes([]);
+      setNextGratitudes(gratitudes);
+      const hasMore = gratitudes && gratitudes.length > 1;
+      setMoreGratitudes(hasMore);
+      setLoadingReload(false);
+    }
+
+    fetchGratitudes();
+    // eslint-disable-next-line
+  }, [filters, newGratitude]);
+
+  useEffect(() => {
     setLoadedGratitudes((value) => {
       const array = _.uniqBy([...value, ...nextGratitudes], 'id');
       const sortedArray = _.orderBy(array, [(item) => item.date.seconds], ['desc']);
       return sortedArray;
     });
   }, [nextGratitudes]);
-
-  useEffect(() => {
-    if (newGratitude) {
-      setLoadedGratitudes((value) => {
-        const array = _.uniqBy([...value, newGratitude], 'id');
-        const sortedArray = _.orderBy(array, [(item) => item.date.seconds], ['desc']);
-        return sortedArray;
-      });
-    }
-  }, [newGratitude]);
 
   const getLastFetchedGratitude = () => {
     return loadedGratitudes && loadedGratitudes.length && loadedGratitudes[loadedGratitudes.length - 1]
@@ -122,6 +130,7 @@ const GratitudeMyList: React.FC<IProps> = ({ newGratitude }) => {
 
   return (
     <>
+      {loadingReload ? <PageLoading /> : null}
       {loadedGratitudes && loadedGratitudes.length ? (
         <GratitudeListScrolled
           headerText={intl.formatMessage({ id: 'gratitude.my.list.title' })}
