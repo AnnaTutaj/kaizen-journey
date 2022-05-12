@@ -1,9 +1,11 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Select, Space, Row, Col, Divider } from 'antd';
+import { Form, Select, Space, Row, Col, Divider, Button } from 'antd';
 import { IGratitudeMyListFiltersModel } from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './GratitudeMyListFilters.module.less';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEraser } from '@fortawesome/free-solid-svg-icons';
 
 const { Option } = Select;
 
@@ -25,7 +27,7 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
       onFinish={onFinish}
       form={form}
     >
-      <Row gutter={30}>
+      <Row gutter={30} align="bottom">
         <Col lg={9} span={24}>
           <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
             <Select<string[]>
@@ -41,7 +43,7 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
         </Col>
         <Col lg={9} span={24}>
           <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.color' })} name="color">
-            <Select<CategoryColorsDTO> onChange={() => form.submit()}>
+            <Select<CategoryColorsDTO> onChange={() => form.submit()} allowClear>
               {Object.entries(CategoryColors).map((categoryColor, index) => (
                 <Option key={index} value={categoryColor[0]}>
                   <Space>
@@ -56,6 +58,21 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
                 </Option>
               ))}
             </Select>
+          </Form.Item>
+        </Col>
+        <Col lg={6} span={24}>
+          <Form.Item>
+            <Button
+              onClick={() => {
+                form.resetFields();
+                form.submit();
+              }}
+            >
+              <Space size={10}>
+                <FontAwesomeIcon icon={faEraser} />
+                {intl.formatMessage({ id: 'common.filters.clear' })}
+              </Space>
+            </Button>
           </Form.Item>
         </Col>
       </Row>

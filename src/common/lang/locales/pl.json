@@ -17,6 +17,7 @@
   "common.language.english": "English",
   "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
   "common.filters": "Filtry",
+  "common.filters.clear": "Wyczyść",
   "common.form.field.required.error": "To pole jest wymagane",
   "common.form.field.max.error": "Limit znaków wynosi {max}",
   "common.list.loadMore": "Załaduj więcej",
