@@ -50,6 +50,7 @@
   "settings.form.title": "Settings",
   "settings.form.field.username": "Username",
   "settings.form.field.language": "Language",
+  "settings.form.field.tags": "Tags",
   "settings.form.submit": "Save",
 
   "home.header.text": "Continuous improvement?",

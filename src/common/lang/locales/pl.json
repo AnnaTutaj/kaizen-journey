@@ -50,6 +50,7 @@
   "settings.form.title": "Ustawienia",
   "settings.form.field.username": "Nazwa użytkownika",
   "settings.form.field.language": "Język",
+  "settings.form.field.tags": "Tagi",
   "settings.form.submit": "Zapisz",
 
   "home.header.text": "Ciągłe doskonalenie?",

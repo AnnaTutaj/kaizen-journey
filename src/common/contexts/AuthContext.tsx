@@ -29,6 +29,7 @@ export interface IUserProfile {
   pictureURL: string;
   username: string;
   language: Language | undefined;
+  tags: string[];
 }
 export interface IAuthContext {
   userAuth: FirebaseUser | null;
@@ -76,7 +77,8 @@ export default function AuthContextProvider({ children }: any) {
             createdAt: userSnap.createdAt,
             pictureURL: userSnap.pictureURL,
             username: userSnap.username,
-            language: userSnap?.language || Language.en
+            language: userSnap?.language || Language.en,
+            tags: userSnap.tags || []
           });
         } else {
           setUserProfile(null);
@@ -106,7 +108,8 @@ export default function AuthContextProvider({ children }: any) {
 
       await updateDoc(userRef, {
         username: values.username,
-        language: values.language
+        language: values.language,
+        tags: values.tags
       });
 
       setIsUserLoading(true);
@@ -121,7 +124,8 @@ export default function AuthContextProvider({ children }: any) {
           createdAt: userSnap.createdAt,
           pictureURL: userSnap.pictureURL,
           username: userSnap.username,
-          language: userSnap?.language || Language.en
+          language: userSnap?.language || Language.en,
+          tags: userSnap.tags || []
         });
       }
       setIsUserLoading(false);

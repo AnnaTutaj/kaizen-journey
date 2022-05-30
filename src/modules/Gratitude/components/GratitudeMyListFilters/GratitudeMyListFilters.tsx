@@ -6,6 +6,7 @@ import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryCol
 import styles from './GratitudeMyListFilters.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEraser } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '@common/contexts/AuthContext';
 
 const { Option } = Select;
 
@@ -17,6 +18,7 @@ interface IProps {
 const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
+  const { userProfile } = useAuth();
 
   return (
     <Form
@@ -38,7 +40,11 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
                 form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) });
                 form.submit();
               }}
-            />
+            >
+              {userProfile?.tags.map((tag) => (
+                <Option key={tag}>{tag}</Option>
+              ))}
+            </Select>
           </Form.Item>
         </Col>
         <Col lg={9} span={24}>

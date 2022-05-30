@@ -4,6 +4,7 @@ import { Modal, Form, Input, Button, DatePicker, Switch, Select, Space } from 'a
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './GratitudeForm.module.less';
+import { useAuth } from '@common/contexts/AuthContext';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -18,6 +19,7 @@ interface IProps {
 const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCancel }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
+  const { userProfile } = useAuth();
 
   return (
     <Modal title={title} visible onCancel={handleCancel} footer={false} width={500}>
@@ -54,7 +56,11 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
             style={{ width: '100%' }}
             tokenSeparators={['#', ' ']}
             onChange={(value) => form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) })}
-          />
+          >
+            {userProfile?.tags.map((tag) => (
+              <Option key={tag}>{tag}</Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.color' })} name="color">

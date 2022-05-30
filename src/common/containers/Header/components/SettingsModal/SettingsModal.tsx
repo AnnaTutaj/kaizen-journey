@@ -15,10 +15,12 @@ interface IProps {
 interface ISettingsFormProps {
   username: string;
   language: Language;
+  tags: string[];
 }
 
 const SettingsModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCancel }) => {
   const intl = useIntl();
+  const [form] = Form.useForm();
   const { updateProfile, userProfile } = useAuth();
 
   const onFinish = async (values: ISettingsFormProps) => {
@@ -47,7 +49,8 @@ const SettingsModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
     >
       <Form
         name="basic"
-        initialValues={{ username: userProfile?.username, language: userProfile?.language }}
+        form={form}
+        initialValues={{ username: userProfile?.username, language: userProfile?.language, tags: userProfile?.tags }}
         onFinish={onFinish}
         autoComplete="off"
         layout={'vertical'}
@@ -69,6 +72,15 @@ const SettingsModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
             <Option value={Language.pl}>{intl.formatMessage({ id: 'common.language.polish' })}</Option>
             <Option value={Language.en}>{intl.formatMessage({ id: 'common.language.english' })}</Option>
           </Select>
+        </Form.Item>
+
+        <Form.Item label={intl.formatMessage({ id: 'settings.form.field.tags' })} name="tags">
+          <Select<string[]>
+            mode="tags"
+            style={{ width: '100%' }}
+            tokenSeparators={['#', ' ']}
+            onChange={(value) => form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) })}
+          />
         </Form.Item>
 
         <Form.Item>
