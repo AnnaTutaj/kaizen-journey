@@ -1,9 +1,10 @@
-import { Modal, Form, Input, Button, Divider, message } from 'antd';
+import { Form, Input, Button, Divider, message } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import FederatedLogin from '../FederatedLogin';
 import { FirebaseError } from '@firebase/util';
 import { useAuth } from '@common/contexts/AuthContext';
+import Modal from '@common/components/Modal';
 
 interface IProps {
   isModalVisible: boolean;
@@ -43,7 +44,6 @@ const LoginModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCanc
       title={intl.formatMessage({ id: 'login.form.title' })}
       visible={isModalVisible}
       onCancel={handleCancel}
-      footer={false}
       width={400}
     >
       <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>

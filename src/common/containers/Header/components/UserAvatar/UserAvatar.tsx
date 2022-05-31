@@ -42,7 +42,7 @@ const UserAvatar: React.FC = () => {
 
   return (
     <>
-      <Dropdown overlay={menu} trigger={['click']}>
+      <Dropdown overlay={menu} trigger={['click']} overlayClassName={styles.DropdownOverlay}>
         <Avatar className={styles.Avatar} size={40} icon={<UserOutlined />} src={userProfile?.pictureURL} />
       </Dropdown>
       <SettingsModal

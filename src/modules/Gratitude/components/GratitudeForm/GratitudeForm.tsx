@@ -1,6 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Modal, Form, Input, Button, DatePicker, Switch, Select, Space } from 'antd';
+import { Form, Input, Button, DatePicker, Switch, Select, Space } from 'antd';
+import Modal from '@common/components/Modal';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './GratitudeForm.module.less';
@@ -22,7 +23,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
   const { userProfile } = useAuth();
 
   return (
-    <Modal title={title} visible onCancel={handleCancel} footer={false} width={500}>
+    <Modal title={title} visible onCancel={handleCancel} width={500}>
       <Form
         name="basic"
         form={form}

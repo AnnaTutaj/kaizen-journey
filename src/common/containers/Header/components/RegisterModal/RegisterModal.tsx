@@ -1,12 +1,12 @@
-import { Modal, Form, Input, Button, Divider, message } from 'antd';
+import { Form, Input, Button, Divider, message } from 'antd';
 import React from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-
 import { useIntl } from 'react-intl';
 import FederatedLogin from '../FederatedLogin';
 import { serverTimestamp, doc, setDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { FirebaseError } from '@firebase/util';
+import Modal from '@common/components/Modal';
 
 interface IProps {
   isModalVisible: boolean;
@@ -52,7 +52,6 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
       title={intl.formatMessage({ id: 'register.form.title' })}
       visible={isModalVisible}
       onCancel={handleCancel}
-      footer={false}
       width={400}
     >
       <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>

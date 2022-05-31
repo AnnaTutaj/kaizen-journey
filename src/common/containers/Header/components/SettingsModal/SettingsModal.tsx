@@ -1,9 +1,10 @@
-import { Modal, Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, message, Select } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { FirebaseError } from '@firebase/util';
 import { Language, useAuth } from '@common/contexts/AuthContext';
-import { Select } from 'antd';
+import Modal from '@common/components/Modal';
+
 const { Option } = Select;
 
 interface IProps {
@@ -44,7 +45,6 @@ const SettingsModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
       title={intl.formatMessage({ id: 'settings.form.title' })}
       visible={isModalVisible}
       onCancel={handleCancel}
-      footer={false}
       width={400}
     >
       <Form
