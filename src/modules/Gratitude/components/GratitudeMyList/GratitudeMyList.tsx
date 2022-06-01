@@ -1,5 +1,5 @@
 import PageLoading from '@common/components/PageLoading';
-import { Empty } from 'antd';
+import Empty from '@common/components/Empty';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import GratitudeListScrolled from '../GratitudeListScrolled';

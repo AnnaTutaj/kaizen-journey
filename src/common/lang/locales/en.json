@@ -11,6 +11,7 @@
   "header.settings": "Settings",
 
   "common.edit": "Edit",
+  "common.empty": "No items found",
   "common.delete": "Delete",
   "common.or": "Or",
   "common.language.polish": "Polski",
@@ -58,11 +59,11 @@
   "home.header.discoverMore": "Discover more",
   "home.publicGratitude.list.empty": "No one shared for what they were grateful for",
 
-  "gratitude.create.button": "I'm grateful for",
+  "gratitude.create.button": "Add gratitude",
   "gratitude.my.list.title": "My gratitude list",
   "gratitude.my.list.empty": "Keep a journal and find its entries here",
 
-  "gratitude.create.title": "Create gratitude",
+  "gratitude.create.title": "Add gratitude",
   "gratitude.update.title": "Edit gratitude",
   "gratitude.form.field.title": "Title",
   "gratitude.form.field.description": "Description",

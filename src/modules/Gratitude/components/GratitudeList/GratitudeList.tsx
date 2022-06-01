@@ -1,10 +1,8 @@
 import React from 'react';
-import { List, Typography } from 'antd';
+import { List } from 'antd';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import styles from '@modules/Gratitude/components/GratitudeList/GratitudeList.module.less';
 import GratitudeListItem from './GratitudeListItem/GratitudeListItem';
-
-const { Title } = Typography;
 
 interface IProps {
   gratitudes: IGratitudeModel[];
@@ -24,7 +22,7 @@ const GratitudeList: React.FC<IProps> = ({
   return (
     <List
       className={styles.GratitudeList}
-      header={<Title level={5}>{headerText}</Title>}
+      header={<span className={styles.ListHeader}>{headerText}</span>}
       dataSource={gratitudes}
       renderItem={(item) => {
         return (

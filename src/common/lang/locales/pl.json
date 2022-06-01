@@ -4,13 +4,14 @@
   "header.home": "Strona główna",
   "header.dashboard": "Dashboard",
   "header.habits": "Nawyki",
-  "header.gratitude": "Dziękuję za",
+  "header.gratitude": "Wdzięczności",
   "header.signIn": "Zaloguj się",
   "header.register": "Zarejestuj się",
   "header.logout": "Wyloguj się",
   "header.settings": "Ustawienia",
 
   "common.edit": "Edytuj",
+  "common.empty": "Niestety, pusto",
   "common.delete": "Usuń",
   "common.or": "Albo",
   "common.language.polish": "Polski",
@@ -59,11 +60,11 @@
 
   "home.publicGratitude.list.empty": "Nikt ostatnio nie podzielili się tym, za co był wdzięczny",
 
-  "gratitude.create.button": "Jestem wdzięczny/a za",
+  "gratitude.create.button": "Dodaj wdzięczność",
   "gratitude.my.list.title": "Moja lista wdzięczności",
-  "gratitude.my.list.empty": "Zacznij uzupełniać dziennik i znajdź te wpisy tutaj",
+  "gratitude.my.list.empty": "Zacznij dodawać wdzięczności i znajdź te wpisy tutaj",
 
-  "gratitude.create.title": "Utwórz wdzięczność",
+  "gratitude.create.title": "Dodaj wdzięczność",
   "gratitude.update.title": "Edytuj wdzięczność",
   "gratitude.form.field.title": "Tytuł",
   "gratitude.form.field.description": "Opis",

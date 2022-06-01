@@ -1,6 +1,7 @@
-import { Empty, Spin, Space } from 'antd';
+import { Spin, Space } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
+import Empty from '@common/components/Empty';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import useGratitudeListFetch from '@modules/Gratitude/hooks/useGratitudeListFetch';
 import GratitudeList from '@modules/Gratitude/components/GratitudeList';
