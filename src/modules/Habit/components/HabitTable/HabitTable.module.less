@@ -1,0 +1,88 @@
+@strike-columns-max-width: 400px;
+
+.Checked {
+  height: 100%;
+
+  /* todo: color would be get from the habit */
+  background-color: @primary-color;
+  cursor: pointer;
+}
+
+.Unchecked {
+  height: 100%;
+  background-color: unset;
+  cursor: pointer;
+}
+
+.Skipped {
+  height: 100%;
+
+  /* todo: change color or td style */
+  background-color: yellow;
+  cursor: pointer;
+}
+
+.DateCol {
+  min-width: 50px !important;
+  height: 60px;
+  padding: 0 !important;
+}
+
+.DateHeaderContainer {
+  padding: 0 10px;
+}
+
+.Date {
+  text-align: center;
+}
+
+.DateToday {
+  padding: 8px 28px;
+  color: var(--light-text-color);
+  background-color: @primary-color;
+  border-radius: 50%;
+  scroll-margin-right: @strike-columns-max-width;
+}
+
+.SmallText {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.MonthDay {
+  font-size: 22px;
+}
+
+.Title {
+  color: var(--light-text-color) !important;
+}
+
+.StreakCol {
+  padding: 0 !important;
+  text-align: center;
+}
+
+.StreakHeader {
+  padding: 10px 5px;
+  text-align: center;
+  text-transform: lowercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.NameCol {
+  max-width: 400px;
+}
+
+.HabitName {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 767.98px) {
+  .NameCol {
+    max-width: 200px;
+  }
+}

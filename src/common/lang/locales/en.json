@@ -76,5 +76,18 @@
   "gratitude.confirmModal.delete.title": "Delete gratitude?",
   "gratitude.confirmModal.delete.content": "Gratitudes that you delete can't be restored.",
   "gratitude.confirmModal.delete.okText": "Delete",
-  "gratitude.confirmModal.delete.cancelText": "Cancel"
+  "gratitude.confirmModal.delete.cancelText": "Cancel",
+
+  "habit.currentStreak": "Current streak",
+  "habit.longestStreak": "Longest streak",
+  "habit.totalCount": "Total count",
+  "habit.create.button": "Add habit",
+  "habit.create.title": "Add habit",
+  "habit.update.title": "Edit habit",
+  "habit.form.field.title": "Name",
+  "habit.form.field.title.placeholder": "E.g. cleaning",
+  "habit.form.field.description": "Description",
+  "habit.form.field.description.placeholder": "When the habit would be fullfilled? E.g. min 15 min",
+  "habit.form.field.isArchived": "Archived",
+  "habit.form.submit": "Save"
 }

@@ -77,5 +77,18 @@
   "gratitude.confirmModal.delete.title": "Usunąć wdzięczność?",
   "gratitude.confirmModal.delete.content": "Wdzięczności, które usuniesz, nie będzie można przywrócić.",
   "gratitude.confirmModal.delete.okText": "Usuń",
-  "gratitude.confirmModal.delete.cancelText": "Anuluj"
+  "gratitude.confirmModal.delete.cancelText": "Anuluj",
+
+  "habit.currentStreak": "Aktualny streak",
+  "habit.longestStreak": "Najdłuższy streak",
+  "habit.totalCount": "Suma zaznaczeń",
+  "habit.create.button": "Dodaj nawyk",
+  "habit.create.title": "Dodaj nawyk",
+  "habit.update.title": "Edytuj nawyk",
+  "habit.form.field.title": "Nazwa",
+  "habit.form.field.title.placeholder": "Np. sprzątanie",
+  "habit.form.field.description": "Opis",
+  "habit.form.field.description.placeholder": "Kiedy nawyk będzie spełniony? Np. min 15 min",
+  "habit.form.field.isArchived": "Archiwalny",
+  "habit.form.submit": "Zapisz"
 }
