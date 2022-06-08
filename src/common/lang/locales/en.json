@@ -60,8 +60,8 @@
   "home.publicGratitude.list.empty": "No one shared for what they were grateful for",
 
   "gratitude.create.button": "Add gratitude",
-  "gratitude.my.list.title": "My gratitude list",
-  "gratitude.my.list.empty": "Keep a journal and find its entries here",
+  "gratitude.my.list.title": "My gratitude journal",
+  "gratitude.my.list.empty": "Keep a journal and find its entries here!",
 
   "gratitude.create.title": "Add gratitude",
   "gratitude.update.title": "Edit gratitude",
@@ -82,6 +82,9 @@
   "habit.longestStreak": "Longest streak",
   "habit.totalCount": "Total count",
   "habit.create.button": "Add habit",
+  "habit.title": "My habit tracker",
+  "habit.empty": "Keep a journal and find its entries here",
+
   "habit.create.title": "Add habit",
   "habit.update.title": "Edit habit",
   "habit.form.field.title": "Name",
