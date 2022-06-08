@@ -22,6 +22,9 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
   const [form] = Form.useForm();
   const { userProfile } = useAuth();
 
+  const maxTitleLength = 100;
+  const maxDescriptionLength = 2000;
+
   return (
     <Modal title={title} visible onCancel={handleCancel} width={500}>
       <Form
@@ -37,18 +40,26 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
           name="title"
           rules={[
             { required: true, message: intl.formatMessage({ id: 'common.form.field.required.error' }) },
-            { max: 50, message: intl.formatMessage({ id: 'common.form.field.max.error' }, { max: 200 }) }
+            {
+              max: maxTitleLength,
+              message: intl.formatMessage({ id: 'common.form.field.max.error' }, { max: maxTitleLength })
+            }
           ]}
         >
-          <Input />
+          <Input showCount maxLength={maxTitleLength} />
         </Form.Item>
 
         <Form.Item
           label={intl.formatMessage({ id: 'gratitude.form.field.description' })}
           name="description"
-          rules={[{ max: 5000, message: intl.formatMessage({ id: 'common.form.field.max.error' }, { max: 2000 }) }]}
+          rules={[
+            {
+              max: maxDescriptionLength,
+              message: intl.formatMessage({ id: 'common.form.field.max.error' }, { max: maxDescriptionLength })
+            }
+          ]}
         >
-          <TextArea rows={2} showCount maxLength={2000} />
+          <TextArea rows={2} showCount maxLength={maxDescriptionLength} />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
