@@ -1,19 +1,50 @@
 import { Button, Space } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import styles from './Habit.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import HabitTable from './components/HabitTable';
+import HabitTable from '@modules/Habit/components/HabitTable';
+import { IHabitCreateModalProps } from '@modules/Habit/components/HabitCreateModal/HabitCreateModal';
+import HabitCreateModal from '@modules/Habit/components/HabitCreateModal';
+import { IHabitModel } from '@modules/Habit/models/HabitModel';
+import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
+import PageLoading from '@common/components/PageLoading';
 
 const Habit: React.FC = () => {
   const intl = useIntl();
+  const [habitCreateModalConfig, setHabitCreateModalConfig] = useState<IHabitCreateModalProps>();
+  const [habits, setHabits] = useState<IHabitModel[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { getHabits } = useHabitFetch();
 
-  //todo: implementation
-  const handleCreateHabit = () => {};
+  useEffect(() => {
+    async function fetchHabits() {
+      const loadedHabits = await getHabits({ setLoading, isArchived: false });
+      setHabits(loadedHabits);
+    }
 
+    fetchHabits();
+    // eslint-disable-next-line
+  }, []);
+
+  const handleCreateSubmit = async () => {
+    const loadedHabits = await getHabits({ setLoading, isArchived: false });
+    setHabits(loadedHabits);
+  };
+
+  const handleCreateHabit = () => {
+    setHabitCreateModalConfig({
+      handleCancel: () => setHabitCreateModalConfig(undefined),
+      handleSubmit: async () => {
+        setHabitCreateModalConfig(undefined);
+        await handleCreateSubmit();
+      }
+    });
+  };
   return (
     <>
+      {loading ? <PageLoading /> : null}
       <div className={styles.Header}>
         <Button type="primary" onClick={() => handleCreateHabit()}>
           <Space size={10}>
@@ -22,7 +53,8 @@ const Habit: React.FC = () => {
           </Space>
         </Button>
       </div>
-      <HabitTable />
+      <HabitTable habits={habits} setHabits={setHabits} />
+      {habitCreateModalConfig ? <HabitCreateModal {...habitCreateModalConfig} /> : null}
     </>
   );
 };

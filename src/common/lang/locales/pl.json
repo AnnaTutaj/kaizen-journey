@@ -85,10 +85,11 @@
   "habit.create.button": "Dodaj nawyk",
   "habit.create.title": "Dodaj nawyk",
   "habit.update.title": "Edytuj nawyk",
-  "habit.form.field.title": "Nazwa",
-  "habit.form.field.title.placeholder": "Np. sprzątanie",
+  "habit.form.field.name": "Nazwa",
+  "habit.form.field.name.placeholder": "Np. sprzątanie",
   "habit.form.field.description": "Opis",
   "habit.form.field.description.placeholder": "Kiedy nawyk będzie spełniony? Np. min 15 min",
+  "habit.form.field.color": "Kolor",
   "habit.form.field.isArchived": "Archiwalny",
   "habit.form.submit": "Zapisz"
 }

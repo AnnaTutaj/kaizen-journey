@@ -1,28 +1,34 @@
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import styles from './HabitTable.module.less';
 import cn from 'classnames';
+import { IHabitModel } from '@modules/Habit/models/HabitModel';
+import { HabitDateStatus } from '@common/constants/HabitDateStatus';
+import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
+import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PageLoading from '@common/components/PageLoading';
 
-const HabitTable: React.FC = () => {
+interface IProps {
+  habits: IHabitModel[];
+  setHabits: React.Dispatch<React.SetStateAction<IHabitModel[]>>;
+}
+
+const HabitTable: React.FC<IProps> = ({ habits, setHabits }) => {
   const intl = useIntl();
-
-  interface DataType {
-    key: string;
-    name: string;
-    description: string;
-    createdByUid: string;
-    datesChecked: string[];
-  }
+  const [loading, setLoading] = useState<boolean>(false);
 
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
+  const { getDateStatus, getIconByDateStatus, getIconHoverByDateStatus } = useHabitHelper();
+  const { getHabitById, updateHabitDates } = useHabitFetch();
+
   const scrollTo = useCallback(() => {
     if (scrollContainerRef.current) {
-      console.log(scrollContainerRef.current.scrollWidth);
       scrollContainerRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'end',
@@ -35,13 +41,25 @@ const HabitTable: React.FC = () => {
     scrollTo();
   }, [scrollTo]);
 
-  //todo: add/remove value from array in Firebase + refresh view + loading
-  const handleClickDate = (date: Moment) => {
-    console.log(date.format('YYYY-MM-DD'));
+  const refreshHabit = async (habit: IHabitModel) => {
+    const updatedHabit = await getHabitById(habit.id);
+    if (updatedHabit) {
+      setHabits((prevState) => {
+        return prevState.map((i) => (i.id === updatedHabit.id ? updatedHabit : i));
+      });
+    }
   };
 
-  const columns = (): ColumnsType<DataType> => {
-    const dateCols: ColumnsType<DataType> = [];
+  //todo: delete PageLoading and move loading to the clicked cell
+  const handleClickDate = async (dateKey: string, habit: IHabitModel, dateStatus: HabitDateStatus) => {
+    setLoading(true);
+    await updateHabitDates({ habitId: habit.id, dateStatus, dateKey });
+    await refreshHabit(habit);
+    setLoading(false);
+  };
+
+  const columns = (): ColumnsType<IHabitModel> => {
+    const dateCols: ColumnsType<IHabitModel> = [];
 
     const today = moment();
     //todo move daysCount to select: eg. last 14 days, last month, last two months, last three months. Default: 14 days
@@ -71,9 +89,41 @@ const HabitTable: React.FC = () => {
         key: `date-${i}`,
         className: styles.DateCol,
         render: (value, record) => {
-          const isChecked = record.datesChecked.findIndex((i) => i === dateKey) > -1;
-
-          return <div onClick={() => handleClickDate(date)} className={cn({ [styles.Checked]: isChecked })}></div>;
+          const dateStatus = getDateStatus(record, dateKey);
+          return (
+            <div
+              onClick={() => {
+                handleClickDate(dateKey, record, dateStatus);
+              }}
+              className={cn(
+                styles.DateSelectContainer,
+                { [styles.Checked]: dateStatus === HabitDateStatus.checked },
+                { [styles.Skipped]: dateStatus === HabitDateStatus.skipped },
+                { [styles.Unchecked]: dateStatus === HabitDateStatus.unchecked }
+              )}
+              style={{
+                borderColor: record.colorLighten.value,
+                backgroundColor: dateStatus === HabitDateStatus.checked ? record.color.value : 'unset'
+              }}
+            >
+              <FontAwesomeIcon
+                className={styles.DateHoverIcon}
+                style={{
+                  color: record.colorLighten.value
+                }}
+                icon={getIconHoverByDateStatus(dateStatus)}
+              />
+              {dateStatus === HabitDateStatus.skipped ? (
+                <FontAwesomeIcon
+                  className={styles.DateInfoIcon}
+                  style={{
+                    color: record.color.value
+                  }}
+                  icon={getIconByDateStatus(dateStatus)}
+                />
+              ) : null}
+            </div>
+          );
         }
       });
     }
@@ -119,25 +169,21 @@ const HabitTable: React.FC = () => {
     ];
   };
 
-  //todo: remove when testing on dummy data would be finished
-  const data: DataType[] = [
-    {
-      key: '1',
-      name: 'Sprzątanie min 15 min',
-      description: 'min 15 min',
-      createdByUid: '',
-      datesChecked: ['2022-06-07', '2022-06-08']
-    },
-    {
-      key: '2',
-      name: 'Lorem ipsum dolor sit amet',
-      description: 'Lorem ipsum dolor sit amet, consectetuer adipiscin',
-      createdByUid: '',
-      datesChecked: ['2022-06-06', '2022-06-05']
-    }
-  ];
-
-  return <Table bordered={true} columns={columns()} dataSource={data} pagination={false} scroll={{ x: true }} />;
+  //todo empty list
+  return (
+    <>
+      {loading ? <PageLoading /> : null}
+      <Table
+        bordered={true}
+        columns={columns()}
+        dataSource={habits}
+        pagination={false}
+        scroll={{ x: true }}
+        rowKey="id"
+        className={styles.HabitTable}
+      />
+    </>
+  );
 };
 
 export default HabitTable;

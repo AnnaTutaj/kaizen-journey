@@ -1,25 +1,50 @@
 @strike-columns-max-width: 400px;
+@icon-size: 22px;
+@bigger-icon-size: @icon-size + 4px;
+
+.DateHoverIcon,
+.DateInfoIcon {
+  font-size: @icon-size;
+}
+
+.DateHoverIcon {
+  display: none;
+}
 
 .Checked {
-  height: 100%;
+  &:hover {
+    background-color: unset !important;
+    border: solid 3px;
 
-  /* todo: color would be get from the habit */
-  background-color: @primary-color;
-  cursor: pointer;
+    .DateHoverIcon {
+      display: block;
+    }
+  }
 }
 
 .Unchecked {
-  height: 100%;
-  background-color: unset;
-  cursor: pointer;
+  &:hover {
+    border: solid 3px;
+
+    .DateHoverIcon {
+      display: block;
+    }
+  }
 }
 
 .Skipped {
-  height: 100%;
+  &:hover {
+    border: solid 3px;
 
-  /* todo: change color or td style */
-  background-color: yellow;
-  cursor: pointer;
+    .DateInfoIcon {
+      display: none;
+    }
+
+    .DateHoverIcon {
+      display: block;
+      font-size: @bigger-icon-size;
+    }
+  }
 }
 
 .DateCol {
@@ -28,8 +53,17 @@
   padding: 0 !important;
 }
 
+.DateSelectContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
+}
+
 .DateHeaderContainer {
-  padding: 0 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .Date {
@@ -37,7 +71,8 @@
 }
 
 .DateToday {
-  padding: 8px 28px;
+  margin: 0 10px;
+  padding: 8px 34px;
   color: var(--light-text-color);
   background-color: @primary-color;
   border-radius: 50%;

@@ -87,10 +87,11 @@
 
   "habit.create.title": "Add habit",
   "habit.update.title": "Edit habit",
-  "habit.form.field.title": "Name",
-  "habit.form.field.title.placeholder": "E.g. cleaning",
+  "habit.form.field.name": "Name",
+  "habit.form.field.name.placeholder": "E.g. cleaning",
   "habit.form.field.description": "Description",
   "habit.form.field.description.placeholder": "When the habit would be fullfilled? E.g. min 15 min",
+  "habit.form.field.color": "Color",
   "habit.form.field.isArchived": "Archived",
   "habit.form.submit": "Save"
 }
