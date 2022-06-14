@@ -144,20 +144,19 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits }) => {
         )
       },
       ...dateCols,
-      //todo: calculate
       {
         title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.currentStreak' })}</div>,
         className: styles.StreakCol,
         key: 'currentStrike',
         fixed: 'right',
-        render: (value, record) => <div>42</div>
+        render: (value, record) => <div>{record.currentStreak.streakCount}</div>
       },
       {
         title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.longestStreak' })}</div>,
         className: styles.StreakCol,
         key: 'longestStrike',
         fixed: 'right',
-        render: (value, record) => <div>42</div>
+        render: (value, record) => <div>{record.longestStreak.streakCount}</div>
       },
       {
         title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.totalCount' })}</div>,

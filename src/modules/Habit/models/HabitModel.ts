@@ -1,8 +1,10 @@
-import { CategoryColorsDTO, CategoryColorsLighten } from '@common/constants/CategoryColors';
-import { CategoryColors } from '@common/constants/CategoryColors';
+import * as _ from 'lodash';
 import { QueryDocumentSnapshot } from '@firebase/firestore';
 import { db } from '@common/util/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { CategoryColors } from '@common/constants/CategoryColors';
+import { CategoryColorsDTO, CategoryColorsLighten } from '@common/constants/CategoryColors';
+import { getSpecifiedStreaks, IStreak } from '@common/helpers/StreakHelper';
 
 export interface IHabitModel {
   id: string;
@@ -14,6 +16,8 @@ export interface IHabitModel {
   isArchived: boolean;
   color: { name: CategoryColorsDTO; value: CategoryColors };
   colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten };
+  currentStreak: IStreak;
+  longestStreak: IStreak;
 }
 
 export interface IHabitModelDTO {
@@ -37,10 +41,14 @@ class HabitModel implements IHabitModel {
     public createdByUid: string,
     public isArchived: boolean,
     public color: { name: CategoryColorsDTO; value: CategoryColors },
-    public colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten }
+    public colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten },
+    public currentStreak: IStreak,
+    public longestStreak: IStreak
   ) {}
 
   static build(dto: IHabitModelDTO): IHabitModel {
+    const { longestStreak, currentStreak } = getSpecifiedStreaks(dto.datesChecked, dto.datesSkipped);
+
     return new HabitModel(
       dto.id,
       dto.name,
@@ -54,7 +62,9 @@ class HabitModel implements IHabitModel {
         : { name: 'default', value: CategoryColors.default },
       dto.color
         ? { name: dto.color, value: CategoryColorsLighten[dto.color] }
-        : { name: 'default', value: CategoryColorsLighten.default }
+        : { name: 'default', value: CategoryColorsLighten.default },
+      currentStreak,
+      longestStreak
     );
   }
 
