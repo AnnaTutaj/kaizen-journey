@@ -94,6 +94,12 @@
 .StreakCol {
   padding: 0 !important;
   text-align: center;
+
+  &:global {
+    &.ant-table-cell-row-hover {
+      background-color: var(--layout-body-background) !important;
+    }
+  }
 }
 
 .StreakHeader {
@@ -106,6 +112,12 @@
 
 .NameCol {
   max-width: 400px;
+
+  &:global {
+    &.ant-table-cell-row-hover {
+      background-color: var(--layout-body-background) !important;
+    }
+  }
 }
 
 .HabitName {
