@@ -1,5 +1,5 @@
 import moment, { Moment } from 'moment';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 export interface IStreak {
   dates: string[];
