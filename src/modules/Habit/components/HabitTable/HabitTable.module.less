@@ -2,6 +2,23 @@
 @hover-icon-size: 12px;
 @hover-bigger-icon-size: @hover-icon-size + 2px;
 
+.HabitTable {
+  :global {
+    .ant-table {
+      background-color: var(--table-background);
+    }
+
+    .ant-table-cell-fix-left,
+    .ant-table-cell-fix-right {
+      background-color: var(--table-background);
+    }
+
+    .ant-table-thead > tr > th {
+      background-color: var(--table-header-background);
+    }
+  }
+}
+
 .DateInfoIcon {
   font-size: 22px;
 }
@@ -97,7 +114,7 @@
 
   &:global {
     &.ant-table-cell-row-hover {
-      background-color: var(--layout-body-background) !important;
+      background-color: var(--table-background) !important;
     }
   }
 }
@@ -115,7 +132,7 @@
 
   &:global {
     &.ant-table-cell-row-hover {
-      background-color: var(--layout-body-background) !important;
+      background-color: var(--table-background) !important;
     }
   }
 }
