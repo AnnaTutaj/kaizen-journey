@@ -78,7 +78,7 @@
   "gratitude.confirmModal.delete.okText": "Delete",
   "gratitude.confirmModal.delete.cancelText": "Cancel",
 
-  "habit.title": "My habit tracker",
+  "habit.table.title": "My habit tracker",
   "habt.table.empty": "Add habit and track your progress here!",
   "habit.pause": "Pause",
   "habit.check": "Check",

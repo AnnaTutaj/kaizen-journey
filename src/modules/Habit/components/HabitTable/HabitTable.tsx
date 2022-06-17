@@ -13,6 +13,7 @@ import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageLoading from '@common/components/PageLoading';
+import HeaderText from '@common/components/HeaderText';
 
 interface IProps {
   habits: IHabitModel[];
@@ -27,7 +28,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
-  const { getHabitById, deleteHabit, updateHabitDates } = useHabitFetch();
+  const { getHabitById, updateHabitDates } = useHabitFetch();
 
   const scrollTo = useCallback(() => {
     if (scrollContainerRef.current) {
@@ -183,15 +184,18 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     <>
       {loading ? <PageLoading /> : null}
       {habits && habits.length ? (
-        <Table
-          bordered={true}
-          columns={columns()}
-          dataSource={habits}
-          pagination={false}
-          scroll={{ x: true }}
-          rowKey="id"
-          className={styles.HabitTable}
-        />
+        <>
+          <HeaderText text={intl.formatMessage({ id: 'habit.table.title' })} />
+          <Table
+            bordered={true}
+            columns={columns()}
+            dataSource={habits}
+            pagination={false}
+            scroll={{ x: true }}
+            rowKey="id"
+            className={styles.HabitTable}
+          />
+        </>
       ) : (
         <Empty description={intl.formatMessage({ id: 'habt.table.empty' })} />
       )}

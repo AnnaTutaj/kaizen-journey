@@ -79,7 +79,7 @@
   "gratitude.confirmModal.delete.okText": "Usuń",
   "gratitude.confirmModal.delete.cancelText": "Anuluj",
 
-  "habit.title": "Mój habt tracker",
+  "habit.table.title": "Mój śledzik nawyków",
   "habt.table.empty": "Dodaj nawyk i śledź swój postęp tutaj!",
   "habit.pause": "Pauza",
   "habit.check": "Zaznacz",
