@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import moment from 'moment';
 import styles from './HabitTable.module.less';
 import cn from 'classnames';
+import Empty from '@common/components/Empty';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
@@ -16,16 +17,17 @@ import PageLoading from '@common/components/PageLoading';
 interface IProps {
   habits: IHabitModel[];
   setHabits: React.Dispatch<React.SetStateAction<IHabitModel[]>>;
+  isInitialLoaded: boolean;
 }
 
-const HabitTable: React.FC<IProps> = ({ habits, setHabits }) => {
+const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) => {
   const intl = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
 
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
-  const { getHabitById, updateHabitDates } = useHabitFetch();
+  const { getHabitById, deleteHabit, updateHabitDates } = useHabitFetch();
 
   const scrollTo = useCallback(() => {
     if (scrollContainerRef.current) {
@@ -173,19 +175,26 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits }) => {
     ];
   };
 
-  //todo empty list
+  if (!isInitialLoaded) {
+    return <PageLoading />;
+  }
+
   return (
     <>
       {loading ? <PageLoading /> : null}
-      <Table
-        bordered={true}
-        columns={columns()}
-        dataSource={habits}
-        pagination={false}
-        scroll={{ x: true }}
-        rowKey="id"
-        className={styles.HabitTable}
-      />
+      {habits && habits.length ? (
+        <Table
+          bordered={true}
+          columns={columns()}
+          dataSource={habits}
+          pagination={false}
+          scroll={{ x: true }}
+          rowKey="id"
+          className={styles.HabitTable}
+        />
+      ) : (
+        <Empty description={intl.formatMessage({ id: 'habt.table.empty' })} />
+      )}
     </>
   );
 };

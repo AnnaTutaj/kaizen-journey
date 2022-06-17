@@ -80,6 +80,7 @@
   "gratitude.confirmModal.delete.cancelText": "Anuluj",
 
   "habit.title": "Mój habt tracker",
+  "habt.table.empty": "Dodaj nawyk i śledź swój postęp tutaj!",
   "habit.pause": "Pauza",
   "habit.check": "Zaznacz",
   "habit.uncheck": "Odznacz",

@@ -16,12 +16,14 @@ const Habit: React.FC = () => {
   const [habitCreateModalConfig, setHabitCreateModalConfig] = useState<IHabitCreateModalProps>();
   const [habits, setHabits] = useState<IHabitModel[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isInitialLoaded, setIsInitialLoaded] = useState<boolean>(false);
   const { getHabits } = useHabitFetch();
 
   useEffect(() => {
     async function fetchHabits() {
       const loadedHabits = await getHabits({ setLoading, isArchived: false });
       setHabits(loadedHabits);
+      setIsInitialLoaded(true);
     }
 
     fetchHabits();
@@ -53,7 +55,7 @@ const Habit: React.FC = () => {
           </Space>
         </Button>
       </div>
-      <HabitTable habits={habits} setHabits={setHabits} />
+      <HabitTable habits={habits} setHabits={setHabits} isInitialLoaded={isInitialLoaded} />
       {habitCreateModalConfig ? <HabitCreateModal {...habitCreateModalConfig} /> : null}
     </>
   );
