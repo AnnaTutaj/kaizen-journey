@@ -78,13 +78,14 @@
   "gratitude.confirmModal.delete.okText": "Delete",
   "gratitude.confirmModal.delete.cancelText": "Cancel",
 
+  "habit.title": "My habit tracker",
+  "habit.pause": "Pause",
+  "habit.check": "Check",
+  "habit.uncheck": "Uncheck",
   "habit.currentStreak": "Current streak",
   "habit.longestStreak": "Longest streak",
   "habit.totalCount": "Total count",
   "habit.create.button": "Add habit",
-  "habit.title": "My habit tracker",
-  "habit.empty": "Keep a journal and find its entries here",
-
   "habit.create.title": "Add habit",
   "habit.update.title": "Edit habit",
   "habit.form.field.name": "Name",

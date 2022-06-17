@@ -24,7 +24,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits }) => {
 
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const { getDateStatus, getIconByDateStatus, getIconHoverByDateStatus } = useHabitHelper();
+  const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
   const { getHabitById, updateHabitDates } = useHabitFetch();
 
   const scrollTo = useCallback(() => {
@@ -90,17 +90,14 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits }) => {
         className: styles.DateCol,
         render: (value, record) => {
           const dateStatus = getDateStatus(record, dateKey);
+          const { icon: hoverIcon, text: hoverText } = getHoverInfoByDateStatus(dateStatus);
+
           return (
             <div
               onClick={() => {
                 handleClickDate(dateKey, record, dateStatus);
               }}
-              className={cn(
-                styles.DateSelectContainer,
-                { [styles.Checked]: dateStatus === HabitDateStatus.checked },
-                { [styles.Skipped]: dateStatus === HabitDateStatus.skipped },
-                { [styles.Unchecked]: dateStatus === HabitDateStatus.unchecked }
-              )}
+              className={cn(styles.DateSelectContainer, { [styles.Skipped]: dateStatus === HabitDateStatus.skipped })}
               style={{
                 borderColor: record.colorLighten.value,
                 backgroundColor: dateStatus === HabitDateStatus.checked ? record.color.value : 'unset'
@@ -111,8 +108,16 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits }) => {
                 style={{
                   color: record.colorLighten.value
                 }}
-                icon={getIconHoverByDateStatus(dateStatus)}
+                icon={hoverIcon}
               />
+              <small
+                className={styles.DateHoverText}
+                style={{
+                  color: record.colorLighten.value
+                }}
+              >
+                {hoverText}
+              </small>
               {dateStatus === HabitDateStatus.skipped ? (
                 <FontAwesomeIcon
                   className={styles.DateInfoIcon}

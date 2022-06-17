@@ -1,48 +1,24 @@
 @strike-columns-max-width: 400px;
-@icon-size: 22px;
-@bigger-icon-size: @icon-size + 4px;
+@hover-icon-size: 12px;
+@hover-bigger-icon-size: @hover-icon-size + 2px;
 
-.DateHoverIcon,
 .DateInfoIcon {
-  font-size: @icon-size;
+  font-size: 22px;
 }
 
 .DateHoverIcon {
+  font-size: @hover-icon-size;
+}
+
+.DateHoverIcon,
+.DateHoverText {
   display: none;
-}
-
-.Checked {
-  &:hover {
-    background-color: unset !important;
-    border: solid 3px;
-
-    .DateHoverIcon {
-      display: block;
-    }
-  }
-}
-
-.Unchecked {
-  &:hover {
-    border: solid 3px;
-
-    .DateHoverIcon {
-      display: block;
-    }
-  }
 }
 
 .Skipped {
   &:hover {
-    border: solid 3px;
-
-    .DateInfoIcon {
-      display: none;
-    }
-
     .DateHoverIcon {
-      display: block;
-      font-size: @bigger-icon-size;
+      font-size: @hover-bigger-icon-size;
     }
   }
 }
@@ -55,10 +31,29 @@
 
 .DateSelectContainer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
   cursor: pointer;
+
+  &:hover {
+    background-color: unset !important;
+    border: dashed 1px;
+
+    .DateInfoIcon {
+      display: none;
+    }
+
+    .DateHoverText {
+      text-transform: lowercase;
+    }
+
+    .DateHoverIcon,
+    .DateHoverText {
+      display: block;
+    }
+  }
 }
 
 .DateHeaderContainer {

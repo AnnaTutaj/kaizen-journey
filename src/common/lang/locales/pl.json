@@ -79,6 +79,10 @@
   "gratitude.confirmModal.delete.okText": "Usuń",
   "gratitude.confirmModal.delete.cancelText": "Anuluj",
 
+  "habit.title": "Mój habt tracker",
+  "habit.pause": "Pauza",
+  "habit.check": "Zaznacz",
+  "habit.uncheck": "Odznacz",
   "habit.currentStreak": "Aktualny streak",
   "habit.longestStreak": "Najdłuższy streak",
   "habit.totalCount": "Suma zaznaczeń",
