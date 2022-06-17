@@ -81,6 +81,7 @@
 
   "habit.table.title": "Mój śledzik nawyków",
   "habt.table.empty": "Dodaj nawyk i śledź swój postęp tutaj!",
+  "habit.table.header.habit": "Nawyk",
   "habit.pause": "Pauza",
   "habit.check": "Zaznacz",
   "habit.uncheck": "Odznacz",

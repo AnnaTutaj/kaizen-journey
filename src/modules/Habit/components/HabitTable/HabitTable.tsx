@@ -140,7 +140,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
 
     return [
       {
-        title: 'Name',
+        title: intl.formatMessage({ id: 'habit.table.header.habit' }),
         className: styles.NameCol,
         dataIndex: 'name',
         key: 'name',

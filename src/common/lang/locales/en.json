@@ -80,6 +80,7 @@
 
   "habit.table.title": "My habit tracker",
   "habt.table.empty": "Add habit and track your progress here!",
+  "habit.table.header.habit": "Habit",
   "habit.pause": "Pause",
   "habit.check": "Check",
   "habit.uncheck": "Uncheck",
