@@ -16,9 +16,11 @@
 }
 
 .Skipped {
-  &:hover {
-    .DateHoverIcon {
-      font-size: @hover-bigger-icon-size;
+  @media (hover: hover) {
+    &:hover {
+      .DateHoverIcon {
+        font-size: @hover-bigger-icon-size;
+      }
     }
   }
 }
@@ -37,21 +39,23 @@
   height: 100%;
   cursor: pointer;
 
-  &:hover {
-    background-color: unset !important;
-    border: dashed 1px;
+  @media (hover: hover) {
+    &:hover {
+      background-color: unset !important;
+      border: dashed 1px;
 
-    .DateInfoIcon {
-      display: none;
-    }
+      .DateInfoIcon {
+        display: none;
+      }
 
-    .DateHoverText {
-      text-transform: lowercase;
-    }
+      .DateHoverText {
+        text-transform: lowercase;
+      }
 
-    .DateHoverIcon,
-    .DateHoverText {
-      display: block;
+      .DateHoverIcon,
+      .DateHoverText {
+        display: block;
+      }
     }
   }
 }
