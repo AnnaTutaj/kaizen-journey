@@ -96,5 +96,10 @@
   "habit.form.field.description.placeholder": "When the habit would be fullfilled? E.g. min 15 min",
   "habit.form.field.color": "Color",
   "habit.form.field.isArchived": "Archived",
-  "habit.form.submit": "Save"
+  "habit.form.submit": "Save",
+
+  "habit.confirmModal.delete.title": "Delete habit?",
+  "habit.confirmModal.delete.content": "Habits that you delete can't be restored.",
+  "habit.confirmModal.delete.okText": "Delete",
+  "habit.confirmModal.delete.cancelText": "Cancel"
 }

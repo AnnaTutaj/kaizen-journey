@@ -1,4 +1,15 @@
-import { collection, query, where, getDocs, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  arrayRemove,
+  arrayUnion,
+  deleteDoc
+} from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import HabitModel, { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { useAuth } from '@common/contexts/AuthContext';
@@ -46,6 +57,10 @@ const useHabitFetch = () => {
     }
   };
 
+  const deleteHabit = async (id: string): Promise<void> => {
+    await deleteDoc(doc(db, 'habits', id));
+  };
+
   const updateHabitDates = async ({
     habitId,
     dateStatus,
@@ -79,7 +94,7 @@ const useHabitFetch = () => {
     }
   };
 
-  return { getHabits, getHabitById, updateHabitDates };
+  return { getHabits, getHabitById, deleteHabit, updateHabitDates };
 };
 
 export default useHabitFetch;

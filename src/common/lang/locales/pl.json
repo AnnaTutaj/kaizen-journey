@@ -97,5 +97,10 @@
   "habit.form.field.description.placeholder": "Kiedy nawyk będzie spełniony? Np. min 15 min",
   "habit.form.field.color": "Kolor",
   "habit.form.field.isArchived": "Archiwalny",
-  "habit.form.submit": "Zapisz"
+  "habit.form.submit": "Zapisz",
+
+  "habit.confirmModal.delete.title": "Usunąć nawyk?",
+  "habit.confirmModal.delete.content": "Nawyki, które usuniesz, nie będzie można przywrócić.",
+  "habit.confirmModal.delete.okText": "Usuń",
+  "habit.confirmModal.delete.cancelText": "Anuluj"
 }

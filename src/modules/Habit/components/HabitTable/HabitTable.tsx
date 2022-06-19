@@ -1,11 +1,14 @@
-import { Table } from 'antd';
+import { Col, Modal, Row, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
 import moment from 'moment';
+import _ from 'lodash';
 import styles from './HabitTable.module.less';
 import cn from 'classnames';
+import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
+import Dropdown from '@common/components/Dropdown';
 import Empty from '@common/components/Empty';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
@@ -14,6 +17,7 @@ import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageLoading from '@common/components/PageLoading';
 import HeaderText from '@common/components/HeaderText';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
   habits: IHabitModel[];
@@ -25,20 +29,20 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const intl = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
 
   const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
-  const { getHabitById, updateHabitDates } = useHabitFetch();
+  const { getHabitById, updateHabitDates, deleteHabit } = useHabitFetch();
 
   const scrollTo = useCallback(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollIntoView({
+    if (scrollContainerRef) {
+      scrollContainerRef.scrollIntoView({
         behavior: 'smooth',
         block: 'end',
         inline: 'end'
       });
     }
-  }, []);
+  }, [scrollContainerRef]);
 
   useEffect(() => {
     scrollTo();
@@ -61,6 +65,41 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     setLoading(false);
   };
 
+  //todo: implementation
+  const handleUpdateHabit = (habit: IHabitModel) => {};
+
+  const handleDelete = async (habit: IHabitModel) => {
+    await deleteHabit(habit.id);
+    setHabits((prevState) => _.remove(prevState, (i) => i.id !== habit.id));
+  };
+
+  const confirmDelete = async (habit: IHabitModel) => {
+    Modal.confirm({
+      centered: true,
+      closable: true,
+      title: intl.formatMessage({ id: 'habit.confirmModal.delete.title' }),
+      content: intl.formatMessage({ id: 'habit.confirmModal.delete.content' }),
+      okText: intl.formatMessage({ id: 'habit.confirmModal.delete.okText' }),
+      cancelText: intl.formatMessage({ id: 'habit.confirmModal.delete.cancelText' }),
+      onOk: async () => {
+        await handleDelete(habit);
+      }
+    });
+  };
+
+  const menuItems = (habit: IHabitModel) => {
+    return [
+      {
+        key: DropdownMenuKey.update,
+        onClick: async () => handleUpdateHabit(habit)
+      },
+      {
+        key: DropdownMenuKey.delete,
+        onClick: () => confirmDelete(habit)
+      }
+    ];
+  };
+
   const columns = (): ColumnsType<IHabitModel> => {
     const dateCols: ColumnsType<IHabitModel> = [];
 
@@ -80,7 +119,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
             <div className={styles.DateHeaderContainer}>
               <div
                 className={cn(styles.Date, { [styles.DateToday]: isToday })}
-                ref={isToday ? scrollContainerRef : null}
+                ref={(element) => (isToday ? setScrollContainerRef(element) : null)}
               >
                 <small className={styles.SmallText}>{monthShort}</small>
                 <div className={styles.MonthDay}>{monthDay}</div>
@@ -145,9 +184,20 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         dataIndex: 'name',
         key: 'name',
         fixed: true,
-        render: (text) => (
+        render: (text, record) => (
           <>
-            <div className={styles.HabitName}>{text}</div>
+            <Row wrap={false} className={styles.HabitNameRow} justify="space-between">
+              <Col flex={1}>
+                <div className={styles.HabitName}>{text}</div>
+              </Col>
+              <Col className={styles.DropdownCol}>
+                <Dropdown menuItems={menuItems(record)} className={styles.Dropdown}>
+                  <div className={styles.DropdownIconContainer}>
+                    <FontAwesomeIcon icon={faEllipsisV} />
+                  </div>
+                </Dropdown>
+              </Col>
+            </Row>
           </>
         )
       },

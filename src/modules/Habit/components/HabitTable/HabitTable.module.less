@@ -144,6 +144,24 @@
   overflow: hidden;
 }
 
+.DropdownCol {
+  padding-left: 8px;
+  text-align: right;
+}
+
+.DropdownIconContainer {
+  padding: 4px 8px;
+  font-size: 15px;
+  text-align: center;
+  border-radius: @border-radius-small;
+  transform: scale(1, 1.15);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--header-bg-color-hover);
+  }
+}
+
 @media (max-width: 767.98px) {
   .NameCol {
     max-width: 200px;

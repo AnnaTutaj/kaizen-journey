@@ -1,4 +1,4 @@
-import { Avatar, Col, Dropdown, Menu, Modal, Row, Space } from 'antd';
+import { Avatar, Col, Modal, Row } from 'antd';
 import React, { useState } from 'react';
 import { List, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -8,8 +8,10 @@ import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import styles from '@modules/Gratitude/components/GratitudeList/GratitudeListItem/GratitudeListItem.module.less';
-import { faEllipsisV, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
+import Dropdown from '@common/components/Dropdown';
+import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 
 const { Title, Paragraph } = Typography;
 
@@ -56,21 +58,26 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
     backgroundColor: dropdownHover ? gratitude.colorLighten.value : 'unset'
   });
 
-  const menu = (
-    <Menu>
-      <Menu.Item key={1} className={styles.DropdownMenuItem} onClick={() => handleUpdate()}>
-        <Space size={16}>
-          <FontAwesomeIcon icon={faPen} className={styles.DropdownMenuItemIcon} />
-          {intl.formatMessage({ id: 'common.edit' })}
-        </Space>
-      </Menu.Item>
-      <Menu.Item key={2} className={styles.DropdownMenuItem} onClick={confirmDelete}>
-        <Space size={16}>
-          <FontAwesomeIcon icon={faTrash} className={styles.DropdownMenuItemIcon} />
-          {intl.formatMessage({ id: 'common.delete' })}
-        </Space>
-      </Menu.Item>
-    </Menu>
+  const menuItems = [
+    {
+      key: DropdownMenuKey.update,
+      onClick: async () => handleUpdate()
+    },
+    {
+      key: DropdownMenuKey.delete,
+      onClick: () => confirmDelete()
+    }
+  ];
+
+  const dropdownButton = (
+    <div
+      className={styles.DropdownIconContainer}
+      style={dropdownIconContainer()}
+      onMouseEnter={() => setDropdownHover(true)}
+      onMouseLeave={() => setDropdownHover(false)}
+    >
+      <FontAwesomeIcon icon={faEllipsisV} />
+    </div>
   );
 
   const miliseconds = gratitude.date.seconds * 1000;
@@ -118,15 +125,8 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
         </Col>
         {!hideManageOptions ? (
           <Col className={styles.DropDownCol}>
-            <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']} className={styles.Dropdown}>
-              <div
-                className={styles.DropdownIconContainer}
-                style={dropdownIconContainer()}
-                onMouseEnter={() => setDropdownHover(true)}
-                onMouseLeave={() => setDropdownHover(false)}
-              >
-                <FontAwesomeIcon icon={faEllipsisV} className={styles.DropdownIcon} />
-              </div>
+            <Dropdown menuItems={menuItems} className={styles.Dropdown}>
+              {dropdownButton}
             </Dropdown>
           </Col>
         ) : null}
