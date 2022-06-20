@@ -4,7 +4,6 @@ import { IHabitModel } from './HabitModel';
 export interface IHabitFormModel {
   name: string;
   description: string;
-  isArchived: boolean;
   color: CategoryColorsDTO;
 }
 
@@ -38,11 +37,10 @@ class HabitFormModel {
     };
   }
 
-  static serializeToUpdate({ name, description, isArchived, color }: IHabitFormModel): Partial<IHabitFormModelDTO> {
+  static serializeToUpdate({ name, description, color }: IHabitFormModel): Partial<IHabitFormModelDTO> {
     return {
       name: name,
       description: description || '',
-      isArchived: isArchived || false,
       color: color || 'default'
     };
   }
@@ -51,7 +49,6 @@ class HabitFormModel {
     return {
       name: data.name,
       description: data.description || '',
-      isArchived: data.isArchived ?? false,
       color: data.color ? data.color.name : 'default'
     };
   }

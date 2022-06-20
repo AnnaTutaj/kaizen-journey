@@ -19,6 +19,7 @@ import PageLoading from '@common/components/PageLoading';
 import HeaderText from '@common/components/HeaderText';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
+import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/components/HabitUpdateModal/HabitUpdateModal';
 
 interface IProps {
   habits: IHabitModel[];
@@ -29,6 +30,7 @@ interface IProps {
 const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) => {
   const intl = useIntl();
   const [loading, setLoading] = useState<boolean>(false);
+  const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
 
   const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
 
@@ -66,8 +68,17 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     setLoading(false);
   };
 
-  //todo: implementation
-  const handleUpdateHabit = (habit: IHabitModel) => {};
+  const handleUpdateHabit = (habit: IHabitModel) => {
+    setHabitUpdateModalConfig({
+      handleCancel: () => setHabitUpdateModalConfig(undefined),
+      handleSubmit: async () => {
+        setHabitUpdateModalConfig(undefined);
+        await refreshHabit(habit);
+      },
+      habit: habit,
+      
+    });
+  };
 
   const handleDelete = async (habit: IHabitModel) => {
     await deleteHabit(habit.id);
@@ -250,6 +261,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
       ) : (
         <Empty description={intl.formatMessage({ id: 'habt.table.empty' })} />
       )}
+      {habitUpdateModalConfig ? <HabitUpdateModal {...habitUpdateModalConfig} /> : null}
     </>
   );
 };

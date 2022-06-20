@@ -8,12 +8,16 @@ import {
   updateDoc,
   arrayRemove,
   arrayUnion,
-  deleteDoc
+  deleteDoc,
+  addDoc,
+  DocumentReference,
+  DocumentData
 } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import HabitModel, { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { useAuth } from '@common/contexts/AuthContext';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
+import { IHabitFormModelDTO } from '../models/HabitFormModel';
 
 const useHabitFetch = () => {
   const { userProfile } = useAuth();
@@ -57,8 +61,16 @@ const useHabitFetch = () => {
     }
   };
 
+  const createHabit = async (values: IHabitFormModelDTO): Promise<DocumentReference<DocumentData>> => {
+    return await addDoc(collection(db, 'habits'), values);
+  };
+
   const deleteHabit = async (id: string): Promise<void> => {
     await deleteDoc(doc(db, 'habits', id));
+  };
+
+  const updateHabit = async (id: string, values: Partial<IHabitFormModelDTO>): Promise<void> => {
+    await updateDoc(doc(db, 'habits', id), values);
   };
 
   const updateHabitDates = async ({
@@ -94,7 +106,7 @@ const useHabitFetch = () => {
     }
   };
 
-  return { getHabits, getHabitById, deleteHabit, updateHabitDates };
+  return { getHabits, getHabitById, createHabit, deleteHabit, updateHabit, updateHabitDates };
 };
 
 export default useHabitFetch;

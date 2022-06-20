@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, Button, Switch, Select, Space } from 'antd';
+import { Form, Input, Button, Select, Space } from 'antd';
 import Modal from '@common/components/Modal';
 import { IHabitFormModel } from '@modules/Habit/models/HabitFormModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
@@ -14,10 +14,9 @@ interface IProps {
   initialValues: Partial<IHabitFormModel>;
   onFinish: (values: IHabitFormModel) => void;
   handleCancel: () => void;
-  isUpdated?: boolean;
 }
 
-const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCancel, isUpdated }) => {
+const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCancel }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
 
@@ -87,16 +86,6 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
             ))}
           </Select>
         </Form.Item>
-
-        {isUpdated ? (
-          <Form.Item
-            label={intl.formatMessage({ id: 'habit.form.field.isArchived' })}
-            name="isArchived"
-            valuePropName="checked"
-          >
-            <Switch />
-          </Form.Item>
-        ) : null}
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
