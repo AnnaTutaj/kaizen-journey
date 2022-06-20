@@ -1,9 +1,9 @@
 import { Avatar, Col, Modal, Row } from 'antd';
 import React, { useState } from 'react';
 import { List, Typography } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
@@ -12,6 +12,7 @@ import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
 import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
+import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 
 const { Title, Paragraph } = Typography;
 
@@ -58,7 +59,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
     backgroundColor: dropdownHover ? gratitude.colorLighten.value : 'unset'
   });
 
-  const menuItems = [
+  const menuItems: DropdownMenuItemProps = [
     {
       key: DropdownMenuKey.update,
       onClick: async () => handleUpdate()
@@ -103,7 +104,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
         {hideManageOptions ? (
           <Col>
             <Avatar
-              icon={<UserOutlined />}
+              icon={<FontAwesomeIcon icon={faUser} />}
               size="large"
               src={gratitude?.createdByPictureURL}
               className={styles.Avatar}

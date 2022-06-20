@@ -1,10 +1,15 @@
-import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Dropdown, Menu } from 'antd';
+import { Avatar } from 'antd';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import styles from './UserAvatar.module.less';
 import { useAuth } from '@common/contexts/AuthContext';
 import SettingsModal from '../SettingsModal';
+import Dropdown from '@common/components/Dropdown';
+import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
+import { faCog, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import HeaderText from '@common/components/HeaderText';
 
 const UserAvatar: React.FC = () => {
   const intl = useIntl();
@@ -27,23 +32,43 @@ const UserAvatar: React.FC = () => {
     setIsSettingsModalVisible(false);
   };
 
-  const menu = (
-    <Menu>
-      <Menu.ItemGroup title={userProfile?.username}>
-        <Menu.Item key="1" onClick={openSettingsModal}>
-          {intl.formatMessage({ id: 'header.settings' })}
-        </Menu.Item>
-        <Menu.Item key="2" onClick={() => logout()}>
-          {intl.formatMessage({ id: 'header.logout' })}
-        </Menu.Item>
-      </Menu.ItemGroup>
-    </Menu>
-  );
+  const menuItems: DropdownMenuItemProps = [
+    {
+      title: <HeaderText text={userProfile?.username || ''} size="small" />,
+      items: [
+        {
+          key: 'settings',
+          item: {
+            text: intl.formatMessage({ id: 'header.settings' }),
+            icon: faCog
+          },
+          onClick: () => {
+            openSettingsModal();
+          }
+        },
+        {
+          key: 'logout',
+          item: {
+            text: intl.formatMessage({ id: 'header.logout' }),
+            icon: faSignOut
+          },
+          onClick: () => {
+            logout();
+          }
+        }
+      ]
+    }
+  ];
 
   return (
     <>
-      <Dropdown overlay={menu} trigger={['click']} overlayClassName={styles.DropdownOverlay}>
-        <Avatar className={styles.Avatar} size={40} icon={<UserOutlined />} src={userProfile?.pictureURL} />
+      <Dropdown menuItems={menuItems}>
+        <Avatar
+          className={styles.Avatar}
+          size={40}
+          icon={<FontAwesomeIcon icon={faUser} />}
+          src={userProfile?.pictureURL}
+        />
       </Dropdown>
       <SettingsModal
         isModalVisible={isSettingsrModalVisible}

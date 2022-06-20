@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageLoading from '@common/components/PageLoading';
 import HeaderText from '@common/components/HeaderText';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 
 interface IProps {
   habits: IHabitModel[];
@@ -87,7 +88,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     });
   };
 
-  const menuItems = (habit: IHabitModel) => {
+  const menuItems = (habit: IHabitModel): DropdownMenuItemProps => {
     return [
       {
         key: DropdownMenuKey.update,

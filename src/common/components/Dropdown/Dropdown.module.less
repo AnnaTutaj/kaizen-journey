@@ -1,8 +1,22 @@
 .DropdownMenuItem {
-  width: 200px !important;
-  padding: 16px 8px !important;
+  min-width: 180px !important;
+  margin: 0 8px;
+  padding: 8px !important;
+  border-radius: @border-radius-small;
 }
 
 .DropdownMenuItemIcon {
   margin-left: 10px;
+}
+
+.DropdownOverlay {
+  :global {
+    .ant-dropdown-menu {
+      padding: 8px 0;
+    }
+
+    .ant-dropdown-menu-item-group-list {
+      margin: 0;
+    }
+  }
 }

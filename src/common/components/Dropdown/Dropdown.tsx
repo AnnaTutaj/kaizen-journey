@@ -7,7 +7,7 @@ import styles from './Dropdown.module.less';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { DropdownButtonProps } from 'antd/lib/dropdown';
 
-export interface IDropdownMenuItemProps {
+interface IDropdownMenuItemProps {
   key: DropdownMenuKey.update | DropdownMenuKey.delete | string;
   item?: {
     icon: IconDefinition;
@@ -16,8 +16,15 @@ export interface IDropdownMenuItemProps {
   onClick: () => void;
 }
 
+interface IDropdownMenuGroupItemProps {
+  title: string | JSX.Element;
+  items: IDropdownMenuItemProps[];
+}
+
+export type DropdownMenuItemProps = (IDropdownMenuItemProps | IDropdownMenuGroupItemProps)[];
+
 export interface IDropdownMenuProps extends Omit<DropdownButtonProps, 'overlay'> {
-  menuItems: IDropdownMenuItemProps[];
+  menuItems: DropdownMenuItemProps;
 }
 
 const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.Element | null => {
@@ -34,27 +41,56 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
     return null;
   };
 
+  const renderMenuItems = (menuItem: IDropdownMenuItemProps) => {
+    const data = menuItem.item ? menuItem.item : getDataByKey(menuItem);
+
+    if (!data) {
+      return null;
+    }
+
+    return (
+      <Menu.Item key={menuItem.key} className={styles.DropdownMenuItem} onClick={() => menuItem.onClick()}>
+        <Space size={16}>
+          <FontAwesomeIcon icon={data.icon} className={styles.DropdownMenuItemIcon} />
+          {data.text}
+        </Space>
+      </Menu.Item>
+    );
+  };
+
+  const isMenuGroup = (object: IDropdownMenuItemProps | IDropdownMenuGroupItemProps): boolean => {
+    return 'title' in object;
+  };
+
   const menu = (
     <Menu>
       {menuItems.map((menuItem) => {
-        const data = menuItem.item ? menuItem.item : getDataByKey(menuItem);
-        if (!data) {
-          return null;
-        }
+        if (isMenuGroup(menuItem)) {
+          const menuGroupItem: IDropdownMenuGroupItemProps = menuItem as IDropdownMenuGroupItemProps;
 
-        return (
-          <Menu.Item key={menuItem.key} className={styles.DropdownMenuItem} onClick={() => menuItem.onClick()}>
-            <Space size={16}>
-              <FontAwesomeIcon icon={data.icon} className={styles.DropdownMenuItemIcon} />
-              {data.text}
-            </Space>
-          </Menu.Item>
-        );
+          return (
+            <Menu.ItemGroup title={menuGroupItem.title}>
+              {menuGroupItem.items.map((item) => {
+                return renderMenuItems(item as IDropdownMenuItemProps);
+              })}
+            </Menu.ItemGroup>
+          );
+        } else {
+          return renderMenuItems(menuItem as IDropdownMenuItemProps);
+        }
       })}
     </Menu>
   );
 
-  return <AntDDropdown overlay={menu} placement="bottomLeft" trigger={['click']} {...props} />;
+  return (
+    <AntDDropdown
+      overlay={menu}
+      overlayClassName={styles.DropdownOverlay}
+      placement="bottomLeft"
+      trigger={['click']}
+      {...props}
+    />
+  );
 };
 
 export default Dropdown;
