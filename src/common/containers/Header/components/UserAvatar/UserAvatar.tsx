@@ -34,6 +34,7 @@ const UserAvatar: React.FC = () => {
 
   const menuItems: DropdownMenuItemProps = [
     {
+      key: 'userProfileGroup',
       title: <HeaderText text={userProfile?.username || ''} size="small" />,
       items: [
         {

@@ -17,6 +17,7 @@ interface IDropdownMenuItemProps {
 }
 
 interface IDropdownMenuGroupItemProps {
+  key: string;
   title: string | JSX.Element;
   items: IDropdownMenuItemProps[];
 }
@@ -69,7 +70,7 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
           const menuGroupItem: IDropdownMenuGroupItemProps = menuItem as IDropdownMenuGroupItemProps;
 
           return (
-            <Menu.ItemGroup title={menuGroupItem.title}>
+            <Menu.ItemGroup title={menuGroupItem.title} key={menuGroupItem.key}>
               {menuGroupItem.items.map((item) => {
                 return renderMenuItems(item as IDropdownMenuItemProps);
               })}
