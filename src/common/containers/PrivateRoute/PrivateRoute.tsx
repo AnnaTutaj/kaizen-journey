@@ -1,26 +1,20 @@
 import { Paths } from '@common/constants/Paths';
 import { useAuth } from '@common/contexts/AuthContext';
-import * as React from 'react';
-import { Redirect, Route, RouteComponentProps } from 'react-router';
+import { Navigate, useLocation } from 'react-router-dom';
 
 interface IProps {
-  path: string;
-  component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any> | undefined;
+  children: JSX.Element;
 }
-const PrivateRoute: React.FC<IProps> = ({ path, component }) => {
+
+const PrivateRoute: React.FC<IProps> = ({ children }) => {
   const { userAuth } = useAuth();
+  const location = useLocation();
 
   if (!userAuth) {
-    return (
-      <Redirect
-        to={{
-          pathname: Paths.Home
-        }}
-      />
-    );
+    return <Navigate to={Paths.Home} state={{ from: location }} replace />;
   }
 
-  return <Route exact path={path} component={component} />;
+  return children;
 };
 
 export default PrivateRoute;

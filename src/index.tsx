@@ -1,8 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import Root from '@common/containers/Root';
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(<Root />);
 
 reportWebVitals();

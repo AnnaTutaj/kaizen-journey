@@ -7,7 +7,7 @@ import RegisterModal from './components/RegisterModal';
 import LoginModal from './components/LoginModal';
 import UserAvatar from './components/UserAvatar';
 import { useAuth } from '@common/contexts/AuthContext';
-import { useHistory } from 'react-router';
+import { useNavigate } from "react-router-dom";
 import { Paths } from '@common/constants/Paths';
 import { useTheme } from '@themes/use-theme';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
   const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const { userAuth } = useAuth();
-  const history = useHistory();
+  const navigate  = useNavigate();
   const { darkMode, setDarkMode } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -65,7 +65,7 @@ const Header: React.FC = () => {
         <div
           className={styles.LogoContainer}
           onClick={() => {
-            history.push(Paths.Home);
+            navigate(Paths.Home);
           }}
         >
           <img src={kaizenJourneyLogo} className={styles.LogoImage} alt="Kaizen Journey Logo" />

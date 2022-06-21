@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Header from '@common/containers/Header';
 import { Paths } from '@common/constants/Paths';
 import styles from './Main.module.less';
@@ -13,8 +13,7 @@ import PrivateRoute from '@common/containers/PrivateRoute';
 import Habit from '@modules/Habit';
 
 const { Content } = Layout;
-// import AccessDenied from '@common/routes/AccessDenied';
-// import PageNotFound from '@common/routes/PageNotFound';
+//todo add route to PageNotFound, AccessDenied
 
 const Main: React.FC = () => {
   const { isUserLoading } = useAuth();
@@ -27,17 +26,33 @@ const Main: React.FC = () => {
     <Layout className={styles.Layout}>
       <Header />
       <Content className={styles.Content}>
-        <Switch>
-          {/* //todo check permissions, LoadableComponent */}
-
-          <PrivateRoute path={Paths.Dashboard} component={Dashboard} />
-          <PrivateRoute path={Paths.Gratitude} component={Gratitude} />
-          <PrivateRoute path={Paths.Habit} component={Habit} />
-          <Route path={Paths.Home} component={Home} />
-
-          {/* <Route path={Paths.AccessDenied} component={AccessDenied} /> */}
-          {/* <Route path={Paths.PageNotFound} component={PageNotFound} /> */}
-        </Switch>
+        <Routes>
+          <Route path={Paths.Home} element={<Home />} />
+          <Route
+            path={Paths.Dashboard}
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={Paths.Gratitude}
+            element={
+              <PrivateRoute>
+                <Gratitude />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={Paths.Habit}
+            element={
+              <PrivateRoute>
+                <Habit />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
       </Content>
     </Layout>
   );

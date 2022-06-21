@@ -4,7 +4,7 @@ import styles from './SiteMenu.module.less';
 import { useIntl } from 'react-intl';
 import { User as FirebaseUser } from 'firebase/auth';
 import { Paths } from '@common/constants/Paths';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 export interface ISiteMenuProps {
@@ -17,7 +17,7 @@ export interface ISiteMenuProps {
 
 const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal, openRegisterModal, hideDrawer }) => {
   const intl = useIntl();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Menu
@@ -29,7 +29,7 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
           <Menu.Item
             key="dashboard"
             onClick={() => {
-              history.push(Paths.Dashboard);
+              navigate(Paths.Dashboard);
               if (hideDrawer) {
                 hideDrawer();
               }
@@ -40,7 +40,7 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
           <Menu.Item
             key="habit"
             onClick={() => {
-              history.push(Paths.Habit);
+              navigate(Paths.Habit);
               if (hideDrawer) {
                 hideDrawer();
               }
@@ -51,7 +51,7 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
           <Menu.Item
             key="gratitude"
             onClick={() => {
-              history.push(Paths.Gratitude);
+              navigate(Paths.Gratitude);
               if (hideDrawer) {
                 hideDrawer();
               }
