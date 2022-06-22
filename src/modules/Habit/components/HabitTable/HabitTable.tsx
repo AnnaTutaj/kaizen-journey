@@ -20,6 +20,8 @@ import HeaderText from '@common/components/HeaderText';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/components/HabitUpdateModal/HabitUpdateModal';
+import { useNavigate } from 'react-router-dom';
+import { Paths } from '@common/constants/Paths';
 
 interface IProps {
   habits: IHabitModel[];
@@ -29,6 +31,7 @@ interface IProps {
 
 const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
 
@@ -75,8 +78,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         setHabitUpdateModalConfig(undefined);
         await refreshHabit(habit);
       },
-      habit: habit,
-      
+      habit: habit
     });
   };
 
@@ -101,6 +103,11 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
 
   const menuItems = (habit: IHabitModel): DropdownMenuItemProps => {
     return [
+      {
+        key: DropdownMenuKey.preview,
+        //todo just for testing- change later to use Paths.HabitView 
+        onClick: async () => navigate(`${Paths.Habit}/${habit.id}`)
+      },
       {
         key: DropdownMenuKey.update,
         onClick: async () => handleUpdateHabit(habit)

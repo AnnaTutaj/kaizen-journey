@@ -1,5 +1,5 @@
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown as AntDDropdown, Menu, Space } from 'antd';
 import { useIntl } from 'react-intl';
@@ -33,6 +33,10 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
 
   const getDataByKey = (item: IDropdownMenuItemProps): { icon: IconDefinition; text: string } | null => {
     switch (item.key) {
+      case DropdownMenuKey.preview:
+        return { icon: faSearch, text: intl.formatMessage({ id: 'common.preview' }) };
+
+
       case DropdownMenuKey.update:
         return { icon: faPen, text: intl.formatMessage({ id: 'common.edit' }) };
 

@@ -11,6 +11,8 @@ import Home from '@modules/Home';
 import Gratitude from '@modules/Gratitude';
 import PrivateRoute from '@common/containers/PrivateRoute';
 import Habit from '@modules/Habit';
+import HabitView from '@modules/Habit/routes/HabitView';
+import PageUnderConstruction from '@common/components/PageUnderConstruction';
 
 const { Content } = Layout;
 //todo add route to PageNotFound, AccessDenied
@@ -52,6 +54,16 @@ const Main: React.FC = () => {
               </PrivateRoute>
             }
           />
+          <Route
+            path={Paths.HabitView}
+            element={
+              <PrivateRoute>
+                <HabitView />
+              </PrivateRoute>
+            }
+          />
+          {/* todo: Create Page Not Found View */}
+          <Route path="*" element={<PageUnderConstruction title="Page Not Found" />} />
         </Routes>
       </Content>
     </Layout>

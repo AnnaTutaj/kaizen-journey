@@ -27,8 +27,7 @@ const Habit: React.FC = () => {
     }
 
     fetchHabits();
-    // eslint-disable-next-line
-  }, []);
+  }, [getHabits]);
 
   const handleCreateSubmit = async () => {
     const loadedHabits = await getHabits({ setLoading, isArchived: false });

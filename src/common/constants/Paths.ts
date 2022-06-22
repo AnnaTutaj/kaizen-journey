@@ -4,5 +4,6 @@ export const Paths = {
   AccessDenied: '/access-denied',
   PageNotFound: '/page-not-found',
   Gratitude: '/gratitude',
-  Habit: '/habits'
+  Habit: '/habits',
+  HabitView: '/habits/:id'
 };

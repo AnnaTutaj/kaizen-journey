@@ -18,39 +18,43 @@ import HabitModel, { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { useAuth } from '@common/contexts/AuthContext';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import { IHabitFormModelDTO } from '../models/HabitFormModel';
+import { useCallback } from 'react';
 
 const useHabitFetch = () => {
   const { userProfile } = useAuth();
 
-  const getHabits = async ({
-    setLoading,
-    isArchived
-  }: {
-    setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
-    isArchived: boolean;
-  }) => {
-    if (typeof setLoading === 'function') setLoading(true);
+  const getHabits = useCallback(
+    async ({
+      setLoading,
+      isArchived
+    }: {
+      setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+      isArchived: boolean;
+    }) => {
+      if (typeof setLoading === 'function') setLoading(true);
 
-    const q = query(
-      collection(db, 'habits').withConverter(HabitModel.converter),
-      where('createdByUid', '==', userProfile?.uid),
-      where('isArchived', '==', isArchived)
-    );
+      const q = query(
+        collection(db, 'habits').withConverter(HabitModel.converter),
+        where('createdByUid', '==', userProfile?.uid),
+        where('isArchived', '==', isArchived)
+      );
 
-    const querySnap = await getDocs(q);
+      const querySnap = await getDocs(q);
 
-    if (querySnap.docs.length === 0) {
+      if (querySnap.docs.length === 0) {
+        if (typeof setLoading === 'function') setLoading(false);
+        return [];
+      }
+
+      const habits = querySnap.docs.map((i) => HabitModel.build(i.data()));
       if (typeof setLoading === 'function') setLoading(false);
-      return [];
-    }
 
-    const habits = querySnap.docs.map((i) => HabitModel.build(i.data()));
-    if (typeof setLoading === 'function') setLoading(false);
+      return habits;
+    },
+    [userProfile?.uid]
+  );
 
-    return habits;
-  };
-
-  const getHabitById = async (id: string): Promise<IHabitModel | null> => {
+  const getHabitById = useCallback(async (id: string): Promise<IHabitModel | null> => {
     const docRef = doc(db, 'habits', id).withConverter(HabitModel.converter);
     const docSnap = await getDoc(docRef);
 
@@ -59,52 +63,47 @@ const useHabitFetch = () => {
     } else {
       return null;
     }
-  };
+  }, []);
 
-  const createHabit = async (values: IHabitFormModelDTO): Promise<DocumentReference<DocumentData>> => {
+  const createHabit = useCallback(async (values: IHabitFormModelDTO): Promise<DocumentReference<DocumentData>> => {
     return await addDoc(collection(db, 'habits'), values);
-  };
+  }, []);
 
-  const deleteHabit = async (id: string): Promise<void> => {
+  const deleteHabit = useCallback(async (id: string): Promise<void> => {
     await deleteDoc(doc(db, 'habits', id));
-  };
+  }, []);
 
-  const updateHabit = async (id: string, values: Partial<IHabitFormModelDTO>): Promise<void> => {
+  const updateHabit = useCallback(async (id: string, values: Partial<IHabitFormModelDTO>): Promise<void> => {
     await updateDoc(doc(db, 'habits', id), values);
-  };
+  }, []);
 
-  const updateHabitDates = async ({
-    habitId,
-    dateStatus,
-    dateKey
-  }: {
-    habitId: string;
-    dateStatus: HabitDateStatus;
-    dateKey: string;
-  }) => {
-    switch (dateStatus) {
-      case HabitDateStatus.checked:
-        await updateDoc(doc(db, 'habits', habitId), {
-          datesChecked: arrayRemove(dateKey),
-          datesSkipped: arrayUnion(dateKey)
-        });
-        break;
+  const updateHabitDates = useCallback(
+    async ({ habitId, dateStatus, dateKey }: { habitId: string; dateStatus: HabitDateStatus; dateKey: string }) => {
+      switch (dateStatus) {
+        case HabitDateStatus.checked:
+          await updateDoc(doc(db, 'habits', habitId), {
+            datesChecked: arrayRemove(dateKey),
+            datesSkipped: arrayUnion(dateKey)
+          });
+          break;
 
-      case HabitDateStatus.skipped:
-        await updateDoc(doc(db, 'habits', habitId), {
-          datesChecked: arrayRemove(dateKey),
-          datesSkipped: arrayRemove(dateKey)
-        });
-        break;
+        case HabitDateStatus.skipped:
+          await updateDoc(doc(db, 'habits', habitId), {
+            datesChecked: arrayRemove(dateKey),
+            datesSkipped: arrayRemove(dateKey)
+          });
+          break;
 
-      case HabitDateStatus.unchecked:
-        await updateDoc(doc(db, 'habits', habitId), {
-          datesChecked: arrayUnion(dateKey),
-          datesSkipped: arrayRemove(dateKey)
-        });
-        break;
-    }
-  };
+        case HabitDateStatus.unchecked:
+          await updateDoc(doc(db, 'habits', habitId), {
+            datesChecked: arrayUnion(dateKey),
+            datesSkipped: arrayRemove(dateKey)
+          });
+          break;
+      }
+    },
+    []
+  );
 
   return { getHabits, getHabitById, createHabit, deleteHabit, updateHabit, updateHabitDates };
 };
