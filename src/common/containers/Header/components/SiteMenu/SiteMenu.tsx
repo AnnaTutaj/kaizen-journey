@@ -19,74 +19,69 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
   const intl = useIntl();
   const navigate = useNavigate();
 
+  const items = userAuth
+    ? [
+        {
+          key: 'dashboard',
+          label: intl.formatMessage({ id: 'header.dashboard' }),
+          onClick: () => {
+            navigate(Paths.Dashboard);
+            if (hideDrawer) {
+              hideDrawer();
+            }
+          }
+        },
+
+        {
+          key: 'habit',
+          label: intl.formatMessage({ id: 'header.habits' }),
+          onClick: () => {
+            navigate(Paths.Habit);
+            if (hideDrawer) {
+              hideDrawer();
+            }
+          }
+        },
+        {
+          key: 'gratitude',
+          label: intl.formatMessage({ id: 'header.gratitude' }),
+          onClick: () => {
+            navigate(Paths.Gratitude);
+            if (hideDrawer) {
+              hideDrawer();
+            }
+          }
+        }
+      ]
+    : [
+        {
+          key: 'signIn',
+          label: intl.formatMessage({ id: 'header.signIn' }),
+          onClick: () => {
+            openLoginModal();
+            if (hideDrawer) {
+              hideDrawer();
+            }
+          }
+        },
+        {
+          key: 'register',
+          label: intl.formatMessage({ id: 'header.register' }),
+          onClick: () => {
+            openRegisterModal();
+            if (hideDrawer) {
+              hideDrawer();
+            }
+          }
+        }
+      ];
+
   return (
     <Menu
       mode={isMobile ? 'vertical' : 'horizontal'}
       className={cn(styles.MenuContainer, { [styles.MenuContainerMobile]: isMobile })}
-    >
-      {userAuth ? (
-        <>
-          <Menu.Item
-            key="dashboard"
-            onClick={() => {
-              navigate(Paths.Dashboard);
-              if (hideDrawer) {
-                hideDrawer();
-              }
-            }}
-          >
-            {intl.formatMessage({ id: 'header.dashboard' })}
-          </Menu.Item>
-          <Menu.Item
-            key="habit"
-            onClick={() => {
-              navigate(Paths.Habit);
-              if (hideDrawer) {
-                hideDrawer();
-              }
-            }}
-          >
-            {intl.formatMessage({ id: 'header.habits' })}
-          </Menu.Item>
-          <Menu.Item
-            key="gratitude"
-            onClick={() => {
-              navigate(Paths.Gratitude);
-              if (hideDrawer) {
-                hideDrawer();
-              }
-            }}
-          >
-            {intl.formatMessage({ id: 'header.gratitude' })}
-          </Menu.Item>
-        </>
-      ) : (
-        <>
-          <Menu.Item
-            key="signIn"
-            onClick={() => {
-              openLoginModal();
-              if (hideDrawer) {
-                hideDrawer();
-              }
-            }}
-          >
-            {intl.formatMessage({ id: 'header.signIn' })}
-          </Menu.Item>
-          <Menu.Item
-            key="register"
-            onClick={() => {
-              openRegisterModal();
-              if (hideDrawer) {
-                hideDrawer();
-              }
-            }}
-          >
-            {intl.formatMessage({ id: 'header.register' })}
-          </Menu.Item>
-        </>
-      )}
-    </Menu>
+      items={items}
+    />
   );
 };
 
