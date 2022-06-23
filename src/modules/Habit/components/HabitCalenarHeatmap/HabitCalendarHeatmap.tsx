@@ -1,10 +1,13 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import moment from 'moment';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import { Tooltip } from 'antd';
 import 'react-calendar-heatmap/dist/styles.css';
-import './habit-calendar-heatmap.css';
+import './habit-calendar-heatmap.less';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
+import { HabitDateStatus } from '@common/constants/HabitDateStatus';
+import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 
 interface IProps {
   habit: IHabitModel;
@@ -12,10 +15,13 @@ interface IProps {
 
 interface ICalendarHeatMapValue {
   date: string;
-  count: number;
+  dateStatus: HabitDateStatus;
 }
 
 const HabitCalendarHeatmap: React.FC<IProps> = ({ habit }) => {
+  const intl = useIntl();
+  const { getDateStatus } = useHabitHelper();
+
   //todo: Add year select. E.g. start range: current year, end range: current year - 100 years
   const selectedYear = moment().format('YYYY-MM-DD');
   const startDate = moment(selectedYear).startOf('year').subtract(1, 'day').format('YYYY-MM-DD');
@@ -28,17 +34,19 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit }) => {
     const endDateMoment = moment(endDate);
 
     while (startDateMoment.isSameOrBefore(endDateMoment)) {
+      const dateStatus = getDateStatus(habit, startDateMoment.format('YYYY-MM-DD'));
+
       values.push({
         date: startDateMoment.format('YYYY-MM-DD'),
-        count: habit.datesChecked.indexOf(startDateMoment.format('YYYY-MM-DD')) >= 0 ? 1 : 0
+        dateStatus: dateStatus
       });
+
       startDateMoment.add(1, 'days');
     }
 
     return values;
   };
 
-  //todo: show paused days aswell (with lighter color) + set text in tooltip "Wykonano w dniu ...", "Zapauzowano w dniu...", "Nie wykonano w dniu..."
   return (
     <CalendarHeatmap
       startDate={startDate}
@@ -48,12 +56,25 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit }) => {
       monthLabels={moment.monthsShort()}
       weekdayLabels={moment.weekdaysShort()}
       values={prepareValues()}
-      transformDayElement={(element: any, value: ICalendarHeatMapValue | null, index: number) => {
-        return <Tooltip title={value?.date}>{element}</Tooltip>;
+      transformDayElement={(element: any, value: ICalendarHeatMapValue, index: number) => {
+        return (
+          <Tooltip
+            title={intl.formatMessage(
+              { id: `habit.calendarHeatmap.dateTooltip.${value.dateStatus}` },
+              { date: moment(value.date).format('ll') }
+            )}
+          >
+            {element}
+          </Tooltip>
+        );
       }}
-      classForValue={(value) => {
-        if (!value || value.count === 0) {
+      classForValue={(value: ICalendarHeatMapValue) => {
+        if (!value || value.dateStatus === HabitDateStatus.unchecked) {
           return 'color-empty';
+        }
+
+        if (value.dateStatus === HabitDateStatus.skipped) {
+          return `color-lighten-${habit.colorLighten.name}`;
         }
 
         return `color-${habit.color.name}`;

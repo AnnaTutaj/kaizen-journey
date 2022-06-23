@@ -102,5 +102,9 @@
   "habit.confirmModal.delete.title": "Delete habit?",
   "habit.confirmModal.delete.content": "Habits that you delete can't be restored.",
   "habit.confirmModal.delete.okText": "Delete",
-  "habit.confirmModal.delete.cancelText": "Cancel"
+  "habit.confirmModal.delete.cancelText": "Cancel",
+
+  "habit.calendarHeatmap.dateTooltip.checked": "Marked on {date}",
+  "habit.calendarHeatmap.dateTooltip.unchecked": "Not marked on {date}",
+  "habit.calendarHeatmap.dateTooltip.skipped": "Paused on {date}"
 }

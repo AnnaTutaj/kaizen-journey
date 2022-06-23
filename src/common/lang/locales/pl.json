@@ -103,5 +103,9 @@
   "habit.confirmModal.delete.title": "Usunąć nawyk?",
   "habit.confirmModal.delete.content": "Nawyki, które usuniesz, nie będzie można przywrócić.",
   "habit.confirmModal.delete.okText": "Usuń",
-  "habit.confirmModal.delete.cancelText": "Anuluj"
+  "habit.confirmModal.delete.cancelText": "Anuluj",
+
+  "habit.calendarHeatmap.dateTooltip.checked": "Zaznaczono w dniu {date}",
+  "habit.calendarHeatmap.dateTooltip.unchecked": "Nie zaznaczono w dniu {date}",
+  "habit.calendarHeatmap.dateTooltip.skipped": "Zapauzowano w dniu {date}"
 }
