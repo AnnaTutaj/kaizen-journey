@@ -12,6 +12,7 @@ import HabitCalenarHeatmap from '@modules/Habit/components/HabitCalenarHeatmap';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import styles from './HabitView.module.less';
+import HabitStatistic from '@modules/Habit/components/HabitStatistic';
 
 interface IYearSelect {
   label: string;
@@ -71,8 +72,17 @@ const HabitView: React.FC = () => {
           onChange={(value) => setYear(value)}
         />
       </div>
-      <HeaderText text={habit.name} />
-      <HabitCalenarHeatmap habit={habit} year={year} />
+      <div className={styles.HabitViewContainer}>
+        <HeaderText text={habit.name} />
+        <div className={styles.HabitCalenarHeatmapContainer}>
+          <HabitCalenarHeatmap habit={habit} year={year} />
+        </div>
+        <Space size={0} direction="vertical" className={styles.SummaryContainer} align="center">
+          <HeaderText text={intl.formatMessage({ id: 'common.summary' })} />
+          <HeaderText text={intl.formatMessage({ id: 'common.summary.info' })} size="small" />
+        </Space>
+        <HabitStatistic habit={habit} />
+      </div>
     </>
   );
 };
