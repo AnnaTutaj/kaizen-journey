@@ -17,9 +17,7 @@ const Empty: React.FC<IEmptyProps> = ({ description }) => {
       image={<FontAwesomeIcon icon={faCloudMoonRain} className={styles.EmptyIcon} />}
       description={
         <>
-          <div className={styles.EmptyTitle}>
-            <HeaderText text={intl.formatMessage({ id: 'common.empty' })} />
-          </div>
+          <HeaderText text={intl.formatMessage({ id: 'common.empty' })} className={styles.EmptyTitle} />
           <div className={styles.EmptyDescription}>{description}</div>
         </>
       }
