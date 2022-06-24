@@ -11,6 +11,7 @@ import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 
 interface IProps {
   habit: IHabitModel;
+  year: string;
 }
 
 interface ICalendarHeatMapValue {
@@ -18,12 +19,11 @@ interface ICalendarHeatMapValue {
   dateStatus: HabitDateStatus;
 }
 
-const HabitCalendarHeatmap: React.FC<IProps> = ({ habit }) => {
+const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
   const intl = useIntl();
   const { getDateStatus } = useHabitHelper();
 
-  //todo: Add year select. E.g. start range: current year, end range: current year - 100 years
-  const selectedYear = moment().format('YYYY-MM-DD');
+  const selectedYear = moment(year).format('YYYY-MM-DD');
   const startDate = moment(selectedYear).startOf('year').subtract(1, 'day').format('YYYY-MM-DD');
   const endDate = moment(selectedYear).endOf('year').format('YYYY-MM-DD');
 
@@ -59,9 +59,10 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit }) => {
       transformDayElement={(element: any, value: ICalendarHeatMapValue, index: number) => {
         return (
           <Tooltip
+            key={index}
             title={intl.formatMessage(
               { id: `habit.calendarHeatmap.dateTooltip.${value.dateStatus}` },
-              { date: moment(value.date).format('ll') }
+              { date: `${moment(value.date).format('ll [(]ddd[)]')}` }
             )}
           >
             {element}

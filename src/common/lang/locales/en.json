@@ -15,6 +15,7 @@
   "common.empty": "No items found",
   "common.delete": "Delete",
   "common.or": "Or",
+  "common.goBack": "Go back",
   "common.language.polish": "Polski",
   "common.language.english": "English",
   "common.defaultErrorMessage": "Something went wrong... please try again later",
