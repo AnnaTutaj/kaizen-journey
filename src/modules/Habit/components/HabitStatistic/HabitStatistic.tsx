@@ -14,23 +14,23 @@ const HabitStatistic: React.FC<IProps> = ({ habit }) => {
   //todo: add tooltips to streaks with dates/ paused days counts
   return (
     <>
-      <Row gutter={[8, 24]} justify="center" className={styles.StatisticRow}>
-        <Col span={24} md={4}>
+      <Row gutter={[16, 16]} justify="center" className={styles.StatisticRow}>
+        <Col span={12} md={6} xxl={4}>
           <Statistic
             title={intl.formatMessage({ id: 'habit.currentStreak' })}
             value={habit.currentStreak.streakCount}
           />
         </Col>
-        <Col span={24} md={4}>
+        <Col span={12} md={6} xxl={4}>
           <Statistic
             title={intl.formatMessage({ id: 'habit.longestStreak' })}
             value={habit.longestStreak.streakCount}
           />
         </Col>
-        <Col span={24} md={4}>
+        <Col span={12} md={6} xxl={4}>
           <Statistic title={intl.formatMessage({ id: 'habit.totalCount' })} value={habit.datesChecked.length} />
         </Col>
-        <Col span={24} md={4}>
+        <Col span={12} md={6} xxl={4}>
           <Statistic title={intl.formatMessage({ id: 'habit.totalSkippedCount' })} value={habit.datesSkipped.length} />
         </Col>
       </Row>
