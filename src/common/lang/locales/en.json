@@ -82,6 +82,9 @@
   "gratitude.confirmModal.delete.okText": "Delete",
   "gratitude.confirmModal.delete.cancelText": "Cancel",
 
+  "habit.habitTracker": "Habit tracker",
+  "habit.habitArchive": "Habit archive",
+
   "habit.table.title": "My habit tracker",
   "habt.table.empty": "Add habit and track your progress here!",
   "habit.table.header.habit": "Habit",

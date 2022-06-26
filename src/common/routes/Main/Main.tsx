@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from '@common/containers/Header';
 import { Paths } from '@common/constants/Paths';
 import styles from './Main.module.less';
@@ -11,8 +11,10 @@ import Home from '@modules/Home';
 import Gratitude from '@modules/Gratitude';
 import PrivateRoute from '@common/containers/PrivateRoute';
 import Habit from '@modules/Habit';
-import HabitView from '@modules/Habit/routes/HabitView';
 import PageUnderConstruction from '@common/components/PageUnderConstruction';
+import HabitTracker from '@modules/Habit/routes/HabitTracker';
+import HabitArchive from '@modules/Habit/routes/HabitArchive';
+import HabitView from '@modules/Habit/routes/HabitView';
 
 const { Content } = Layout;
 //todo add route to PageNotFound, AccessDenied
@@ -53,7 +55,11 @@ const Main: React.FC = () => {
                 <Habit />
               </PrivateRoute>
             }
-          />
+          >
+            <Route path={Paths.HabitTracker} element={<HabitTracker />} />
+            <Route path={Paths.HabitArchive} element={<HabitArchive />} />
+            <Route path={Paths.Habit} element={<Navigate replace to={Paths.HabitTracker} />} />
+          </Route>
           <Route
             path={Paths.HabitView}
             element={
@@ -62,6 +68,7 @@ const Main: React.FC = () => {
               </PrivateRoute>
             }
           />
+
           {/* todo: Create Page Not Found View */}
           <Route path="*" element={<PageUnderConstruction title="Page Not Found" />} />
         </Routes>
