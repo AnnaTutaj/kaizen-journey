@@ -1,5 +1,7 @@
 {
   "pageUnderConstruction.title": "This page is under construction",
+  "pageError.title": "An unexpected error has occurred",
+  "pageError.button": "Try again",
 
   "header.home": "Home",
   "header.dashboard": "Dashboard",

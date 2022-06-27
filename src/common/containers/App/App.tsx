@@ -12,6 +12,8 @@ import { ITranslationConfig } from '@common/lang/config/types';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import { Locale } from 'antd/lib/locale-provider';
 import { ThemeProvider } from '@themes/theme-provider';
+import { ErrorBoundary } from 'react-error-boundary';
+import PageError from '@common/components/PageError';
 
 const App: React.FC = () => {
   const { userProfile } = useAuth();
@@ -35,7 +37,9 @@ const App: React.FC = () => {
       <ConfigProvider componentSize="large" locale={locale}>
         <IntlProvider locale={language} messages={appLocale.messages}>
           <Layout>
-            <Main />
+            <ErrorBoundary FallbackComponent={(props) => <PageError onClick={props.resetErrorBoundary} />}>
+              <Main />
+            </ErrorBoundary>
           </Layout>
         </IntlProvider>
       </ConfigProvider>

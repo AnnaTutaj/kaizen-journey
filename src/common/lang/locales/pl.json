@@ -1,5 +1,7 @@
 {
   "pageUnderConstruction.title": "Ta strona jest w budowie",
+  "pageError.title": "Wystąpił nieoczekiwany błąd",
+  "pageError.button": "Spróbuj ponownie",
 
   "header.home": "Strona główna",
   "header.dashboard": "Dashboard",
