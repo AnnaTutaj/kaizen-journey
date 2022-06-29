@@ -65,7 +65,7 @@ const Gratitude: React.FC = () => {
         </Button>
       </div>
 
-      <div className={cn(styles.FilersContainer, { [styles.FilersContainerVisible]: showFilters })}>
+      <div className={cn(styles.FiltersContainer, { [styles.FiltersContainerVisible]: showFilters })}>
         <GratitudeMyListFilters
           onFinish={(values) => {
             const finalValues = GratitudeMyListFiltersModel.serialize(values);
