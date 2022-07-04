@@ -60,7 +60,7 @@ const HabitView: React.FC = () => {
   return (
     <>
       <div className={styles.Header}>
-        <Button onClick={() => navigate(Paths.Habit)}>
+        <Button onClick={() => navigate(habit.isArchived ? Paths.HabitArchive : Paths.HabitTracker)}>
           <Space size={10}>
             <FontAwesomeIcon icon={faLongArrowLeft} />
             {intl.formatMessage({ id: 'common.goBack' })}

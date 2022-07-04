@@ -1,6 +1,7 @@
 module.exports = {
   // Basic Colors
   '@primary-color': '#45b4a5',
+  '@error-color': '#c0293b',
   '@white-color': '#ffffff',
   '@dark-grey-color': '#6b6b6b',
   '@light-grey-color': '#e6e6e6',

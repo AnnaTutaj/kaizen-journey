@@ -1,5 +1,5 @@
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
-import { faPen, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faPen, faRotateLeft, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown as AntDDropdown, Menu, Space } from 'antd';
 import { useIntl } from 'react-intl';
@@ -7,14 +7,14 @@ import styles from './Dropdown.module.less';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { DropdownButtonProps } from 'antd/lib/dropdown';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
-
+import cn from 'classnames';
 interface IDropdownMenuItemProps {
   key: DropdownMenuKey.update | DropdownMenuKey.delete | string;
   item?: {
     icon: IconDefinition;
     text: string;
   };
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 interface IDropdownMenuGroupItemProps {
@@ -37,17 +37,28 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
       case DropdownMenuKey.preview:
         return { icon: faSearch, text: intl.formatMessage({ id: 'common.preview' }) };
 
-
       case DropdownMenuKey.update:
         return { icon: faPen, text: intl.formatMessage({ id: 'common.edit' }) };
 
       case DropdownMenuKey.delete:
         return { icon: faTrash, text: intl.formatMessage({ id: 'common.delete' }) };
+
+      case DropdownMenuKey.archive:
+        return { icon: faBoxArchive, text: intl.formatMessage({ id: 'common.archive' }) };
+
+      case DropdownMenuKey.restore:
+        return { icon: faRotateLeft, text: intl.formatMessage({ id: 'common.restore' }) };
     }
     return null;
   };
 
   const renderMenuItem = (menuItem: IDropdownMenuItemProps): ItemType => {
+    if (menuItem.key === DropdownMenuKey.divider) {
+      return {
+        type: 'divider'
+      };
+    }
+
     const data = menuItem.item ? menuItem.item : getDataByKey(menuItem);
 
     if (!data) {
@@ -57,9 +68,9 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
     return {
       key: menuItem.key,
       className: styles.DropdownMenuItem,
-      onClick: () => menuItem.onClick(),
+      onClick: () => menuItem.onClick?.(),
       label: (
-        <Space size={16}>
+        <Space size={16} className={cn({ [styles.DropdownMenuItemDelete]: menuItem.key === DropdownMenuKey.delete })}>
           <FontAwesomeIcon icon={data.icon} className={styles.DropdownMenuItemIcon} />
           {data.text}
         </Space>

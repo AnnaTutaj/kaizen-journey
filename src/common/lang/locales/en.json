@@ -16,6 +16,8 @@
   "common.edit": "Edit",
   "common.empty": "No items found",
   "common.delete": "Delete",
+  "common.archive": "Archive",
+  "common.restore": "Restore",
   "common.or": "Or",
   "common.goBack": "Go back",
   "common.summary": "Summary",
@@ -84,8 +86,8 @@
   "gratitude.confirmModal.delete.okText": "Delete",
   "gratitude.confirmModal.delete.cancelText": "Cancel",
 
-  "habit.habitTracker": "Habit tracker",
-  "habit.habitArchive": "Habit archive",
+  "habit.menu.habitTracker": "Habit tracker",
+  "habit.menu.habitArchive": "Habit archive",
 
   "habit.table.title": "My habit tracker",
   "habt.table.empty": "Add habit and track your progress here!",
@@ -112,8 +114,19 @@
   "habit.confirmModal.delete.content": "Habits that you delete can't be restored.",
   "habit.confirmModal.delete.okText": "Delete",
   "habit.confirmModal.delete.cancelText": "Cancel",
+  "habit.confirmModal.archive.title": "Archive habit?",
+  "habit.confirmModal.archive.content": "Archived habits can be restored at any moment.",
+  "habit.confirmModal.archive.okText": "Archive",
+  "habit.confirmModal.archive.cancelText": "Cancel",
+  "habit.confirmModal.restore.title": "Restore habit?",
+  "habit.confirmModal.restore.content": "Habit will go back to Habit tracker.",
+  "habit.confirmModal.restore.okText": "Restore",
+  "habit.confirmModal.restore.cancelText": "Cancel",
 
   "habit.calendarHeatmap.dateTooltip.checked": "Marked on {date}",
   "habit.calendarHeatmap.dateTooltip.unchecked": "Not marked on {date}",
-  "habit.calendarHeatmap.dateTooltip.skipped": "Paused on {date}"
+  "habit.calendarHeatmap.dateTooltip.skipped": "Paused on {date}",
+
+  "habit.archive.title": "Habit archive",
+  "habit.archive.empty": "Yours archived habits would appear here"
 }

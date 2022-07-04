@@ -15,11 +15,11 @@ const Habit: React.FC = () => {
     () => [
       {
         key: Paths.HabitTracker,
-        label: <Link to={Paths.HabitTracker}>{intl.formatMessage({ id: 'habit.habitTracker' })}</Link>
+        label: <Link to={Paths.HabitTracker}>{intl.formatMessage({ id: 'habit.menu.habitTracker' })}</Link>
       },
       {
         key: Paths.HabitArchive,
-        label: <Link to={Paths.HabitArchive}>{intl.formatMessage({ id: 'habit.habitArchive' })}</Link>
+        label: <Link to={Paths.HabitArchive}>{intl.formatMessage({ id: 'habit.menu.habitArchive' })}</Link>
       }
     ],
     [intl]

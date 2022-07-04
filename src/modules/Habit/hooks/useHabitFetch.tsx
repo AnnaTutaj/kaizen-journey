@@ -77,6 +77,18 @@ const useHabitFetch = () => {
     await updateDoc(doc(db, 'habits', id), values);
   }, []);
 
+  const archiveHabit = useCallback(async (id: string): Promise<void> => {
+    await updateDoc(doc(db, 'habits', id), {
+      isArchived: true
+    });
+  }, []);
+
+  const restoreHabit = useCallback(async (id: string): Promise<void> => {
+    await updateDoc(doc(db, 'habits', id), {
+      isArchived: false
+    });
+  }, []);
+
   const updateHabitDates = useCallback(
     async ({ habitId, dateStatus, dateKey }: { habitId: string; dateStatus: HabitDateStatus; dateKey: string }) => {
       switch (dateStatus) {
@@ -105,7 +117,16 @@ const useHabitFetch = () => {
     []
   );
 
-  return { getHabits, getHabitById, createHabit, deleteHabit, updateHabit, updateHabitDates };
+  return {
+    getHabits,
+    getHabitById,
+    createHabit,
+    deleteHabit,
+    updateHabit,
+    archiveHabit,
+    restoreHabit,
+    updateHabitDates
+  };
 };
 
 export default useHabitFetch;

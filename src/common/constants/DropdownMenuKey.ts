@@ -1,5 +1,8 @@
 export enum DropdownMenuKey {
+  divider = 'divider',
   preview = 'preview',
   update = 'update',
-  delete = 'delete'
+  delete = 'delete',
+  archive = 'archive',
+  restore = 'restore'
 }

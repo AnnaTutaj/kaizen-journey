@@ -16,6 +16,8 @@
   "common.edit": "Edytuj",
   "common.empty": "Niestety, pusto",
   "common.delete": "Usuń",
+  "common.archive": "Archiwizuj",
+  "common.restore": "Przywróć",
   "common.or": "Albo",
   "common.goBack": "Wróć",
   "common.summary": "Podsumowanie",
@@ -85,8 +87,8 @@
   "gratitude.confirmModal.delete.okText": "Usuń",
   "gratitude.confirmModal.delete.cancelText": "Anuluj",
 
-  "habit.habitTracker": "Śledzik nawyków",
-  "habit.habitArchive": "Archiwum nawyków",
+  "habit.menu.habitTracker": "Śledzik nawyków",
+  "habit.menu.habitArchive": "Archiwum nawyków",
 
   "habit.table.title": "Mój śledzik nawyków",
   "habt.table.empty": "Dodaj nawyk i śledź swój postęp tutaj!",
@@ -113,8 +115,19 @@
   "habit.confirmModal.delete.content": "Nawyki, które usuniesz, nie będzie można przywrócić.",
   "habit.confirmModal.delete.okText": "Usuń",
   "habit.confirmModal.delete.cancelText": "Anuluj",
+  "habit.confirmModal.archive.title": "Zarchiwizować nawyk?",
+  "habit.confirmModal.archive.content": "Zarchiwizowane nawyki można przywrócić w każdym momencie.",
+  "habit.confirmModal.archive.okText": "Zarchiwizuj",
+  "habit.confirmModal.archive.cancelText": "Anuluj",
+  "habit.confirmModal.restore.title": "Przywrócić nawyk?",
+  "habit.confirmModal.restore.content": "Nawyk wróci do Śledzika nawyków.",
+  "habit.confirmModal.restore.okText": "Przywróć",
+  "habit.confirmModal.restore.cancelText": "Anuluj",
 
   "habit.calendarHeatmap.dateTooltip.checked": "Zaznaczono w dniu {date}",
   "habit.calendarHeatmap.dateTooltip.unchecked": "Nie zaznaczono w dniu {date}",
-  "habit.calendarHeatmap.dateTooltip.skipped": "Zapauzowano w dniu {date}"
+  "habit.calendarHeatmap.dateTooltip.skipped": "Zapauzowano w dniu {date}",
+
+  "habit.archive.title": "Archiwum nawyków",
+  "habit.archive.empty": "Twoje zarchiwizowane nawyki pojawią się tutaj"
 }

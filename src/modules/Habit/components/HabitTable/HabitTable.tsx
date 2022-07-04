@@ -20,7 +20,7 @@ import HeaderText from '@common/components/HeaderText';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/components/HabitUpdateModal/HabitUpdateModal';
-import { useNavigate } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 
 interface IProps {
@@ -38,7 +38,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
 
   const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
-  const { getHabitById, updateHabitDates, deleteHabit } = useHabitFetch();
+  const { getHabitById, updateHabitDates, deleteHabit, archiveHabit } = useHabitFetch();
 
   const scrollTo = useCallback(() => {
     if (scrollContainerRef) {
@@ -87,6 +87,11 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     setHabits((prevState) => _.remove(prevState, (i) => i.id !== habit.id));
   };
 
+  const handleArchive = async (habit: IHabitModel) => {
+    await archiveHabit(habit.id);
+    setHabits((prevState) => _.remove(prevState, (i) => i.id !== habit.id));
+  };
+
   const confirmDelete = async (habit: IHabitModel) => {
     Modal.confirm({
       centered: true,
@@ -101,16 +106,36 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     });
   };
 
+  const confirmArchive = async (habit: IHabitModel) => {
+    Modal.confirm({
+      centered: true,
+      closable: true,
+      title: intl.formatMessage({ id: 'habit.confirmModal.archive.title' }),
+      content: intl.formatMessage({ id: 'habit.confirmModal.archive.content' }),
+      okText: intl.formatMessage({ id: 'habit.confirmModal.archive.okText' }),
+      cancelText: intl.formatMessage({ id: 'habit.confirmModal.archive.cancelText' }),
+      onOk: async () => {
+        await handleArchive(habit);
+      }
+    });
+  };
+
   const menuItems = (habit: IHabitModel): DropdownMenuItemProps => {
     return [
       {
         key: DropdownMenuKey.preview,
-        //todo just for testing- change later to use Paths.HabitView 
-        onClick: async () => navigate(`${Paths.Habit}/${habit.id}`)
+        onClick: async () => navigate(generatePath(Paths.HabitView, { id: habit.id }))
       },
       {
         key: DropdownMenuKey.update,
         onClick: async () => handleUpdateHabit(habit)
+      },
+      {
+        key: DropdownMenuKey.divider
+      },
+      {
+        key: DropdownMenuKey.archive,
+        onClick: () => confirmArchive(habit)
       },
       {
         key: DropdownMenuKey.delete,
