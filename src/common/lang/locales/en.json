@@ -21,7 +21,7 @@
   "common.or": "Or",
   "common.goBack": "Go back",
   "common.summary": "Summary",
-  "common.summary.info": "during all years",
+  "common.summary.info": "All years summary",
   "common.language.polish": "Polski",
   "common.language.english": "English",
   "common.defaultErrorMessage": "Something went wrong... please try again later",
@@ -128,5 +128,9 @@
   "habit.calendarHeatmap.dateTooltip.skipped": "Paused on {date}",
 
   "habit.archive.title": "Habit archive",
-  "habit.archive.empty": "Yours archived habits would appear here"
+  "habit.archive.empty": "Yours archived habits would appear here",
+
+  "habit.statistic.total": "Sum",
+  "habit.statistic.check": "Checks",
+  "habit.statistic.skipped": "Pauses"
 }

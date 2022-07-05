@@ -21,7 +21,7 @@
   "common.or": "Albo",
   "common.goBack": "Wróć",
   "common.summary": "Podsumowanie",
-  "common.summary.info": "ze wszystkich lat",
+  "common.summary.info": "Podsumowanie ze wszystkich lat",
   "common.language.polish": "Polski",
   "common.language.english": "English",
   "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
@@ -129,5 +129,9 @@
   "habit.calendarHeatmap.dateTooltip.skipped": "Zapauzowano w dniu {date}",
 
   "habit.archive.title": "Archiwum nawyków",
-  "habit.archive.empty": "Twoje zarchiwizowane nawyki pojawią się tutaj"
+  "habit.archive.empty": "Twoje zarchiwizowane nawyki pojawią się tutaj",
+
+  "habit.statistic.total": "Suma",
+  "habit.statistic.check": "Zaznaczenia",
+  "habit.statistic.skipped": "Pauzy"
 }

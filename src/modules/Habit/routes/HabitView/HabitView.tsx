@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { Button, Select, Space } from 'antd';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLongArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faLongArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import HeaderText from '@common/components/HeaderText';
 import { Paths } from '@common/constants/Paths';
 import PageLoading from '@common/components/PageLoading';
@@ -13,6 +13,7 @@ import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import styles from './HabitView.module.less';
 import HabitStatistic from '@modules/Habit/components/HabitStatistic';
+import Tooltip from 'antd/es/tooltip';
 
 interface IYearSelect {
   label: string;
@@ -77,9 +78,11 @@ const HabitView: React.FC = () => {
         <div className={styles.HabitCalenarHeatmapContainer}>
           <HabitCalenarHeatmap habit={habit} year={year} />
         </div>
-        <Space size={0} direction="vertical" className={styles.SummaryContainer} align="center">
+        <Space size={8} className={styles.SummaryContainer} align="center">
           <HeaderText text={intl.formatMessage({ id: 'common.summary' })} />
-          <HeaderText text={intl.formatMessage({ id: 'common.summary.info' })} size="small" />
+          <Tooltip title={intl.formatMessage({ id: 'common.summary.info' })}>
+            <FontAwesomeIcon className={styles.DateInfoIcon} icon={faInfoCircle} />
+          </Tooltip>
         </Space>
         <HabitStatistic habit={habit} />
       </div>
