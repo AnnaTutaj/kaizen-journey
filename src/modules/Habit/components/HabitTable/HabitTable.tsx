@@ -297,11 +297,13 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         <>
           <div className={styles.Header}>
             <HeaderText text={intl.formatMessage({ id: 'habit.table.title' })} />
-            <Select<IRangeSelect['value']>
-              options={rangeSelectOptions}
-              defaultValue={range}
-              onChange={(value) => setRange(value)}
-            />
+            <div className={styles.HeaderRangeSelect}>
+              <Select<IRangeSelect['value']>
+                options={rangeSelectOptions}
+                defaultValue={range}
+                onChange={(value) => setRange(value)}
+              />
+            </div>
           </div>
           <Table
             bordered={true}
