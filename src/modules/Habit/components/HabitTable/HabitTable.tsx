@@ -1,6 +1,6 @@
-import { Col, Modal, Row, Table } from 'antd';
+import { Col, Modal, Row, Select, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
 import moment from 'moment';
@@ -23,6 +23,11 @@ import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/compone
 import { generatePath, useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 
+type RangeLastDaysType = 7 | 14 | 30 | 60 | 90;
+interface IRangeSelect {
+  label: string;
+  value: RangeLastDaysType;
+}
 interface IProps {
   habits: IHabitModel[];
   setHabits: React.Dispatch<React.SetStateAction<IHabitModel[]>>;
@@ -36,6 +41,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
 
   const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
+  const [range, setRange] = useState<RangeLastDaysType>(14);
 
   const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
   const { getHabitById, updateHabitDates, deleteHabit, archiveHabit } = useHabitFetch();
@@ -53,6 +59,17 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   useEffect(() => {
     scrollTo();
   }, [scrollTo]);
+
+  const rangeSelectOptions = useMemo((): IRangeSelect[] => {
+    const range: IRangeSelect[] = [];
+    const days: RangeLastDaysType[] = [7, 14, 30, 60, 90];
+
+    days.forEach((i) => {
+      range.push({ label: intl.formatMessage({ id: 'habit.table.select.lastDays' }, { days: i }), value: i });
+    });
+
+    return range;
+  }, [intl]);
 
   const refreshHabit = async (habit: IHabitModel) => {
     const updatedHabit = await getHabitById(habit.id);
@@ -148,8 +165,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     const dateCols: ColumnsType<IHabitModel> = [];
 
     const today = moment();
-    //todo move daysCount to select: eg. last 14 days, last month, last two months, last three months. Default: 14 days
-    for (let i = 0; i <= 14; i++) {
+    for (let i = 0; i <= range - 1; i++) {
       const isToday = i === 0;
       const date = today.clone().subtract(i, 'days');
       const dateKey = date.format('YYYY-MM-DD');
@@ -279,7 +295,14 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
       {loading ? <PageLoading /> : null}
       {habits && habits.length ? (
         <>
-          <HeaderText text={intl.formatMessage({ id: 'habit.table.title' })} />
+          <div className={styles.Header}>
+            <HeaderText text={intl.formatMessage({ id: 'habit.table.title' })} />
+            <Select<IRangeSelect['value']>
+              options={rangeSelectOptions}
+              defaultValue={range}
+              onChange={(value) => setRange(value)}
+            />
+          </div>
           <Table
             bordered={true}
             columns={columns()}
@@ -291,7 +314,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           />
         </>
       ) : (
-        <Empty description={intl.formatMessage({ id: 'habt.table.empty' })} />
+        <Empty description={intl.formatMessage({ id: 'habit.table.empty' })} />
       )}
       {habitUpdateModalConfig ? <HabitUpdateModal {...habitUpdateModalConfig} /> : null}
     </>
