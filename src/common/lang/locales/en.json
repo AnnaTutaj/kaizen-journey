@@ -97,7 +97,7 @@
   "habit.uncheck": "Uncheck",
   "habit.currentStreak": "Current streak",
   "habit.longestStreak": "Longest streak",
-  "habit.totalCount": "Total count",
+  "habit.totalChecks": "Total checks",
   "habit.totalSkippedCount": "Total pauses",
   "habit.create.button": "Add habit",
   "habit.create.title": "Add habit",

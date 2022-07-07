@@ -261,9 +261,9 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         render: (value, record) => <div>{record.longestStreak.streakCount}</div>
       },
       {
-        title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.totalCount' })}</div>,
+        title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.totalChecks' })}</div>,
         className: styles.StreakCol,
-        key: 'totalCount',
+        key: 'totalChecks',
         fixed: 'right',
         render: (value, record) => <div>{record.datesChecked.length}</div>
       }

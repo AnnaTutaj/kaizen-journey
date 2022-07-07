@@ -98,7 +98,7 @@
   "habit.uncheck": "Odznacz",
   "habit.currentStreak": "Aktualny streak",
   "habit.longestStreak": "Najdłuższy streak",
-  "habit.totalCount": "Suma zaznaczeń",
+  "habit.totalChecks": "Suma zaznaczeń",
   "habit.totalSkippedCount": "Suma zapauzowań",
   "habit.create.button": "Dodaj nawyk",
   "habit.create.title": "Dodaj nawyk",
