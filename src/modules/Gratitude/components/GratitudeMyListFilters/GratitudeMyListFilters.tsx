@@ -5,8 +5,9 @@ import { IGratitudeMyListFiltersModel } from '@modules/Gratitude/models/Gratitud
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './GratitudeMyListFilters.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEraser } from '@fortawesome/free-solid-svg-icons';
+import { faEraser, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@common/contexts/AuthContext';
+import { Visibility } from '@common/constants/Visibility';
 
 const { Option } = Select;
 
@@ -20,6 +21,19 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
   const [form] = Form.useForm();
   const { userProfile } = useAuth();
 
+  const visibilityOptions = [
+    {
+      type: Visibility.public,
+      icon: faGlobe,
+      value: true
+    },
+    {
+      type: Visibility.private,
+      icon: faLock,
+      value: false
+    }
+  ];
+
   return (
     <Form
       name="basic"
@@ -30,7 +44,7 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
       form={form}
     >
       <Row gutter={30} align="bottom">
-        <Col lg={9} span={24}>
+        <Col lg={10} span={24}>
           <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
             <Select<string[]>
               mode="tags"
@@ -47,7 +61,7 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
             </Select>
           </Form.Item>
         </Col>
-        <Col lg={9} span={24}>
+        <Col lg={7} span={24}>
           <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.color' })} name="color">
             <Select<CategoryColorsDTO> onChange={() => form.submit()} allowClear>
               {Object.entries(CategoryColors).map((categoryColor, index) => (
@@ -66,7 +80,23 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
             </Select>
           </Form.Item>
         </Col>
-        <Col lg={6} span={24}>
+        <Col lg={7} span={24}>
+          <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.visibility' })} name="isPublic">
+            <Select<boolean> onChange={() => form.submit()} allowClear>
+              {visibilityOptions.map((visibility, index) => (
+                <Option key={index} value={visibility.value}>
+                  <Space>
+                    <FontAwesomeIcon icon={visibility.icon} />
+                    {intl.formatMessage({ id: `common.visibility.${visibility.type}` })}
+                  </Space>
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <Form.Item>
             <Button
               onClick={() => {

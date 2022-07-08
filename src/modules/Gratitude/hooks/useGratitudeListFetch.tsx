@@ -34,6 +34,10 @@ const useGratitudeListFetch = ({ setLoading, mode, filters }: IProps) => {
       whereConditions.push(where('tags', 'array-contains-any', filters.tags));
     }
 
+    if (filters?.isPublic !== undefined) {
+      whereConditions.push(where('isPublic', '==', filters.isPublic));
+    }
+
     const q = startAfterGratitude
       ? query(
           collection(db, 'gratitude').withConverter(GratitudeModel.converter),
