@@ -50,7 +50,8 @@ const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubm
       title={intl.formatMessage({ id: 'gratitude.create.title' })}
       initialValues={{
         date: moment(),
-        color: 'default'
+        color: 'default',
+        isPublic: false
       }}
     />
   );

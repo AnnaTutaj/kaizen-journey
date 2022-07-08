@@ -1,4 +1,4 @@
-import { Avatar, Col, Modal, Row } from 'antd';
+import { Avatar, Col, Modal, Row, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { List, Typography } from 'antd';
 import moment from 'moment';
@@ -8,11 +8,12 @@ import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import styles from '@modules/Gratitude/components/GratitudeList/GratitudeListItem/GratitudeListItem.module.less';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
 import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
+import { Visibility } from '@common/constants/Visibility';
 
 const { Title, Paragraph } = Typography;
 
@@ -124,6 +125,19 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
             ))}
           </Row>
         </Col>
+        <Col>
+          <div className={styles.VisibilityIconContainer}>
+            <Tooltip
+              placement="left"
+              title={intl.formatMessage({
+                id: `common.visibility.${gratitude.isPublic ? Visibility.public : Visibility.private}`
+              })}
+            >
+              <FontAwesomeIcon icon={gratitude.isPublic ? faGlobe : faLock} />
+            </Tooltip>
+          </div>
+        </Col>
+
         {!hideManageOptions ? (
           <Col className={styles.DropDownCol}>
             <Dropdown menuItems={menuItems} className={styles.Dropdown}>

@@ -1,11 +1,14 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, Button, DatePicker, Switch, Select, Space } from 'antd';
+import { Form, Input, Button, DatePicker, Select, Space } from 'antd';
 import Modal from '@common/components/Modal';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './GratitudeForm.module.less';
 import { useAuth } from '@common/contexts/AuthContext';
+import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Visibility } from '@common/constants/Visibility';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -24,6 +27,19 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
 
   const maxTitleLength = 100;
   const maxDescriptionLength = 2000;
+
+  const visibilityOptions = [
+    {
+      type: Visibility.public,
+      icon: faGlobe,
+      value: true
+    },
+    {
+      type: Visibility.private,
+      icon: faLock,
+      value: false
+    }
+  ];
 
   return (
     <Modal title={title} visible onCancel={handleCancel} width={500}>
@@ -97,12 +113,17 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
           <DatePicker />
         </Form.Item>
 
-        <Form.Item
-          label={intl.formatMessage({ id: 'gratitude.form.field.isPublic' })}
-          name="isPublic"
-          valuePropName="checked"
-        >
-          <Switch />
+        <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.visibility' })} name="isPublic">
+          <Select<boolean>>
+            {visibilityOptions.map((visibility, index) => (
+              <Option key={index} value={visibility.value}>
+                <Space>
+                  <FontAwesomeIcon icon={visibility.icon} />
+                  {intl.formatMessage({ id: `common.visibility.${visibility.type}` })}
+                </Space>
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item>

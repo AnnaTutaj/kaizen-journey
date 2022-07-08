@@ -31,6 +31,9 @@
   "common.form.field.max.error": "Limit znaków wynosi {max}",
   "common.list.loadMore": "Załaduj więcej",
 
+  "common.visibility.public": "Publiczne",
+  "common.visibility.private": "Tylko ja",
+
   "common.color.default": "Domyślny",
   "common.color.red": "Malinowy",
   "common.color.green": "Pistacjowy",
@@ -79,7 +82,7 @@
   "gratitude.form.field.tags": "Tagi",
   "gratitude.form.field.color": "Kolor",
   "gratitude.form.field.date": "Data",
-  "gratitude.form.field.isPublic": "Publiczne",
+  "gratitude.form.field.visibility": "Widoczność",
   "gratitude.form.submit": "Zapisz",
 
   "gratitude.confirmModal.delete.title": "Usunąć wdzięczność?",

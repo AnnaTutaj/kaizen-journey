@@ -24,7 +24,7 @@ export interface IGratitudeFormModelDTO {
 }
 
 class GratitudeFormModel {
-  static  serializeToCreate({
+  static serializeToCreate({
     createdByUid,
     createdBy,
     createdByPictureURL,

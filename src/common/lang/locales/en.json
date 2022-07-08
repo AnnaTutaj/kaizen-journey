@@ -31,6 +31,9 @@
   "common.form.field.max.error": "Character limit is {max}",
   "common.list.loadMore": "Load more",
 
+  "common.visibility.public": "Public",
+  "common.visibility.private": "Only me",
+
   "common.color.default": "Default",
   "common.color.red": "Raspberry",
   "common.color.green": "Pistachio",
@@ -78,7 +81,7 @@
   "gratitude.form.field.tags": "Tags",
   "gratitude.form.field.color": "Color",
   "gratitude.form.field.date": "Date",
-  "gratitude.form.field.isPublic": "Public",
+  "gratitude.form.field.visibility": "Visibility",
   "gratitude.form.submit": "Save",
 
   "gratitude.confirmModal.delete.title": "Delete gratitude?",
