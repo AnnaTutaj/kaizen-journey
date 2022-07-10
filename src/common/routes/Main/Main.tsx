@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from '@common/containers/Header';
+import Footer from '@common/containers/Footer';
 import { Paths } from '@common/constants/Paths';
 import styles from './Main.module.less';
 import Dashboard from '@modules/Dashboard';
@@ -27,7 +28,7 @@ const Main: React.FC = () => {
   }
 
   return (
-    <Layout className={styles.Layout}>
+    <Layout>
       <Header />
       <Content className={styles.Content}>
         <Routes>
@@ -73,6 +74,7 @@ const Main: React.FC = () => {
           <Route path="*" element={<PageUnderConstruction title="Page Not Found" />} />
         </Routes>
       </Content>
+      <Footer />
     </Layout>
   );
 };

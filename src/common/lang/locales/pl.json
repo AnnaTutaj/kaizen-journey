@@ -11,6 +11,9 @@
   "header.register": "Zarejestuj się",
   "header.logout": "Wyloguj się",
   "header.settings": "Ustawienia",
+  "footer.credits": "Utworzone z ❤️ przez",
+  "footer.help": "Pomoc & FAQ",
+  "footer.privacyPolicy": "Polityka prywatności",
 
   "common.preview": "Podgląd",
   "common.edit": "Edytuj",

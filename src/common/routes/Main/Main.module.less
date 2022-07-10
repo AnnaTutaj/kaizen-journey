@@ -3,11 +3,8 @@ body {
   background-color: var(--layout-body-background) !important;
 }
 
-.Layout {
-  min-height: 100vh;
-}
-
 .Content {
+  min-height: calc(100vh - @header-height) !important;
   margin-top: @header-height !important;
   padding: @content-padding-vertical 50px;
   background-color: var(--layout-body-background) !important;
