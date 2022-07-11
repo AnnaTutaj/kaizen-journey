@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
 
   return (
     <Layout.Footer className={styles.Footer}>
-      <div className={styles.Credits}>
+      <div>
         <span>
           <span className={styles.CreditsText}>©2022 {intl.formatMessage({ id: 'footer.credits' })} </span>
           <a className={styles.Link} href="mailto:tutaj.anna.93@gmail.com">
@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
         </span>
       </div>
       <div>
-        <Space size={10} className={styles.Space}>
+        <Space size={10}>
           <Link to={Paths.Support}>{intl.formatMessage({ id: 'footer.help' })}</Link>
           <span>•</span>
           <a
