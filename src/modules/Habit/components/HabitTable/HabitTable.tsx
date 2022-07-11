@@ -58,7 +58,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
 
   useEffect(() => {
     scrollTo();
-  }, [scrollTo]);
+  }, [scrollTo, range]);
 
   const rangeSelectOptions = useMemo((): IRangeSelect[] => {
     const range: IRangeSelect[] = [];
