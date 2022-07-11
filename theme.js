@@ -5,7 +5,7 @@ module.exports = {
   '@white-color': '#ffffff',
   '@dark-grey-color': '#6b6b6b',
   '@light-grey-color': '#e6e6e6',
-  '@title-grey-color': '#00000073',
+  '@title-grey-color': '#8b8b8b',
 
   '@gradient-keppel-color': '@primary-color',
   '@gradient-viola-color': '#c78b9e',
