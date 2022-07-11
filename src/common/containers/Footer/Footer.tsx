@@ -10,15 +10,13 @@ const Footer: React.FC = () => {
 
   return (
     <Layout.Footer className={styles.Footer}>
-      <div>
+      <Space direction="vertical" size={4}>
         <span>
           <span className={styles.CreditsText}>©2022 {intl.formatMessage({ id: 'footer.credits' })} </span>
           <a className={styles.Link} href="mailto:tutaj.anna.93@gmail.com">
             Anna Tutaj
           </a>
         </span>
-      </div>
-      <div>
         <Space size={10}>
           <Link to={Paths.Support}>{intl.formatMessage({ id: 'footer.help' })}</Link>
           <span>•</span>
@@ -30,7 +28,7 @@ const Footer: React.FC = () => {
             {intl.formatMessage({ id: 'footer.privacyPolicy' })}
           </a>
         </Space>
-      </div>
+      </Space>
     </Layout.Footer>
   );
 };
