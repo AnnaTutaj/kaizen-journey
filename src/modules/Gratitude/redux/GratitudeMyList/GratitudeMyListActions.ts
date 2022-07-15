@@ -1,9 +1,11 @@
-import { IGratitudeMyListFiltersModel } from './../../models/GratitudeMyListFiltersModel';
 import { Dispatch } from 'redux';
 import { collection, query, where, getDocs, orderBy, limit, startAfter, getDoc, doc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { ActionsUnion, createAction as createActionHelper } from '@common/helpers/ActionHelper';
-import { IGratitudeMyListFiltersModelDTO } from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
+import {
+  IGratitudeMyListFiltersModel,
+  IGratitudeMyListFiltersModelDTO
+} from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
 import GratitudeModel, { IGratitudeModel, IGratitudeModelDTO } from '@modules/Gratitude/models/GratitudeModel';
 import { GratitudeMyListTypes } from './GratitudeMyListTypes';
 

@@ -1,6 +1,6 @@
-import { Col, Modal, Row, Select, Table } from 'antd';
+import { Col, Modal, Row, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
 import moment from 'moment';
@@ -22,12 +22,9 @@ import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/components/HabitUpdateModal/HabitUpdateModal';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
+import { useSelector } from 'react-redux';
+import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTrackerInterface';
 
-type RangeLastDaysType = 7 | 14 | 30 | 60 | 90;
-interface IRangeSelect {
-  label: string;
-  value: RangeLastDaysType;
-}
 interface IProps {
   habits: IHabitModel[];
   setHabits: React.Dispatch<React.SetStateAction<IHabitModel[]>>;
@@ -37,11 +34,12 @@ interface IProps {
 const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) => {
   const intl = useIntl();
   const navigate = useNavigate();
+
+  const range = useSelector(({ habitTracker }: IHabitTrackerOwnState) => habitTracker.rangeLastDays);
+
   const [loading, setLoading] = useState<boolean>(false);
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
-
   const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
-  const [range, setRange] = useState<RangeLastDaysType>(14);
 
   const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
   const { getHabitById, updateHabitDates, deleteHabit, archiveHabit } = useHabitFetch();
@@ -59,17 +57,6 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   useEffect(() => {
     scrollTo();
   }, [scrollTo, range]);
-
-  const rangeSelectOptions = useMemo((): IRangeSelect[] => {
-    const range: IRangeSelect[] = [];
-    const days: RangeLastDaysType[] = [7, 14, 30, 60, 90];
-
-    days.forEach((i) => {
-      range.push({ label: intl.formatMessage({ id: 'habit.table.select.lastDays' }, { days: i }), value: i });
-    });
-
-    return range;
-  }, [intl]);
 
   const refreshHabit = async (habit: IHabitModel) => {
     const updatedHabit = await getHabitById(habit.id);
@@ -297,13 +284,6 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         <>
           <div className={styles.Header}>
             <HeaderText text={intl.formatMessage({ id: 'habit.table.title' })} />
-            <div className={styles.HeaderRangeSelect}>
-              <Select<IRangeSelect['value']>
-                options={rangeSelectOptions}
-                defaultValue={range}
-                onChange={(value) => setRange(value)}
-              />
-            </div>
           </div>
           <Table
             bordered={true}

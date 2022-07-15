@@ -1,0 +1,3 @@
+export enum HabitTrackerTypes {
+  HABIT_TRACKER_SET_RANGE_LAST_DAYS = 'HABIT_TRACKER_SET_RANGE_LAST_DAYS'
+}

@@ -1,4 +1,4 @@
-import { UserDispatchUnion } from './../../../../common/redux/UserActions';
+import { UserDispatchUnion } from '@common/redux/UserActions';
 import { produce } from 'immer';
 import _ from 'lodash';
 import GratitudeModel from '@modules/Gratitude/models/GratitudeModel';
