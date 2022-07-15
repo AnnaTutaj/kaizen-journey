@@ -100,7 +100,11 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
           <Form.Item>
             <Button
               onClick={() => {
-                form.resetFields();
+                form.setFieldsValue({
+                  tags: [],
+                  color: undefined,
+                  isPublic: undefined
+                });
                 form.submit();
               }}
             >

@@ -1,116 +1,52 @@
 import PageLoading from '@common/components/PageLoading';
 import Empty from '@common/components/Empty';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import GratitudeListScrolled from '../GratitudeListScrolled';
-import _ from 'lodash';
-import GratitudeModel, { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
-import useGratitudeListFetch from '@modules/Gratitude/hooks/useGratitudeListFetch';
+import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { IGratitudeUpdateModalProps } from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
 import GratitudeUpdateModal from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
-import { IGratitudeMyListFiltersModelDTO } from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
+import GratitudeMyListFiltersModel from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { IGratitudeMyListOwnState } from '@modules/Gratitude/redux/GratitudeMyList/GratitudeMyListInterface';
+import { useAuth } from '@common/contexts/AuthContext';
+import GratitudeMyListActions from '@modules/Gratitude/redux/GratitudeMyList/GratitudeMyListActions';
 
-interface IProps {
-  newGratitude: IGratitudeModel | undefined;
-  filters: IGratitudeMyListFiltersModelDTO | undefined;
-}
-
-const GratitudeMyList: React.FC<IProps> = ({ newGratitude, filters }) => {
+const GratitudeMyList: React.FC = () => {
   const intl = useIntl();
+  const dispatch = useDispatch();
+  const { userProfile } = useAuth();
 
-  const [loadedGratitudes, setLoadedGratitudes] = useState<IGratitudeModel[]>([]);
-  const [nextGratitudes, setNextGratitudes] = useState<IGratitudeModel[]>([]);
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [loadingReload, setLoadingReload] = useState<boolean>(false); //set after add gratitude or set filter -
-  const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
-  const [moreGratitudes, setMoreGratitudes] = useState<boolean>(false);
+  const { data, isLoaded, isLoadingMore, hasMore, filters } = useSelector(
+    ({ gratitudeMyList }: IGratitudeMyListOwnState) => gratitudeMyList,
+    shallowEqual
+  );
 
   const [gratitudeUpdateModalConfig, setGratitudeUpdateModalConfig] = useState<IGratitudeUpdateModalProps>();
 
-  const { getGratitudes } = useGratitudeListFetch({ setLoading, mode: 'myList', filters });
-
-  //init - runs only once
-  useEffect(() => {
-    async function fetchGratitudes() {
-      const gratitudes = await getGratitudes();
-      setNextGratitudes(gratitudes);
-      const hasMore = gratitudes && gratitudes.length > 1;
-      setMoreGratitudes(hasMore);
-      setLoadingInitial(false);
-    }
-
-    fetchGratitudes();
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    async function fetchGratitudes() {
-      setLoadingReload(true);
-      const gratitudes = await getGratitudes();
-      setLoadedGratitudes([]);
-      setNextGratitudes(gratitudes);
-      const hasMore = gratitudes && gratitudes.length > 1;
-      setMoreGratitudes(hasMore);
-      setLoadingReload(false);
-    }
-
-    fetchGratitudes();
-    // eslint-disable-next-line
-  }, [filters, newGratitude]);
-
-  useEffect(() => {
-    setLoadedGratitudes((value) => {
-      const array = _.uniqBy([...value, ...nextGratitudes], 'id');
-      const sortedArray = _.orderBy(array, [(item) => item.date.seconds], ['desc']);
-      return sortedArray;
-    });
-  }, [nextGratitudes]);
-
   const getLastFetchedGratitude = () => {
-    return loadedGratitudes && loadedGratitudes.length && loadedGratitudes[loadedGratitudes.length - 1]
-      ? loadedGratitudes[loadedGratitudes.length - 1]
-      : undefined;
+    return data && data.length && data[data.length - 1] ? data[data.length - 1] : undefined;
   };
 
   const getNextGratitudes = async () => {
-    const lastFetchedGratitude = getLastFetchedGratitude();
+    if (userProfile) {
+      const lastFetchedGratitude = getLastFetchedGratitude();
+      const serializedFilters = GratitudeMyListFiltersModel.serialize(filters);
 
-    const gratitudes = await getGratitudes(lastFetchedGratitude);
-    setNextGratitudes(gratitudes);
-
-    if (gratitudes && gratitudes.length <= 1) {
-      setMoreGratitudes(false);
+      GratitudeMyListActions.loadAction({
+        filters: serializedFilters,
+        userProfileUid: userProfile.uid,
+        lastFetchedGratitude
+      })(dispatch);
     }
   };
 
   const removeGratitude = (id: string) => {
-    setLoadedGratitudes((prevState) => _.remove(prevState, (i) => i.id !== id));
+    GratitudeMyListActions.removeAction(id)(dispatch);
   };
 
   const handleUpdateSubmit = async (gratitude: IGratitudeModel) => {
-    const gratitudeSnap = await GratitudeModel.fetchById(gratitude.id);
-
-    if (gratitudeSnap.exists()) {
-      const updatedGratitude = GratitudeModel.build(gratitudeSnap.data());
-
-      setLoadedGratitudes((prevItems) => {
-        const array = prevItems.map((prevGratitude) =>
-          prevGratitude.id === updatedGratitude.id ? updatedGratitude : prevGratitude
-        );
-
-        // if date changes, it cannot be added as the last fetched (cuz gaps risk)
-        if (
-          array[array.length - 1].id === updatedGratitude.id &&
-          gratitude.date.seconds !== updatedGratitude.date.seconds
-        ) {
-          array.pop();
-        }
-
-        const sortedArray = _.orderBy(array, [(item) => item.date.seconds], ['desc']);
-        return sortedArray;
-      });
-    }
+    GratitudeMyListActions.updateAction(gratitude)(dispatch);
   };
 
   const updateGratitude = (item: IGratitudeModel) => {
@@ -124,20 +60,19 @@ const GratitudeMyList: React.FC<IProps> = ({ newGratitude, filters }) => {
     });
   };
 
-  if (loadingInitial) {
+  if (!isLoaded) {
     return <PageLoading />;
   }
 
   return (
     <>
-      {loadingReload ? <PageLoading /> : null}
-      {loadedGratitudes && loadedGratitudes.length ? (
+      {data && data.length ? (
         <GratitudeListScrolled
           headerText={intl.formatMessage({ id: 'gratitude.my.list.title' })}
-          gratitudes={loadedGratitudes}
-          loading={loading}
+          gratitudes={data}
+          loading={isLoadingMore}
           getNextGratitudes={getNextGratitudes}
-          moreGratitudes={moreGratitudes}
+          moreGratitudes={hasMore}
           removeGratitude={removeGratitude}
           updateGratitude={updateGratitude}
         />

@@ -14,6 +14,8 @@ import {
 import { User as FirebaseUser } from 'firebase/auth';
 import { UserCredential as FirebaseUserCredential } from 'firebase/auth';
 import { serverTimestamp, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { useDispatch } from 'react-redux';
+import UserActions from '@common/redux/UserActions';
 
 export enum Language {
   pl = 'pl',
@@ -57,6 +59,7 @@ export const AuthContext = createContext<IAuthContext>({
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthContextProvider({ children }: any) {
+  const dispatch = useDispatch();
   const [userAuth, setUserAuth] = useState<FirebaseUser | null>(null);
   const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
@@ -143,7 +146,9 @@ export default function AuthContextProvider({ children }: any) {
   //   }
 
   const logout = () => {
+    UserActions.userLogoutAction()(dispatch);
     return signOut(auth);
+    //todo wyczysczenie z reduxa gratitudes
   };
 
   const signInWithGoogle = async () => {

@@ -10,7 +10,7 @@ import GratitudeForm from '@modules/Gratitude/components/GratitudeForm';
 import moment from 'moment';
 
 export interface IGratitudeCreateModalProps {
-  handleSubmit: (gratitudeId: string) => void;
+  handleSubmit: () => void;
   handleCancel: () => void;
 }
 
@@ -27,9 +27,8 @@ const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubm
         ...values
       });
 
-      const gratitudeRef = await addDoc(collection(db, 'gratitude'), finalValues);
-
-      handleSubmit(gratitudeRef?.id);
+      await addDoc(collection(db, 'gratitude'), finalValues);
+      handleSubmit();
     } catch (error) {
       if (error instanceof FirebaseError) {
         const errorMessage = intl.formatMessage({

@@ -1,12 +1,12 @@
-import { getDoc, doc } from '@firebase/firestore';
 import { Button, Space } from 'antd';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
+import _ from 'lodash';
+import { useAuth } from '@common/contexts/AuthContext';
 import GratitudeCreateModal from './components/GratitudeCreateModal';
 import GratitudeMyList from './components/GratitudeMyList';
 import styles from './Gratitude.module.less';
-import { db } from '@common/util/firebase';
-import GratitudeModel, { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { IGratitudeCreateModalProps } from '@modules/Gratitude/components/GratitudeCreateModal/GratitudeCreateModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -15,33 +15,60 @@ import cn from 'classnames';
 import GratitudeMyListFiltersModel, {
   IGratitudeMyListFiltersModelDTO
 } from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
+import GratitudeMyListActions from './redux/GratitudeMyList/GratitudeMyListActions';
+import { IGratitudeMyListOwnState } from './redux/GratitudeMyList/GratitudeMyListInterface';
 
 const Gratitude: React.FC = () => {
   const intl = useIntl();
+  const dispatch = useDispatch();
+
+  const { userProfile } = useAuth();
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [gratitudeCreateModalConfig, setGratitudeCreateModalConfig] = useState<IGratitudeCreateModalProps>();
-  const [newGratitude, setNewGratitude] = useState<IGratitudeModel>();
-  const [filters, setFilters] = useState<IGratitudeMyListFiltersModelDTO>();
 
-  const handleCreateSubmit = async (gratitudeId: string) => {
-    if (gratitudeId) {
-      const snap = await getDoc(doc(db, 'gratitude', gratitudeId).withConverter(GratitudeModel.converter));
+  const { isLoaded, filters } = useSelector(
+    ({ gratitudeMyList }: IGratitudeMyListOwnState) => gratitudeMyList,
+    shallowEqual
+  );
 
-      if (snap.exists()) {
-        setNewGratitude(GratitudeModel.build(snap.data()));
-      }
+  const resetList = useCallback(() => {
+    if (userProfile) {
+      const serializedFilters = GratitudeMyListFiltersModel.serialize(filters);
+
+      GratitudeMyListActions.loadAction({ filters: serializedFilters, userProfileUid: userProfile.uid, reload: true })(
+        dispatch
+      );
     }
-  };
+  }, [dispatch, filters, userProfile]);
+
+  const refreshListAfterChangeFilters = useCallback(
+    (newFilters: IGratitudeMyListFiltersModelDTO) => {
+      if (userProfile) {
+        GratitudeMyListActions.loadAction({ filters: newFilters, userProfileUid: userProfile.uid, reload: true })(
+          dispatch
+        );
+      }
+    },
+    [dispatch, userProfile]
+  );
 
   const handleCreateGratitude = () => {
     setGratitudeCreateModalConfig({
       handleCancel: () => setGratitudeCreateModalConfig(undefined),
-      handleSubmit: async (gratitudeId) => {
+      handleSubmit: async () => {
         setGratitudeCreateModalConfig(undefined);
-        await handleCreateSubmit(gratitudeId);
+        resetList();
       }
     });
   };
+
+  //init
+  useEffect(() => {
+    if (!isLoaded) {
+      resetList();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -67,14 +94,20 @@ const Gratitude: React.FC = () => {
 
       <div className={cn(styles.FiltersContainer, { [styles.FiltersContainerVisible]: showFilters })}>
         <GratitudeMyListFilters
+          initialValues={filters}
           onFinish={(values) => {
-            const finalValues = GratitudeMyListFiltersModel.serialize(values);
-            setFilters(finalValues);
+            const serializedFilters = GratitudeMyListFiltersModel.serialize(values);
+            const serializedCurrentFilters = GratitudeMyListFiltersModel.serialize(filters);
+
+            if (!_.isEqual(serializedFilters, serializedCurrentFilters)) {
+              GratitudeMyListActions.setFiltersAction(values)(dispatch);
+              refreshListAfterChangeFilters(serializedFilters);
+            }
           }}
         />
       </div>
 
-      <GratitudeMyList newGratitude={newGratitude} filters={filters} />
+      <GratitudeMyList />
 
       {gratitudeCreateModalConfig ? <GratitudeCreateModal {...gratitudeCreateModalConfig} /> : null}
     </>
