@@ -5,6 +5,9 @@ import Modal from '@common/components/Modal';
 import { IHabitFormModel } from '@modules/Habit/models/HabitFormModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './HabitForm.module.less';
+import { Visibility } from '@common/constants/Visibility';
+import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -22,6 +25,19 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
 
   const maxNameLength = 100;
   const maxDescriptionLength = 250;
+
+  const visibilityOptions = [
+    {
+      type: Visibility.public,
+      icon: faGlobe,
+      value: true
+    },
+    {
+      type: Visibility.private,
+      icon: faLock,
+      value: false
+    }
+  ];
 
   return (
     <Modal title={title} visible onCancel={handleCancel} width={500}>
@@ -81,6 +97,19 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
                     }}
                   ></div>
                   {intl.formatMessage({ id: `common.color.${categoryColor[0]}` })}
+                </Space>
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
+          <Select<boolean>>
+            {visibilityOptions.map((visibility, index) => (
+              <Option key={index} value={visibility.value}>
+                <Space>
+                  <FontAwesomeIcon icon={visibility.icon} />
+                  {intl.formatMessage({ id: `common.visibility.${visibility.type}` })}
                 </Space>
               </Option>
             ))}

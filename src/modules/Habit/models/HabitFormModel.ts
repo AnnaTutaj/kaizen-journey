@@ -4,6 +4,7 @@ import { IHabitModel } from './HabitModel';
 export interface IHabitFormModel {
   name: string;
   description: string;
+  isPublic: boolean;
   color: CategoryColorsDTO;
 }
 
@@ -11,6 +12,7 @@ export interface IHabitFormModelDTO {
   name: string;
   description: string;
   isArchived: boolean;
+  isPublic: boolean;
   createdByUid: string;
   color: CategoryColorsDTO;
   datesChecked: string[];
@@ -22,6 +24,7 @@ class HabitFormModel {
     createdByUid,
     name,
     description,
+    isPublic,
     color
   }: IHabitFormModel & {
     createdByUid: string;
@@ -31,16 +34,18 @@ class HabitFormModel {
       name: name,
       description: description || '',
       isArchived: false,
+      isPublic: isPublic || false,
       color: color || 'default',
       datesChecked: [],
       datesSkipped: []
     };
   }
 
-  static serializeToUpdate({ name, description, color }: IHabitFormModel): Partial<IHabitFormModelDTO> {
+  static serializeToUpdate({ name, description, color, isPublic }: IHabitFormModel): Partial<IHabitFormModelDTO> {
     return {
       name: name,
       description: description || '',
+      isPublic: isPublic || false,
       color: color || 'default'
     };
   }
@@ -49,6 +54,7 @@ class HabitFormModel {
     return {
       name: data.name,
       description: data.description || '',
+      isPublic: data.isPublic ?? false,
       color: data.color ? data.color.name : 'default'
     };
   }

@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { Button, Select, Space } from 'antd';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfoCircle, faLongArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faGlobe, faInfoCircle, faLock, faLongArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import HeaderText from '@common/components/HeaderText';
 import { Paths } from '@common/constants/Paths';
 import PageLoading from '@common/components/PageLoading';
@@ -14,6 +14,7 @@ import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import styles from './HabitView.module.less';
 import HabitStatistic from '@modules/Habit/components/HabitStatistic';
 import Tooltip from 'antd/es/tooltip';
+import { Visibility } from '@common/constants/Visibility';
 
 interface IYearSelect {
   label: string;
@@ -74,7 +75,30 @@ const HabitView: React.FC = () => {
         />
       </div>
       <div className={styles.HabitViewContainer}>
-        <HeaderText text={habit.name} />
+        <Space size={12}>
+          <HeaderText text={habit.name} />
+          <div>
+            <Tooltip
+              placement="bottom"
+              title={intl.formatMessage({
+                id: `common.visibility.${habit.isPublic ? Visibility.public : Visibility.private}`
+              })}
+            >
+              <FontAwesomeIcon className={styles.HeaderIcon} icon={habit.isPublic ? faGlobe : faLock} />
+            </Tooltip>
+          </div>
+          {habit.isArchived ? (
+            <Tooltip
+              placement="bottom"
+              title={intl.formatMessage({
+                id: 'habit.archived'
+              })}
+            >
+              <FontAwesomeIcon className={styles.HeaderIcon} icon={faBoxArchive} />
+            </Tooltip>
+          ) : null}
+        </Space>
+
         <div className={styles.HabitCalenarHeatmapContainer}>
           <HabitCalenarHeatmap habit={habit} year={year} />
         </div>

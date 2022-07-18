@@ -1,4 +1,4 @@
-import { Col, Modal, Row, Table } from 'antd';
+import { Col, Modal, Row, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -17,13 +17,14 @@ import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageLoading from '@common/components/PageLoading';
 import HeaderText from '@common/components/HeaderText';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/components/HabitUpdateModal/HabitUpdateModal';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import { useSelector } from 'react-redux';
 import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTrackerInterface';
+import { Visibility } from '@common/constants/Visibility';
 
 interface IProps {
   habits: IHabitModel[];
@@ -233,14 +234,26 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         fixed: true,
         render: (text, record) => (
           <>
-            <Row wrap={false} className={styles.HabitNameRow} justify="space-between">
+            <Row wrap={false} className={styles.HabitNameRow} align="middle">
               <Col flex={1}>
                 <div className={styles.HabitName}>{text}</div>
+              </Col>
+              <Col>
+                <div className={styles.VisibilityIconContainer}>
+                  <Tooltip
+                    placement="bottom"
+                    title={intl.formatMessage({
+                      id: `common.visibility.${record.isPublic ? Visibility.public : Visibility.private}`
+                    })}
+                  >
+                    <FontAwesomeIcon className={styles.HabitIcon} icon={record.isPublic ? faGlobe : faLock} />
+                  </Tooltip>
+                </div>
               </Col>
               <Col className={styles.DropdownCol}>
                 <Dropdown menuItems={menuItems(record)} className={styles.Dropdown}>
                   <div className={styles.DropdownIconContainer}>
-                    <FontAwesomeIcon icon={faEllipsisV} />
+                    <FontAwesomeIcon className={styles.HabitIcon} icon={faEllipsisV} />
                   </div>
                 </Dropdown>
               </Col>

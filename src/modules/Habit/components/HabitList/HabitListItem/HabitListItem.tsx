@@ -2,8 +2,8 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { generatePath, useNavigate } from 'react-router-dom';
-import { Col, Modal, Row, List, Typography } from 'antd';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { Col, Modal, Row, List, Typography, Tooltip } from 'antd';
+import { faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Paths } from '@common/constants/Paths';
 import Dropdown from '@common/components/Dropdown';
@@ -13,6 +13,7 @@ import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import styles from '@modules/Habit/components/HabitList/HabitListItem/HabitListItem.module.less';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '../../HabitUpdateModal/HabitUpdateModal';
+import { Visibility } from '@common/constants/Visibility';
 
 const { Title, Paragraph } = Typography;
 
@@ -157,6 +158,18 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
               {habit.name}
             </Title>
             <Paragraph className={styles.Description}>{habit.description}</Paragraph>
+          </Col>
+          <Col>
+            <div className={styles.VisibilityIconContainer}>
+              <Tooltip
+                placement="bottom"
+                title={intl.formatMessage({
+                  id: `common.visibility.${habit.isPublic ? Visibility.public : Visibility.private}`
+                })}
+              >
+                <FontAwesomeIcon icon={habit.isPublic ? faGlobe : faLock} />
+              </Tooltip>
+            </div>
           </Col>
           <Col className={styles.DropDownCol}>
             <Dropdown menuItems={menuItems} className={styles.Dropdown}>

@@ -30,6 +30,7 @@
   "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
   "common.filters": "Filtry",
   "common.filters.clear": "Wyczyść",
+  "common.form.field.visibility": "Widoczność",
   "common.form.field.required.error": "To pole jest wymagane",
   "common.form.field.max.error": "Limit znaków wynosi {max}",
   "common.list.loadMore": "Załaduj więcej",
@@ -85,7 +86,6 @@
   "gratitude.form.field.tags": "Tagi",
   "gratitude.form.field.color": "Kolor",
   "gratitude.form.field.date": "Data",
-  "gratitude.form.field.visibility": "Widoczność",
   "gratitude.form.submit": "Zapisz",
 
   "gratitude.confirmModal.delete.title": "Usunąć wdzięczność?",
@@ -107,6 +107,7 @@
   "habit.longestStreak": "Najdłuższy streak",
   "habit.totalChecks": "Suma zaznaczeń",
   "habit.totalSkippedCount": "Suma zapauzowań",
+  "habit.archived": "Nawyk zarchiwizowany",
   "habit.create.button": "Dodaj nawyk",
   "habit.create.title": "Dodaj nawyk",
   "habit.update.title": "Edytuj nawyk",

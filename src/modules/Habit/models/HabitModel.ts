@@ -17,6 +17,7 @@ export interface IHabitModel {
   colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten };
   currentStreak: IStreak;
   longestStreak: IStreak;
+  isPublic: boolean;
 }
 
 export interface IHabitModelDTO {
@@ -27,6 +28,7 @@ export interface IHabitModelDTO {
   datesSkipped: string[];
   createdByUid: string;
   isArchived: boolean;
+  isPublic: boolean;
   color?: CategoryColorsDTO;
 }
 
@@ -39,6 +41,7 @@ class HabitModel implements IHabitModel {
     public datesSkipped: string[],
     public createdByUid: string,
     public isArchived: boolean,
+    public isPublic: boolean,
     public color: { name: CategoryColorsDTO; value: CategoryColors },
     public colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten },
     public currentStreak: IStreak,
@@ -56,6 +59,7 @@ class HabitModel implements IHabitModel {
       dto.datesSkipped,
       dto.createdByUid,
       dto.isArchived,
+      dto.isPublic,
       dto.color
         ? { name: dto.color, value: CategoryColors[dto.color] }
         : { name: 'default', value: CategoryColors.default },

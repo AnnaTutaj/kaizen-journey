@@ -81,7 +81,7 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
           </Form.Item>
         </Col>
         <Col lg={7} span={24}>
-          <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.visibility' })} name="isPublic">
+          <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
             <Select<boolean> onChange={() => form.submit()} allowClear>
               {visibilityOptions.map((visibility, index) => (
                 <Option key={index} value={visibility.value}>

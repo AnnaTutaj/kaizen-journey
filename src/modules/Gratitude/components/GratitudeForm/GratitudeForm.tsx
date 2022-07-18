@@ -113,7 +113,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
           <DatePicker />
         </Form.Item>
 
-        <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.visibility' })} name="isPublic">
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
           <Select<boolean>>
             {visibilityOptions.map((visibility, index) => (
               <Option key={index} value={visibility.value}>

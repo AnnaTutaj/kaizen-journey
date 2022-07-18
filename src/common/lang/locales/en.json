@@ -30,6 +30,7 @@
   "common.defaultErrorMessage": "Something went wrong... please try again later",
   "common.filters": "Filters",
   "common.filters.clear": "Clear",
+  "common.form.field.visibility": "Visibility",
   "common.form.field.required.error": "This field is required",
   "common.form.field.max.error": "Character limit is {max}",
   "common.list.loadMore": "Load more",
@@ -84,7 +85,6 @@
   "gratitude.form.field.tags": "Tags",
   "gratitude.form.field.color": "Color",
   "gratitude.form.field.date": "Date",
-  "gratitude.form.field.visibility": "Visibility",
   "gratitude.form.submit": "Save",
 
   "gratitude.confirmModal.delete.title": "Delete gratitude?",
@@ -106,6 +106,7 @@
   "habit.longestStreak": "Longest streak",
   "habit.totalChecks": "Total checks",
   "habit.totalSkippedCount": "Total pauses",
+  "habit.archived": "Archived habit",
   "habit.create.button": "Add habit",
   "habit.create.title": "Add habit",
   "habit.update.title": "Edit habit",
