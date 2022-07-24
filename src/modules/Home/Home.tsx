@@ -1,18 +1,26 @@
-import { Spin, Space } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import { Space, Row, Col, Button } from 'antd';
+import React, { useEffect, useRef } from 'react';
 import { useIntl } from 'react-intl';
-import Empty from '@common/components/Empty';
-import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
-import useGratitudeListFetch from '@modules/Gratitude/hooks/useGratitudeListFetch';
-import GratitudeList from '@modules/Gratitude/components/GratitudeList';
 import styles from './Home.module.less';
-import cn from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
+import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
+import { useDispatch } from 'react-redux';
 
 const Home: React.FC = () => {
   const intl = useIntl();
+  const dispatch = useDispatch();
   const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    LayoutActions.setHidePaddingAction(true)(dispatch);
+
+    return () => {
+      LayoutActions.setHidePaddingAction(false)(dispatch);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const executeScroll = () => {
     if (divRef && divRef.current) {
@@ -20,59 +28,49 @@ const Home: React.FC = () => {
     }
   };
 
-  const [loadedGratitudes, setLoadedGratitudes] = useState<IGratitudeModel[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const { getGratitudes } = useGratitudeListFetch({ setLoading, mode: 'public' });
-
-  //init - runs only once
-  useEffect(() => {
-    async function fetchGratitudes() {
-      const gratitudes = await getGratitudes();
-      setLoadedGratitudes(gratitudes);
-    }
-
-    fetchGratitudes();
-    // eslint-disable-next-line
-  }, []);
+  const onClick = () => {};
 
   return (
     <>
       <div className={styles.HeaderContainer}>
+        <Space className={styles.HeaderKaizenJourney}>
+          <img src={kaizenJourneyLogo} className={styles.LogoImage} alt="Kaizen Journey Logo" />
+          <div className={styles.HeaderTitle}>Kaizen Journey</div>
+        </Space>
+
+        <div className={styles.HeaderSubtitle}>{intl.formatMessage({ id: 'home.header.subtitle' })}</div>
         <Space direction="vertical">
-          <div className={cn(styles.HeaderText, styles.HeaderSubtitle, styles.HeaderTextAnimate)}>
-            {intl.formatMessage({ id: 'home.header.text' })}
-          </div>
-          <div className={cn(styles.HeaderText, styles.HeaderTitle, styles.HeaderTextAnimate)}>Kaizen Journey!</div>
-          <Space direction="vertical" size={5} className={styles.HeaderTextDiscoverMore} onClick={executeScroll}>
-            <span>{intl.formatMessage({ id: 'home.header.discoverMore' })}</span>
-            <FontAwesomeIcon className={styles.HeaderIconDiscoverMore} icon={faChevronDown} />
-          </Space>
+          <Button type="primary" onClick={onClick}>
+            {intl.formatMessage({ id: 'home.header.button' })}
+          </Button>
+          {intl.formatMessage({ id: 'common.or' }).toLowerCase()}
+          <Button type="text" onClick={executeScroll}>
+            <Space size={10}>
+              <FontAwesomeIcon icon={faChevronDown} />
+              <span>{intl.formatMessage({ id: 'home.header.discoverMore' })}</span>
+            </Space>
+          </Button>
         </Space>
       </div>
-
-      <div ref={divRef} className={styles.FeaturesDiv}>
-        <h1>Lorem Ipsum</h1>
-        <div>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est laborum.
-        </div>
+      <div ref={divRef} className={styles.ContentDiv}>
+        <Row justify="center" style={{ textAlign: 'center' }}>
+          <Col md={24} className={styles.HeaderFontSize}>
+            {intl.formatMessage({ id: 'home.kaizenMeaning' })}
+          </Col>
+          <Col span={24}>
+            <Space size={20}>
+              <Space direction="vertical">
+                <div className={styles.Kanji}>改</div>
+                <div className={styles.KanjiMeaning}>Kai = {intl.formatMessage({ id: 'home.change' })}</div>
+              </Space>
+              <Space direction="vertical">
+                <div className={styles.Kanji}>善</div>
+                <div className={styles.KanjiMeaning}>Zen = {intl.formatMessage({ id: 'home.forTheBetter' })}</div>
+              </Space>
+            </Space>
+          </Col>
+        </Row>
       </div>
-
-      {loading ? (
-        <Spin size="large" />
-      ) : loadedGratitudes && loadedGratitudes.length ? (
-        <GratitudeList
-          gratitudes={loadedGratitudes}
-          headerText={intl.formatMessage({ id: 'home.publicGratitude.list.title' })}
-          hideManageOptions
-        />
-      ) : (
-        <Empty description={intl.formatMessage({ id: 'home.publicGratitude.list.empty' })} />
-      )}
     </>
   );
 };

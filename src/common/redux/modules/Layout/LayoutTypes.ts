@@ -1,0 +1,3 @@
+export enum LayoutTypes {
+  LAYOUT_HIDE_CONTENT_PADDING = 'LAYOUT_HIDE_CONTENT_PADDING'
+}

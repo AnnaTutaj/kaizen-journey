@@ -69,11 +69,12 @@
   "settings.form.field.tags": "Tagi",
   "settings.form.submit": "Zapisz",
 
-  "home.header.text": "Ciągłe doskonalenie?",
-  "home.publicGratitude.list.title": "Ostatnio użytkownicy byli wdzięczni za",
+  "home.header.subtitle": "Osiągnij swoje cele przez nawyki & dziennik wdzięczności",
   "home.header.discoverMore": "Odkryj więcej",
-
-  "home.publicGratitude.list.empty": "Nikt ostatnio nie podzielili się tym, za co był wdzięczny",
+  "home.header.button": "Rozpocznij swoją podróż już teraz!",
+  "home.change": "Zmiana",
+  "home.forTheBetter": "na lepsze",
+  "home.kaizenMeaning": "Kaizen to japoński koncept oznaczający \"Ciągłe doskonalenie\"",
 
   "gratitude.create.button": "Dodaj wdzięczność",
   "gratitude.my.list.title": "Mój dziennik wdzięczności",

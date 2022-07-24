@@ -69,10 +69,12 @@
   "settings.form.field.tags": "Tags",
   "settings.form.submit": "Save",
 
-  "home.header.text": "Continuous improvement?",
-  "home.publicGratitude.list.title": "Lately users were grateful for",
+  "home.header.subtitle": "Achive your goals by habits & gratitude journal",
   "home.header.discoverMore": "Discover more",
-  "home.publicGratitude.list.empty": "No one shared for what they were grateful for",
+  "home.header.button": "Start your journey right now!",
+  "home.change": "Change",
+  "home.forTheBetter": "for better",
+  "home.kaizenMeaning": "Kaizen is a Japanese term meaning \"Continuous improvement\"",
 
   "gratitude.create.button": "Add gratitude",
   "gratitude.my.list.title": "My gratitude journal",

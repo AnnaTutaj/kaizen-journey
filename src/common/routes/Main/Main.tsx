@@ -1,6 +1,8 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import Header from '@common/containers/Header';
 import Footer from '@common/containers/Footer';
 import { Paths } from '@common/constants/Paths';
@@ -16,12 +18,14 @@ import PageUnderConstruction from '@common/components/PageUnderConstruction';
 import HabitTracker from '@modules/Habit/routes/HabitTracker';
 import HabitArchive from '@modules/Habit/routes/HabitArchive';
 import HabitView from '@modules/Habit/routes/HabitView';
+import cn from 'classnames';
 
 const { Content } = Layout;
 //todo add route to PageNotFound, AccessDenied
 
 const Main: React.FC = () => {
   const { isUserLoading } = useAuth();
+  const hideContentPadding = useSelector(({ layout }: ILayoutOwnState) => layout.hideContentPadding);
 
   if (isUserLoading) {
     return <PageLoading />;
@@ -30,7 +34,7 @@ const Main: React.FC = () => {
   return (
     <Layout>
       <Header />
-      <Content className={styles.Content}>
+      <Content className={cn(styles.Content, { [styles.ContentNoPadding]: hideContentPadding })}>
         <Routes>
           <Route path={Paths.Home} element={<Home />} />
           <Route
