@@ -1,39 +1,43 @@
+@gradientColors: #f28d77, #eb8078, #e27379, #d7677b, #cb5c7e, #bd5380, #ad4b82, #9c4484, #893f85, #743b85, #5c3884,
+  #413582;
+@homeHeaderGradient: radial-gradient(circle at 80% 10%, @gradientColors);
+@homeEndingGradient: radial-gradient(circle at 10% 80%, @gradientColors);
+@padding-horizontal: 20px;
+
 .HeaderContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: calc(100vh - @header-height);
-  margin-bottom: @content-padding-vertical;
+  min-height: 450px;
   padding: 30px;
+  color: var(--light-text-color);
   text-align: center;
-  background: radial-gradient(
-    circle at 80% 10%,
-    #f28d77,
-    #eb8078,
-    #e27379,
-    #d7677b,
-    #cb5c7e,
-    #bd5380,
-    #ad4b82,
-    #9c4484,
-    #893f85,
-    #743b85,
-    #5c3884,
-    #413582
-  );
+  background: @homeHeaderGradient;
+}
+
+.EndingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - @header-height - @footer-height);
+  min-height: 200px;
+  padding: 30px;
+  color: var(--light-text-color);
+  text-align: center;
+  background: @homeEndingGradient;
 }
 
 .HeaderTitle {
-  color: var(--light-text-color);
   font-weight: 900;
-  font-size: min(10vw, 10vh);
+  font-size: clamp(40px, min(10vw, 10vh), 90px);
   letter-spacing: 0.1em;
 }
 
 .HeaderSubtitle {
   margin-bottom: 40px;
-  color: var(--light-text-color);
   font-size: 1.5em;
   letter-spacing: 0.1em;
 }
@@ -49,6 +53,12 @@
 
 .ContentDiv {
   font-size: 17px;
+  scroll-margin-top: @header-height;
+}
+
+.SectionHeaderTitle {
+  margin-bottom: 10px;
+  font-size: 1.7em;
 }
 
 .HeaderFontSize {
@@ -61,6 +71,47 @@
 
 .HeaderKaizenJourney {
   margin-bottom: 20px;
+}
+
+.KaizenContainer {
+  padding: 0 @padding-horizontal;
+  text-align: center;
+}
+
+.SectionDivider {
+  margin: 50px 0;
+}
+
+.SectionFeatureContainer {
+  padding: 50px @padding-horizontal;
+  background-color: var(--primary-color-bg-color);
+
+  &:global {
+    &.ant-row {
+      margin: 0 !important;
+    }
+  }
+}
+
+.FeatureContainer {
+  text-align: center;
+}
+
+.FeatureIcon {
+  margin-bottom: 20px;
+  color: lighten(@primary-color, 10%);
+  font-size: 50px;
+}
+
+.FeatureDescription {
+  strong {
+    color: lighten(@primary-color, 10%);
+  }
+}
+
+.FeatureTitle {
+  font-weight: 600;
+  font-size: 20px;
 }
 
 @media (max-width: 767.98px) {
