@@ -1,9 +1,10 @@
-import { Space, Row, Col, Button, Divider } from 'antd';
+import _ from 'lodash';
+import { Space, Row, Col, Button, Divider, Carousel } from 'antd';
 import React, { useEffect, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styles from './Home.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faBrain, faHeart, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faBrain, faHeart, faUserGroup, faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
 import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
 import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
 import { useDispatch } from 'react-redux';
@@ -19,6 +20,7 @@ const Home: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const divRef = useRef<HTMLDivElement>(null);
+  const quoteCount = 6;
 
   useEffect(() => {
     LayoutActions.setHidePaddingAction(true)(dispatch);
@@ -54,6 +56,7 @@ const Home: React.FC = () => {
       icon: faUserGroup
     }
   ];
+
   const renderFeature = (feature: IFeature) => {
     return (
       <div className={styles.FeatureContainer}>
@@ -65,6 +68,18 @@ const Home: React.FC = () => {
             __html: feature.description
           }}
         />
+      </div>
+    );
+  };
+
+  const renderQuote = (i: number) => {
+    return (
+      <div key={i}>
+        <div className={styles.QuoteContainer}>
+          <FontAwesomeIcon className={styles.QuoteMark} icon={faQuoteLeft} />
+          <div className={styles.QuoteText}>{intl.formatMessage({ id: `home.quote.${i}.text` })}</div>
+          <div className={styles.QuoteAuthor}>~ {intl.formatMessage({ id: `home.quote.${i}.author` })}</div>
+        </div>
       </div>
     );
   };
@@ -102,9 +117,9 @@ const Home: React.FC = () => {
           </Row>
         </section>
         <Divider className={styles.SectionDivider} />
-        <section className={styles.KaizenContainer}>
-          <div className={styles.SectionHeaderTitle}>{intl.formatMessage({ id: 'home.kaizenMeaning.title' })}</div>
-          <div className={styles.HeaderFontSize}>{intl.formatMessage({ id: 'home.kaizenMeaning' })}</div>
+        <section className={styles.SectionTextContainer}>
+          <h2 className={styles.SectionHeaderTitle}>{intl.formatMessage({ id: 'home.kaizenMeaning.title' })}</h2>
+          <div>{intl.formatMessage({ id: 'home.kaizenMeaning' })}</div>
           <Space size={20}>
             <Space direction="vertical">
               <div className={styles.Kanji}>改</div>
@@ -115,12 +130,27 @@ const Home: React.FC = () => {
               <div className={styles.KanjiMeaning}>Zen = {intl.formatMessage({ id: 'home.forTheBetter' })}</div>
             </Space>
           </Space>
-          <div className={styles.HeaderFontSize}>{intl.formatMessage({ id: 'home.kaizenMeaning.description' })}</div>
+          <div className={styles.SectionSummaryText}>
+            {intl.formatMessage({ id: 'home.kaizenMeaning.description' })}
+          </div>
+        </section>
+        <Divider className={styles.SectionDivider} />
+        <section className={styles.SectionTextContainer}>
+          <h2 className={styles.SectionHeaderTitle}>{intl.formatMessage({ id: 'home.quote.title' })}</h2>
+          <Carousel
+            className={styles.Carousel}
+            dots={{ className: styles.CarouselDots }}
+            infinite={false}
+            autoplay
+            draggable
+          >
+            {_.times(quoteCount, (i) => renderQuote(i))}
+          </Carousel>
         </section>
         <Divider className={styles.SectionDivider} />
         <section>
           <div className={styles.EndingContainer}>
-            <div className={styles.SectionHeaderTitle}>{intl.formatMessage({ id: 'home.ending.title' })}</div>
+            <div className={styles.SectionEndingTitle}>{intl.formatMessage({ id: 'home.ending.title' })}</div>
             <Button type="primary" onClick={onClick}>
               {intl.formatMessage({ id: 'home.ending.button' })}
             </Button>

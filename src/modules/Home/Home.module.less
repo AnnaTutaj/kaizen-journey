@@ -57,12 +57,17 @@
 }
 
 .SectionHeaderTitle {
+  font-size: 1.25em;
+}
+
+.SectionEndingTitle {
   margin-bottom: 10px;
   font-size: 1.7em;
 }
 
-.HeaderFontSize {
-  font-size: 1.2em;
+.SectionSummaryText {
+  margin-top: 20px;
+  font-size: 1.25em;
 }
 
 .LogoImage {
@@ -73,9 +78,11 @@
   margin-bottom: 20px;
 }
 
-.KaizenContainer {
+.SectionTextContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0 @padding-horizontal;
-  text-align: center;
 }
 
 .SectionDivider {
@@ -112,6 +119,41 @@
 .FeatureTitle {
   font-weight: 600;
   font-size: 20px;
+}
+
+.CarouselDots {
+  :global {
+    button {
+      height: 10px !important;
+      background-color: @primary-color !important;
+    }
+  }
+}
+
+.Carousel {
+  width: min(100vw, 400px);
+}
+
+.QuoteContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 410px;
+  margin: 0 20px;
+  padding: 30px 30px 50px;
+  background-color: var(--primary-color-bg-color);
+  border-radius: @border-radius-large;
+}
+
+.QuoteMark {
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+
+.QuoteText {
+  margin-bottom: 20px;
+  font-size: 1.2em;
 }
 
 @media (max-width: 767.98px) {
