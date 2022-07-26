@@ -140,8 +140,8 @@ const Home: React.FC = () => {
           <Carousel
             className={styles.Carousel}
             dots={{ className: styles.CarouselDots }}
-            infinite={false}
             autoplay
+            autoplaySpeed={20000}
             draggable
           >
             {_.times(quoteCount, (i) => renderQuote(i))}
