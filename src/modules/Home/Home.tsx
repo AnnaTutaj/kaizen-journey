@@ -9,6 +9,7 @@ import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
 import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
 import { useDispatch } from 'react-redux';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import fuji from '@assets/fuji.jpg';
 
 interface IFeature {
   title: string;
@@ -119,20 +120,18 @@ const Home: React.FC = () => {
         <Divider className={styles.SectionDivider} />
         <section className={styles.SectionTextContainer}>
           <h2 className={styles.SectionHeaderTitle}>{intl.formatMessage({ id: 'home.kaizenMeaning.title' })}</h2>
-          <div>{intl.formatMessage({ id: 'home.kaizenMeaning' })}</div>
-          <Space size={20}>
-            <Space direction="vertical">
+          <div className={styles.KanjiContainer} style={{ backgroundImage: `url(${fuji})` }}>
+            <div className={styles.KanjiDivContainer}>
               <div className={styles.Kanji}>改</div>
               <div className={styles.KanjiMeaning}>Kai = {intl.formatMessage({ id: 'home.change' })}</div>
-            </Space>
-            <Space direction="vertical">
+            </div>
+            <div className={styles.KanjiDivContainer}>
               <div className={styles.Kanji}>善</div>
               <div className={styles.KanjiMeaning}>Zen = {intl.formatMessage({ id: 'home.forTheBetter' })}</div>
-            </Space>
-          </Space>
-          <div className={styles.SectionSummaryText}>
-            {intl.formatMessage({ id: 'home.kaizenMeaning.description' })}
+            </div>
           </div>
+          <div>{intl.formatMessage({ id: 'home.kaizenMeaning' })}</div>
+          <div>{intl.formatMessage({ id: 'home.kaizenMeaning.description' })}</div>
         </section>
         <Divider className={styles.SectionDivider} />
         <section className={styles.SectionTextContainer}>
