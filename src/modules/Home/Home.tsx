@@ -141,7 +141,9 @@ const Home: React.FC = () => {
             className={styles.Carousel}
             dots={{ className: styles.CarouselDots }}
             autoplay
-            autoplaySpeed={20000}
+            pauseOnFocus
+            pauseOnHover
+            pauseOnDotsHover
             draggable
           >
             {_.times(quoteCount, (i) => renderQuote(i))}
