@@ -47,6 +47,18 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
     return values;
   };
 
+  const colorByStatus = (value: ICalendarHeatMapValue) => {
+    if (!value || value.dateStatus === HabitDateStatus.unchecked) {
+      return 'color-empty';
+    }
+
+    if (value.dateStatus === HabitDateStatus.skipped) {
+      return `color-lighten-${habit.colorLighten.name}`;
+    }
+
+    return `color-${habit.color.name}`;
+  };
+
   return (
     <CalendarHeatmap
       startDate={startDate}
@@ -70,15 +82,13 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
         );
       }}
       classForValue={(value: ICalendarHeatMapValue) => {
-        if (!value || value.dateStatus === HabitDateStatus.unchecked) {
-          return 'color-empty';
+        let classCell = '';
+        classCell = colorByStatus(value);
+        if (value.date === moment().format('YYYY-MM-DD')) {
+          classCell = `${classCell} mark-today`;
         }
 
-        if (value.dateStatus === HabitDateStatus.skipped) {
-          return `color-lighten-${habit.colorLighten.name}`;
-        }
-
-        return `color-${habit.color.name}`;
+        return classCell;
       }}
     />
   );

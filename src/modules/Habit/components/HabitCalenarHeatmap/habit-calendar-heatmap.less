@@ -37,3 +37,13 @@
 .react-calendar-heatmap .color-lighten-brown {
   fill: @lighten-brown-picker-color;
 }
+
+.react-calendar-heatmap .mark-today {
+  stroke: @primary-color;
+  stroke-width: 2px;
+
+  &:hover {
+    stroke: lighten(@primary-color, 10%);
+    stroke-width: 2px;
+  }
+}
