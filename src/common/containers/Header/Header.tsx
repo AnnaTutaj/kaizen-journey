@@ -1,26 +1,37 @@
 import React, { useState } from 'react';
-import { Drawer, Grid, Layout, Switch } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
+import { Drawer, Grid, Layout, Select, Switch } from 'antd';
 import styles from './Header.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import RegisterModal from './components/RegisterModal';
 import LoginModal from './components/LoginModal';
 import UserAvatar from './components/UserAvatar';
-import { useAuth } from '@common/contexts/AuthContext';
-import { useNavigate } from "react-router-dom";
+import { Language, useAuth } from '@common/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import { useTheme } from '@themes/use-theme';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
 import SiteMenu from './components/SiteMenu';
+import { ITranslationConfig } from '@common/lang/config/types';
+import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
+import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 
+const { Option } = Select;
 const { useBreakpoint } = Grid;
 
 const Header: React.FC = () => {
+  const intl = useIntl();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
+
   const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const { userAuth } = useAuth();
-  const navigate  = useNavigate();
   const { darkMode, setDarkMode } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -80,6 +91,27 @@ const Header: React.FC = () => {
         {userAuth ? (
           <div className={styles.Avatar}>
             <UserAvatar />
+          </div>
+        ) : null}
+
+        {!userAuth ? (
+          <div className={styles.Avatar}>
+            <Select<ITranslationConfig['locale']>
+              style={{ width: 65 }}
+              dropdownMatchSelectWidth={120}
+              defaultValue={siteLanguage}
+              optionLabelProp="label"
+              size="middle"
+              placement="bottomRight"
+              onChange={(value) => LayoutActions.setSiteLanguageAction(value)(dispatch)}
+            >
+              <Option value={Language.pl} label={Language.pl.toUpperCase()}>
+                {intl.formatMessage({ id: 'common.language.polish' })}
+              </Option>
+              <Option value={Language.en} label={Language.en.toUpperCase()}>
+                {intl.formatMessage({ id: 'common.language.english' })}
+              </Option>
+            </Select>
           </div>
         ) : null}
 

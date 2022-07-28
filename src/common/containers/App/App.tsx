@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import Main from '@common/routes/Main';
 import { ConfigProvider, Layout } from 'antd';
@@ -14,9 +14,11 @@ import { Locale } from 'antd/lib/locale-provider';
 import { ThemeProvider } from '@themes/theme-provider';
 import { ErrorBoundary } from 'react-error-boundary';
 import PageError from '@common/components/PageError';
+import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 
 const App: React.FC = () => {
   const { userProfile } = useAuth();
+  const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
 
   const [language, setLanguage] = useState<ITranslationConfig['locale']>(Language.en);
   const [locale, setLocale] = useState<Locale>(enUS);
@@ -25,8 +27,8 @@ const App: React.FC = () => {
   moment.locale(language);
 
   useEffect(() => {
-    setLanguage(userProfile?.language ? userProfile?.language : Language.en);
-  }, [userProfile?.language]);
+    setLanguage(userProfile?.language ? userProfile?.language : siteLanguage);
+  }, [userProfile?.language, siteLanguage]);
 
   useEffect(() => {
     setLocale(language === Language.en ? enUS : plPL);

@@ -7,6 +7,8 @@ import { serverTimestamp, doc, setDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { FirebaseError } from '@firebase/util';
 import Modal from '@common/components/Modal';
+import { useSelector } from 'react-redux';
+import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 
 interface IProps {
   isModalVisible: boolean;
@@ -23,6 +25,7 @@ interface IRegisterFormProps {
 const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCancel }) => {
   const intl = useIntl();
   const auth = getAuth();
+  const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
 
   const onFinish = async (values: IRegisterFormProps) => {
     try {
@@ -30,6 +33,7 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
 
       const newUser = {
         username: values.username,
+        language: siteLanguage,
         createdAt: serverTimestamp()
       };
 
