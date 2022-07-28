@@ -46,7 +46,8 @@ const HabitCreateModal: React.FC<IHabitCreateModalProps> = ({ handleSubmit, hand
       handleCancel={handleCancel}
       title={intl.formatMessage({ id: 'habit.create.title' })}
       initialValues={{
-        color: 'default'
+        color: 'default',
+        isPublic: false
       }}
     />
   );
