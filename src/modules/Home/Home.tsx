@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Space, Row, Col, Button, Divider, Carousel } from 'antd';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import styles from './Home.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,10 @@ import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
 import { useDispatch } from 'react-redux';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import fuji from '@assets/fuji.jpg';
+import { useAuth } from '@common/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { Paths } from '@common/constants/Paths';
+import RegisterModal from '@common/containers/Header/components/RegisterModal';
 
 interface IFeature {
   title: string;
@@ -20,8 +24,13 @@ interface IFeature {
 const Home: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   const quoteCount = 6;
+
+  const { userProfile } = useAuth();
 
   useEffect(() => {
     LayoutActions.setHidePaddingAction(true)(dispatch);
@@ -38,7 +47,13 @@ const Home: React.FC = () => {
     }
   };
 
-  const onClick = () => {};
+  const onClick = () => {
+    if (userProfile?.uid) {
+      navigate(Paths.Support);
+    } else {
+      setIsRegisterModalVisible(true);
+    }
+  };
 
   const features = [
     {
@@ -158,6 +173,12 @@ const Home: React.FC = () => {
           </div>
         </section>
       </div>
+
+      <RegisterModal
+        isModalVisible={isRegisterModalVisible}
+        handleCancel={() => setIsRegisterModalVisible(false)}
+        handleSubmit={() => setIsRegisterModalVisible(false)}
+      />
     </>
   );
 };
