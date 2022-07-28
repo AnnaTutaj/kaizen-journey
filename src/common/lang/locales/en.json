@@ -60,8 +60,8 @@
   "login.form.field.email": "Email",
   "login.form.submit": "Sign in",
 
-  "federatedLogin.google": "Sign in with Google",
-  "federatedLogin.facebook": "Sign in with Facebook",
+  "federatedLogin.google": "Continue with Google",
+  "federatedLogin.facebook": "Continue with Facebook",
 
   "settings.form.title": "Settings",
   "settings.form.field.username": "Username",
