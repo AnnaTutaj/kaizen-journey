@@ -26,6 +26,7 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [quoteAutoplay, setQuoteAutoplay] = useState<boolean>(true);
   const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   const quoteCount = 6;
@@ -91,7 +92,11 @@ const Home: React.FC = () => {
   const renderQuote = (i: number) => {
     return (
       <div key={i}>
-        <div className={styles.QuoteContainer}>
+        <div
+          className={styles.QuoteContainer}
+          onTouchStart={() => setQuoteAutoplay(false)}
+          onClick={() => setQuoteAutoplay(false)}
+        >
           <FontAwesomeIcon className={styles.QuoteMark} icon={faQuoteLeft} />
           <div className={styles.QuoteText}>{intl.formatMessage({ id: `home.quote.${i}.text` })}</div>
           <div className={styles.QuoteAuthor}>~ {intl.formatMessage({ id: `home.quote.${i}.author` })}</div>
@@ -154,7 +159,7 @@ const Home: React.FC = () => {
           <Carousel
             className={styles.Carousel}
             dots={{ className: styles.CarouselDots }}
-            autoplay
+            autoplay={quoteAutoplay}
             pauseOnFocus
             pauseOnHover
             pauseOnDotsHover
