@@ -22,17 +22,6 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
   const items = userAuth
     ? [
         {
-          key: 'dashboard',
-          label: intl.formatMessage({ id: 'header.dashboard' }),
-          onClick: () => {
-            navigate(Paths.Dashboard);
-            if (hideDrawer) {
-              hideDrawer();
-            }
-          }
-        },
-
-        {
           key: 'habit',
           label: intl.formatMessage({ id: 'header.habits' }),
           onClick: () => {
@@ -47,6 +36,16 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
           label: intl.formatMessage({ id: 'header.gratitude' }),
           onClick: () => {
             navigate(Paths.Gratitude);
+            if (hideDrawer) {
+              hideDrawer();
+            }
+          }
+        },
+        {
+          key: 'friend',
+          label: intl.formatMessage({ id: 'header.friends' }),
+          onClick: () => {
+            navigate(Paths.Friend);
             if (hideDrawer) {
               hideDrawer();
             }

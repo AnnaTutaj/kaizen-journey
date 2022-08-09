@@ -4,7 +4,7 @@
   "pageError.button": "Try again",
 
   "header.home": "Home",
-  "header.dashboard": "Dashboard",
+  "header.friends": "Friends",
   "header.habits": "Habits",
   "header.gratitude": "Gratitude",
   "header.signIn": "Sign In",
@@ -23,6 +23,7 @@
   "common.restore": "Restore",
   "common.or": "Or",
   "common.goBack": "Go back",
+  "common.since": "Since",
   "common.summary": "Summary",
   "common.summary.info": "All years summary",
   "common.language.polish": "Polski",
@@ -166,5 +167,27 @@
 
   "habit.statistic.total": "Sum",
   "habit.statistic.check": "Checks",
-  "habit.statistic.skipped": "Pauses"
+  "habit.statistic.skipped": "Pauses",
+
+  "friend.menu.following": "Following",
+  "friend.menu.followers": "Followers",
+
+  "friend.following.create.button": "Follow",
+  "friend.following.create.title": "Follow",
+  "friend.following.form.field.id": "Search by ID",
+  "friend.following.form.field.id.info.title": "Ask your friend for their ID",
+  "friend.following.form.field.id.info.description": "Where to find ID? Click your avatar at the top right and then select Settings.",
+  "friend.following.form.field.id.cannotFollowYourself": "Cannot follow yourself",
+  "friend.following.form.search": "Search",
+  "friend.following.form.follow": "Follow",
+  "friend.following.form.unfollow": "Unfollow",
+  "friend.following.form.notFound.empty": "Make sure that id is correct. Note that id is case sensitive.",
+
+  "friend.following.list.title": "I am following",
+  "friend.following.list.empty": "Follow someone and find they here!",
+
+  "friend.following.confirmModal.delete.title": "Are you sure you want to unfollow this user?",
+  "friend.following.confirmModal.delete.content": "You can follow this user again later",
+  "friend.following.confirmModal.delete.okText": "Unfollow",
+  "friend.following.confirmModal.delete.cancelText": "Cancel"
 }

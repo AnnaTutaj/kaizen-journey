@@ -6,24 +6,27 @@ import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import Header from '@common/containers/Header';
 import Footer from '@common/containers/Footer';
 import { Paths } from '@common/constants/Paths';
+import PageUnderConstruction from '@common/components/PageUnderConstruction';
 import styles from './Main.module.less';
-import Dashboard from '@modules/Dashboard';
 import { useAuth } from '@common/contexts/AuthContext';
 import PageLoading from '@common/components/PageLoading';
 import Home from '@modules/Home';
 import Gratitude from '@modules/Gratitude';
 import PrivateRoute from '@common/containers/PrivateRoute';
 import Habit from '@modules/Habit';
-import PageUnderConstruction from '@common/components/PageUnderConstruction';
 import HabitTracker from '@modules/Habit/routes/HabitTracker';
 import HabitArchive from '@modules/Habit/routes/HabitArchive';
+import Friend from '@modules/Friend';
+import FriendFollowing from '@modules/Friend/routes/FriendFollowing';
 import HabitView from '@modules/Habit/routes/HabitView';
 import cn from 'classnames';
+import { useIntl } from 'react-intl';
 
 const { Content } = Layout;
 //todo add route to PageNotFound, AccessDenied
 
 const Main: React.FC = () => {
+  const intl = useIntl();
   const { isUserLoading } = useAuth();
   const hideContentPadding = useSelector(({ layout }: ILayoutOwnState) => layout.hideContentPadding);
 
@@ -37,14 +40,6 @@ const Main: React.FC = () => {
       <Content className={cn(styles.Content, { [styles.ContentNoPadding]: hideContentPadding })}>
         <Routes>
           <Route path={Paths.Home} element={<Home />} />
-          <Route
-            path={Paths.Dashboard}
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
           <Route
             path={Paths.Gratitude}
             element={
@@ -73,6 +68,21 @@ const Main: React.FC = () => {
               </PrivateRoute>
             }
           />
+          <Route
+            path={Paths.Friend}
+            element={
+              <PrivateRoute>
+                <Friend />
+              </PrivateRoute>
+            }
+          >
+            <Route path={Paths.FriendFollowing} element={<FriendFollowing />} />
+            <Route
+              path={Paths.FriendFollowers}
+              element={<PageUnderConstruction title={intl.formatMessage({ id: 'friend.menu.followers' })} />}
+            />
+            <Route path={Paths.Friend} element={<Navigate replace to={Paths.FriendFollowing} />} />
+          </Route>
 
           {/* todo: Create Page Not Found View */}
           <Route path="*" element={<PageUnderConstruction title="Page Not Found" />} />

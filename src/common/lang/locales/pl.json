@@ -4,7 +4,7 @@
   "pageError.button": "Spróbuj ponownie",
 
   "header.home": "Strona główna",
-  "header.dashboard": "Dashboard",
+  "header.friends": "Przyjaciele",
   "header.habits": "Nawyki",
   "header.gratitude": "Wdzięczności",
   "header.signIn": "Zaloguj się",
@@ -23,6 +23,7 @@
   "common.restore": "Przywróć",
   "common.or": "Albo",
   "common.goBack": "Wróć",
+  "common.since": "Od",
   "common.summary": "Podsumowanie",
   "common.summary.info": "Podsumowanie ze wszystkich lat",
   "common.language.polish": "Polski",
@@ -165,5 +166,27 @@
 
   "habit.statistic.total": "Suma",
   "habit.statistic.check": "Zaznaczenia",
-  "habit.statistic.skipped": "Pauzy"
+  "habit.statistic.skipped": "Pauzy",
+
+  "friend.menu.following": "Obserwowani",
+  "friend.menu.followers": "Obserwujący",
+
+  "friend.following.create.button": "Obserwuj",
+  "friend.following.create.title": "Obserwuj",
+  "friend.following.form.field.id": "Szukaj po ID",
+  "friend.following.form.field.id.info.title": "Zapytaj swojego przyjaciela o jego ID",
+  "friend.following.form.field.id.info.description": "Gdzie znaleźć ID? Kliknij swój awatar w prawym górnym rogu, a później wybierz Ustawienia.",
+  "friend.following.form.field.id.cannotFollowYourself": "Nie można obserwować samego siebie",
+  "friend.following.form.search": "Szukaj",
+  "friend.following.form.follow": "Obserwuj",
+  "friend.following.form.unfollow": "Nie obserwuj",
+  "friend.following.form.notFound.empty": "Upewnij się, że id jest poprawne. Zwróć uwagę na to, że id uwzględnia wielkość liter.",
+
+  "friend.following.list.title": "Obserwuję",
+  "friend.following.list.empty": "Zaobserwuj kogoś i znajdź go tutaj!",
+
+  "friend.following.confirmModal.delete.title": "Czy na pewno nie chcesz już obserwować tego użytkownika?",
+  "friend.following.confirmModal.delete.content": "Możesz go później znów zaobserwować.",
+  "friend.following.confirmModal.delete.okText": "Nie obserwuj",
+  "friend.following.confirmModal.delete.cancelText": "Anuluj"
 }

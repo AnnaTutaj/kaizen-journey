@@ -1,0 +1,26 @@
+.MenuContainer {
+  color: @dark-grey-color;
+  background: none !important;
+  border-right: none !important;
+  border-bottom: none;
+
+  &:global {
+    &.ant-menu {
+      margin-bottom: 8px;
+    }
+
+    &.ant-menu-horizontal {
+      border-bottom: none !important;
+    }
+  }
+
+  :global {
+    .ant-menu-item {
+      border-radius: @border-radius-large;
+    }
+
+    .ant-menu-item:hover {
+      background-color: var(--header-bg-color-hover) !important;
+    }
+  }
+}

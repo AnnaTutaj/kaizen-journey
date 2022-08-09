@@ -1,6 +1,5 @@
 export const Paths = {
   Home: '/',
-  Dashboard: '/dashboard',
   Support: '/support',
   AccessDenied: '/access-denied',
   PageNotFound: '/page-not-found',
@@ -8,5 +7,9 @@ export const Paths = {
   Habit: '/habits',
   HabitTracker: '/habits/tracker',
   HabitArchive: '/habits/archive',
-  HabitView: '/habits/:id'
+  HabitView: '/habits/:id',
+  Friend: '/friends',
+  FriendFollowing: '/friends/following',
+  FriendFollowers: '/friends/followers',
+  UserView: '/user/:id',
 };

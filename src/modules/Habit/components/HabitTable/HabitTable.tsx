@@ -68,7 +68,6 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     }
   };
 
-  //todo: delete PageLoading and move loading to the clicked cell
   const handleClickDate = async (dateKey: string, habit: IHabitModel, dateStatus: HabitDateStatus) => {
     setLoading(true);
     await updateHabitDates({ habitId: habit.id, dateStatus, dateKey });
