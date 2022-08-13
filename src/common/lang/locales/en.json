@@ -189,5 +189,14 @@
   "friend.following.confirmModal.delete.title": "Are you sure you want to unfollow this user?",
   "friend.following.confirmModal.delete.content": "You can follow this user again later",
   "friend.following.confirmModal.delete.okText": "Unfollow",
-  "friend.following.confirmModal.delete.cancelText": "Cancel"
+  "friend.following.confirmModal.delete.cancelText": "Cancel",
+
+  "friend.follower.list.title": "My followers",
+  "friend.follower.list.empty": "When someone follows you, you can find them here!",
+  "friend.follower.list.delete": "Remove",
+
+  "friend.follower.confirmModal.delete.title": "Remove follower?",
+  "friend.follower.confirmModal.delete.content": "This user will no longer follow you.",
+  "friend.follower.confirmModal.delete.okText": "Remove",
+  "friend.follower.confirmModal.delete.cancelText": "Cancel"
 }

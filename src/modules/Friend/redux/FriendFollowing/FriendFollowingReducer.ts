@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 import _ from 'lodash';
-import FriendFollowingModel from '@modules/Friend/models/FriendFollowingModel';
+import FriendBaseModel from '@modules/Friend/models/FriendBaseModel';
 import { FriendFollowingDispatchUnion } from './FriendFollowingActions';
 import { IFriendFollowingState } from './FriendFollowingInterface';
 import { FriendFollowingTypes } from './FriendFollowingTypes';
@@ -25,7 +25,7 @@ const FriendFollowingReducer = (state = initialState, action: FriendFollowingDis
       }
 
       case FriendFollowingTypes.FRIEND_FOLLOWING_LOAD: {
-        const nextFriendFollowings = action.payload.data.map((i) => FriendFollowingModel.build(i));
+        const nextFriendFollowings = action.payload.data.map((i) => FriendBaseModel.build(i));
         const array = _.uniqBy([...draft.data, ...nextFriendFollowings], 'id');
         const sortedArray = _.orderBy(array, [(item) => item.createdAt.seconds], ['desc']);
         draft.data = sortedArray;

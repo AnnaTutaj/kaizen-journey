@@ -1,10 +1,10 @@
 import { IFriendBaseModel } from '@modules/Friend/models/FriendBaseModel';
 
-export interface IFriendFollowingOwnState {
-  friendFollowing: IFriendFollowingState;
+export interface IFriendFollowerOwnState {
+  friendFollower: IFriendFollowerState;
 }
 
-export interface IFriendFollowingState {
+export interface IFriendFollowerState {
   data: IFriendBaseModel[];
   isLoaded: boolean;
   isLoadingMore: boolean;

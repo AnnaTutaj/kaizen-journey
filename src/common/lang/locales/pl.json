@@ -188,5 +188,14 @@
   "friend.following.confirmModal.delete.title": "Czy na pewno nie chcesz już obserwować tego użytkownika?",
   "friend.following.confirmModal.delete.content": "Możesz go później znów zaobserwować.",
   "friend.following.confirmModal.delete.okText": "Nie obserwuj",
-  "friend.following.confirmModal.delete.cancelText": "Anuluj"
+  "friend.following.confirmModal.delete.cancelText": "Anuluj",
+
+  "friend.follower.list.title": "Obserwują mnie",
+  "friend.follower.list.empty": "Gdy ktoś Cię zaobserwuje, znajdziesz go tutaj!",
+  "friend.follower.list.delete": "Usuń",
+
+  "friend.follower.confirmModal.delete.title": "Usunąć obserwującego?",
+  "friend.follower.confirmModal.delete.content": "Ten użytkowni przestanie Cię obserwować.",
+  "friend.follower.confirmModal.delete.okText": "Usuń",
+  "friend.follower.confirmModal.delete.cancelText": "Anuluj"
 }

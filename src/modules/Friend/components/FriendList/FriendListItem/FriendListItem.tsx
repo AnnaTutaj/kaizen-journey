@@ -4,26 +4,27 @@ import { List } from 'antd';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { IFriendModel } from '@modules/Friend/models/FriendModel';
+import { IFriendBaseModel } from '@modules/Friend/models/FriendBaseModel';
 import styles from '@modules/Friend/components/FriendList/FriendListItem/FriendListItem.module.less';
 import { useIntl } from 'react-intl';
-import { useAuth } from '@common/contexts/AuthContext';
 import { Paths } from '@common/constants/Paths';
 import { generatePath, Link } from 'react-router-dom';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 
+export type FriendListMode = 'following' | 'follower' | 'viewUser';
+
 interface IProps {
-  friend: IFriendModel;
-  hideManageOptions?: boolean;
+  friend: IFriendBaseModel;
+  mode: FriendListMode;
   removeFriendFollowing?: (id: string) => void;
+  removeFriendFollower?: (id: string) => void;
 }
 
-const FriendListItem: React.FC<IProps> = ({ friend, hideManageOptions, removeFriendFollowing }) => {
+const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing, removeFriendFollower }) => {
   const intl = useIntl();
-  const { userProfile } = useAuth();
-  const { deleteFollowing } = useFriendFollowFetch();
+  const { deleteFollowing, deleteFollower } = useFriendFollowFetch();
 
-  const confirmDelete = async () => {
+  const confirmDeleteFollowing = async () => {
     Modal.confirm({
       centered: true,
       closable: true,
@@ -32,15 +33,36 @@ const FriendListItem: React.FC<IProps> = ({ friend, hideManageOptions, removeFri
       okText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.okText' }),
       cancelText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.cancelText' }),
       onOk: async () => {
-        await handleDelete();
+        await handleDeleteFollowing();
       }
     });
   };
 
-  const handleDelete = async () => {
-    if (removeFriendFollowing && userProfile) {
+  const confirmDeleteFollower = async () => {
+    Modal.confirm({
+      centered: true,
+      closable: true,
+      title: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.title' }),
+      content: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.content' }),
+      okText: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.okText' }),
+      cancelText: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.cancelText' }),
+      onOk: async () => {
+        await handleDeleteFollower();
+      }
+    });
+  };
+
+  const handleDeleteFollowing = async () => {
+    if (removeFriendFollowing) {
       await deleteFollowing(friend.id);
       removeFriendFollowing(friend.id);
+    }
+  };
+
+  const handleDeleteFollower = async () => {
+    if (removeFriendFollower) {
+      await deleteFollower(friend.id);
+      removeFriendFollower(friend.id);
     }
   };
 
@@ -68,9 +90,14 @@ const FriendListItem: React.FC<IProps> = ({ friend, hideManageOptions, removeFri
           </Row>
         </Col>
         <Col>
-          {!hideManageOptions ? (
-            <Button type="ghost" onClick={() => confirmDelete()} size="middle">
+          {mode === 'following' && removeFriendFollowing ? (
+            <Button type="ghost" onClick={() => confirmDeleteFollowing()} size="middle">
               {intl.formatMessage({ id: 'friend.following.form.unfollow' })}
+            </Button>
+          ) : null}
+          {mode === 'follower' && removeFriendFollower ? (
+            <Button type="ghost" onClick={() => confirmDeleteFollower()} size="middle">
+              {intl.formatMessage({ id: 'friend.follower.list.delete' })}
             </Button>
           ) : null}
         </Col>

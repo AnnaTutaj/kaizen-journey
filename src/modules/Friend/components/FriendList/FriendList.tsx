@@ -1,18 +1,19 @@
 import React from 'react';
 import { List } from 'antd';
-import { IFriendModel } from '@modules/Friend/models/FriendModel';
+import { IFriendBaseModel } from '@modules/Friend/models/FriendBaseModel';
 import styles from '@modules/Friend/components/FriendList/FriendList.module.less';
-import FriendListItem from './FriendListItem/FriendListItem';
+import FriendListItem, { FriendListMode } from './FriendListItem/FriendListItem';
 import HeaderText from '@common/components/HeaderText';
 
 interface IProps {
-  friends: IFriendModel[];
+  friends: IFriendBaseModel[];
   headerText: string;
-  hideManageOptions?: boolean;
+  mode: FriendListMode;
   removeFriendFollowing?: (id: string) => void;
+  removeFriendFollower?: (id: string) => void;
 }
 
-const FriendList: React.FC<IProps> = ({ friends, headerText, hideManageOptions, removeFriendFollowing }) => {
+const FriendList: React.FC<IProps> = ({ friends, headerText, mode, removeFriendFollowing, removeFriendFollower }) => {
   return (
     <List
       className={styles.FriendList}
@@ -22,8 +23,9 @@ const FriendList: React.FC<IProps> = ({ friends, headerText, hideManageOptions, 
         return (
           <FriendListItem
             friend={item}
-            hideManageOptions={hideManageOptions}
+            mode={mode}
             removeFriendFollowing={removeFriendFollowing}
+            removeFriendFollower={removeFriendFollower}
           />
         );
       }}

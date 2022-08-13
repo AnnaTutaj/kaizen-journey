@@ -4,37 +4,37 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import FriendListScrolled from '@modules/Friend/components/FriendListScrolled';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { IFriendFollowingOwnState } from '@modules/Friend/redux/FriendFollowing/FriendFollowingInterface';
+import { IFriendFollowerOwnState } from '@modules/Friend/redux/FriendFollower/FriendFollowerInterface';
 import { useAuth } from '@common/contexts/AuthContext';
-import FriendFollowingListActions from '@modules/Friend/redux/FriendFollowing/FriendFollowingActions';
+import FriendFollowerListActions from '@modules/Friend/redux/FriendFollower/FriendFollowerActions';
 
-const FriendFollowingList: React.FC = () => {
+const FriendFollowerList: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const { userProfile } = useAuth();
 
   const { data, isLoaded, isLoadingMore, hasMore } = useSelector(
-    ({ friendFollowing }: IFriendFollowingOwnState) => friendFollowing,
+    ({ friendFollower }: IFriendFollowerOwnState) => friendFollower,
     shallowEqual
   );
 
-  const getLastFetchedFriendFollowing = () => {
+  const getLastFetchedFriendFollower = () => {
     return data && data.length && data[data.length - 1] ? data[data.length - 1] : undefined;
   };
 
-  const getNextFriendFollowings = async () => {
+  const getNextFriendFollowers = async () => {
     if (userProfile) {
-      const lastFetchedFriendFollowing = getLastFetchedFriendFollowing();
+      const lastFetchedFriendFollower = getLastFetchedFriendFollower();
 
-      FriendFollowingListActions.loadAction({
+      FriendFollowerListActions.loadAction({
         userProfileUid: userProfile.uid,
-        lastFetchedFriendFollowing
+        lastFetchedFriendFollower
       })(dispatch);
     }
   };
 
-  const removeFriendFollowing = (id: string) => {
-    FriendFollowingListActions.removeAction(id)(dispatch);
+  const removeFriendFollower = (id: string) => {
+    FriendFollowerListActions.removeAction(id)(dispatch);
   };
 
   if (!isLoaded) {
@@ -45,19 +45,19 @@ const FriendFollowingList: React.FC = () => {
     <>
       {data && data.length ? (
         <FriendListScrolled
-          headerText={intl.formatMessage({ id: 'friend.following.list.title' })}
+          headerText={intl.formatMessage({ id: 'friend.follower.list.title' })}
           friends={data}
-          mode="following"
+          mode="follower"
           loading={isLoadingMore}
-          getNextFriends={getNextFriendFollowings}
+          getNextFriends={getNextFriendFollowers}
           moreFriends={hasMore}
-          removeFriendFollowing={removeFriendFollowing}
+          removeFriendFollower={removeFriendFollower}
         />
       ) : (
-        <Empty description={intl.formatMessage({ id: 'friend.following.list.empty' })} />
+        <Empty description={intl.formatMessage({ id: 'friend.follower.list.empty' })} />
       )}
     </>
   );
 };
 
-export default FriendFollowingList;
+export default FriendFollowerList;

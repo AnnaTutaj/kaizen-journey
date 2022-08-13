@@ -18,6 +18,7 @@ import HabitTracker from '@modules/Habit/routes/HabitTracker';
 import HabitArchive from '@modules/Habit/routes/HabitArchive';
 import Friend from '@modules/Friend';
 import FriendFollowing from '@modules/Friend/routes/FriendFollowing';
+import FriendFollower from '@modules/Friend/routes/FriendFollower';
 import HabitView from '@modules/Habit/routes/HabitView';
 import cn from 'classnames';
 import { useIntl } from 'react-intl';
@@ -77,6 +78,7 @@ const Main: React.FC = () => {
             }
           >
             <Route path={Paths.FriendFollowing} element={<FriendFollowing />} />
+            <Route path={Paths.FriendFollowers} element={<FriendFollower />} />
             <Route
               path={Paths.FriendFollowers}
               element={<PageUnderConstruction title={intl.formatMessage({ id: 'friend.menu.followers' })} />}

@@ -2,10 +2,9 @@ import { Dispatch } from 'redux';
 import { collection, query, getDocs, orderBy, limit, startAfter, getDoc, doc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { ActionsUnion, createAction as createActionHelper } from '@common/helpers/ActionHelper';
-import FriendFollowingModel, {
-  IFriendFollowingModel,
-  IFriendFollowingModelDTO
-} from '@modules/Friend/models/FriendFollowingModel';
+import FriendBaseModel from '@modules/Friend/models/FriendBaseModel';
+import { IFriendBaseModel, IFriendBaseModelDTO } from '@modules/Friend/models/FriendBaseModel';
+
 import { FriendFollowingTypes } from './FriendFollowingTypes';
 
 const loadAction =
@@ -14,7 +13,7 @@ const loadAction =
     userProfileUid,
     reload
   }: {
-    lastFetchedFriendFollowing?: IFriendFollowingModel;
+    lastFetchedFriendFollowing?: IFriendBaseModel;
     userProfileUid: string;
     reload?: boolean;
   }) =>
@@ -32,13 +31,13 @@ const loadAction =
 
       const q = startAfterFriendFollowing
         ? query(
-            collection(db, `follows/${userProfileUid}/following`).withConverter(FriendFollowingModel.converter),
+            collection(db, `follows/${userProfileUid}/following`).withConverter(FriendBaseModel.converter),
             orderBy('createdAt', 'desc'),
             startAfter(startAfterFriendFollowing),
             limit(limitCount)
           )
         : query(
-            collection(db, `follows/${userProfileUid}/following`).withConverter(FriendFollowingModel.converter),
+            collection(db, `follows/${userProfileUid}/following`).withConverter(FriendBaseModel.converter),
             orderBy('createdAt', 'desc'),
             limit(limitCount)
           );
@@ -60,7 +59,7 @@ const removeAction = (friendFollowingId: string) => async (dispatch: Dispatch) =
 
 export const FriendFollowingDispatch = {
   reload: () => createActionHelper(FriendFollowingTypes.FRIEND_FOLLOWING_RELOAD),
-  load: (data: IFriendFollowingModelDTO[]) => createActionHelper(FriendFollowingTypes.FRIEND_FOLLOWING_LOAD, { data }),
+  load: (data: IFriendBaseModelDTO[]) => createActionHelper(FriendFollowingTypes.FRIEND_FOLLOWING_LOAD, { data }),
   remove: (id: string) => createActionHelper(FriendFollowingTypes.FRIEND_FOLLOWING_ITEM_REMOVE, { id })
 };
 

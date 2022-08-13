@@ -6,7 +6,8 @@ import { Menu } from 'antd';
 import { Paths } from '@common/constants/Paths';
 import styles from './Friend.module.less';
 import { DynamicModuleLoader } from 'redux-dynamic-modules';
-import FriendFollowingModule from '@modules/Friend/redux/FriendFollowing/FriendFollowingModule';
+import FriendFollowingModule from './redux/FriendFollowing/FriendFollowingModule';
+import FriendFollowerModule from './redux/FriendFollower/FriendFollowerModule';
 
 const Friend: React.FC = () => {
   const intl = useIntl();
@@ -46,7 +47,7 @@ const Friend: React.FC = () => {
 const FriendModuleLoader = (): React.ReactElement => {
   return (
     //@ts-ignore
-    <DynamicModuleLoader modules={[FriendFollowingModule]}>
+    <DynamicModuleLoader modules={[FriendFollowingModule, FriendFollowerModule]}>
       <Friend />
     </DynamicModuleLoader>
   );

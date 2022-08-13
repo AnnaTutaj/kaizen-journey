@@ -1,6 +1,6 @@
-import { doc, getDoc, writeBatch } from 'firebase/firestore';
+import { doc, writeBatch } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
-import FriendFollowingModel, { IFriendFollowingModel } from '@modules/Friend/models/FriendFollowingModel';
+import FriendBaseModel, { IFriendBaseModel } from '@modules/Friend/models/FriendBaseModel';
 import { useAuth } from '@common/contexts/AuthContext';
 import { useCallback } from 'react';
 import FriendFormModel from '../models/FriendFormModel';
@@ -10,12 +10,10 @@ const useFriendFollowFetch = () => {
   const { userProfile } = useAuth();
 
   const getFollowingById = useCallback(
-    async (userId: string, followingId: string): Promise<IFriendFollowingModel | null> => {
-      const docRef = doc(db, 'follows', userId, 'following', followingId).withConverter(FriendFollowingModel.converter);
-      const docSnap = await getDoc(docRef);
-
+    async (userId: string, followingId: string): Promise<IFriendBaseModel | null> => {
+      const docSnap = await FriendBaseModel.fetchFollowingById(userId, followingId);
       if (docSnap.exists()) {
-        return FriendFollowingModel.build(docSnap.data());
+        return FriendBaseModel.build(docSnap.data());
       } else {
         return null;
       }
@@ -67,10 +65,30 @@ const useFriendFollowFetch = () => {
     [userProfile]
   );
 
+  const deleteFollower = useCallback(
+    async (id: string): Promise<void> => {
+      if (!userProfile) {
+        return;
+      }
+
+      const batch = writeBatch(db);
+
+      const followingRef = doc(db, 'follows', id, 'following', userProfile.uid);
+      batch.delete(followingRef);
+
+      const followerRef = doc(db, 'follows', userProfile.uid, 'followers', id);
+      batch.delete(followerRef);
+
+      await batch.commit();
+    },
+    [userProfile]
+  );
+
   return {
     getFollowingById,
     followUser,
-    deleteFollowing
+    deleteFollowing,
+    deleteFollower
   };
 };
 
