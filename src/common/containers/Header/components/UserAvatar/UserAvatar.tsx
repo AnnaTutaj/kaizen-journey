@@ -9,7 +9,6 @@ import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import { faCog, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import HeaderText from '@common/components/HeaderText';
 
 const UserAvatar: React.FC = () => {
   const intl = useIntl();
@@ -35,7 +34,7 @@ const UserAvatar: React.FC = () => {
   const menuItems: DropdownMenuItemProps = [
     {
       key: 'userProfileGroup',
-      title: <HeaderText text={userProfile?.username || ''} size="small" />,
+      title: userProfile?.username || '',
       items: [
         {
           key: 'settings',
