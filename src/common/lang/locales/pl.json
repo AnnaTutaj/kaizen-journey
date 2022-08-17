@@ -130,6 +130,7 @@
   "habit.uncheck": "Odznacz",
   "habit.currentStreak": "Aktualny łańcuch",
   "habit.longestStreak": "Najdłuższy łańcuch",
+  "habit.total": "Łącznie",
   "habit.totalChecks": "Suma zaznaczeń",
   "habit.totalSkippedCount": "Suma zapauzowań",
   "habit.archived": "Nawyk zarchiwizowany",
@@ -164,9 +165,9 @@
   "habit.archive.title": "Archiwum nawyków",
   "habit.archive.empty": "Twoje zarchiwizowane nawyki pojawią się tutaj",
 
-  "habit.statistic.total": "Suma",
   "habit.statistic.check": "Zaznaczenia",
   "habit.statistic.skipped": "Pauzy",
+  "habit.statistic.date": "Daty",
 
   "friend.menu.following": "Obserwowani",
   "friend.menu.followers": "Obserwujący",

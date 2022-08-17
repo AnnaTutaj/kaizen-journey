@@ -131,6 +131,7 @@
   "habit.uncheck": "Uncheck",
   "habit.currentStreak": "Current streak",
   "habit.longestStreak": "Longest streak",
+  "habit.total": "Total",
   "habit.totalChecks": "Total checks",
   "habit.totalSkippedCount": "Total pauses",
   "habit.archived": "Archived habit",
@@ -165,9 +166,9 @@
   "habit.archive.title": "Habit archive",
   "habit.archive.empty": "Yours archived habits would appear here",
 
-  "habit.statistic.total": "Sum",
   "habit.statistic.check": "Checks",
   "habit.statistic.skipped": "Pauses",
+  "habit.statistic.date": "Dates",
 
   "friend.menu.following": "Following",
   "friend.menu.followers": "Followers",

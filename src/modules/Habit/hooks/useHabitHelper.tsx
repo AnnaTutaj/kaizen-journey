@@ -49,6 +49,10 @@ const useHabitHelper = () => {
   const getMinMaxDates = (habit: IHabitModel): { maxDate: string; minDate: string } => {
     const allDates = [...habit.datesChecked, ...habit.datesSkipped];
 
+    if (!allDates.length) {
+      return { maxDate: '', minDate: '' };
+    }
+
     const moments = allDates.map((d) => moment(d));
     const maxDate = moment.max(moments).format('YYYY-MM-DD');
     const minDate = moment.min(moments).format('YYYY-MM-DD');

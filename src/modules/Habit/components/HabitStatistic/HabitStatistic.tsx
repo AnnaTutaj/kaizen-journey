@@ -1,15 +1,22 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Col, Row, Space } from 'antd';
+import { Space, Table, Tooltip } from 'antd';
 import styles from './HabitStatistic.module.less';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
-import { IStreak } from '@common/helpers/StreakHelper';
 import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays, faCheck, faPause } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightLong, faCalendarDays, faCheck, faPause } from '@fortawesome/free-solid-svg-icons';
+import { ColumnsType } from 'antd/lib/table';
 
 interface IProps {
   habit: IHabitModel;
+}
+interface IStatistic {
+  type: 'currentStreak' | 'longestStreak' | 'total';
+  checks: number;
+  skipped: number;
+  minDate: string;
+  maxDate: string;
 }
 
 const HabitStatistic: React.FC<IProps> = ({ habit }) => {
@@ -17,76 +24,86 @@ const HabitStatistic: React.FC<IProps> = ({ habit }) => {
   const { getMinMaxDates } = useHabitHelper();
   const { minDate, maxDate } = getMinMaxDates(habit);
 
-  const renderStreakValues = (title: string, streak: IStreak) => {
-    return (
-      <Space size={8} direction="vertical">
-        <div className={styles.Title}>{title}</div>
-        <Space className={styles.Text}>
-          <FontAwesomeIcon icon={faCheck} />
-          <span>
-            {intl.formatMessage({ id: 'habit.statistic.check' })}: {streak.streakCount}
-          </span>
-        </Space>
-        <Space className={styles.Text}>
-          <FontAwesomeIcon icon={faPause} />
-          <span>
-            {intl.formatMessage({ id: 'habit.statistic.skipped' })}: {streak.skippedCount}
-          </span>
-        </Space>
-        {streak.dates.length ? (
-          <Space className={styles.Text}>
+  const columns = (): ColumnsType<IStatistic> => {
+    const cols: ColumnsType<IStatistic> = [
+      {
+        dataIndex: 'type',
+        render: (value) => <span>{intl.formatMessage({ id: `habit.${value}` })}</span>
+      },
+      {
+        title: () => (
+          <Tooltip title={intl.formatMessage({ id: 'habit.statistic.check' })}>
+            <FontAwesomeIcon icon={faCheck} />
+          </Tooltip>
+        ),
+        dataIndex: 'checks',
+        align: 'right'
+      },
+      {
+        title: () => (
+          <Tooltip title={intl.formatMessage({ id: 'habit.statistic.skipped' })}>
+            <FontAwesomeIcon icon={faPause} />
+          </Tooltip>
+        ),
+        dataIndex: 'skipped',
+        align: 'right'
+      },
+      {
+        title: () => (
+          <Tooltip title={intl.formatMessage({ id: 'habit.statistic.date' })}>
             <FontAwesomeIcon icon={faCalendarDays} />
-            <span>
-              {streak.dates[0]}
-              <>{streak.dates.length > 1 ? <> — {streak.dates[streak.dates.length - 1]}</> : null}</>
-            </span>
-          </Space>
-        ) : null}
-      </Space>
-    );
+          </Tooltip>
+        ),
+        render: (record: IStatistic) => (
+          <>
+            {record.minDate ? (
+              <Space size={8} wrap={true}>
+                <span className={styles.Date}>{record.minDate}</span>
+                {record.minDate !== record.maxDate ? (
+                  <>
+                    <FontAwesomeIcon icon={faArrowRightLong} />
+                    <span className={styles.Date}>{record.maxDate}</span>
+                  </>
+                ) : null}
+              </Space>
+            ) : null}
+          </>
+        )
+      }
+    ];
+
+    return cols;
   };
 
-  const renderTotalValues = (
-    <Space size={8} direction="vertical">
-      <div className={styles.Title}>{intl.formatMessage({ id: 'habit.statistic.total' })}</div>
-
-      <Space className={styles.Text}>
-        <FontAwesomeIcon icon={faCheck} />
-        <span>
-          {intl.formatMessage({ id: 'habit.statistic.check' })}: {habit.datesChecked.length}
-        </span>
-      </Space>
-      <Space className={styles.Text}>
-        <FontAwesomeIcon icon={faPause} />
-        <span>
-          {intl.formatMessage({ id: 'habit.statistic.skipped' })}: {habit.datesSkipped.length}
-        </span>
-      </Space>
-
-      {minDate && (habit.datesSkipped.length || habit.datesChecked.length) ? (
-        <Space className={styles.Text}>
-          <FontAwesomeIcon icon={faCalendarDays} />
-          <span>
-            {minDate}
-            <>{minDate !== maxDate ? <> — {maxDate}</> : null}</>
-          </span>
-        </Space>
-      ) : null}
-    </Space>
-  );
-
   return (
-    <Row gutter={[16, 20]} justify="space-around" className={styles.StatisticRow}>
-      <Col span={24} md={8} xxl={4}>
-        {renderStreakValues(intl.formatMessage({ id: 'habit.currentStreak' }), habit.currentStreak)}
-      </Col>
-      <Col span={24} md={8} xxl={4}>
-        {renderStreakValues(intl.formatMessage({ id: 'habit.longestStreak' }), habit.longestStreak)}
-      </Col>
-      <Col span={24} md={8} xxl={4}>
-        {renderTotalValues}
-      </Col>
-    </Row>
+    <Table<IStatistic>
+      bordered={true}
+      columns={columns()}
+      dataSource={[
+        {
+          type: 'currentStreak',
+          checks: habit.currentStreak.streakCount,
+          skipped: habit.currentStreak.skippedCount,
+          minDate: habit.currentStreak.dates[0],
+          maxDate: habit.currentStreak.dates[habit.currentStreak.dates.length - 1]
+        },
+        {
+          type: 'longestStreak',
+          checks: habit.longestStreak.streakCount,
+          skipped: habit.longestStreak.skippedCount,
+          minDate: habit.longestStreak.dates[0],
+          maxDate: habit.longestStreak.dates[habit.longestStreak.dates.length - 1]
+        },
+        {
+          type: 'total',
+          checks: habit.datesChecked.length,
+          skipped: habit.datesSkipped.length,
+          minDate: minDate,
+          maxDate: maxDate
+        }
+      ]}
+      pagination={false}
+    />
   );
 };
 
