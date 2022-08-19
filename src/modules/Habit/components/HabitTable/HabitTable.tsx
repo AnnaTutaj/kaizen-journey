@@ -1,4 +1,4 @@
-import { Col, Modal, Row, Table, Tooltip } from 'antd';
+import { Col, Modal, Popover, Row, Space, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -17,7 +17,7 @@ import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageLoading from '@common/components/PageLoading';
 import HeaderText from '@common/components/HeaderText';
-import { faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faBrush, faCog, faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/components/HabitUpdateModal/HabitUpdateModal';
 import { generatePath, useNavigate } from 'react-router-dom';
@@ -25,6 +25,8 @@ import { Paths } from '@common/constants/Paths';
 import { useSelector } from 'react-redux';
 import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTrackerInterface';
 import { Visibility } from '@common/constants/Visibility';
+import HabitTableColumnSettings, { ColumnType } from './HabitTableColumnSettings/HabitTableColumnSettings';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
 
 interface IProps {
   habits: IHabitModel[];
@@ -41,6 +43,11 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const [loading, setLoading] = useState<boolean>(false);
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
+  const [visibleColumns, setVisibleColumns] = useState<CheckboxValueType[]>([
+    ColumnType.currentStreak,
+    ColumnType.longestStreak,
+    ColumnType.totalChecks
+  ]);
 
   const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
   const { getHabitById, updateHabitDates, deleteHabit, archiveHabit } = useHabitFetch();
@@ -226,7 +233,32 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
 
     return [
       {
-        title: intl.formatMessage({ id: 'habit.table.header.habit' }),
+        title: () => (
+          <Row justify="space-between" align="middle">
+            <Col>{intl.formatMessage({ id: 'habit.table.header.habit' })}</Col>
+            <Col>
+              <Popover
+                placement="bottomLeft"
+                title={
+                  <div className={styles.PopoverTitle}>
+                    <Space size={10}>
+                      <FontAwesomeIcon icon={faBrush} />
+                      {intl.formatMessage({ id: 'habit.table.popover.columnSettings.title' })}
+                    </Space>
+                  </div>
+                }
+                content={
+                  <HabitTableColumnSettings visibleColumns={visibleColumns} setVisibleColumns={setVisibleColumns} />
+                }
+                trigger="click"
+              >
+                <div className={styles.DropdownIconContainer}>
+                  <FontAwesomeIcon className={styles.SettingsIcon} icon={faCog} />
+                </div>
+              </Popover>
+            </Col>
+          </Row>
+        ),
         className: styles.NameCol,
         dataIndex: 'name',
         key: 'name',
@@ -263,24 +295,27 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
       ...dateCols,
       {
         title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.currentStreak' })}</div>,
-        className: styles.StreakCol,
-        key: 'currentStrike',
+        className: cn(styles.StreakCol, { [styles.HideCol]: !visibleColumns.includes(ColumnType.currentStreak) }),
+        key: 'currentStreak',
         fixed: 'right',
-        render: (value, record) => <div>{record.currentStreak.streakCount}</div>
+        align: 'right',
+        render: (record) => <div className={styles.StreakValue}>{record.currentStreak.streakCount}</div>
       },
       {
         title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.longestStreak' })}</div>,
-        className: styles.StreakCol,
-        key: 'longestStrike',
+        className: cn(styles.StreakCol, { [styles.HideCol]: !visibleColumns.includes(ColumnType.longestStreak) }),
+        key: 'longestStreak',
         fixed: 'right',
-        render: (value, record) => <div>{record.longestStreak.streakCount}</div>
+        align: 'right',
+        render: (record) => <div className={styles.StreakValue}>{record.longestStreak.streakCount}</div>
       },
       {
         title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.totalChecks' })}</div>,
-        className: styles.StreakCol,
+        className: cn(styles.StreakCol, { [styles.HideCol]: !visibleColumns.includes(ColumnType.totalChecks) }),
         key: 'totalChecks',
         fixed: 'right',
-        render: (value, record) => <div>{record.datesChecked.length}</div>
+        align: 'right',
+        render: (record) => <div className={styles.StreakValue}>{record.datesChecked.length}</div>
       }
     ];
   };

@@ -1,4 +1,4 @@
-@strike-columns-max-width: 400px;
+@streak-columns-max-width: 400px;
 @hover-icon-size: 12px;
 @hover-bigger-icon-size: @hover-icon-size + 2px;
 
@@ -84,6 +84,7 @@
 .DateHeaderContainer {
   display: flex;
   justify-content: center;
+  margin: 4px 0;
 }
 
 .Date {
@@ -96,7 +97,7 @@
   color: var(--light-text-color);
   background-color: @primary-color;
   border-radius: 50%;
-  scroll-margin-right: @strike-columns-max-width;
+  scroll-margin-right: @streak-columns-max-width;
 }
 
 .SmallText {
@@ -114,7 +115,6 @@
 
 .StreakCol {
   padding: 0 !important;
-  text-align: center;
 
   &:global {
     &.ant-table-cell-row-hover {
@@ -123,16 +123,30 @@
   }
 }
 
+.StreakValue {
+  padding: 0 10px;
+}
+
+.SettingsColumnsCheckbox {
+  text-transform: lowercase;
+}
+
+.HideCol {
+  display: none;
+}
+
 .StreakHeader {
   padding: 10px 5px;
   text-align: center;
   text-transform: lowercase;
   writing-mode: vertical-rl;
   text-orientation: mixed;
+  margin-left: auto;
 }
 
 .NameCol {
   max-width: 400px;
+  padding: 16px 8px 16px 10px !important;
 
   &:global {
     &.ant-table-cell-row-hover {
@@ -174,8 +188,16 @@
   color: @title-grey-color;
 }
 
+.SettingsIcon {
+  color: @title-grey-color;
+}
+
+.PopoverTitle {
+  margin: 8px 0;
+}
+
 @media (max-width: 767.98px) {
   .NameCol {
-    max-width: 200px;
+    max-width: 140px;
   }
 }
