@@ -6,17 +6,23 @@
 
   &:global {
     &.ant-menu {
-      margin-bottom: 8px;
+      margin: 0 -20px 8px;
+
+      @media (max-width: 767.98px) {
+        margin: 0 -13px 8px;
+      }
     }
 
     &.ant-menu-horizontal {
+      line-height: 40px;
       border-bottom: none !important;
     }
   }
 
   :global {
     .ant-menu-item {
-      border-radius: @border-radius-large;
+      margin-right: 4px;
+      border-radius: @border-radius-base;
     }
 
     .ant-menu-item:hover {

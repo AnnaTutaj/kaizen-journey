@@ -80,6 +80,7 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
       mode={isMobile ? 'vertical' : 'horizontal'}
       className={cn(styles.MenuContainer, { [styles.MenuContainerMobile]: isMobile })}
       items={items}
+      disabledOverflow
     />
   );
 };

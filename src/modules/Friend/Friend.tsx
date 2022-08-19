@@ -2,9 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Menu } from 'antd';
+import Menu from '@common/components/Menu';
 import { Paths } from '@common/constants/Paths';
-import styles from './Friend.module.less';
 import { DynamicModuleLoader } from 'redux-dynamic-modules';
 import FriendFollowingModule from './redux/FriendFollowing/FriendFollowingModule';
 import FriendFollowerModule from './redux/FriendFollower/FriendFollowerModule';
@@ -37,7 +36,7 @@ const Friend: React.FC = () => {
 
   return (
     <>
-      <Menu mode={'horizontal'} className={styles.MenuContainer} selectedKeys={selectedKeys} items={items} />
+      <Menu selectedKeys={selectedKeys} items={items} />
 
       <Outlet />
     </>

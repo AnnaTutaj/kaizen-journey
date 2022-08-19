@@ -2,9 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Menu } from 'antd';
+import Menu from '@common/components/Menu';
 import { Paths } from '@common/constants/Paths';
-import styles from './Habit.module.less';
 
 const Habit: React.FC = () => {
   const intl = useIntl();
@@ -34,7 +33,7 @@ const Habit: React.FC = () => {
 
   return (
     <>
-      <Menu mode={'horizontal'} className={styles.MenuContainer} selectedKeys={selectedKeys} items={items} />
+      <Menu selectedKeys={selectedKeys} items={items} />
 
       <Outlet />
     </>
