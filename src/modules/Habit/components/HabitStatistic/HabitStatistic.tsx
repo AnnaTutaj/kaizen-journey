@@ -1,12 +1,12 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Space, Table, Tooltip } from 'antd';
+import { Space, Tooltip } from 'antd';
 import styles from './HabitStatistic.module.less';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong, faCalendarDays, faCheck, faPause } from '@fortawesome/free-solid-svg-icons';
-import { ColumnsType } from 'antd/lib/table';
+import Table, { ITableColumn } from '@common/components/Table/Table';
 
 interface IProps {
   habit: IHabitModel;
@@ -24,61 +24,57 @@ const HabitStatistic: React.FC<IProps> = ({ habit }) => {
   const { getMinMaxDates } = useHabitHelper();
   const { minDate, maxDate } = getMinMaxDates(habit);
 
-  const columns = (): ColumnsType<IStatistic> => {
-    const cols: ColumnsType<IStatistic> = [
-      {
-        dataIndex: 'type',
-        render: (value) => <span>{intl.formatMessage({ id: `habit.${value}` })}</span>
-      },
-      {
-        title: () => (
-          <Tooltip title={intl.formatMessage({ id: 'habit.statistic.check' })}>
-            <FontAwesomeIcon icon={faCheck} />
-          </Tooltip>
-        ),
-        dataIndex: 'checks',
-        align: 'right'
-      },
-      {
-        title: () => (
-          <Tooltip title={intl.formatMessage({ id: 'habit.statistic.skipped' })}>
-            <FontAwesomeIcon icon={faPause} />
-          </Tooltip>
-        ),
-        dataIndex: 'skipped',
-        align: 'right'
-      },
-      {
-        title: () => (
-          <Tooltip title={intl.formatMessage({ id: 'habit.statistic.date' })}>
-            <FontAwesomeIcon icon={faCalendarDays} />
-          </Tooltip>
-        ),
-        render: (record: IStatistic) => (
-          <>
-            {record.minDate ? (
-              <Space size={8} wrap={true}>
-                <span className={styles.Date}>{record.minDate}</span>
-                {record.minDate !== record.maxDate ? (
-                  <>
-                    <FontAwesomeIcon icon={faArrowRightLong} />
-                    <span className={styles.Date}>{record.maxDate}</span>
-                  </>
-                ) : null}
-              </Space>
-            ) : null}
-          </>
-        )
-      }
-    ];
-
-    return cols;
-  };
+  const columns: ITableColumn<IStatistic>[] = [
+    {
+      dataIndex: 'type',
+      render: (value) => <span>{intl.formatMessage({ id: `habit.${value}` })}</span>
+    },
+    {
+      title: () => (
+        <Tooltip title={intl.formatMessage({ id: 'habit.statistic.check' })}>
+          <FontAwesomeIcon icon={faCheck} />
+        </Tooltip>
+      ),
+      dataIndex: 'checks',
+      align: 'right'
+    },
+    {
+      title: () => (
+        <Tooltip title={intl.formatMessage({ id: 'habit.statistic.skipped' })}>
+          <FontAwesomeIcon icon={faPause} />
+        </Tooltip>
+      ),
+      dataIndex: 'skipped',
+      align: 'right'
+    },
+    {
+      title: () => (
+        <Tooltip title={intl.formatMessage({ id: 'habit.statistic.date' })}>
+          <FontAwesomeIcon icon={faCalendarDays} />
+        </Tooltip>
+      ),
+      render: (record: IStatistic) => (
+        <>
+          {record.minDate ? (
+            <Space size={8} wrap={true}>
+              <span className={styles.Date}>{record.minDate}</span>
+              {record.minDate !== record.maxDate ? (
+                <>
+                  <FontAwesomeIcon icon={faArrowRightLong} />
+                  <span className={styles.Date}>{record.maxDate}</span>
+                </>
+              ) : null}
+            </Space>
+          ) : null}
+        </>
+      )
+    }
+  ];
 
   return (
     <Table<IStatistic>
       bordered={true}
-      columns={columns()}
+      columns={columns}
       dataSource={[
         {
           type: 'currentStreak',
