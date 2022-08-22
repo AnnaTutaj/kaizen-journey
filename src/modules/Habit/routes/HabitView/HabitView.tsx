@@ -98,7 +98,7 @@ const HabitView: React.FC = () => {
             </Tooltip>
           ) : null}
         </Space>
-
+        <div className={styles.HabitDescription}>{habit.description}</div>
         <div className={styles.HabitCalenarHeatmapContainer}>
           <HabitCalenarHeatmap habit={habit} year={year} />
         </div>
