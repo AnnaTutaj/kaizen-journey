@@ -85,7 +85,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
             tokenSeparators={['#', ' ']}
             onChange={(value) => form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) })}
           >
-            {userProfile?.tags.map((tag) => (
+            {userProfile.tags.map((tag) => (
               <Option key={tag}>{tag}</Option>
             ))}
           </Select>

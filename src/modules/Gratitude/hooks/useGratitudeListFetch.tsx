@@ -23,7 +23,7 @@ const useGratitudeListFetch = ({ setLoading, mode, filters }: IProps) => {
     const limitCount: number = mode === 'myList' ? 10 : 5;
 
     const whereConditionByMode =
-      mode === 'myList' ? where('createdByUid', '==', userProfile?.uid) : where('isPublic', '==', true);
+      mode === 'myList' ? where('createdByUid', '==', userProfile.uid) : where('isPublic', '==', true);
 
     const whereConditions = [whereConditionByMode];
     if (filters?.color) {

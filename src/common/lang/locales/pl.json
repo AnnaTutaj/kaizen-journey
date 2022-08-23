@@ -200,5 +200,8 @@
   "friend.follower.confirmModal.delete.title": "Usunąć obserwującego?",
   "friend.follower.confirmModal.delete.content": "Ten użytkowni przestanie Cię obserwować.",
   "friend.follower.confirmModal.delete.okText": "Usuń",
-  "friend.follower.confirmModal.delete.cancelText": "Anuluj"
+  "friend.follower.confirmModal.delete.cancelText": "Anuluj",
+
+  "user.copyIdToClipboard": "Skopiuj ID",
+  "user.joined": "Data dołączenia"
 }

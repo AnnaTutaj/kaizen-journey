@@ -50,7 +50,7 @@ const SettingsModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
       <Form
         name="basic"
         form={form}
-        initialValues={{ username: userProfile?.username, language: userProfile?.language, tags: userProfile?.tags }}
+        initialValues={{ username: userProfile.username, language: userProfile.language, tags: userProfile.tags }}
         onFinish={onFinish}
         autoComplete="off"
         layout={'vertical'}

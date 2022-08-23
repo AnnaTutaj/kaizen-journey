@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { generatePath, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import Header from '@common/containers/Header';
@@ -22,9 +22,15 @@ import FriendFollower from '@modules/Friend/routes/FriendFollower';
 import HabitView from '@modules/Habit/routes/HabitView';
 import cn from 'classnames';
 import { useIntl } from 'react-intl';
+import User from '@modules/User';
 
 const { Content } = Layout;
 //todo add route to PageNotFound, AccessDenied
+
+const RedirectToUser = () => {
+  const { id } = useParams();
+  return <Navigate replace to={generatePath(Paths.UserViewHabit, { id: id })} />;
+};
 
 const Main: React.FC = () => {
   const intl = useIntl();
@@ -85,7 +91,18 @@ const Main: React.FC = () => {
             />
             <Route path={Paths.Friend} element={<Navigate replace to={Paths.FriendFollowing} />} />
           </Route>
-
+          <Route
+            path={Paths.UserView}
+            element={
+              <PrivateRoute>
+                <User />
+              </PrivateRoute>
+            }
+          >
+            <Route path={Paths.UserViewHabit} element={<PageUnderConstruction title="Habits" />} />
+            <Route path={Paths.UserViewGratitude} element={<PageUnderConstruction title="Gratitude" />} />
+            <Route path={Paths.UserView} element={<RedirectToUser />} />
+          </Route>
           {/* todo: Create Page Not Found View */}
           <Route path="*" element={<PageUnderConstruction title="Page Not Found" />} />
         </Routes>

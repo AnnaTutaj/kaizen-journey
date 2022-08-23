@@ -55,7 +55,7 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
                 form.submit();
               }}
             >
-              {userProfile?.tags.map((tag) => (
+              {userProfile.tags.map((tag) => (
                 <Option key={tag}>{tag}</Option>
               ))}
             </Select>

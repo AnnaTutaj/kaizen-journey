@@ -23,14 +23,12 @@ const FriendFollowingList: React.FC = () => {
   };
 
   const getNextFriendFollowings = async () => {
-    if (userProfile) {
-      const lastFetchedFriendFollowing = getLastFetchedFriendFollowing();
+    const lastFetchedFriendFollowing = getLastFetchedFriendFollowing();
 
-      FriendFollowingListActions.loadAction({
-        userProfileUid: userProfile.uid,
-        lastFetchedFriendFollowing
-      })(dispatch);
-    }
+    FriendFollowingListActions.loadAction({
+      userProfileUid: userProfile.uid,
+      lastFetchedFriendFollowing
+    })(dispatch);
   };
 
   const removeFriendFollowing = (id: string) => {

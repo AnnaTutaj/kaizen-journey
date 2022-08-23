@@ -39,16 +39,12 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
       return;
     }
 
-    if (!userProfile) {
-      return;
-    }
-
     setLastSearchedId(values.id);
     setSearchedUser(null);
     setNotFound(false);
     const userSnap = await UserModel.fetchById(values.id);
     if (userSnap.exists()) {
-      const friendFollow = await getFollowingById(userProfile?.uid, values.id);
+      const friendFollow = await getFollowingById(userProfile.uid, values.id);
       const isFollowing = friendFollow ? true : false;
       setSearchedUser({ ...UserModel.build(userSnap.data()), isFollowing: isFollowing });
     } else {
@@ -58,9 +54,6 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
 
   const handleOnFollowClick = async (searchedUser: ISearchedUser) => {
     try {
-      if (!userProfile || !userProfile.uid) {
-        return;
-      }
       setCloseWithReload(true);
       setFormDisabled(true);
       await followUser(searchedUser);
@@ -154,7 +147,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
               { required: true, message: intl.formatMessage({ id: 'common.form.field.required.error' }) },
               {
                 validator: async (_, value) => {
-                  if (userProfile?.uid === value) {
+                  if (userProfile.uid === value) {
                     return Promise.reject(
                       intl.formatMessage({ id: 'friend.following.form.field.id.cannotFollowYourself' })
                     );

@@ -23,9 +23,7 @@ const FriendFollowing: React.FC = () => {
   const { isLoaded } = useSelector(({ friendFollowing }: IFriendFollowingOwnState) => friendFollowing, shallowEqual);
 
   const resetList = useCallback(() => {
-    if (userProfile) {
-      FriendFollowingActions.loadAction({ userProfileUid: userProfile.uid, reload: true })(dispatch);
-    }
+    FriendFollowingActions.loadAction({ userProfileUid: userProfile.uid, reload: true })(dispatch);
   }, [dispatch, userProfile]);
 
   const handleCreateFriendFollowing = () => {

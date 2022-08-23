@@ -32,22 +32,18 @@ const Gratitude: React.FC = () => {
   );
 
   const resetList = useCallback(() => {
-    if (userProfile) {
-      const serializedFilters = GratitudeMyListFiltersModel.serialize(filters);
+    const serializedFilters = GratitudeMyListFiltersModel.serialize(filters);
 
-      GratitudeMyListActions.loadAction({ filters: serializedFilters, userProfileUid: userProfile.uid, reload: true })(
-        dispatch
-      );
-    }
+    GratitudeMyListActions.loadAction({ filters: serializedFilters, userProfileUid: userProfile.uid, reload: true })(
+      dispatch
+    );
   }, [dispatch, filters, userProfile]);
 
   const refreshListAfterChangeFilters = useCallback(
     (newFilters: IGratitudeMyListFiltersModelDTO) => {
-      if (userProfile) {
-        GratitudeMyListActions.loadAction({ filters: newFilters, userProfileUid: userProfile.uid, reload: true })(
-          dispatch
-        );
-      }
+      GratitudeMyListActions.loadAction({ filters: newFilters, userProfileUid: userProfile.uid, reload: true })(
+        dispatch
+      );
     },
     [dispatch, userProfile]
   );

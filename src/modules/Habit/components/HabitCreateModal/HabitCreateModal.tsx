@@ -20,7 +20,7 @@ const HabitCreateModal: React.FC<IHabitCreateModalProps> = ({ handleSubmit, hand
   const onFinish = async (values: IHabitFormModel) => {
     try {
       const serializedValues = HabitFormModel.serializeToCreate({
-        createdByUid: userProfile?.uid || '',
+        createdByUid: userProfile.uid,
         ...values
       });
 

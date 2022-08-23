@@ -201,5 +201,8 @@
   "friend.follower.confirmModal.delete.title": "Remove follower?",
   "friend.follower.confirmModal.delete.content": "This user will no longer follow you.",
   "friend.follower.confirmModal.delete.okText": "Remove",
-  "friend.follower.confirmModal.delete.cancelText": "Cancel"
+  "friend.follower.confirmModal.delete.cancelText": "Cancel",
+
+  "user.copyIdToClipboard": "Copy ID",
+  "user.joined": "Joined"
 }

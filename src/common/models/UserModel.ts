@@ -45,7 +45,7 @@ class UserModel implements IUserModel {
   ) {}
 
   static build(dto: IUserModelDTO): IUserModel {
-    return new UserModel(dto.id, dto.createdAt, dto.pictureURL, dto.username, dto.language, dto.tags);
+    return new UserModel(dto.id, dto.createdAt, dto.pictureURL || '', dto.username, dto.language, dto.tags);
   }
 
   static converter = {

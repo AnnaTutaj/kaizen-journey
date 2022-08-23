@@ -27,8 +27,8 @@ const App: React.FC = () => {
   moment.locale(language);
 
   useEffect(() => {
-    setLanguage(userProfile?.language ? userProfile?.language : siteLanguage);
-  }, [userProfile?.language, siteLanguage]);
+    setLanguage(userProfile.language ? userProfile.language : siteLanguage);
+  }, [userProfile.language, siteLanguage]);
 
   useEffect(() => {
     setLocale(language === Language.en ? enUS : plPL);

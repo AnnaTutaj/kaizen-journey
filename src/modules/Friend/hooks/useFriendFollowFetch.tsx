@@ -4,7 +4,7 @@ import FriendBaseModel, { IFriendBaseModel } from '@modules/Friend/models/Friend
 import { useAuth } from '@common/contexts/AuthContext';
 import { useCallback } from 'react';
 import FriendFormModel from '../models/FriendFormModel';
-import { ISearchedUser } from '../components/FriendFollowingCreateModal/FriendFollowingCreateModal';
+import { IUserModel } from '@common/models/UserModel';
 
 const useFriendFollowFetch = () => {
   const { userProfile } = useAuth();
@@ -22,18 +22,13 @@ const useFriendFollowFetch = () => {
   );
 
   const followUser = useCallback(
-    async (searchedUser: ISearchedUser): Promise<void> => {
-      if (!userProfile) {
-        return;
-      }
-
+    async (searchedUser: Pick<IUserModel, 'id' | 'username' | 'pictureURL'>): Promise<void> => {
       const batch = writeBatch(db);
 
       const finalFollowingValues = FriendFormModel.serializeToCreate({
         ...searchedUser
       });
 
-      //todo przeniesc to wspolnego modelu
       const finalFollowerValues = FriendFormModel.serializeToCreate({ ...userProfile });
 
       const followingRef = doc(db, 'follows', userProfile.uid, 'following', searchedUser.id);
@@ -48,10 +43,6 @@ const useFriendFollowFetch = () => {
 
   const deleteFollowing = useCallback(
     async (id: string): Promise<void> => {
-      if (!userProfile) {
-        return;
-      }
-
       const batch = writeBatch(db);
 
       const followingRef = doc(db, 'follows', userProfile.uid, 'following', id);
@@ -67,10 +58,6 @@ const useFriendFollowFetch = () => {
 
   const deleteFollower = useCallback(
     async (id: string): Promise<void> => {
-      if (!userProfile) {
-        return;
-      }
-
       const batch = writeBatch(db);
 
       const followingRef = doc(db, 'follows', id, 'following', userProfile.uid);

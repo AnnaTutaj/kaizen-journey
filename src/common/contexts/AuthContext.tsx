@@ -37,7 +37,7 @@ export interface IUserProfile {
 }
 export interface IAuthContext {
   userAuth: FirebaseUser | null;
-  userProfile: IUserProfile | null;
+  userProfile: IUserProfile;
   isUserLoading: boolean;
   signInWithGoogle: () => void;
   signInWithFacebook: () => void;
@@ -47,9 +47,21 @@ export interface IAuthContext {
   updateProfile: (values: Partial<IUserProfile>) => void;
 }
 
+const initUserProfile = {
+  uid: '',
+  createdAt: {
+    nanoseconds: 0,
+    seconds: 0
+  },
+  pictureURL: '',
+  username: '',
+  language: Language.en,
+  tags: []
+};
+
 export const AuthContext = createContext<IAuthContext>({
   userAuth: null,
-  userProfile: null,
+  userProfile: { ...initUserProfile },
   isUserLoading: false,
   signInWithGoogle: () => {},
   signInWithFacebook: () => {},
@@ -65,7 +77,7 @@ export default function AuthContextProvider({ children }: any) {
 
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
   const [userAuth, setUserAuth] = useState<FirebaseUser | null>(null);
-  const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
+  const [userProfile, setUserProfile] = useState<IUserProfile>({ ...initUserProfile });
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -81,18 +93,18 @@ export default function AuthContextProvider({ children }: any) {
 
           setUserProfile({
             uid: user.uid,
-            createdAt: userSnap.createdAt,
-            pictureURL: userSnap.pictureURL,
-            username: userSnap.username,
+            createdAt: userSnap.createdAt || '',
+            pictureURL: userSnap.pictureURL || '',
+            username: userSnap.username || '',
             language: userSnap?.language || Language.en,
             tags: userSnap.tags || []
           });
         } else {
-          setUserProfile(null);
+          setUserProfile({ ...initUserProfile });
           setUserAuth(null);
         }
       } else {
-        setUserProfile(null);
+        setUserProfile({ ...initUserProfile });
       }
       setIsUserLoading(false);
     });
@@ -128,9 +140,9 @@ export default function AuthContextProvider({ children }: any) {
 
         setUserProfile({
           uid: userAuth.uid,
-          createdAt: userSnap.createdAt,
-          pictureURL: userSnap.pictureURL,
-          username: userSnap.username,
+          createdAt: userSnap.createdAt || '',
+          pictureURL: userSnap.pictureURL || '',
+          username: userSnap.username || '',
           language: userSnap?.language || Language.en,
           tags: userSnap.tags || []
         });

@@ -21,9 +21,9 @@ const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubm
   const onFinish = async (values: IGratitudeFormModel) => {
     try {
       const finalValues = GratitudeFormModel.serializeToCreate({
-        createdByUid: userProfile?.uid || '',
-        createdBy: userProfile?.username || '',
-        createdByPictureURL: userProfile?.pictureURL || '',
+        createdByUid: userProfile.uid,
+        createdBy: userProfile.username,
+        createdByPictureURL: userProfile.pictureURL,
         ...values
       });
 

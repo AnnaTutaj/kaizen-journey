@@ -12,4 +12,9 @@ export const Paths = {
   FriendFollowing: '/friends/following',
   FriendFollowers: '/friends/followers',
   UserView: '/user/:id',
+  UserViewHabit: '/user/:id/habits',
+  UserViewHabitView: '/user/:id/habits/:habitId',
+  UserViewGratitude: '/user/:id/gratitude',
+  UserViewFollowing: '/user/:id/following',
+  UserViewFollowers: '/user/:id/followers'
 };

@@ -49,7 +49,7 @@ const Home: React.FC = () => {
   };
 
   const onClick = () => {
-    if (userProfile?.uid) {
+    if (userProfile.uid) {
       navigate(Paths.Support);
     } else {
       setIsRegisterModalVisible(true);

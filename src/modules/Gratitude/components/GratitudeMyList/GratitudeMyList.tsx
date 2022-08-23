@@ -29,16 +29,14 @@ const GratitudeMyList: React.FC = () => {
   };
 
   const getNextGratitudes = async () => {
-    if (userProfile) {
-      const lastFetchedGratitude = getLastFetchedGratitude();
-      const serializedFilters = GratitudeMyListFiltersModel.serialize(filters);
+    const lastFetchedGratitude = getLastFetchedGratitude();
+    const serializedFilters = GratitudeMyListFiltersModel.serialize(filters);
 
-      GratitudeMyListActions.loadAction({
-        filters: serializedFilters,
-        userProfileUid: userProfile.uid,
-        lastFetchedGratitude
-      })(dispatch);
-    }
+    GratitudeMyListActions.loadAction({
+      filters: serializedFilters,
+      userProfileUid: userProfile.uid,
+      lastFetchedGratitude
+    })(dispatch);
   };
 
   const removeGratitude = (id: string) => {

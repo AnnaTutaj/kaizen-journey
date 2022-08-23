@@ -35,7 +35,7 @@ const useHabitFetch = () => {
 
       const q = query(
         collection(db, 'habits').withConverter(HabitModel.converter),
-        where('createdByUid', '==', userProfile?.uid),
+        where('createdByUid', '==', userProfile.uid),
         where('isArchived', '==', isArchived)
       );
 
@@ -51,7 +51,7 @@ const useHabitFetch = () => {
 
       return habits;
     },
-    [userProfile?.uid]
+    [userProfile.uid]
   );
 
   const getHabitById = useCallback(async (id: string): Promise<IHabitModel | null> => {

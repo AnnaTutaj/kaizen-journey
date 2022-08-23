@@ -34,7 +34,7 @@ const UserAvatar: React.FC = () => {
   const menuItems: DropdownMenuItemProps = [
     {
       key: 'userProfileGroup',
-      title: userProfile?.username || '',
+      title: userProfile.username || '',
       items: [
         {
           key: 'settings',
@@ -67,7 +67,7 @@ const UserAvatar: React.FC = () => {
           className={styles.Avatar}
           size={40}
           icon={<FontAwesomeIcon icon={faUser} />}
-          src={userProfile?.pictureURL}
+          src={userProfile.pictureURL}
         />
       </Dropdown>
       <SettingsModal
