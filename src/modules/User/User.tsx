@@ -17,6 +17,7 @@ import { faEye, faEyeSlash, faCopy } from '@fortawesome/free-regular-svg-icons';
 import PageLoading from '@common/components/PageLoading';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import moment from 'moment';
+import { MenuItemsProps } from '@common/components/Menu/Menu';
 
 const { useBreakpoint } = Grid;
 
@@ -110,7 +111,7 @@ const User: React.FC = () => {
     }
   };
 
-  const items: { key: string; label: React.ReactElement }[] = useMemo(
+  const items: MenuItemsProps = useMemo(
     () => [
       {
         key: Paths.UserViewHabit,
@@ -129,31 +130,46 @@ const User: React.FC = () => {
         )
       },
       {
-        key: Paths.UserViewFollowing,
-        label: (
-          <Link to={generatePath(Paths.UserViewFollowing, { id: params.id })}>
-            {intl.formatMessage({ id: 'friend.menu.following' })}
-          </Link>
-        )
-      },
-      {
-        key: Paths.UserViewFollowers,
-        label: (
-          <Link to={generatePath(Paths.UserViewFollowers, { id: params.id })}>
-            {intl.formatMessage({ id: 'friend.menu.followers' })}
-          </Link>
-        )
+        label: <div> {intl.formatMessage({ id: 'header.friends' })}</div>,
+        key: 'friends',
+        children: [
+          {
+            key: Paths.UserViewFollowing,
+            label: (
+              <Link to={generatePath(Paths.UserViewFollowing, { id: params.id })}>
+                {intl.formatMessage({ id: 'friend.menu.following' })}
+              </Link>
+            )
+          },
+          {
+            key: Paths.UserViewFollowers,
+            label: (
+              <Link to={generatePath(Paths.UserViewFollowers, { id: params.id })}>
+                {intl.formatMessage({ id: 'friend.menu.followers' })}
+              </Link>
+            )
+          }
+        ]
       }
     ],
     [intl, params.id]
   );
 
   useEffect(() => {
-    const findItem = items.find((i) => i.key === location.pathname);
-    if (findItem) {
-      setSelectedKeys([findItem.key]);
-    }
-  }, [location.pathname, items]);
+    items.forEach((i) => {
+      if (location.pathname === generatePath(i.key, { id: params.id })) {
+        setSelectedKeys([i.key]);
+      }
+
+      if (i.children) {
+        i.children.forEach((j) => {
+          if (location.pathname === generatePath(j.key, { id: params.id })) {
+            setSelectedKeys([j.key]);
+          }
+        });
+      }
+    });
+  }, [location.pathname, items, params.id]);
 
   const handleCopy = () => {
     setShowCheckCopiedIcon(true);

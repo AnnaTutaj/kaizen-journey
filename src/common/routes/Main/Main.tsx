@@ -101,6 +101,8 @@ const Main: React.FC = () => {
           >
             <Route path={Paths.UserViewHabit} element={<PageUnderConstruction title="Habits" />} />
             <Route path={Paths.UserViewGratitude} element={<PageUnderConstruction title="Gratitude" />} />
+            <Route path={Paths.UserViewFollowing} element={<PageUnderConstruction title="Following" />} />
+            <Route path={Paths.UserViewFollowers} element={<PageUnderConstruction title="Followers" />} />
             <Route path={Paths.UserView} element={<RedirectToUser />} />
           </Route>
           {/* todo: Create Page Not Found View */}
