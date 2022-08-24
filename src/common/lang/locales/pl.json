@@ -182,7 +182,7 @@
   "friend.following.form.field.id.cannotFollowYourself": "Nie można obserwować samego siebie",
   "friend.following.form.search": "Szukaj",
   "friend.following.form.follow": "Obserwuj",
-  "friend.following.form.unfollow": "Nie obserwuj",
+  "friend.following.form.unfollow": "Przestań obserwować",
   "friend.following.form.notFound.empty": "Upewnij się, że id jest poprawne. Zwróć uwagę na to, że id uwzględnia wielkość liter.",
 
   "friend.following.list.title": "Obserwuję",
@@ -190,7 +190,7 @@
 
   "friend.following.confirmModal.delete.title": "Czy na pewno nie chcesz już obserwować tego użytkownika?",
   "friend.following.confirmModal.delete.content": "Możesz go później znów zaobserwować.",
-  "friend.following.confirmModal.delete.okText": "Nie obserwuj",
+  "friend.following.confirmModal.delete.okText": "Przestań obserwować",
   "friend.following.confirmModal.delete.cancelText": "Anuluj",
 
   "friend.follower.list.title": "Obserwują mnie",
