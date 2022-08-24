@@ -14,6 +14,7 @@ import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import styles from '@modules/Habit/components/HabitList/HabitListItem/HabitListItem.module.less';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '../../HabitUpdateModal/HabitUpdateModal';
 import { Visibility } from '@common/constants/Visibility';
+import { useAuth } from '@common/contexts/AuthContext';
 
 const { Title, Paragraph } = Typography;
 
@@ -25,6 +26,7 @@ interface IProps {
 const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const { userProfile } = useAuth();
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const { getHabitById, deleteHabit, archiveHabit, restoreHabit } = useHabitFetch();
 
@@ -118,18 +120,22 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
     },
     {
       key: DropdownMenuKey.update,
-      onClick: async () => handleUpdateHabit()
+      onClick: async () => handleUpdateHabit(),
+      visible: () => habit.createdByUid === userProfile.uid
     },
     {
-      key: DropdownMenuKey.divider
+      key: DropdownMenuKey.divider,
+      visible: () => habit.createdByUid === userProfile.uid
     },
     {
       key: habit.isArchived ? DropdownMenuKey.restore : DropdownMenuKey.archive,
-      onClick: () => (habit.isArchived ? confirmRestore(habit) : confirmArchive(habit))
+      onClick: () => (habit.isArchived ? confirmRestore(habit) : confirmArchive(habit)),
+      visible: () => habit.createdByUid === userProfile.uid
     },
     {
       key: DropdownMenuKey.delete,
-      onClick: () => confirmDelete(habit)
+      onClick: () => confirmDelete(habit),
+      visible: () => habit.createdByUid === userProfile.uid
     }
   ];
 

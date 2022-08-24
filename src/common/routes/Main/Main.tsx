@@ -23,6 +23,7 @@ import HabitView from '@modules/Habit/routes/HabitView';
 import cn from 'classnames';
 import { useIntl } from 'react-intl';
 import User from '@modules/User';
+import UserHabit from '@modules/User/routes/UserHabit';
 
 const { Content } = Layout;
 //todo add route to PageNotFound, AccessDenied
@@ -99,7 +100,7 @@ const Main: React.FC = () => {
               </PrivateRoute>
             }
           >
-            <Route path={Paths.UserViewHabit} element={<PageUnderConstruction title="Habits" />} />
+            <Route path={Paths.UserViewHabit} element={<UserHabit />} />
             <Route path={Paths.UserViewGratitude} element={<PageUnderConstruction title="Gratitude" />} />
             <Route path={Paths.UserViewFollowing} element={<PageUnderConstruction title="Following" />} />
             <Route path={Paths.UserViewFollowers} element={<PageUnderConstruction title="Followers" />} />

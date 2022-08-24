@@ -26,18 +26,29 @@ const useHabitFetch = () => {
   const getHabits = useCallback(
     async ({
       setLoading,
-      isArchived
+      isArchived,
+      createdByUid,
+      isPublic
     }: {
       setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
-      isArchived: boolean;
+      isArchived?: boolean;
+      createdByUid?: string;
+      isPublic?: boolean;
     }) => {
       if (typeof setLoading === 'function') setLoading(true);
 
-      const q = query(
-        collection(db, 'habits').withConverter(HabitModel.converter),
-        where('createdByUid', '==', userProfile.uid),
-        where('isArchived', '==', isArchived)
-      );
+      const whereConditionsByAuthor = where('createdByUid', '==', createdByUid ? createdByUid : userProfile.uid);
+      const whereConditions = [whereConditionsByAuthor];
+
+      if (isArchived !== undefined) {
+        whereConditions.push(where('isArchived', '==', isArchived));
+      }
+
+      if (isPublic !== undefined) {
+        whereConditions.push(where('isPublic', '==', isPublic));
+      }
+
+      const q = query(collection(db, 'habits').withConverter(HabitModel.converter), ...whereConditions);
 
       const querySnap = await getDocs(q);
 

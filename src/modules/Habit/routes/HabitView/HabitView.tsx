@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { generatePath, useNavigate, useParams } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { Button, Select, Space } from 'antd';
 import moment from 'moment';
@@ -15,6 +15,7 @@ import styles from './HabitView.module.less';
 import HabitStatistic from '@modules/Habit/components/HabitStatistic';
 import Tooltip from 'antd/es/tooltip';
 import { Visibility } from '@common/constants/Visibility';
+import { useAuth } from '@common/contexts/AuthContext';
 
 interface IYearSelect {
   label: string;
@@ -25,6 +26,7 @@ const HabitView: React.FC = () => {
   const intl = useIntl();
   const params = useParams();
   const navigate = useNavigate();
+  const { userProfile } = useAuth();
   const [habit, setHabit] = useState<IHabitModel | null>(null);
   const [year, setYear] = useState<string>();
   const { getHabitById } = useHabitFetch();
@@ -55,6 +57,18 @@ const HabitView: React.FC = () => {
     return years;
   }, []);
 
+  const handleGoBack = useCallback(() => {
+    if (!habit) {
+      return;
+    }
+
+    if (habit.createdByUid === userProfile.uid) {
+      navigate(habit.isArchived ? Paths.HabitArchive : Paths.HabitTracker);
+    } else {
+      navigate(generatePath(Paths.UserViewHabit, { id: habit.createdByUid }));
+    }
+  }, [navigate, habit, userProfile.uid]);
+
   if (!habit || !year) {
     return <PageLoading />;
   }
@@ -62,7 +76,7 @@ const HabitView: React.FC = () => {
   return (
     <>
       <div className={styles.Header}>
-        <Button onClick={() => navigate(habit.isArchived ? Paths.HabitArchive : Paths.HabitTracker)}>
+        <Button onClick={() => handleGoBack()}>
           <Space size={10}>
             <FontAwesomeIcon icon={faLongArrowLeft} />
             {intl.formatMessage({ id: 'common.goBack' })}

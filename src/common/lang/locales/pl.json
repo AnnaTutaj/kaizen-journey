@@ -202,5 +202,8 @@
   "friend.follower.confirmModal.delete.cancelText": "Anuluj",
 
   "user.copyIdToClipboard": "Skopiuj ID",
-  "user.joined": "Data dołączenia"
+  "user.joined": "Data dołączenia",
+
+  "user.habit.title": "Publiczne nawyki",
+  "user.habit.empty": "Ten użytkownik nie dodał publicznych nawyków"
 }

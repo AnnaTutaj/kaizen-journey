@@ -15,12 +15,14 @@ interface IDropdownMenuItemProps {
     text: string;
   };
   onClick?: () => void;
+  visible?: () => boolean;
 }
 
 interface IDropdownMenuGroupItemProps {
   key: string;
   title: string | JSX.Element;
   items: IDropdownMenuItemProps[];
+  visible?: () => boolean;
 }
 
 export type DropdownMenuItemProps = (IDropdownMenuItemProps | IDropdownMenuGroupItemProps)[];
@@ -82,7 +84,9 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
     return 'title' in object;
   };
 
-  const items = menuItems.map((menuItem) => {
+  const filteredMenuItems = menuItems.filter((menuItem) => menuItem.visible === undefined || menuItem.visible());
+ 
+  const items = filteredMenuItems.map((menuItem) => {
     if (isMenuGroup(menuItem)) {
       const menuGroupItem: IDropdownMenuGroupItemProps = menuItem as IDropdownMenuGroupItemProps;
 

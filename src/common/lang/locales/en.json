@@ -203,5 +203,8 @@
   "friend.follower.confirmModal.delete.cancelText": "Cancel",
 
   "user.copyIdToClipboard": "Copy ID",
-  "user.joined": "Joined"
+  "user.joined": "Joined",
+
+  "user.habit.title": "Public habits",
+  "user.habit.empty": "This user has not added any public habits"
 }
