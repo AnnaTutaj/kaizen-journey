@@ -190,7 +190,6 @@
   "friend.following.list.empty": "Follow someone and find they here!",
 
   "friend.following.confirmModal.delete.title": "Are you sure you want to unfollow this user?",
-  "friend.following.confirmModal.delete.content": "You can follow this user again later",
   "friend.following.confirmModal.delete.okText": "Unfollow",
   "friend.following.confirmModal.delete.cancelText": "Cancel",
 

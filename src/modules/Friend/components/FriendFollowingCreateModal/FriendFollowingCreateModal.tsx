@@ -1,4 +1,4 @@
-import { Alert, Avatar, Col, Divider, message, Row } from 'antd';
+import { Alert, Avatar, Col, Divider, message, Row, Modal as ConfirmModal } from 'antd';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Input, Button } from 'antd';
@@ -82,7 +82,20 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
     }
   };
 
-  const handleOnUnFollowClick = async (searchedUser: ISearchedUser) => {
+  const confirmDeleteFollowing = async (searchedUser: ISearchedUser) => {
+    ConfirmModal.confirm({
+      centered: true,
+      closable: true,
+      title: intl.formatMessage({ id: 'friend.following.confirmModal.delete.title' }),
+      okText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.okText' }),
+      cancelText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.cancelText' }),
+      onOk: async () => {
+        await handleUnfollow(searchedUser);
+      }
+    });
+  };
+
+  const handleUnfollow = async (searchedUser: ISearchedUser) => {
     try {
       setCloseWithReload(true);
       setFormDisabled(true);
@@ -183,7 +196,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
                 </Col>
                 <Col>
                   {searchedUser.isFollowing ? (
-                    <Button onClick={() => handleOnUnFollowClick(searchedUser)}>
+                    <Button onClick={() => confirmDeleteFollowing(searchedUser)}>
                       {intl.formatMessage({ id: 'friend.following.form.unfollow' })}
                     </Button>
                   ) : (

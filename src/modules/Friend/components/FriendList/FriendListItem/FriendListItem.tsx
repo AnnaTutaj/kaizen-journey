@@ -1,4 +1,4 @@
-import { Avatar, Button, Col, Modal, Row } from 'antd';
+import { Avatar, Button, Col, Modal as ConfirmModal, Row } from 'antd';
 import React from 'react';
 import { List } from 'antd';
 import moment from 'moment';
@@ -25,11 +25,10 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
   const { deleteFollowing, deleteFollower } = useFriendFollowFetch();
 
   const confirmDeleteFollowing = async () => {
-    Modal.confirm({
+    ConfirmModal.confirm({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'friend.following.confirmModal.delete.title' }),
-      content: intl.formatMessage({ id: 'friend.following.confirmModal.delete.content' }),
       okText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.okText' }),
       cancelText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.cancelText' }),
       onOk: async () => {
@@ -39,7 +38,7 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
   };
 
   const confirmDeleteFollower = async () => {
-    Modal.confirm({
+    ConfirmModal.confirm({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.title' }),

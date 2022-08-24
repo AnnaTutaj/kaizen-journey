@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useParams, generatePath } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Button, Col, Grid, message, Row, Space } from 'antd';
+import { Button, Col, Grid, message, Row, Space, Modal as ConfirmModal } from 'antd';
 import { Paths } from '@common/constants/Paths';
 import styles from './User.module.less';
 import UserModel, { IUserModel } from '@common/models/UserModel';
@@ -13,7 +13,7 @@ import Avatar from '@common/components/Avatar';
 import { useAuth } from '@common/contexts/AuthContext';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 import { FirebaseError } from 'firebase/app';
-import { faEye, faEyeSlash, faCopy } from '@fortawesome/free-regular-svg-icons';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import PageLoading from '@common/components/PageLoading';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import moment from 'moment';
@@ -62,6 +62,10 @@ const User: React.FC = () => {
   }, [params.id]);
 
   const handleOnFollowClick = async () => {
+    if (isFollowingLoading) {
+      return;
+    }
+
     try {
       if (!user) {
         return;
@@ -86,7 +90,24 @@ const User: React.FC = () => {
     }
   };
 
-  const handleOnUnFollowClick = async () => {
+  const confirmDeleteFollowing = async () => {
+    if (isFollowingLoading) {
+      return;
+    }
+
+    ConfirmModal.confirm({
+      centered: true,
+      closable: true,
+      title: intl.formatMessage({ id: 'friend.following.confirmModal.delete.title' }),
+      okText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.okText' }),
+      cancelText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.cancelText' }),
+      onOk: async () => {
+        await handleUnfollow();
+      }
+    });
+  };
+
+  const handleUnfollow = async () => {
     try {
       if (!user) {
         return;
@@ -197,33 +218,21 @@ const User: React.FC = () => {
 
   const renderButtons = (
     <Space size={10} wrap={true}>
+      {isFollowing ? (
+        <Button onClick={() => confirmDeleteFollowing()}>
+          {intl.formatMessage({ id: 'friend.following.form.unfollow' })}
+        </Button>
+      ) : (
+        <Button onClick={() => handleOnFollowClick()}>
+          {intl.formatMessage({ id: 'friend.following.form.follow' })}
+        </Button>
+      )}
+
       <CopyToClipboard text={user.id} onCopy={() => handleCopy()}>
         <Button icon={<FontAwesomeIcon icon={showCheckCopiedIcon ? faCheck : faCopy} />}>
           <span className={styles.ButtonTextWithIcon}>{intl.formatMessage({ id: 'user.copyIdToClipboard' })}</span>
         </Button>
       </CopyToClipboard>
-
-      {isFollowing ? (
-        <Button
-          onClick={() => handleOnUnFollowClick()}
-          loading={isFollowingLoading}
-          icon={<FontAwesomeIcon icon={faEyeSlash} />}
-        >
-          <span className={styles.ButtonTextWithIcon}>
-            {intl.formatMessage({ id: 'friend.following.form.unfollow' })}
-          </span>
-        </Button>
-      ) : (
-        <Button
-          onClick={() => handleOnFollowClick()}
-          loading={isFollowingLoading}
-          icon={<FontAwesomeIcon icon={faEye} />}
-        >
-          <span className={styles.ButtonTextWithIcon}>
-            {intl.formatMessage({ id: 'friend.following.form.follow' })}
-          </span>
-        </Button>
-      )}
     </Space>
   );
 
