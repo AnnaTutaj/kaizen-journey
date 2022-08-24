@@ -196,7 +196,7 @@ const User: React.FC = () => {
   );
 
   const renderButtons = (
-    <Space size={10}>
+    <Space size={10} wrap={true}>
       <CopyToClipboard text={user.id} onCopy={() => handleCopy()}>
         <Button icon={<FontAwesomeIcon icon={showCheckCopiedIcon ? faCheck : faCopy} />}>
           <span className={styles.ButtonTextWithIcon}>{intl.formatMessage({ id: 'user.copyIdToClipboard' })}</span>
