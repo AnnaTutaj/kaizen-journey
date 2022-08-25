@@ -85,7 +85,7 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" block>
             {intl.formatMessage({ id: 'register.form.submit' })}
           </Button>
         </Form.Item>

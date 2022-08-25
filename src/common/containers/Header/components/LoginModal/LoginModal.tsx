@@ -65,7 +65,7 @@ const LoginModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCanc
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" block>
             {intl.formatMessage({ id: 'login.form.submit' })}
           </Button>
         </Form.Item>
