@@ -1,4 +1,4 @@
-import { Button, Select, Space } from 'antd';
+import { Select } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useIntl } from 'react-intl';
@@ -15,6 +15,7 @@ import { RangeLastDaysType } from '@common/constants/RangeLastDaysType';
 import { useSelector } from 'react-redux';
 import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTrackerInterface';
 import HabitTrackerActions from '@modules/Habit/redux/HabitTracker/HabitTrackerActions';
+import Button from '@common/components/Button';
 
 interface IRangeSelect {
   label: string;
@@ -80,12 +81,12 @@ const HabitTracker: React.FC = () => {
             onChange={(value) => HabitTrackerActions.setRangeLastDaysAction(value)(dispatch)}
           />
         </div>
-        <Button type="primary" onClick={() => handleCreateHabit()}>
-          <Space size={10}>
-            <FontAwesomeIcon icon={faPlus} />
-            {intl.formatMessage({ id: 'habit.create.button' })}
-          </Space>
-        </Button>
+        <Button
+          type="primary"
+          onClick={() => handleCreateHabit()}
+          icon={<FontAwesomeIcon icon={faPlus} />}
+          text={intl.formatMessage({ id: 'habit.create.button' })}
+        />
       </div>
       <HabitTable habits={habits} setHabits={setHabits} isInitialLoaded={isInitialLoaded} />
       {habitCreateModalConfig ? <HabitCreateModal {...habitCreateModalConfig} /> : null}

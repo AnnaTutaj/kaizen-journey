@@ -1,4 +1,4 @@
-import { Avatar, Button, Col, Modal as ConfirmModal, Row } from 'antd';
+import { Avatar, Col, Modal as ConfirmModal, Row } from 'antd';
 import React from 'react';
 import { List } from 'antd';
 import moment from 'moment';
@@ -10,6 +10,7 @@ import { useIntl } from 'react-intl';
 import { Paths } from '@common/constants/Paths';
 import { generatePath, Link } from 'react-router-dom';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
+import Button from '@common/components/Button';
 
 export type FriendListMode = 'following' | 'follower' | 'viewUser';
 

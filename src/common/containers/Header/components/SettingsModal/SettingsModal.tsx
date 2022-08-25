@@ -1,15 +1,14 @@
-import { Form, Input, Button, message, Select } from 'antd';
+import { Form, Input, message, Select } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { FirebaseError } from '@firebase/util';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import Modal from '@common/components/Modal';
+import Button from '@common/components/Button';
 
 const { Option } = Select;
 
-interface IProps {
-  isModalVisible: boolean;
-  handleSubmit: () => void;
+export interface ISettingsModalProps {
   handleCancel: () => void;
 }
 
@@ -19,7 +18,7 @@ interface ISettingsFormProps {
   tags: string[];
 }
 
-const SettingsModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCancel }) => {
+const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
   const { updateProfile, userProfile } = useAuth();
@@ -27,8 +26,6 @@ const SettingsModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
   const onFinish = async (values: ISettingsFormProps) => {
     try {
       updateProfile(values);
-
-      handleSubmit();
     } catch (error) {
       if (error instanceof FirebaseError) {
         const errorMessage = intl.formatMessage({
@@ -41,12 +38,7 @@ const SettingsModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
   };
 
   return (
-    <Modal
-      title={intl.formatMessage({ id: 'settings.form.title' })}
-      visible={isModalVisible}
-      onCancel={handleCancel}
-      width={400}
-    >
+    <Modal title={intl.formatMessage({ id: 'settings.form.title' })} visible={true} onCancel={handleCancel} width={400}>
       <Form
         name="basic"
         form={form}

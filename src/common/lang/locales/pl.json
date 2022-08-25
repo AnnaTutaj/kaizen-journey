@@ -11,6 +11,7 @@
   "header.register": "Zarejestuj się",
   "header.logout": "Wyloguj się",
   "header.settings": "Ustawienia",
+  "header.myProfile": "Mój profil",
   "footer.credits": "Utworzone z ❤️ przez",
   "footer.help": "Pomoc & FAQ",
   "footer.privacyPolicy": "Polityka prywatności",
@@ -202,6 +203,7 @@
   "friend.follower.confirmModal.delete.cancelText": "Anuluj",
 
   "user.copyIdToClipboard": "Skopiuj ID",
+  "user.editProfile": "Edytuj profil",
   "user.joined": "Data dołączenia",
 
   "user.habit.title": "Publiczne nawyki",

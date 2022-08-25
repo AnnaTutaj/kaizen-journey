@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Space, Row, Col, Button, Divider, Carousel } from 'antd';
+import { Space, Row, Col, Divider, Carousel } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import styles from './Home.module.less';
@@ -14,6 +14,7 @@ import { useAuth } from '@common/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import RegisterModal from '@common/containers/Header/components/RegisterModal';
+import Button from '@common/components/Button';
 
 interface IFeature {
   title: string;
@@ -115,16 +116,14 @@ const Home: React.FC = () => {
 
         <div className={styles.HeaderSubtitle}>{intl.formatMessage({ id: 'home.header.subtitle' })}</div>
         <Space direction="vertical">
-          <Button type="primary" onClick={onClick}>
-            {intl.formatMessage({ id: 'home.header.button' })}
-          </Button>
+          <Button type="primary" onClick={onClick} text={intl.formatMessage({ id: 'home.header.button' })} />
           {intl.formatMessage({ id: 'common.or' }).toLowerCase()}
-          <Button type="text" onClick={executeScroll}>
-            <Space size={10}>
-              <FontAwesomeIcon icon={faChevronDown} />
-              <span>{intl.formatMessage({ id: 'home.header.discoverMore' })}</span>
-            </Space>
-          </Button>
+          <Button
+            type="text"
+            onClick={executeScroll}
+            icon={<FontAwesomeIcon icon={faChevronDown} />}
+            text={intl.formatMessage({ id: 'home.header.discoverMore' })}
+          />
         </Space>
       </div>
       <div ref={divRef} className={styles.ContentDiv}>

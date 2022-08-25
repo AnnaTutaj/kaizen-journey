@@ -1,11 +1,10 @@
 import { useAuth } from '@common/contexts/AuthContext';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from 'antd';
 import React from 'react';
 import styles from './FederatedLogin.module.less';
-
 import { useIntl } from 'react-intl';
+import Button from '@common/components/Button';
 
 interface IProps {
   closeModal: () => void;
@@ -24,10 +23,9 @@ const RegisterModal: React.FC<IProps> = ({ closeModal }) => {
         }}
         block
         className={styles.Button}
-      >
-        <FontAwesomeIcon icon={faFacebook} className={styles.Icon} />
-        {intl.formatMessage({ id: 'federatedLogin.facebook' })}
-      </Button>
+        icon={<FontAwesomeIcon icon={faFacebook} />}
+        text={intl.formatMessage({ id: 'federatedLogin.facebook' })}
+      />
 
       <Button
         onClick={() => {
@@ -36,10 +34,9 @@ const RegisterModal: React.FC<IProps> = ({ closeModal }) => {
         }}
         block
         className={styles.Button}
-      >
-        <FontAwesomeIcon icon={faGoogle} className={styles.Icon} />
-        {intl.formatMessage({ id: 'federatedLogin.google' })}
-      </Button>
+        icon={<FontAwesomeIcon icon={faGoogle} />}
+        text={intl.formatMessage({ id: 'federatedLogin.google' })}
+      />
     </>
   );
 };

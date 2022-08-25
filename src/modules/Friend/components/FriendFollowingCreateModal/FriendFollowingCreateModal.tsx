@@ -1,7 +1,7 @@
 import { Alert, Avatar, Col, Divider, message, Row, Modal as ConfirmModal } from 'antd';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, Button } from 'antd';
+import { Form, Input } from 'antd';
 import { useAuth } from '@common/contexts/AuthContext';
 import Modal from '@common/components/Modal';
 import { IFriendFormModel } from '@modules/Friend/models/FriendFormModel';
@@ -13,6 +13,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FirebaseError } from 'firebase/app';
 import PageLoading from '@common/components/PageLoading';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
+import Button from '@common/components/Button';
 
 export interface IFriendFollowingCreateModalProps {
   handleSubmit: () => void;

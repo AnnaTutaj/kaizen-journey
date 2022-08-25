@@ -1,4 +1,4 @@
-import { Button, Spin } from 'antd';
+import { Spin } from 'antd';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { IFriendBaseModel } from '@modules/Friend/models/FriendBaseModel';
@@ -6,6 +6,7 @@ import FriendList from '@modules/Friend/components/FriendList';
 import styles from './FriendListScrolled.module.less';
 import { useIntl } from 'react-intl';
 import { FriendListMode } from '@modules/Friend/components/FriendList/FriendListItem/FriendListItem';
+import Button from '@common/components/Button';
 
 interface IProps {
   friends: IFriendBaseModel[];

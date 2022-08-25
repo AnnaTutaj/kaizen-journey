@@ -4,32 +4,20 @@ import { useIntl } from 'react-intl';
 import styles from './UserAvatar.module.less';
 import { useAuth } from '@common/contexts/AuthContext';
 import SettingsModal from '../SettingsModal';
+import { ISettingsModalProps } from '../SettingsModal/SettingsModal';
 import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
-import { faCog, faSignOut } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { faCog, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser as dummyUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { generatePath, useNavigate } from 'react-router-dom';
+import { Paths } from '@common/constants/Paths';
 
 const UserAvatar: React.FC = () => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const { logout, userProfile } = useAuth();
-  const [isSettingsrModalVisible, setIsSettingsModalVisible] = useState(false);
-
-  const showSettingsModal = () => {
-    setIsSettingsModalVisible(true);
-  };
-
-  const openSettingsModal = () => {
-    showSettingsModal();
-  };
-
-  const handleSettingsCancel = () => {
-    setIsSettingsModalVisible(false);
-  };
-
-  const handleSettingsSubmit = () => {
-    setIsSettingsModalVisible(false);
-  };
+  const [settingsModalConfig, setSettingsModalConfig] = useState<ISettingsModalProps>();
 
   const menuItems: DropdownMenuItemProps = [
     {
@@ -37,13 +25,25 @@ const UserAvatar: React.FC = () => {
       title: userProfile.username || '',
       items: [
         {
+          key: 'myProfile',
+          item: {
+            text: intl.formatMessage({ id: 'header.myProfile' }),
+            icon: faUser
+          },
+          onClick: () => {
+            navigate(generatePath(Paths.UserView, { id: userProfile.uid }));
+          }
+        },
+        {
           key: 'settings',
           item: {
             text: intl.formatMessage({ id: 'header.settings' }),
             icon: faCog
           },
           onClick: () => {
-            openSettingsModal();
+            setSettingsModalConfig({
+              handleCancel: () => setSettingsModalConfig(undefined)
+            });
           }
         },
         {
@@ -66,15 +66,12 @@ const UserAvatar: React.FC = () => {
         <Avatar
           className={styles.Avatar}
           size={40}
-          icon={<FontAwesomeIcon icon={faUser} />}
+          icon={<FontAwesomeIcon icon={dummyUser} />}
           src={userProfile.pictureURL}
         />
       </Dropdown>
-      <SettingsModal
-        isModalVisible={isSettingsrModalVisible}
-        handleCancel={handleSettingsCancel}
-        handleSubmit={handleSettingsSubmit}
-      />
+
+      {settingsModalConfig ? <SettingsModal {...settingsModalConfig} /> : null}
     </>
   );
 };

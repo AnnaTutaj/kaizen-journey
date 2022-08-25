@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Select, Space, Row, Col, Divider, Button } from 'antd';
+import { Form, Select, Space, Row, Col, Divider } from 'antd';
 import { IGratitudeMyListFiltersModel } from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './GratitudeMyListFilters.module.less';
@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEraser, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@common/contexts/AuthContext';
 import { Visibility } from '@common/constants/Visibility';
+import Button from '@common/components/Button';
 
 const { Option } = Select;
 
@@ -107,12 +108,9 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
                 });
                 form.submit();
               }}
-            >
-              <Space size={10}>
-                <FontAwesomeIcon icon={faEraser} />
-                {intl.formatMessage({ id: 'common.filters.clear' })}
-              </Space>
-            </Button>
+              icon={<FontAwesomeIcon icon={faEraser} />}
+              text={intl.formatMessage({ id: 'common.filters.clear' })}
+            />
           </Form.Item>
         </Col>
       </Row>

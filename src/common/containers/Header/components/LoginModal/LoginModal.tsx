@@ -1,10 +1,11 @@
-import { Form, Input, Button, Divider, message } from 'antd';
+import { Form, Input, Divider, message } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import FederatedLogin from '../FederatedLogin';
 import { FirebaseError } from '@firebase/util';
 import { useAuth } from '@common/contexts/AuthContext';
 import Modal from '@common/components/Modal';
+import Button from '@common/components/Button';
 
 interface IProps {
   isModalVisible: boolean;

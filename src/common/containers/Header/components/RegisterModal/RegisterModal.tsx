@@ -1,4 +1,4 @@
-import { Form, Input, Button, Divider, message } from 'antd';
+import { Form, Input, Divider, message } from 'antd';
 import React from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useIntl } from 'react-intl';
@@ -9,6 +9,7 @@ import { FirebaseError } from '@firebase/util';
 import Modal from '@common/components/Modal';
 import { useSelector } from 'react-redux';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
+import Button from '@common/components/Button';
 
 interface IProps {
   isModalVisible: boolean;

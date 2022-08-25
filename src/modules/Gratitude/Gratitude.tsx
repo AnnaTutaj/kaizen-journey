@@ -1,4 +1,3 @@
-import { Button, Space } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
@@ -17,6 +16,7 @@ import GratitudeMyListFiltersModel, {
 } from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
 import GratitudeMyListActions from './redux/GratitudeMyList/GratitudeMyListActions';
 import { IGratitudeMyListOwnState } from './redux/GratitudeMyList/GratitudeMyListInterface';
+import Button from '@common/components/Button';
 
 const Gratitude: React.FC = () => {
   const intl = useIntl();
@@ -73,19 +73,16 @@ const Gratitude: React.FC = () => {
           onClick={() => {
             setShowFilters((prevState) => !prevState);
           }}
-        >
-          <Space size={10}>
-            <FontAwesomeIcon icon={faFilter} />
-            {intl.formatMessage({ id: 'common.filters' })}
-          </Space>
-        </Button>
+          icon={<FontAwesomeIcon icon={faFilter} />}
+          text={intl.formatMessage({ id: 'common.filters' })}
+        />
 
-        <Button type="primary" onClick={() => handleCreateGratitude()}>
-          <Space size={10}>
-            <FontAwesomeIcon icon={faPlus} />
-            {intl.formatMessage({ id: 'gratitude.create.button' })}
-          </Space>
-        </Button>
+        <Button
+          type="primary"
+          onClick={() => handleCreateGratitude()}
+          icon={<FontAwesomeIcon icon={faPlus} />}
+          text={intl.formatMessage({ id: 'gratitude.create.button' })}
+        />
       </div>
 
       <div className={cn(styles.FiltersContainer, { [styles.FiltersContainerVisible]: showFilters })}>

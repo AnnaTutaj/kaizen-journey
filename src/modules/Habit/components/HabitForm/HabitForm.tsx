@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, Button, Select, Space } from 'antd';
+import { Form, Input, Select, Space } from 'antd';
 import Modal from '@common/components/Modal';
 import { IHabitFormModel } from '@modules/Habit/models/HabitFormModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
@@ -8,6 +8,7 @@ import styles from './HabitForm.module.less';
 import { Visibility } from '@common/constants/Visibility';
 import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from '@common/components/Button';
 
 const { TextArea } = Input;
 const { Option } = Select;

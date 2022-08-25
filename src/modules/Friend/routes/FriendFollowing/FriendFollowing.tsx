@@ -1,4 +1,3 @@
-import { Button, Space } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
@@ -11,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { IFriendFollowingOwnState } from '@modules/Friend/redux/FriendFollowing/FriendFollowingInterface';
 import FriendFollowingActions from '@modules/Friend/redux/FriendFollowing/FriendFollowingActions';
+import Button from '@common/components/Button';
 
 const FriendFollowing: React.FC = () => {
   const intl = useIntl();
@@ -47,12 +47,12 @@ const FriendFollowing: React.FC = () => {
   return (
     <>
       <div className={styles.Header}>
-        <Button type="primary" onClick={() => handleCreateFriendFollowing()}>
-          <Space size={10}>
-            <FontAwesomeIcon icon={faPlus} />
-            {intl.formatMessage({ id: 'friend.following.create.button' })}
-          </Space>
-        </Button>
+        <Button
+          type="primary"
+          onClick={() => handleCreateFriendFollowing()}
+          icon={<FontAwesomeIcon icon={faPlus} />}
+          text={intl.formatMessage({ id: 'friend.following.create.button' })}
+        />
       </div>
       <FriendFollowingList />
       {friendFollowingCreateModalConfig ? <FriendFollowingCreateModal {...friendFollowingCreateModalConfig} /> : null}

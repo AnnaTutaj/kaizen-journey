@@ -2,12 +2,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useParams, generatePath } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Button, Col, Grid, message, Row, Space, Modal as ConfirmModal } from 'antd';
+import { Col, Grid, message, Row, Space, Modal as ConfirmModal } from 'antd';
 import { Paths } from '@common/constants/Paths';
 import styles from './User.module.less';
 import UserModel, { IUserModel } from '@common/models/UserModel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPen, faUser } from '@fortawesome/free-solid-svg-icons';
 import Menu from '@common/components/Menu';
 import Avatar from '@common/components/Avatar';
 import { useAuth } from '@common/contexts/AuthContext';
@@ -18,6 +18,8 @@ import PageLoading from '@common/components/PageLoading';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import moment from 'moment';
 import { MenuItemsProps } from '@common/components/Menu/Menu';
+import SettingsModal, { ISettingsModalProps } from '@common/containers/Header/components/SettingsModal/SettingsModal';
+import Button from '@common/components/Button';
 
 const { useBreakpoint } = Grid;
 
@@ -35,6 +37,8 @@ const User: React.FC = () => {
   const [isUserInfoLoading, setIsUserInfoLoading] = useState<boolean>(true);
   const [isFollowingLoading, setIsFollowingLoading] = useState<boolean>(false);
   const [showCheckCopiedIcon, setShowCheckCopiedIcon] = useState<boolean>(false);
+  const [settingsModalConfig, setSettingsModalConfig] = useState<ISettingsModalProps>();
+
   const { getFollowingById, followUser, deleteFollowing } = useFriendFollowFetch();
 
   useEffect(() => {
@@ -216,22 +220,37 @@ const User: React.FC = () => {
     </>
   );
 
+  const handleEditProfile = () => {
+    setSettingsModalConfig({
+      handleCancel: () => setSettingsModalConfig(undefined)
+    });
+  };
+
   const renderButtons = (
     <Space size={10} wrap={true}>
-      {isFollowing ? (
-        <Button onClick={() => confirmDeleteFollowing()}>
-          {intl.formatMessage({ id: 'friend.following.form.unfollow' })}
-        </Button>
+      {userProfile.uid === user.id ? (
+        <Button
+          onClick={handleEditProfile}
+          text={intl.formatMessage({ id: 'user.editProfile' })}
+          icon={<FontAwesomeIcon icon={faPen} />}
+        />
       ) : (
-        <Button onClick={() => handleOnFollowClick()}>
-          {intl.formatMessage({ id: 'friend.following.form.follow' })}
-        </Button>
+        <>
+          {isFollowing ? (
+            <Button onClick={confirmDeleteFollowing}>
+              {intl.formatMessage({ id: 'friend.following.form.unfollow' })}
+            </Button>
+          ) : (
+            <Button onClick={handleOnFollowClick}>{intl.formatMessage({ id: 'friend.following.form.follow' })}</Button>
+          )}
+        </>
       )}
 
       <CopyToClipboard text={user.id} onCopy={() => handleCopy()}>
-        <Button icon={<FontAwesomeIcon icon={showCheckCopiedIcon ? faCheck : faCopy} />}>
-          <span className={styles.ButtonTextWithIcon}>{intl.formatMessage({ id: 'user.copyIdToClipboard' })}</span>
-        </Button>
+        <Button
+          icon={<FontAwesomeIcon icon={showCheckCopiedIcon ? faCheck : faCopy} />}
+          text={intl.formatMessage({ id: 'user.copyIdToClipboard' })}
+        />
       </CopyToClipboard>
     </Space>
   );
@@ -258,6 +277,8 @@ const User: React.FC = () => {
       <Menu selectedKeys={selectedKeys} items={items} />
 
       <Outlet />
+
+      {settingsModalConfig ? <SettingsModal {...settingsModalConfig} /> : null}
     </>
   );
 };

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button } from 'antd';
 import { useIntl } from 'react-intl';
 import styles from './PageError.module.less';
 import HeaderText from '../HeaderText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeartBroken } from '@fortawesome/free-solid-svg-icons';
+import Button from '@common/components/Button';
 
 interface IProps {
   onClick: () => void;

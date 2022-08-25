@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, Button, DatePicker, Select, Space } from 'antd';
+import { Form, Input, DatePicker, Select, Space } from 'antd';
 import Modal from '@common/components/Modal';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
@@ -9,6 +9,7 @@ import { useAuth } from '@common/contexts/AuthContext';
 import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Visibility } from '@common/constants/Visibility';
+import Button from '@common/components/Button';
 
 const { TextArea } = Input;
 const { Option } = Select;
