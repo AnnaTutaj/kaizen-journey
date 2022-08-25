@@ -146,14 +146,6 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
           layout={'vertical'}
           disabled={formDisabled}
         >
-          {/* //todo: show somewhere user ID with copy button. Fix then alert instruction */}
-          <Alert
-            showIcon
-            closable
-            message={intl.formatMessage({ id: 'friend.following.form.field.id.info.title' })}
-            description={intl.formatMessage({ id: 'friend.following.form.field.id.info.description' })}
-            type="info"
-          />
           <Form.Item
             label={intl.formatMessage({ id: 'friend.following.form.field.id' })}
             name="id"
@@ -170,7 +162,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
               }
             ]}
           >
-            <Input />
+            <Input placeholder={intl.formatMessage({ id: 'friend.following.form.field.id.placeholder' })} />
           </Form.Item>
 
           <Form.Item>
@@ -179,7 +171,20 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
             </Button>
           </Form.Item>
 
-          {notFound ? <Empty description={intl.formatMessage({ id: 'friend.following.form.notFound.empty' })} /> : null}
+          <Alert
+            showIcon
+            closable
+            message={intl.formatMessage({ id: 'friend.following.form.field.id.info.title' })}
+            description={intl.formatMessage({ id: 'friend.following.form.field.id.info.description' })}
+            type="info"
+          />
+
+          {notFound ? (
+            <>
+              <Divider />
+              <Empty description={intl.formatMessage({ id: 'friend.following.form.notFound.empty' })} />
+            </>
+          ) : null}
 
           {searchedUser ? (
             <>
