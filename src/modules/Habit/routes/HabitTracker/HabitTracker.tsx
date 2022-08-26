@@ -74,13 +74,11 @@ const HabitTracker: React.FC = () => {
     <>
       {loading ? <PageLoading /> : null}
       <div className={styles.Header}>
-        <div className={styles.HeaderRangeSelect}>
-          <Select<IRangeSelect['value']>
-            options={rangeSelectOptions}
-            defaultValue={range}
-            onChange={(value) => HabitTrackerActions.setRangeLastDaysAction(value)(dispatch)}
-          />
-        </div>
+        <Select<IRangeSelect['value']>
+          options={rangeSelectOptions}
+          defaultValue={range}
+          onChange={(value) => HabitTrackerActions.setRangeLastDaysAction(value)(dispatch)}
+        />
         <Button
           type="primary"
           onClick={() => handleCreateHabit()}
