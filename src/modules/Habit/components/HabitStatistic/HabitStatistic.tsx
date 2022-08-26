@@ -98,6 +98,7 @@ const HabitStatistic: React.FC<IProps> = ({ habit }) => {
           maxDate: maxDate
         }
       ]}
+      rowKey="type"
       pagination={false}
     />
   );
