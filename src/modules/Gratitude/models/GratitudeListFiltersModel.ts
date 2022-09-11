@@ -1,19 +1,19 @@
 import { CategoryColorsDTO } from '@common/constants/CategoryColors';
 
-export interface IGratitudeMyListFiltersModel {
+export interface IGratitudeListFiltersModel {
   color?: CategoryColorsDTO;
   tags?: string[];
   isPublic?: boolean;
 }
 
-export interface IGratitudeMyListFiltersModelDTO {
+export interface IGratitudeListFiltersModelDTO {
   color?: CategoryColorsDTO;
   tags?: string[];
   isPublic?: boolean;
 }
 
-class GratitudeMyListFiltersModel {
-  static serialize({ color, tags, isPublic }: IGratitudeMyListFiltersModel): IGratitudeMyListFiltersModelDTO {
+class GratitudeListFiltersModel {
+  static serialize({ color, tags, isPublic }: IGratitudeListFiltersModel): IGratitudeListFiltersModelDTO {
     return {
       color: color || undefined,
       tags: tags && tags.length ? tags : undefined,
@@ -22,4 +22,4 @@ class GratitudeMyListFiltersModel {
   }
 }
 
-export default GratitudeMyListFiltersModel;
+export default GratitudeListFiltersModel;

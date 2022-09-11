@@ -1,24 +1,25 @@
 import PageLoading from '@common/components/PageLoading';
 import Empty from '@common/components/Empty';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-import GratitudeListScrolled from '../GratitudeListScrolled';
+import GratitudeListScrolled from '@modules/Gratitude/components/GratitudeListScrolled/GratitudeListScrolled';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { IGratitudeUpdateModalProps } from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
 import GratitudeUpdateModal from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
-import GratitudeListFiltersModel from '@modules/Gratitude/models/GratitudeListFiltersModel';
+import UserGratitudeListFiltersModel from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { IGratitudeMyListOwnState } from '@modules/Gratitude/redux/GratitudeMyList/GratitudeMyListInterface';
-import { useAuth } from '@common/contexts/AuthContext';
-import GratitudeMyListActions from '@modules/Gratitude/redux/GratitudeMyList/GratitudeMyListActions';
+import { IUserGratitudeListOwnState } from '@modules/User/redux/UserGratitudeList/UserGratitudeListInterface';
+import UserGratitudeListActions from '@modules/User/redux/UserGratitudeList/UserGratitudeListActions';
+import { useParams } from 'react-router-dom';
 
-const GratitudeMyList: React.FC = () => {
+const UserGratitudeList: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const { userProfile } = useAuth();
+  const params = useParams();
+  const userId: string = useMemo(() => params.id || '', [params.id]);
 
   const { data, isLoaded, isLoadingMore, hasMore, filters } = useSelector(
-    ({ gratitudeMyList }: IGratitudeMyListOwnState) => gratitudeMyList,
+    ({ userGratitudeList }: IUserGratitudeListOwnState) => userGratitudeList,
     shallowEqual
   );
 
@@ -30,21 +31,21 @@ const GratitudeMyList: React.FC = () => {
 
   const getNextGratitudes = async () => {
     const lastFetchedGratitude = getLastFetchedGratitude();
-    const serializedFilters = GratitudeListFiltersModel.serialize(filters);
+    const serializedFilters = UserGratitudeListFiltersModel.serialize(filters);
 
-    GratitudeMyListActions.loadAction({
+    UserGratitudeListActions.loadAction({
       filters: serializedFilters,
-      userProfileUid: userProfile.uid,
+      userProfileUid: userId,
       lastFetchedGratitude
     })(dispatch);
   };
 
   const removeGratitude = (id: string) => {
-    GratitudeMyListActions.removeAction(id)(dispatch);
+    UserGratitudeListActions.removeAction(id)(dispatch);
   };
 
   const handleUpdateSubmit = async (gratitude: IGratitudeModel) => {
-    GratitudeMyListActions.updateAction(gratitude)(dispatch);
+    UserGratitudeListActions.updateAction(gratitude)(dispatch);
   };
 
   const updateGratitude = (item: IGratitudeModel) => {
@@ -83,4 +84,4 @@ const GratitudeMyList: React.FC = () => {
   );
 };
 
-export default GratitudeMyList;
+export default UserGratitudeList;

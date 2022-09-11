@@ -1,4 +1,4 @@
-import { IGratitudeMyListFiltersModel } from './../../models/GratitudeMyListFiltersModel';
+import { IGratitudeListFiltersModel } from './../../models/GratitudeListFiltersModel';
 import { IGratitudeModel } from './../../models/GratitudeModel';
 
 export interface IGratitudeMyListOwnState {
@@ -10,5 +10,5 @@ export interface IGratitudeMyListState {
   isLoaded: boolean;
   isLoadingMore: boolean;
   hasMore: boolean;
-  filters: Partial<IGratitudeMyListFiltersModel>;
+  filters: Partial<IGratitudeListFiltersModel>;
 }

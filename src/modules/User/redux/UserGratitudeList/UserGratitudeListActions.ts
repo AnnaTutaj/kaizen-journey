@@ -7,7 +7,7 @@ import {
   IGratitudeListFiltersModelDTO
 } from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import GratitudeModel, { IGratitudeModel, IGratitudeModelDTO } from '@modules/Gratitude/models/GratitudeModel';
-import { GratitudeMyListTypes } from './GratitudeMyListTypes';
+import { UserGratitudeListTypes } from './UserGratitudeListTypes';
 
 const loadAction =
   ({
@@ -24,7 +24,7 @@ const loadAction =
   async (dispatch: Dispatch) => {
     try {
       if (reload) {
-        dispatch(GratitudeMyListDispatch.reload());
+        dispatch(UserGratitudeListDispatch.reload());
       }
 
       const limitCount: number = 10;
@@ -65,45 +65,45 @@ const loadAction =
       const querySnap = await getDocs(q);
 
       if (querySnap.docs.length === 0) {
-        dispatch(GratitudeMyListDispatch.load([]));
+        dispatch(UserGratitudeListDispatch.load([]));
       } else {
         const gratitudes = querySnap.docs.map((i) => i.data());
-        dispatch(GratitudeMyListDispatch.load(gratitudes));
+        dispatch(UserGratitudeListDispatch.load(gratitudes));
       }
     } catch (e) {}
   };
 
 const removeAction = (gratitudeId: string) => async (dispatch: Dispatch) => {
-  dispatch(GratitudeMyListDispatch.remove(gratitudeId));
+  dispatch(UserGratitudeListDispatch.remove(gratitudeId));
 };
 
 const updateAction = (gratitude: IGratitudeModel) => async (dispatch: Dispatch) => {
   const gratitudeSnap = await GratitudeModel.fetchById(gratitude.id);
   if (gratitudeSnap.exists()) {
     const updatedGratitude = GratitudeModel.build(gratitudeSnap.data());
-    dispatch(GratitudeMyListDispatch.update(gratitude, updatedGratitude));
+    dispatch(UserGratitudeListDispatch.update(gratitude, updatedGratitude));
   }
 };
 
 const setFiltersAction = (filters: Partial<IGratitudeListFiltersModel>) => (dispatch: Dispatch) => {
-  dispatch(GratitudeMyListDispatch.setFilters(filters));
+  dispatch(UserGratitudeListDispatch.setFilters(filters));
 };
 
-export const GratitudeMyListDispatch = {
-  reload: () => createActionHelper(GratitudeMyListTypes.GRATITUDE_MY_LIST_RELOAD),
-  load: (data: IGratitudeModelDTO[]) => createActionHelper(GratitudeMyListTypes.GRATITUDE_MY_LIST_LOAD, { data }),
-  remove: (id: string) => createActionHelper(GratitudeMyListTypes.GRATITUDE_MY_LIST_ITEM_REMOVE, { id }),
+export const UserGratitudeListDispatch = {
+  reload: () => createActionHelper(UserGratitudeListTypes.USER_GRATITUDE_LIST_RELOAD),
+  load: (data: IGratitudeModelDTO[]) => createActionHelper(UserGratitudeListTypes.USER_GRATITUDE_LIST_LOAD, { data }),
+  remove: (id: string) => createActionHelper(UserGratitudeListTypes.USER_GRATITUDE_LIST_ITEM_REMOVE, { id }),
   update: (gratitude: IGratitudeModel, updatedGratitude: IGratitudeModel) =>
-    createActionHelper(GratitudeMyListTypes.GRATITUDE_MY_LIST_ITEM_UPDATE, { gratitude, updatedGratitude }),
+    createActionHelper(UserGratitudeListTypes.USER_GRATITUDE_LIST_ITEM_UPDATE, { gratitude, updatedGratitude }),
   setFilters: (filters: Partial<IGratitudeListFiltersModel>) =>
-    createActionHelper(GratitudeMyListTypes.GRATITUDE_MY_LIST_SET_FILTERS, { filters })
+    createActionHelper(UserGratitudeListTypes.USER_GRATITUDE_LIST_SET_FILTERS, { filters })
 };
 
-export type GratitudeMyListDispatchUnion = ActionsUnion<typeof GratitudeMyListDispatch>;
+export type UserGratitudeListDispatchUnion = ActionsUnion<typeof UserGratitudeListDispatch>;
 
 export default {
   loadAction,
+  setFiltersAction,
   removeAction,
-  updateAction,
-  setFiltersAction
+  updateAction
 };

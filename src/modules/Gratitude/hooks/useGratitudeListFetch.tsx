@@ -2,12 +2,12 @@ import { collection, query, where, getDocs, orderBy, limit, startAfter, getDoc, 
 import { db } from '@common/util/firebase';
 import GratitudeModel, { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { useAuth } from '@common/contexts/AuthContext';
-import { IGratitudeMyListFiltersModelDTO } from '../models/GratitudeMyListFiltersModel';
+import { IGratitudeListFiltersModelDTO } from '../models/GratitudeListFiltersModel';
 
 interface IProps {
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   mode: 'myList' | 'public';
-  filters?: IGratitudeMyListFiltersModelDTO | undefined;
+  filters?: IGratitudeListFiltersModelDTO | undefined;
 }
 
 const useGratitudeListFetch = ({ setLoading, mode, filters }: IProps) => {

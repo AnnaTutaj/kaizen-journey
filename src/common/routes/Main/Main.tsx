@@ -24,6 +24,7 @@ import cn from 'classnames';
 import { useIntl } from 'react-intl';
 import User from '@modules/User';
 import UserHabit from '@modules/User/routes/UserHabit';
+import UserGratitude from '@modules/User/routes/UserGratitude';
 
 const { Content } = Layout;
 //todo add route to PageNotFound, AccessDenied
@@ -101,7 +102,7 @@ const Main: React.FC = () => {
             }
           >
             <Route path={Paths.UserViewHabit} element={<UserHabit />} />
-            <Route path={Paths.UserViewGratitude} element={<PageUnderConstruction title="Gratitude" />} />
+            <Route path={Paths.UserViewGratitude} element={<UserGratitude />} />
             <Route path={Paths.UserViewFollowing} element={<PageUnderConstruction title="Following" />} />
             <Route path={Paths.UserViewFollowers} element={<PageUnderConstruction title="Followers" />} />
             <Route path={Paths.UserView} element={<RedirectToUser />} />

@@ -9,11 +9,11 @@ import styles from './Gratitude.module.less';
 import { IGratitudeCreateModalProps } from '@modules/Gratitude/components/GratitudeCreateModal/GratitudeCreateModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faPlus } from '@fortawesome/free-solid-svg-icons';
-import GratitudeMyListFilters from '@modules/Gratitude/components/GratitudeMyListFilters/GratitudeMyListFilters';
+import GratitudeListFilters from '@modules/Gratitude/components/GratitudeListFilters/GratitudeListFilters';
 import cn from 'classnames';
-import GratitudeMyListFiltersModel, {
-  IGratitudeMyListFiltersModelDTO
-} from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
+import GratitudeListFiltersModel, {
+  IGratitudeListFiltersModelDTO
+} from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import GratitudeMyListActions from './redux/GratitudeMyList/GratitudeMyListActions';
 import { IGratitudeMyListOwnState } from './redux/GratitudeMyList/GratitudeMyListInterface';
 import Button from '@common/components/Button';
@@ -32,7 +32,7 @@ const Gratitude: React.FC = () => {
   );
 
   const resetList = useCallback(() => {
-    const serializedFilters = GratitudeMyListFiltersModel.serialize(filters);
+    const serializedFilters = GratitudeListFiltersModel.serialize(filters);
 
     GratitudeMyListActions.loadAction({ filters: serializedFilters, userProfileUid: userProfile.uid, reload: true })(
       dispatch
@@ -40,7 +40,7 @@ const Gratitude: React.FC = () => {
   }, [dispatch, filters, userProfile]);
 
   const refreshListAfterChangeFilters = useCallback(
-    (newFilters: IGratitudeMyListFiltersModelDTO) => {
+    (newFilters: IGratitudeListFiltersModelDTO) => {
       GratitudeMyListActions.loadAction({ filters: newFilters, userProfileUid: userProfile.uid, reload: true })(
         dispatch
       );
@@ -86,11 +86,11 @@ const Gratitude: React.FC = () => {
       </div>
 
       <div className={cn(styles.FiltersContainer, { [styles.FiltersContainerVisible]: showFilters })}>
-        <GratitudeMyListFilters
+        <GratitudeListFilters
           initialValues={filters}
           onFinish={(values) => {
-            const serializedFilters = GratitudeMyListFiltersModel.serialize(values);
-            const serializedCurrentFilters = GratitudeMyListFiltersModel.serialize(filters);
+            const serializedFilters = GratitudeListFiltersModel.serialize(values);
+            const serializedCurrentFilters = GratitudeListFiltersModel.serialize(filters);
 
             if (!_.isEqual(serializedFilters, serializedCurrentFilters)) {
               GratitudeMyListActions.setFiltersAction(values)(dispatch);

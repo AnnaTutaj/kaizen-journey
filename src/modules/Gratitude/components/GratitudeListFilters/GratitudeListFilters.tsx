@@ -1,9 +1,9 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Select, Space, Row, Col, Divider } from 'antd';
-import { IGratitudeMyListFiltersModel } from '@modules/Gratitude/models/GratitudeMyListFiltersModel';
+import { IGratitudeListFiltersModel } from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
-import styles from './GratitudeMyListFilters.module.less';
+import styles from './GratitudeListFilters.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEraser, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@common/contexts/AuthContext';
@@ -13,11 +13,12 @@ import Button from '@common/components/Button';
 const { Option } = Select;
 
 interface IProps {
-  initialValues?: Partial<IGratitudeMyListFiltersModel>;
-  onFinish: (values: IGratitudeMyListFiltersModel) => void;
+  initialValues?: Partial<IGratitudeListFiltersModel>;
+  onFinish: (values: IGratitudeListFiltersModel) => void;
+  hideVisiblity?: boolean;
 }
 
-const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) => {
+const GratitudeListFilters: React.FC<IProps> = ({ initialValues, onFinish, hideVisiblity }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
   const { userProfile } = useAuth();
@@ -82,18 +83,20 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
           </Form.Item>
         </Col>
         <Col lg={7} span={24}>
-          <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
-            <Select<boolean> onChange={() => form.submit()} allowClear>
-              {visibilityOptions.map((visibility, index) => (
-                <Option key={index} value={visibility.value}>
-                  <Space>
-                    <FontAwesomeIcon icon={visibility.icon} />
-                    {intl.formatMessage({ id: `common.visibility.${visibility.type}` })}
-                  </Space>
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+          {!hideVisiblity ? (
+            <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
+              <Select<boolean> onChange={() => form.submit()} allowClear>
+                {visibilityOptions.map((visibility, index) => (
+                  <Option key={index} value={visibility.value}>
+                    <Space>
+                      <FontAwesomeIcon icon={visibility.icon} />
+                      {intl.formatMessage({ id: `common.visibility.${visibility.type}` })}
+                    </Space>
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          ) : null}
         </Col>
       </Row>
       <Row>
@@ -119,4 +122,4 @@ const GratitudeMyListFilters: React.FC<IProps> = ({ initialValues, onFinish }) =
   );
 };
 
-export default GratitudeMyListFilters;
+export default GratitudeListFilters;
