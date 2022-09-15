@@ -5,8 +5,8 @@ import { Drawer, Grid, Layout, Select, Switch } from 'antd';
 import styles from './Header.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import RegisterModal from './components/RegisterModal';
-import LoginModal from './components/LoginModal';
+import RegisterModal, { IRegisterModalProps } from './components/RegisterModal/RegisterModal';
+import LoginModal, { ILoginModalProps } from './components/LoginModal/LoginModal';
 import UserAvatar from './components/UserAvatar';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -29,8 +29,9 @@ const Header: React.FC = () => {
 
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
 
-  const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
-  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const [registerModalConfig, setRegisterModalConfig] = useState<IRegisterModalProps>();
+  const [loginModalConfig, setLoginModalConfig] = useState<ILoginModalProps>();
+
   const { userAuth } = useAuth();
   const { darkMode, setDarkMode } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,36 +39,22 @@ const Header: React.FC = () => {
   const screens = useBreakpoint();
   const isMobile = !screens.md;
 
-  const showRegisterModal = () => {
-    setIsRegisterModalVisible(true);
-  };
-
   const openRegisterModal = () => {
-    showRegisterModal();
-  };
-
-  const handleRegisterCancel = () => {
-    setIsRegisterModalVisible(false);
-  };
-
-  const handleRegsiterSubmit = () => {
-    setIsRegisterModalVisible(false);
-  };
-
-  const showLoginModal = () => {
-    setIsLoginModalVisible(true);
+    setRegisterModalConfig({
+      handleCancel: () => setRegisterModalConfig(undefined),
+      handleSubmit: () => {
+        setRegisterModalConfig(undefined);
+      }
+    });
   };
 
   const openLoginModal = () => {
-    showLoginModal();
-  };
-
-  const handleLoginCancel = () => {
-    setIsLoginModalVisible(false);
-  };
-
-  const handleLoginSubmit = () => {
-    setIsLoginModalVisible(false);
+    setLoginModalConfig({
+      handleCancel: () => setLoginModalConfig(undefined),
+      handleSubmit: () => {
+        setLoginModalConfig(undefined);
+      }
+    });
   };
 
   return (
@@ -128,16 +115,6 @@ const Header: React.FC = () => {
           <SiteMenu userAuth={userAuth} openLoginModal={openLoginModal} openRegisterModal={openRegisterModal} />
         ) : null}
       </Layout.Header>
-      <RegisterModal
-        isModalVisible={isRegisterModalVisible}
-        handleCancel={handleRegisterCancel}
-        handleSubmit={handleRegsiterSubmit}
-      />
-      <LoginModal
-        isModalVisible={isLoginModalVisible}
-        handleCancel={handleLoginCancel}
-        handleSubmit={handleLoginSubmit}
-      />
 
       <Drawer placement="right" closable={false} visible={isMenuOpen} width="100vw" className={styles.MenuDrawer}>
         <div className={styles.MenuDrawerCloseIconContainer} onClick={() => setIsMenuOpen(false)}>
@@ -151,6 +128,9 @@ const Header: React.FC = () => {
           hideDrawer={() => setIsMenuOpen(false)}
         />
       </Drawer>
+
+      {registerModalConfig ? <RegisterModal {...registerModalConfig} /> : null}
+      {loginModalConfig ? <LoginModal {...loginModalConfig} /> : null}
     </>
   );
 };

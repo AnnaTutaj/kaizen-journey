@@ -7,8 +7,7 @@ import { useAuth } from '@common/contexts/AuthContext';
 import Modal from '@common/components/Modal';
 import Button from '@common/components/Button';
 
-interface IProps {
-  isModalVisible: boolean;
+export interface ILoginModalProps {
   handleSubmit: () => void;
   handleCancel: () => void;
 }
@@ -18,7 +17,7 @@ interface ILoginFormProps {
   password: string;
 }
 
-const LoginModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCancel }) => {
+const LoginModal: React.FC<ILoginModalProps> = ({ handleSubmit, handleCancel }) => {
   const intl = useIntl();
   const { login } = useAuth();
 
@@ -41,12 +40,7 @@ const LoginModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCanc
   };
 
   return (
-    <Modal
-      title={intl.formatMessage({ id: 'login.form.title' })}
-      visible={isModalVisible}
-      onCancel={handleCancel}
-      width={400}
-    >
+    <Modal title={intl.formatMessage({ id: 'login.form.title' })} visible={true} onCancel={handleCancel} width={400}>
       <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
         <Form.Item
           label={intl.formatMessage({ id: 'register.form.field.email' })}

@@ -13,7 +13,7 @@ import fuji from '@assets/fuji.jpg';
 import { useAuth } from '@common/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
-import RegisterModal from '@common/containers/Header/components/RegisterModal';
+import RegisterModal, { IRegisterModalProps } from '@common/containers/Header/components/RegisterModal/RegisterModal';
 import Button from '@common/components/Button';
 
 interface IFeature {
@@ -28,7 +28,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   const [quoteAutoplay, setQuoteAutoplay] = useState<boolean>(true);
-  const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
+  const [registerModalConfig, setRegisterModalConfig] = useState<IRegisterModalProps>();
   const divRef = useRef<HTMLDivElement>(null);
   const quoteCount = 6;
 
@@ -53,7 +53,12 @@ const Home: React.FC = () => {
     if (userProfile.uid) {
       navigate(Paths.Support);
     } else {
-      setIsRegisterModalVisible(true);
+      setRegisterModalConfig({
+        handleCancel: () => setRegisterModalConfig(undefined),
+        handleSubmit: () => {
+          setRegisterModalConfig(undefined);
+        }
+      });
     }
   };
 
@@ -178,11 +183,7 @@ const Home: React.FC = () => {
         </section>
       </div>
 
-      <RegisterModal
-        isModalVisible={isRegisterModalVisible}
-        handleCancel={() => setIsRegisterModalVisible(false)}
-        handleSubmit={() => setIsRegisterModalVisible(false)}
-      />
+      {registerModalConfig ? <RegisterModal {...registerModalConfig} /> : null}
     </>
   );
 };

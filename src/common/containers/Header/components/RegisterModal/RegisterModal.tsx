@@ -11,8 +11,7 @@ import { useSelector } from 'react-redux';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import Button from '@common/components/Button';
 
-interface IProps {
-  isModalVisible: boolean;
+export interface IRegisterModalProps {
   handleSubmit: () => void;
   handleCancel: () => void;
 }
@@ -23,7 +22,7 @@ interface IRegisterFormProps {
   password: string;
 }
 
-const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleCancel }) => {
+const RegisterModal: React.FC<IRegisterModalProps> = ({ handleSubmit, handleCancel }) => {
   const intl = useIntl();
   const auth = getAuth();
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
@@ -53,12 +52,7 @@ const RegisterModal: React.FC<IProps> = ({ isModalVisible, handleSubmit, handleC
   };
 
   return (
-    <Modal
-      title={intl.formatMessage({ id: 'register.form.title' })}
-      visible={isModalVisible}
-      onCancel={handleCancel}
-      width={400}
-    >
+    <Modal title={intl.formatMessage({ id: 'register.form.title' })} visible={true} onCancel={handleCancel} width={400}>
       <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
         <Form.Item
           label={intl.formatMessage({ id: 'register.form.field.username' })}
