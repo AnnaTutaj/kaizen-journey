@@ -1,7 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Input, DatePicker, Select, Space } from 'antd';
-import Modal from '@common/components/Modal';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './GratitudeForm.module.less';
@@ -9,7 +8,7 @@ import { useAuth } from '@common/contexts/AuthContext';
 import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Visibility } from '@common/constants/Visibility';
-import Button from '@common/components/Button';
+import FormModal from '@common/components/FormModal';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -17,7 +16,7 @@ const { Option } = Select;
 interface IProps {
   title: string;
   initialValues: Partial<IGratitudeFormModel>;
-  onFinish: (values: IGratitudeFormModel) => void;
+  onFinish: (values: IGratitudeFormModel) => Promise<void>;
   handleCancel: () => void;
 }
 
@@ -43,15 +42,14 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
   ];
 
   return (
-    <Modal title={title} visible onCancel={handleCancel} width={500}>
-      <Form
-        name="basic"
-        form={form}
-        initialValues={initialValues}
-        onFinish={onFinish}
-        autoComplete="off"
-        layout={'vertical'}
-      >
+    <FormModal<IGratitudeFormModel>
+      modalProps={{ title, onCancel: handleCancel }}
+      form={form}
+      initialValues={initialValues}
+      onFinish={onFinish}
+      submitButtonText={intl.formatMessage({ id: 'gratitude.form.submit' })}
+    >
+      <>
         <Form.Item
           label={intl.formatMessage({ id: 'gratitude.form.field.title' })}
           name="title"
@@ -126,14 +124,8 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
             ))}
           </Select>
         </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            {intl.formatMessage({ id: 'gratitude.form.submit' })}
-          </Button>
-        </Form.Item>
-      </Form>
-    </Modal>
+      </>
+    </FormModal>
   );
 };
 

@@ -44,7 +44,7 @@ export interface IAuthContext {
   login?: (email: string, password: string) => Promise<FirebaseUserCredential>;
   register: (email: string, password: string) => void;
   logout: () => void;
-  updateProfile: (values: Partial<IUserProfile>) => void;
+  updateProfile: (values: Partial<IUserProfile>) => Promise<void>;
 }
 
 const initUserProfile = {
@@ -67,7 +67,7 @@ export const AuthContext = createContext<IAuthContext>({
   signInWithFacebook: () => {},
   register: () => {},
   logout: () => {},
-  updateProfile: (values: Partial<IUserProfile>) => {}
+  updateProfile: async (values: Partial<IUserProfile>) => {}
 });
 
 export const useAuth = () => useContext(AuthContext);

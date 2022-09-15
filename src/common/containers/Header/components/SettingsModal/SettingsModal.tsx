@@ -3,8 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { FirebaseError } from '@firebase/util';
 import { Language, useAuth } from '@common/contexts/AuthContext';
-import Modal from '@common/components/Modal';
-import Button from '@common/components/Button';
+import FormModal from '@common/components/FormModal';
 
 const { Option } = Select;
 
@@ -25,7 +24,7 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
 
   const onFinish = async (values: ISettingsFormProps) => {
     try {
-      updateProfile(values);
+      await updateProfile(values);
     } catch (error) {
       if (error instanceof FirebaseError) {
         const errorMessage = intl.formatMessage({
@@ -38,15 +37,14 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
   };
 
   return (
-    <Modal title={intl.formatMessage({ id: 'settings.form.title' })} visible={true} onCancel={handleCancel} width={400}>
-      <Form
-        name="basic"
-        form={form}
-        initialValues={{ username: userProfile.username, language: userProfile.language, tags: userProfile.tags }}
-        onFinish={onFinish}
-        autoComplete="off"
-        layout={'vertical'}
-      >
+    <FormModal
+      modalProps={{ title: intl.formatMessage({ id: 'settings.form.title' }), onCancel: handleCancel, width: 400 }}
+      form={form}
+      initialValues={{ username: userProfile.username, language: userProfile.language, tags: userProfile.tags }}
+      onFinish={onFinish}
+      submitButtonText={intl.formatMessage({ id: 'settings.form.submit' })}
+    >
+      <>
         <Form.Item
           label={intl.formatMessage({ id: 'settings.form.field.username' })}
           name="username"
@@ -74,14 +72,8 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
             onChange={(value) => form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) })}
           />
         </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            {intl.formatMessage({ id: 'settings.form.submit' })}
-          </Button>
-        </Form.Item>
-      </Form>
-    </Modal>
+      </>
+    </FormModal>
   );
 };
 
