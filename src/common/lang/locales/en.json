@@ -209,5 +209,11 @@
   "user.joined": "Joined",
 
   "user.habit.title": "Public habits",
-  "user.habit.empty": "This user has not added any public habits"
+  "user.habit.empty": "This user has no public habits",
+
+  "user.gratitude.empty": "This user gratitudes would appear here",
+
+  "user.friend.following.list.empty": "This user doesn't follow anyone",
+
+  "user.friend.follower.list.empty": "This user doesn't have any followers"
 }

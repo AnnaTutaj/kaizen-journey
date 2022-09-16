@@ -207,6 +207,12 @@
   "user.editProfile": "Edytuj profil",
   "user.joined": "Data dołączenia",
 
-  "user.habit.title": "Publiczne nawyki",
-  "user.habit.empty": "Ten użytkownik nie dodał publicznych nawyków"
+  "user.habit.title": "Moje nawyki",
+  "user.habit.empty": "Ten użytkownik nie ma publicznych nawyków",
+
+  "user.gratitude.empty": "Wdzięczności tego użytownika pojawią się tutaj",
+
+  "user.friend.following.list.empty": "Ten użytkownik jeszcze nikogo nie zaobserwował",
+
+  "user.friend.follower.list.empty": "Tego użytkownika jeszcze nikt nie obserwuje"
 }

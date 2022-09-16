@@ -76,7 +76,7 @@ const UserGratitudeList: React.FC = () => {
           updateGratitude={updateGratitude}
         />
       ) : (
-        <Empty description={intl.formatMessage({ id: 'gratitude.my.list.empty' })} />
+        <Empty description={intl.formatMessage({ id: 'user.gratitude.empty' })} />
       )}
 
       {gratitudeUpdateModalConfig ? <GratitudeUpdateModal {...gratitudeUpdateModalConfig} /> : null}
