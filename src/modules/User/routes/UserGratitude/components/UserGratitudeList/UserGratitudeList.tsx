@@ -6,17 +6,19 @@ import GratitudeListScrolled from '@modules/Gratitude/components/GratitudeListSc
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { IGratitudeUpdateModalProps } from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
 import GratitudeUpdateModal from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
-import UserGratitudeListFiltersModel from '@modules/Gratitude/models/GratitudeListFiltersModel';
+import GratitudeListFiltersModel from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { IUserGratitudeListOwnState } from '@modules/User/redux/UserGratitudeList/UserGratitudeListInterface';
 import UserGratitudeListActions from '@modules/User/redux/UserGratitudeList/UserGratitudeListActions';
 import { useParams } from 'react-router-dom';
+import useUserGratitudeHelper from '../../hooks/useUserGratitudeHelper';
 
 const UserGratitudeList: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const params = useParams();
   const userId: string = useMemo(() => params.id || '', [params.id]);
+  const { prepareFiltersByUser } = useUserGratitudeHelper();
 
   const { data, isLoaded, isLoadingMore, hasMore, filters } = useSelector(
     ({ userGratitudeList }: IUserGratitudeListOwnState) => userGratitudeList,
@@ -31,7 +33,8 @@ const UserGratitudeList: React.FC = () => {
 
   const getNextGratitudes = async () => {
     const lastFetchedGratitude = getLastFetchedGratitude();
-    const serializedFilters = UserGratitudeListFiltersModel.serialize(filters);
+    const finalFilters = prepareFiltersByUser(filters, userId);
+    const serializedFilters = GratitudeListFiltersModel.serialize(finalFilters);
 
     UserGratitudeListActions.loadAction({
       filters: serializedFilters,
