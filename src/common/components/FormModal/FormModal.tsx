@@ -13,7 +13,6 @@ export interface IFormModalProps<T> extends FormProps<T> {
 }
 
 const FormModal = <T extends {}>({ modalProps, submitButtonText, children, ...props }: IFormModalProps<T>) => {
-  const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const onFinish = async (values: T) => {
@@ -30,7 +29,7 @@ const FormModal = <T extends {}>({ modalProps, submitButtonText, children, ...pr
     <Modal visible width={500} {...modalProps}>
       <Form
         name="basic"
-        form={form}
+        form={props.form}
         initialValues={props.initialValues}
         onFinish={onFinish}
         autoComplete="off"
