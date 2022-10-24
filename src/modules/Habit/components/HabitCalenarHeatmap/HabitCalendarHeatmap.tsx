@@ -2,9 +2,10 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import moment from 'moment';
 import CalendarHeatmap from 'react-calendar-heatmap';
-import { Tooltip } from 'antd';
+import { Space, Tooltip } from 'antd';
 import 'react-calendar-heatmap/dist/styles.css';
 import './habit-calendar-heatmap.less';
+import styles from './HabitCalendarHeatmap.module.less';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
@@ -53,44 +54,67 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
     }
 
     if (value.dateStatus === HabitDateStatus.skipped) {
-      return `color-lighten-${habit.colorLighten.name}`;
+      return 'color-skipped';
     }
 
     return `color-${habit.color.name}`;
   };
 
   return (
-    <CalendarHeatmap
-      startDate={startDate}
-      endDate={endDate}
-      showWeekdayLabels={true}
-      gutterSize={2}
-      monthLabels={moment.monthsShort()}
-      weekdayLabels={moment.weekdaysShort()}
-      values={prepareValues()}
-      transformDayElement={(element: any, value: ICalendarHeatMapValue, index: number) => {
-        return (
-          <Tooltip
-            key={index}
-            title={intl.formatMessage(
-              { id: `habit.calendarHeatmap.dateTooltip.${value.dateStatus}` },
-              { date: `${moment(value.date).format('ll [(]ddd[)]')}` }
-            )}
-          >
-            {element}
-          </Tooltip>
-        );
-      }}
-      classForValue={(value: ICalendarHeatMapValue) => {
-        let classCell = '';
-        classCell = colorByStatus(value);
-        if (value.date === moment().format('YYYY-MM-DD')) {
-          classCell = `${classCell} mark-today`;
-        }
+    <>
+      <CalendarHeatmap
+        startDate={startDate}
+        endDate={endDate}
+        showWeekdayLabels={true}
+        gutterSize={2}
+        monthLabels={moment.monthsShort()}
+        weekdayLabels={moment.weekdaysShort()}
+        values={prepareValues()}
+        transformDayElement={(element: any, value: ICalendarHeatMapValue, index: number) => {
+          return (
+            <Tooltip
+              key={index}
+              title={intl.formatMessage(
+                { id: `habit.calendarHeatmap.dateTooltip.${value.dateStatus}` },
+                { date: `${moment(value.date).format('ll [(]ddd[)]')}` }
+              )}
+            >
+              {element}
+            </Tooltip>
+          );
+        }}
+        classForValue={(value: ICalendarHeatMapValue) => {
+          let classCell = '';
+          classCell = colorByStatus(value);
+          if (value.date === moment().format('YYYY-MM-DD')) {
+            classCell = `${classCell} mark-today`;
+          }
 
-        return classCell;
-      }}
-    />
+          return classCell;
+        }}
+      />
+      <div className={styles.LegendContainer}>
+        <Space size={20}>
+          <Space>
+            <div
+              className={styles.LegendColor}
+              style={{
+                backgroundColor: habit.color.value
+              }}
+            ></div>
+            {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.marked' })}
+          </Space>
+          <Space>
+            <div className={styles.LegendColorSkipped}></div>
+            {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.skipped' })}
+          </Space>
+          <Space>
+            <div className={styles.LegendColorToday}></div>
+            {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.today' })}
+          </Space>
+        </Space>
+      </div>
+    </>
   );
 };
 

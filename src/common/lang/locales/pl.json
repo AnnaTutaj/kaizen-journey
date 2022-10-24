@@ -164,6 +164,9 @@
   "habit.calendarHeatmap.dateTooltip.checked": "Zaznaczono w dniu {date}",
   "habit.calendarHeatmap.dateTooltip.unchecked": "Nie zaznaczono w dniu {date}",
   "habit.calendarHeatmap.dateTooltip.skipped": "Zapauzowano w dniu {date}",
+  "habit.calendarHeatmap.legend.marked": "Zaznaczono",
+  "habit.calendarHeatmap.legend.skipped": "Zapauzowano",
+  "habit.calendarHeatmap.legend.today": "Dzisiaj",
 
   "habit.archive.title": "Archiwum nawyków",
   "habit.archive.empty": "Twoje zarchiwizowane nawyki pojawią się tutaj",

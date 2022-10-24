@@ -165,6 +165,9 @@
   "habit.calendarHeatmap.dateTooltip.checked": "Marked on {date}",
   "habit.calendarHeatmap.dateTooltip.unchecked": "Not marked on {date}",
   "habit.calendarHeatmap.dateTooltip.skipped": "Paused on {date}",
+  "habit.calendarHeatmap.legend.marked": "Marked",
+  "habit.calendarHeatmap.legend.skipped": "Paused",
+  "habit.calendarHeatmap.legend.today": "Today",
 
   "habit.archive.title": "Habit archive",
   "habit.archive.empty": "Yours archived habits would appear here",
