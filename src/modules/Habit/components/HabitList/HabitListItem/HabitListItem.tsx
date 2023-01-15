@@ -173,7 +173,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
                   id: `common.visibility.${habit.isPublic ? Visibility.public : Visibility.private}`
                 })}
               >
-                <FontAwesomeIcon icon={habit.isPublic ? faGlobe : faLock} />
+                <FontAwesomeIcon className={styles.HabitIcon} icon={habit.isPublic ? faGlobe : faLock} />
               </Tooltip>
             </div>
           </Col>

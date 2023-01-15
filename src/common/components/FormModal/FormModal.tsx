@@ -26,7 +26,7 @@ const FormModal = <T extends {}>({ modalProps, submitButtonText, children, ...pr
   };
 
   return (
-    <Modal visible width={500} {...modalProps}>
+    <Modal open width={500} {...modalProps}>
       <Form
         name="basic"
         form={props.form}

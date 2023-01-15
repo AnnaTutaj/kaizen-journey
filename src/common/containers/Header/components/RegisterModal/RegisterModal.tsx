@@ -52,7 +52,7 @@ const RegisterModal: React.FC<IRegisterModalProps> = ({ handleSubmit, handleCanc
   };
 
   return (
-    <Modal title={intl.formatMessage({ id: 'register.form.title' })} visible={true} onCancel={handleCancel} width={400}>
+    <Modal title={intl.formatMessage({ id: 'register.form.title' })} open={true} onCancel={handleCancel} width={400}>
       <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
         <Form.Item
           label={intl.formatMessage({ id: 'register.form.field.username' })}

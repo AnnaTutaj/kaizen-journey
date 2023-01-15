@@ -1,5 +1,4 @@
 .MenuContainer {
-  color: @dark-grey-color;
   background-color: var(--header-bg-color) !important;
   border-right: none !important;
   border-bottom: none;
@@ -12,7 +11,7 @@
 
   :global {
     .ant-menu-item {
-      border-radius: @border-radius-large;
+      border-radius: @border-radius-large !important;
     }
 
     .ant-menu-item:hover {
@@ -24,9 +23,14 @@
 .MenuContainerMobile {
   margin-top: 50px !important;
 
-  > li {
-    font-size: 30px;
-    text-align: center;
-    text-transform: uppercase;
+  :global {
+    .ant-menu-item {
+      text-align: center;
+    }
+
+    .ant-menu-title-content {
+      font-size: 30px;
+      text-transform: uppercase;
+    }
   }
 }

@@ -133,7 +133,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
                 id: `common.visibility.${gratitude.isPublic ? Visibility.public : Visibility.private}`
               })}
             >
-              <FontAwesomeIcon icon={gratitude.isPublic ? faGlobe : faLock} />
+              <FontAwesomeIcon className={styles.HabitIcon} icon={gratitude.isPublic ? faGlobe : faLock} />
             </Tooltip>
           </div>
         </Col>

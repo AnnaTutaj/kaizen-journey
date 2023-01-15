@@ -41,7 +41,7 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
   ];
 
   return (
-    <Modal title={title} visible onCancel={handleCancel} width={500}>
+    <Modal title={title} open onCancel={handleCancel} width={500}>
       <Form
         name="basic"
         form={form}

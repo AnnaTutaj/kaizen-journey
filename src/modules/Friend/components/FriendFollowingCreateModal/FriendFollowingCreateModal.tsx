@@ -130,7 +130,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
     <>
       <Modal
         title={intl.formatMessage({ id: 'friend.following.create.title' })}
-        visible
+        open
         onCancel={() => {
           closeWithReload ? handleSubmit() : handleCancel();
         }}

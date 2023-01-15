@@ -11,7 +11,7 @@ import UserAvatar from './components/UserAvatar';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
-import { useTheme } from '@themes/use-theme';
+import { useTheme } from '@themes/useTheme';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
 import SiteMenu from './components/SiteMenu';
@@ -116,7 +116,7 @@ const Header: React.FC = () => {
         ) : null}
       </Layout.Header>
 
-      <Drawer placement="right" closable={false} visible={isMenuOpen} width="100vw" className={styles.MenuDrawer}>
+      <Drawer placement="right" closable={false} open={isMenuOpen} width="100vw" className={styles.MenuDrawer}>
         <div className={styles.MenuDrawerCloseIconContainer} onClick={() => setIsMenuOpen(false)}>
           <FontAwesomeIcon className={styles.MenuDrawerCloseIcon} icon={faTimes} />
         </div>

@@ -40,7 +40,7 @@ const LoginModal: React.FC<ILoginModalProps> = ({ handleSubmit, handleCancel }) 
   };
 
   return (
-    <Modal title={intl.formatMessage({ id: 'login.form.title' })} visible={true} onCancel={handleCancel} width={400}>
+    <Modal title={intl.formatMessage({ id: 'login.form.title' })} open={true} onCancel={handleCancel} width={400}>
       <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
         <Form.Item
           label={intl.formatMessage({ id: 'register.form.field.email' })}

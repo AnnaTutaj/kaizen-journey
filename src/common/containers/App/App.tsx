@@ -11,10 +11,11 @@ import 'moment/locale/pl';
 import { ITranslationConfig } from '@common/lang/config/types';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import { Locale } from 'antd/lib/locale-provider';
-import { ThemeProvider } from '@themes/theme-provider';
+import { ThemeProvider } from '@themes/ThemeProvider';
 import { ErrorBoundary } from 'react-error-boundary';
 import PageError from '@common/components/PageError';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
+import 'antd/dist/reset.css';
 
 const App: React.FC = () => {
   const { userProfile } = useAuth();
