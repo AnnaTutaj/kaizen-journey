@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useParams, generatePath } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Col, Grid, message, Row, Space, Modal as ConfirmModal } from 'antd';
+import { Col, Grid, message, Row, Space } from 'antd';
 import { Paths } from '@common/constants/Paths';
 import styles from './User.module.less';
 import UserModel, { IUserModel } from '@common/models/UserModel';
@@ -20,6 +20,7 @@ import moment from 'moment';
 import { MenuItemsProps } from '@common/components/Menu/Menu';
 import SettingsModal, { ISettingsModalProps } from '@common/containers/Header/components/SettingsModal/SettingsModal';
 import Button from '@common/components/Button';
+import useConfirmModal from '@common/hooks/useConfirmModal';
 
 const { useBreakpoint } = Grid;
 
@@ -38,8 +39,8 @@ const User: React.FC = () => {
   const [isFollowingLoading, setIsFollowingLoading] = useState<boolean>(false);
   const [showCheckCopiedIcon, setShowCheckCopiedIcon] = useState<boolean>(false);
   const [settingsModalConfig, setSettingsModalConfig] = useState<ISettingsModalProps>();
-
   const { getFollowingById, followUser, deleteFollowing } = useFriendFollowFetch();
+  const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -99,7 +100,7 @@ const User: React.FC = () => {
       return;
     }
 
-    ConfirmModal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'friend.following.confirmModal.delete.title' }),
@@ -279,6 +280,7 @@ const User: React.FC = () => {
       <Outlet />
 
       {settingsModalConfig ? <SettingsModal {...settingsModalConfig} /> : null}
+      {confirmModalContextHolder}
     </>
   );
 };

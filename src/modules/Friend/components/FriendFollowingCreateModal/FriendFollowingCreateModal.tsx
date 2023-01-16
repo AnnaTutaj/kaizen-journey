@@ -1,4 +1,4 @@
-import { Alert, Avatar, Col, Divider, message, Row, Modal as ConfirmModal } from 'antd';
+import { Alert, Avatar, Col, Divider, message, Row } from 'antd';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Input } from 'antd';
@@ -14,6 +14,7 @@ import { FirebaseError } from 'firebase/app';
 import PageLoading from '@common/components/PageLoading';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 import Button from '@common/components/Button';
+import useConfirmModal from '@common/hooks/useConfirmModal';
 
 export interface IFriendFollowingCreateModalProps {
   handleSubmit: () => void;
@@ -34,6 +35,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
   const [lastSearchedId, setLastSearchedId] = useState<string>();
   const [formDisabled, setFormDisabled] = useState<boolean>(false);
   const { getFollowingById, followUser, deleteFollowing } = useFriendFollowFetch();
+  const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
   const onFinish = async (values: IFriendFormModel) => {
     if (values.id === lastSearchedId) {
@@ -84,7 +86,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
   };
 
   const confirmDeleteFollowing = async (searchedUser: ISearchedUser) => {
-    ConfirmModal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'friend.following.confirmModal.delete.title' }),
@@ -216,6 +218,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
           ) : null}
         </Form>
       </Modal>
+      {confirmModalContextHolder}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { Avatar, Col, Modal as ConfirmModal, Row } from 'antd';
+import { Avatar, Col, Row } from 'antd';
 import React from 'react';
 import { List } from 'antd';
 import moment from 'moment';
@@ -11,6 +11,7 @@ import { Paths } from '@common/constants/Paths';
 import { generatePath, Link } from 'react-router-dom';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 import Button from '@common/components/Button';
+import useConfirmModal from '@common/hooks/useConfirmModal';
 
 export type FriendListMode = 'following' | 'follower' | 'viewUser';
 
@@ -24,9 +25,10 @@ interface IProps {
 const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing, removeFriendFollower }) => {
   const intl = useIntl();
   const { deleteFollowing, deleteFollower } = useFriendFollowFetch();
+  const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
   const confirmDeleteFollowing = async () => {
-    ConfirmModal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'friend.following.confirmModal.delete.title' }),
@@ -39,7 +41,7 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
   };
 
   const confirmDeleteFollower = async () => {
-    ConfirmModal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.title' }),
@@ -102,6 +104,7 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
           ) : null}
         </Col>
       </Row>
+      {confirmModalContextHolder}
     </List.Item>
   );
 };
