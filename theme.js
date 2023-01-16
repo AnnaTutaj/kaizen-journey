@@ -27,7 +27,7 @@ module.exports = {
 
   //Dimensions
   '@header-height': '60px',
-  '@footer-height': '60px',
+  '@footer-height': '80px',
   '@margin-vertical': '24px',
   '@content-padding-vertical': '20px',
   '@border-radius-base': '8px',

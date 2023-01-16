@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   height: @footer-height;
-  font-size: 14px !important;
   text-align: center;
   background-color: var(--header-bg-color) !important;
 
@@ -13,6 +12,12 @@
 
     &:hover {
       color: @primary-color !important;
+    }
+  }
+
+  :global {
+    .ant-space-item {
+      font-size: 14px;
     }
   }
 }

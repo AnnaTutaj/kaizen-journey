@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
     <Layout.Footer className={styles.Footer}>
       <Space direction="vertical" size={4}>
         <span>
-          <span className={styles.CreditsText}>©2022 {intl.formatMessage({ id: 'footer.credits' })} </span>
+          <span className={styles.CreditsText}>©2022 - 2023 {intl.formatMessage({ id: 'footer.credits' })} </span>
           <a className={styles.Link} href="mailto:tutaj.anna.93@gmail.com">
             Anna Tutaj
           </a>
