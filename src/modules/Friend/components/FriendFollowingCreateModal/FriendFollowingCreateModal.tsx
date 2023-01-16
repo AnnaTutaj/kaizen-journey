@@ -1,4 +1,4 @@
-import { Alert, Avatar, Col, Divider, message, Row } from 'antd';
+import { Avatar, Col, Divider, message, Row } from 'antd';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Input } from 'antd';
@@ -15,6 +15,7 @@ import PageLoading from '@common/components/PageLoading';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 import Button from '@common/components/Button';
 import useConfirmModal from '@common/hooks/useConfirmModal';
+import Alert from '@common/components/Alert';
 
 export interface IFriendFollowingCreateModalProps {
   handleSubmit: () => void;
