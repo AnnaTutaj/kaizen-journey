@@ -3,7 +3,7 @@ import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import { faCheck, faPause, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { useIntl } from 'react-intl';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const useHabitHelper = () => {
   const intl = useIntl();
@@ -53,9 +53,9 @@ const useHabitHelper = () => {
       return { maxDate: '', minDate: '' };
     }
 
-    const moments = allDates.map((d) => moment(d));
-    const maxDate = moment.max(moments).format('YYYY-MM-DD');
-    const minDate = moment.min(moments).format('YYYY-MM-DD');
+    const moments = allDates.map((d) => dayjs(d));
+    const maxDate = dayjs.max(moments).format('YYYY-MM-DD');
+    const minDate = dayjs.min(moments).format('YYYY-MM-DD');
 
     return { maxDate, minDate };
   };

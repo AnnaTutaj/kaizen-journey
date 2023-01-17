@@ -1,7 +1,7 @@
 import { Avatar, Col, Row } from 'antd';
 import React from 'react';
 import { List } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { IFriendBaseModel } from '@modules/Friend/models/FriendBaseModel';
@@ -69,7 +69,7 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
   };
 
   const miliseconds = friend.createdAt.seconds * 1000;
-  const cratedAtText = moment(miliseconds).format('ll');
+  const cratedAtText = dayjs(miliseconds).format('ll');
 
   return (
     <List.Item className={styles.ListItem}>

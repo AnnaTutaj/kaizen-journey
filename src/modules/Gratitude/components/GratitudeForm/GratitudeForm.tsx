@@ -109,7 +109,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.date' })} name="date">
-          <DatePicker />
+          <DatePicker allowClear={false} />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">

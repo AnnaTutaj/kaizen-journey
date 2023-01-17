@@ -16,7 +16,7 @@ import { FirebaseError } from 'firebase/app';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import PageLoading from '@common/components/PageLoading';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { MenuItemsProps } from '@common/components/Menu/Menu';
 import SettingsModal, { ISettingsModalProps } from '@common/containers/Header/components/SettingsModal/SettingsModal';
 import Button from '@common/components/Button';
@@ -210,7 +210,7 @@ const User: React.FC = () => {
   }
 
   const miliseconds = user.createdAt.seconds * 1000;
-  const cratedAtText = moment(miliseconds).format('ll');
+  const cratedAtText = dayjs(miliseconds).format('ll');
 
   const renderUserInfo = (
     <>

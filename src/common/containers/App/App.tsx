@@ -4,10 +4,10 @@ import { IntlProvider } from 'react-intl';
 import Main from '@common/routes/Main';
 import { ConfigProvider, Layout } from 'antd';
 import { AppLocale } from '@common/lang';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import enUS from 'antd/lib/locale/en_US';
 import plPL from 'antd/lib/locale/pl_PL';
-import 'moment/locale/pl';
+import 'dayjs/locale/pl';
 import { ITranslationConfig } from '@common/lang/config/types';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import { Locale } from 'antd/lib/locale-provider';
@@ -16,6 +16,15 @@ import { ErrorBoundary } from 'react-error-boundary';
 import PageError from '@common/components/PageError';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import 'antd/dist/reset.css';
+import localeData from 'dayjs/plugin/localeData';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import minMax from 'dayjs/plugin/minMax';
+
+dayjs.extend(minMax);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(localeData);
+dayjs.extend(localizedFormat);
 
 const App: React.FC = () => {
   const { userProfile } = useAuth();
@@ -25,7 +34,7 @@ const App: React.FC = () => {
   const [locale, setLocale] = useState<Locale>(enUS);
 
   const appLocale = useMemo(() => (AppLocale as any)[language], [language]);
-  moment.locale(language);
+  dayjs.locale(language);
 
   useEffect(() => {
     setLanguage(userProfile.language ? userProfile.language : siteLanguage);

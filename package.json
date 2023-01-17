@@ -19,7 +19,6 @@
     "firebase": "9.1.1",
     "immer": "9.0.15",
     "lodash": "4.17.21",
-    "moment": "2.29.1",
     "react": "18.2.0",
     "react-app-rewired": "2.2.1",
     "react-calendar-heatmap": "1.8.1",

@@ -1,11 +1,11 @@
 import { CategoryColorsDTO } from '@common/constants/CategoryColors';
 import { IGratitudeModel } from './GratitudeModel';
-import moment, { Moment } from 'moment';
+import dayjs, { Dayjs } from 'dayjs';
 
 export interface IGratitudeFormModel {
   title: string;
   description: string;
-  date: Moment;
+  date: Dayjs;
   isPublic: boolean;
   color: CategoryColorsDTO;
   tags: string[];
@@ -74,7 +74,7 @@ class GratitudeFormModel {
     return {
       title: data.title,
       description: data.description || '',
-      date: moment(data.date.seconds * 1000),
+      date: dayjs(data.date.seconds * 1000),
       isPublic: data.isPublic ?? false,
       color: data.color ? data.color.name : 'default',
       tags: data.tags ? data.tags : []

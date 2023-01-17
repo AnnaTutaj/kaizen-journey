@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import { Space, Tooltip } from 'antd';
 import 'react-calendar-heatmap/dist/styles.css';
@@ -24,15 +24,15 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
   const intl = useIntl();
   const { getDateStatus } = useHabitHelper();
 
-  const selectedYear = moment(year).format('YYYY-MM-DD');
-  const startDate = moment(selectedYear).startOf('year').subtract(1, 'day').format('YYYY-MM-DD');
-  const endDate = moment(selectedYear).endOf('year').format('YYYY-MM-DD');
+  const selectedYear = dayjs(year).format('YYYY-MM-DD');
+  const startDate = dayjs(selectedYear).startOf('year').subtract(1, 'day').format('YYYY-MM-DD');
+  const endDate = dayjs(selectedYear).endOf('year').format('YYYY-MM-DD');
 
   const prepareValues = (): ICalendarHeatMapValue[] => {
     const values: ICalendarHeatMapValue[] = [];
 
-    const startDateMoment = moment(startDate);
-    const endDateMoment = moment(endDate);
+    let startDateMoment = dayjs(startDate);
+    const endDateMoment = dayjs(endDate);
 
     while (startDateMoment.isSameOrBefore(endDateMoment)) {
       const dateStatus = getDateStatus(habit, startDateMoment.format('YYYY-MM-DD'));
@@ -41,8 +41,7 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
         date: startDateMoment.format('YYYY-MM-DD'),
         dateStatus: dateStatus
       });
-
-      startDateMoment.add(1, 'days');
+      startDateMoment = startDateMoment.add(1, 'days');
     }
 
     return values;
@@ -67,8 +66,8 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
         endDate={endDate}
         showWeekdayLabels={true}
         gutterSize={2}
-        monthLabels={moment.monthsShort()}
-        weekdayLabels={moment.weekdaysShort()}
+        monthLabels={dayjs.monthsShort()}
+        weekdayLabels={dayjs.weekdaysShort()}
         values={prepareValues()}
         transformDayElement={(element: any, value: ICalendarHeatMapValue, index: number) => {
           return (
@@ -76,7 +75,7 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
               key={index}
               title={intl.formatMessage(
                 { id: `habit.calendarHeatmap.dateTooltip.${value.dateStatus}` },
-                { date: `${moment(value.date).format('ll [(]ddd[)]')}` }
+                { date: `${dayjs(value.date).format('ll [(]ddd[)]')}` }
               )}
             >
               {element}
@@ -86,7 +85,7 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
         classForValue={(value: ICalendarHeatMapValue) => {
           let classCell = '';
           classCell = colorByStatus(value);
-          if (value.date === moment().format('YYYY-MM-DD')) {
+          if (value.date === dayjs().format('YYYY-MM-DD')) {
             classCell = `${classCell} mark-today`;
           }
 

@@ -1,5 +1,5 @@
-import moment, { Moment } from 'moment';
 import _ from 'lodash';
+import dayjs, { Dayjs } from 'dayjs';
 
 export interface IStreak {
   dates: string[];
@@ -10,12 +10,12 @@ export interface IStreak {
 const getStreakDates = (startDate: string, endDate: string) => {
   const dates: string[] = [];
 
-  const startDateMoment = moment(startDate);
-  const endDateMoment = moment(endDate);
+  let startDateMoment = dayjs(startDate);
+  const endDateMoment = dayjs(endDate);
 
   while (startDateMoment.isSameOrBefore(endDateMoment)) {
     dates.push(startDateMoment.format('YYYY-MM-DD'));
-    startDateMoment.add(1, 'days');
+    startDateMoment = startDateMoment.add(1, 'days');
   }
 
   return dates;
@@ -26,7 +26,7 @@ const getStreakCounts = (
   endStreak: string,
   datesSkipped: string[]
 ): { streakCount: number; skippedCount: number; dates: string[] } => {
-  const countDays = moment(endStreak).diff(moment(startStreak), 'days') + 1;
+  const countDays = dayjs(endStreak).diff(dayjs(startStreak), 'days') + 1;
   const dates = getStreakDates(startStreak, endStreak);
   const skippedCount = dates.filter((dates) => datesSkipped.indexOf(dates) >= 0).length;
 
@@ -38,7 +38,7 @@ const getStreaks = (datesChecked: string[], datesSkipped: string[]): IStreak[] =
 
   const streaks: IStreak[] = [];
   let startStreak: string | undefined;
-  let endStreak: Moment | undefined;
+  let endStreak: Dayjs | undefined;
 
   const sortedDates = _.sortBy(allDates);
 
@@ -49,9 +49,9 @@ const getStreaks = (datesChecked: string[], datesSkipped: string[]): IStreak[] =
       startStreak = date;
     }
 
-    const nextDate = sortedDates[i + 1] ? moment(sortedDates[i + 1]) : undefined;
+    const nextDate = sortedDates[i + 1] ? dayjs(sortedDates[i + 1]) : undefined;
 
-    if (nextDate && nextDate.isSame(moment(date).add(1, 'day'))) {
+    if (nextDate && nextDate.isSame(dayjs(date).add(1, 'day'))) {
       endStreak = nextDate;
       continue;
     }
@@ -104,8 +104,8 @@ const getSpecifiedStreaks = (
   );
   const currentStreak = streaks.find(
     (i) =>
-      i.dates.indexOf(moment().format('YYYY-MM-DD')) >= 0 ||
-      i.dates.indexOf(moment().subtract(1, 'day').format('YYYY-MM-DD')) >= 0
+      i.dates.indexOf(dayjs().format('YYYY-MM-DD')) >= 0 ||
+      i.dates.indexOf(dayjs().subtract(1, 'day').format('YYYY-MM-DD')) >= 0
   ) || { ...emptyStreak };
 
   return { longestStreak, currentStreak };

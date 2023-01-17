@@ -1,7 +1,7 @@
 import { Avatar, Col, Row, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { List, Typography } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { doc, deleteDoc } from 'firebase/firestore';
@@ -85,9 +85,9 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
   );
 
   const miliseconds = gratitude.date.seconds * 1000;
-  const monthShort = moment(miliseconds).format('MMM');
-  const monthDay = moment(miliseconds).format('D');
-  const weekDayShort = moment(miliseconds).format('ddd');
+  const monthShort = dayjs(miliseconds).format('MMM');
+  const monthDay = dayjs(miliseconds).format('D');
+  const weekDayShort = dayjs(miliseconds).format('ddd');
 
   return (
     <>

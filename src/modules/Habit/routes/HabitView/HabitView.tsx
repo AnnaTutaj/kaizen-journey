@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { generatePath, useNavigate, useParams } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { Select, Space } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBoxArchive, faGlobe, faInfoCircle, faLock, faLongArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import HeaderText from '@common/components/HeaderText';
@@ -43,16 +43,16 @@ const HabitView: React.FC = () => {
     }
 
     fetchHabit();
-    setYear(moment().format('YYYY'));
+    setYear(dayjs().format('YYYY'));
   }, [params.id, getHabitById]);
 
   const yearSelectOptions = useMemo((): IYearSelect[] => {
     const years: IYearSelect[] = [];
-    const year = moment();
+    let year = dayjs();
 
     for (let i = 0; i < 5; i++) {
       years.push({ label: year.format('YYYY'), value: year.format('YYYY') });
-      year.subtract(1, 'year');
+      year = year.subtract(1, 'year');
     }
 
     return years;

@@ -7,7 +7,7 @@ import { FirebaseError } from '@firebase/util';
 import { useAuth } from '@common/contexts/AuthContext';
 import GratitudeFormModel, { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import GratitudeForm from '@modules/Gratitude/components/GratitudeForm';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 export interface IGratitudeCreateModalProps {
   handleSubmit: () => void;
@@ -48,7 +48,7 @@ const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubm
       handleCancel={handleCancel}
       title={intl.formatMessage({ id: 'gratitude.create.title' })}
       initialValues={{
-        date: moment(),
+        date: dayjs(),
         color: 'default',
         isPublic: false
       }}

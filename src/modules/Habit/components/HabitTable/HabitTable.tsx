@@ -2,7 +2,7 @@ import { Col, Popover, Row, Space, Tooltip } from 'antd';
 import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import _ from 'lodash';
 import styles from './HabitTable.module.less';
 import cn from 'classnames';
@@ -160,10 +160,10 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const columns = (): ITableColumn<IHabitModel>[] => {
     const dateCols: ITableColumn<IHabitModel>[] = [];
 
-    const today = moment();
+    const today = dayjs();
     for (let i = 0; i <= range - 1; i++) {
       const isToday = i === 0;
-      const date = today.clone().subtract(i, 'days');
+      const date = today.subtract(i, 'days');
       const dateKey = date.format('YYYY-MM-DD');
       const monthShort = date.format('MMM');
       const monthDay = date.format('D');
