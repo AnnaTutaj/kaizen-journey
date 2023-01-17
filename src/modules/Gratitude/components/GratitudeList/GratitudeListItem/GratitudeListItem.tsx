@@ -1,4 +1,4 @@
-import { Avatar, Col, Modal, Row, Tooltip } from 'antd';
+import { Avatar, Col, Row, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { List, Typography } from 'antd';
 import moment from 'moment';
@@ -14,6 +14,7 @@ import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import { Visibility } from '@common/constants/Visibility';
+import useConfirmModal from '@common/hooks/useConfirmModal';
 
 const { Title, Paragraph } = Typography;
 
@@ -26,11 +27,12 @@ interface IProps {
 
 const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, removeGratitude, updateGratitude }) => {
   const intl = useIntl();
+  const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
   const [dropdownHover, setDropdownHover] = useState<boolean>(false);
 
   const confirmDelete = async () => {
-    Modal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'gratitude.confirmModal.delete.title' }),
@@ -88,65 +90,68 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
   const weekDayShort = moment(miliseconds).format('ddd');
 
   return (
-    <List.Item
-      className={styles.ListItem}
-      style={{
-        backgroundColor: gratitude.color.value
-      }}
-    >
-      <Row wrap={false} className={styles.ListItemRow}>
-        <Col>
-          <div className={styles.Date}>
-            <small className={styles.SmallText}>{monthShort}</small>
-            <div>{monthDay}</div>
-            <small className={styles.SmallText}>{weekDayShort}</small>
-          </div>
-        </Col>
-        {hideManageOptions ? (
+    <>
+      <List.Item
+        className={styles.ListItem}
+        style={{
+          backgroundColor: gratitude.color.value
+        }}
+      >
+        <Row wrap={false} className={styles.ListItemRow}>
           <Col>
-            <Avatar
-              icon={<FontAwesomeIcon icon={faUser} />}
-              size="large"
-              src={gratitude?.createdByPictureURL}
-              className={styles.Avatar}
-            />
+            <div className={styles.Date}>
+              <small className={styles.SmallText}>{monthShort}</small>
+              <div>{monthDay}</div>
+              <small className={styles.SmallText}>{weekDayShort}</small>
+            </div>
           </Col>
-        ) : null}
-        <Col flex={1}>
-          <Title level={5} className={styles.Title}>
-            {gratitude.title}
-          </Title>
-          <Paragraph className={styles.Description}>{gratitude.description}</Paragraph>
-          <Row gutter={10}>
-            {gratitude.tags.map((tag) => (
-              <Col key={tag} className={styles.TagContainer}>
-                <small>#{tag}</small>
-              </Col>
-            ))}
-          </Row>
-        </Col>
-        <Col>
-          <div className={styles.VisibilityIconContainer}>
-            <Tooltip
-              placement="left"
-              title={intl.formatMessage({
-                id: `common.visibility.${gratitude.isPublic ? Visibility.public : Visibility.private}`
-              })}
-            >
-              <FontAwesomeIcon className={styles.HabitIcon} icon={gratitude.isPublic ? faGlobe : faLock} />
-            </Tooltip>
-          </div>
-        </Col>
+          {hideManageOptions ? (
+            <Col>
+              <Avatar
+                icon={<FontAwesomeIcon icon={faUser} />}
+                size="large"
+                src={gratitude?.createdByPictureURL}
+                className={styles.Avatar}
+              />
+            </Col>
+          ) : null}
+          <Col flex={1}>
+            <Title level={5} className={styles.Title}>
+              {gratitude.title}
+            </Title>
+            <Paragraph className={styles.Description}>{gratitude.description}</Paragraph>
+            <Row gutter={10}>
+              {gratitude.tags.map((tag) => (
+                <Col key={tag} className={styles.TagContainer}>
+                  <small>#{tag}</small>
+                </Col>
+              ))}
+            </Row>
+          </Col>
+          <Col>
+            <div className={styles.VisibilityIconContainer}>
+              <Tooltip
+                placement="left"
+                title={intl.formatMessage({
+                  id: `common.visibility.${gratitude.isPublic ? Visibility.public : Visibility.private}`
+                })}
+              >
+                <FontAwesomeIcon className={styles.HabitIcon} icon={gratitude.isPublic ? faGlobe : faLock} />
+              </Tooltip>
+            </div>
+          </Col>
 
-        {!hideManageOptions ? (
-          <Col className={styles.DropDownCol}>
-            <Dropdown menuItems={menuItems} className={styles.Dropdown}>
-              {dropdownButton}
-            </Dropdown>
-          </Col>
-        ) : null}
-      </Row>
-    </List.Item>
+          {!hideManageOptions ? (
+            <Col className={styles.DropDownCol}>
+              <Dropdown menuItems={menuItems} className={styles.Dropdown}>
+                {dropdownButton}
+              </Dropdown>
+            </Col>
+          ) : null}
+        </Row>
+      </List.Item>
+      {confirmModalContextHolder}
+    </>
   );
 };
 

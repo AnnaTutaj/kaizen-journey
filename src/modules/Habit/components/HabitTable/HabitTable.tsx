@@ -1,4 +1,4 @@
-import { Col, Modal, Popover, Row, Space, Tooltip } from 'antd';
+import { Col, Popover, Row, Space, Tooltip } from 'antd';
 import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
@@ -27,6 +27,7 @@ import { Visibility } from '@common/constants/Visibility';
 import HabitTableColumnSettings, { ColumnType } from './HabitTableColumnSettings/HabitTableColumnSettings';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import Table, { ITableColumn } from '@common/components/Table/Table';
+import useConfirmModal from '@common/hooks/useConfirmModal';
 
 interface IProps {
   habits: IHabitModel[];
@@ -37,6 +38,7 @@ interface IProps {
 const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
   const range = useSelector(({ habitTracker }: IHabitTrackerOwnState) => habitTracker.rangeLastDays);
 
@@ -104,7 +106,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   };
 
   const confirmDelete = async (habit: IHabitModel) => {
-    Modal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'habit.confirmModal.delete.title' }),
@@ -118,7 +120,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   };
 
   const confirmArchive = async (habit: IHabitModel) => {
-    Modal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'habit.confirmModal.archive.title' }),
@@ -349,6 +351,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         <Empty description={intl.formatMessage({ id: 'habit.table.empty' })} />
       )}
       {habitUpdateModalConfig ? <HabitUpdateModal {...habitUpdateModalConfig} /> : null}
+      {confirmModalContextHolder}
     </>
   );
 };

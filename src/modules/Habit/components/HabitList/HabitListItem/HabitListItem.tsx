@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { generatePath, useNavigate } from 'react-router-dom';
-import { Col, Modal, Row, List, Typography, Tooltip } from 'antd';
+import { Col, Row, List, Typography, Tooltip } from 'antd';
 import { faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Paths } from '@common/constants/Paths';
@@ -15,6 +15,7 @@ import styles from '@modules/Habit/components/HabitList/HabitListItem/HabitListI
 import HabitUpdateModal, { IHabitUpdateModalProps } from '../../HabitUpdateModal/HabitUpdateModal';
 import { Visibility } from '@common/constants/Visibility';
 import { useAuth } from '@common/contexts/AuthContext';
+import useConfirmModal from '@common/hooks/useConfirmModal';
 
 const { Title, Paragraph } = Typography;
 
@@ -26,6 +27,7 @@ interface IProps {
 const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const { confirmModal, confirmModalContextHolder } = useConfirmModal();
   const { userProfile } = useAuth();
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const { getHabitById, deleteHabit, archiveHabit, restoreHabit } = useHabitFetch();
@@ -72,7 +74,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   };
 
   const confirmDelete = async (habit: IHabitModel) => {
-    Modal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'habit.confirmModal.delete.title' }),
@@ -86,7 +88,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   };
 
   const confirmArchive = async (habit: IHabitModel) => {
-    Modal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'habit.confirmModal.archive.title' }),
@@ -100,7 +102,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   };
 
   const confirmRestore = async (habit: IHabitModel) => {
-    Modal.confirm({
+    confirmModal({
       centered: true,
       closable: true,
       title: intl.formatMessage({ id: 'habit.confirmModal.restore.title' }),
@@ -185,6 +187,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
         </Row>
       </List.Item>
       {habitUpdateModalConfig ? <HabitUpdateModal {...habitUpdateModalConfig} /> : null}
+      {confirmModalContextHolder}
     </>
   );
 };
