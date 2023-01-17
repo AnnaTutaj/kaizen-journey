@@ -1,6 +1,6 @@
 import { Table as AntDTable } from 'antd';
 import { ColumnType } from 'antd/es/table';
-import { TableProps } from 'antd/es/table/Table';
+import { TableProps } from 'antd/es/table/InternalTable';
 import { useMemo } from 'react';
 
 export interface ITableColumn<T> extends ColumnType<T> {
