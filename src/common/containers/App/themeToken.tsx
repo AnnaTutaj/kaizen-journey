@@ -8,5 +8,5 @@ export const themeToken: Partial<AliasToken> = {
   colorWhite: '#ffffff',
   borderRadius: 8,
   borderRadiusSM: 5,
-  borderRadiusLG: 16,
+  borderRadiusLG: 16
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { Drawer, Grid, Layout, Select, Switch } from 'antd';
@@ -11,13 +11,13 @@ import UserAvatar from './components/UserAvatar';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
-import { useTheme } from '@themes/useTheme';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
 import SiteMenu from './components/SiteMenu';
 import { ITranslationConfig } from '@common/lang/config/types';
 import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
+import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 
 const { Option } = Select;
 const { useBreakpoint } = Grid;
@@ -33,7 +33,7 @@ const Header: React.FC = () => {
   const [loginModalConfig, setLoginModalConfig] = useState<ILoginModalProps>();
 
   const { userAuth } = useAuth();
-  const { darkMode, setDarkMode } = useTheme();
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const screens = useBreakpoint();
