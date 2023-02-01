@@ -1,0 +1,41 @@
+@colors: @primary-color, @turquoise-color, @coral-color, @straw-color;
+@spinner-size: 50px;
+@dot-size: 10px;
+
+.Spinner {
+  height: @spinner-size;
+  width: @spinner-size;
+  position: relative;
+}
+
+[class^='Dot_'] {
+  position: absolute;
+  left: calc(@spinner-size / 2);
+  width: @dot-size;
+  height: @dot-size;
+  border-radius: @dot-size;
+  transition: all 0.5s;
+  animation: dotRotateTwoLaps 2s both infinite;
+  transform-origin: 0 250% 0;
+}
+
+@keyframes dotRotateTwoLaps {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360 * 2deg);
+  }
+}
+
+.customize-dot(@index) when (@index > 0) {
+  .Dot_@{index} {
+    background-color: extract(@colors, @index);
+    animation-timing-function: cubic-bezier(0.25, 0.3 * @index, 0.5, 1);
+  }
+
+  .customize-dot(@index - 1);
+}
+
+.customize-dot(4);

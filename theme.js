@@ -2,16 +2,14 @@ module.exports = {
   // Basic Colors
   '@primary-color': '#8236d5',
   '@secondary-color': '#d5b436',
+  '@straw-color': '#e6e167',
+  '@turquoise-color': '#4dccbd',
+  '@coral-color': '#ff8484',
   '@error-color': '#c0293b',
   '@white-color': '#ffffff',
   '@dark-grey-color': '#6b6b6b',
   '@light-grey-color': '#e6e6e6',
   '@title-grey-color': '#8b8b8b',
-
-  '@gradient-keppel-color': '@primary-color',
-  '@gradient-viola-color': '#c78b9e',
-  '@gradient-japonica-color': '#dd7f65',
-  '@gradient-confetti-color': '#e6e167',
 
   //Picker Colors
   '@default-picker-color': '#73B8AD',
