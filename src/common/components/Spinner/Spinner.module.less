@@ -1,22 +1,56 @@
 @colors: @primary-color, @turquoise-color, @coral-color, @straw-color;
-@spinner-size: 50px;
-@dot-size: 10px;
+@spinner-size-small: 18px;
+@spinner-size-middle: 24px;
+@spinner-size-large: 38px;
+@dot-size-small: 3px;
+@dot-size-middle: 4px;
+@dot-size-large: 7px;
 
 .Spinner {
-  height: @spinner-size;
-  width: @spinner-size;
   position: relative;
 }
 
 [class^='Dot_'] {
   position: absolute;
-  left: calc(@spinner-size / 2);
-  width: @dot-size;
-  height: @dot-size;
-  border-radius: @dot-size;
   transition: all 0.5s;
   animation: dotRotateTwoLaps 2s both infinite;
   transform-origin: 0 250% 0;
+}
+
+.SpinnerSmall {
+  height: @spinner-size-small;
+  width: @spinner-size-small;
+
+  [class^='Dot_'] {
+    left: calc(@spinner-size-small / 2);
+    width: @dot-size-small;
+    height: @dot-size-small;
+    border-radius: @dot-size-middle;
+  }
+}
+
+.SpinnerMiddle {
+  height: @spinner-size-middle;
+  width: @spinner-size-middle;
+
+  [class^='Dot_'] {
+    left: calc(@spinner-size-middle / 2);
+    width: @dot-size-middle;
+    height: @dot-size-middle;
+    border-radius: @dot-size-middle;
+  }
+}
+
+.SpinnerLarge {
+  height: @spinner-size-large;
+  width: @spinner-size-large;
+
+  [class^='Dot_'] {
+    left: calc(@spinner-size-large / 2);
+    width: @dot-size-large;
+    height: @dot-size-large;
+    border-radius: @dot-size-large;
+  }
 }
 
 @keyframes dotRotateTwoLaps {
