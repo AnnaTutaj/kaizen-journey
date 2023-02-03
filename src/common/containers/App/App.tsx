@@ -40,8 +40,8 @@ const App: React.FC = () => {
   dayjs.locale(language);
 
   useEffect(() => {
-    setLanguage(userProfile.language ? userProfile.language : siteLanguage);
-  }, [userProfile.language, siteLanguage]);
+    setLanguage(userProfile.uid && userProfile.language ? userProfile.language : siteLanguage);
+  }, [userProfile.uid, userProfile.language, siteLanguage]);
 
   useEffect(() => {
     setLocale(language === Language.en ? enUS : plPL);
