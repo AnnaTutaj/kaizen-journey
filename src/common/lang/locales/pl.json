@@ -35,7 +35,9 @@
   "common.filters.clear": "Wyczyść",
   "common.form.field.visibility": "Widoczność",
   "common.form.field.required.error": "To pole jest wymagane",
+  "common.form.field.requiredOrDelete.error": "Uzupełnij to pole albo je usuń",
   "common.form.field.max.error": "Limit znaków wynosi {max}",
+  "common.form.field.url.error": "To nie jest poprawny url",
   "common.list.loadMore": "Załaduj więcej",
 
   "common.visibility.public": "Publiczne",
@@ -113,6 +115,8 @@
   "gratitude.form.field.tags": "Tagi",
   "gratitude.form.field.color": "Kolor",
   "gratitude.form.field.date": "Data",
+  "gratitude.form.field.links": "Linki do zdjęć",
+  "gratitude.form.field.addLink": "Dodaj link do zdjęcia",
   "gratitude.form.submit": "Zapisz",
 
   "gratitude.confirmModal.delete.title": "Usunąć wdzięczność?",

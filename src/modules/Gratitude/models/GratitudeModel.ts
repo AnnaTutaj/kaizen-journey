@@ -19,6 +19,7 @@ export interface IGratitudeModel {
   color: { name: CategoryColorsDTO; value: CategoryColors };
   colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten };
   tags: string[];
+  imageURLs: string[];
 }
 
 export interface IGratitudeModelDTO {
@@ -35,6 +36,7 @@ export interface IGratitudeModelDTO {
   isPublic: boolean;
   color?: CategoryColorsDTO;
   tags?: string[];
+  imageURLs?: string[];
 }
 
 class GratitudeModel implements IGratitudeModel {
@@ -52,7 +54,8 @@ class GratitudeModel implements IGratitudeModel {
     public isPublic: boolean,
     public color: { name: CategoryColorsDTO; value: CategoryColors },
     public colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten },
-    public tags: string[]
+    public tags: string[],
+    public imageURLs: string[]
   ) {}
 
   static build(dto: IGratitudeModelDTO): IGratitudeModel {
@@ -71,7 +74,8 @@ class GratitudeModel implements IGratitudeModel {
       dto.color
         ? { name: dto.color, value: CategoryColorsLighten[dto.color] }
         : { name: 'default', value: CategoryColorsLighten.default },
-      dto.tags || []
+      dto.tags || [],
+      dto.imageURLs || []
     );
   }
 

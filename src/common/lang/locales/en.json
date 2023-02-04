@@ -35,7 +35,9 @@
   "common.filters.clear": "Clear",
   "common.form.field.visibility": "Visibility",
   "common.form.field.required.error": "This field is required",
+  "common.form.field.requiredOrDelete.error": "Please input this field or delete it",
   "common.form.field.max.error": "Character limit is {max}",
+  "common.form.field.url.error": "It is not a valid url",
   "common.list.loadMore": "Load more",
 
   "common.visibility.public": "Public",
@@ -114,6 +116,8 @@
   "gratitude.form.field.tags": "Tags",
   "gratitude.form.field.color": "Color",
   "gratitude.form.field.date": "Date",
+  "gratitude.form.field.links": "Links to photos",
+  "gratitude.form.field.addLink": "Add link to photo",
   "gratitude.form.submit": "Save",
 
   "gratitude.confirmModal.delete.title": "Delete gratitude?",

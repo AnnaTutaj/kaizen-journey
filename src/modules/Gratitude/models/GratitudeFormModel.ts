@@ -9,6 +9,7 @@ export interface IGratitudeFormModel {
   isPublic: boolean;
   color: CategoryColorsDTO;
   tags: string[];
+  imageURLs: string[];
 }
 
 export interface IGratitudeFormModelDTO {
@@ -21,6 +22,7 @@ export interface IGratitudeFormModelDTO {
   createdByPictureURL: string;
   color: CategoryColorsDTO;
   tags: string[];
+  imageURLs: string[];
 }
 
 class GratitudeFormModel {
@@ -33,7 +35,8 @@ class GratitudeFormModel {
     date,
     isPublic,
     color,
-    tags
+    tags,
+    imageURLs
   }: IGratitudeFormModel & {
     createdByUid: string;
     createdBy: string;
@@ -48,7 +51,8 @@ class GratitudeFormModel {
       date: date.toDate(),
       isPublic: isPublic || false,
       color: color || 'default',
-      tags: tags || []
+      tags: tags || [],
+      imageURLs: imageURLs || []
     };
   }
 
@@ -58,7 +62,8 @@ class GratitudeFormModel {
     date,
     isPublic,
     color,
-    tags
+    tags,
+    imageURLs
   }: IGratitudeFormModel): Partial<IGratitudeFormModelDTO> {
     return {
       title: title,
@@ -66,7 +71,8 @@ class GratitudeFormModel {
       date: date.toDate(),
       isPublic: isPublic || false,
       color: color || 'default',
-      tags: tags || []
+      tags: tags || [],
+      imageURLs: imageURLs || []
     };
   }
 
@@ -77,7 +83,8 @@ class GratitudeFormModel {
       date: dayjs(data.date.seconds * 1000),
       isPublic: data.isPublic ?? false,
       color: data.color ? data.color.name : 'default',
-      tags: data.tags ? data.tags : []
+      tags: data.tags ? data.tags : [],
+      imageURLs: data.imageURLs ? data.imageURLs : []
     };
   }
 }

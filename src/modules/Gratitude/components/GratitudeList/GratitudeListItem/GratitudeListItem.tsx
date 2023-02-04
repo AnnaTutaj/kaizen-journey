@@ -15,6 +15,7 @@ import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import { Visibility } from '@common/constants/Visibility';
 import useConfirmModal from '@common/hooks/useConfirmModal';
+import ImagePreview from '@common/components/ImagePreview';
 
 const { Title, Paragraph } = Typography;
 
@@ -119,6 +120,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
             <Title level={5} className={styles.Title}>
               {gratitude.title}
             </Title>
+            {gratitude.imageURLs.length ? <ImagePreview srcs={gratitude.imageURLs} /> : null}
             <Paragraph className={styles.Description}>{gratitude.description}</Paragraph>
             <Row gutter={10}>
               {gratitude.tags.map((tag) => (

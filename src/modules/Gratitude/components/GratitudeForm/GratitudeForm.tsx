@@ -1,14 +1,15 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, DatePicker, Select, Space } from 'antd';
+import { Form, Input, DatePicker, Select, Space, Row, Col } from 'antd';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './GratitudeForm.module.less';
 import { useAuth } from '@common/contexts/AuthContext';
-import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faGlobe, faLock, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Visibility } from '@common/constants/Visibility';
 import FormModal from '@common/components/FormModal';
+import Button from '@common/components/Button';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -40,6 +41,8 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
       value: false
     }
   ];
+
+  console.log(initialValues);
 
   return (
     <FormModal<IGratitudeFormModel>
@@ -124,6 +127,57 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
             ))}
           </Select>
         </Form.Item>
+
+        <Form.List name="imageURLs">
+          {(fields, { add, remove }, { errors }) => (
+            <>
+              {fields.map((field, index) => (
+                <Form.Item label={index === 0 ? intl.formatMessage({ id: 'gratitude.form.field.links' }) : ''}>
+                  <Row gutter={20} align="middle" wrap={false}>
+                    <Col flex={1}>
+                      <Form.Item
+                        {...field}
+                        name={[field.key]}
+                        validateTrigger={['onChange', 'onBlur']}
+                        rules={[
+                          {
+                            required: true,
+                            whitespace: true,
+                            message: intl.formatMessage({ id: 'common.form.field.requiredOrDelete.error' })
+                          },
+                          {
+                            type: 'url',
+                            message: intl.formatMessage({ id: 'common.form.field.url.error' })
+                          }
+                        ]}
+                        noStyle
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col>
+                      <FontAwesomeIcon
+                        className={styles.IconImageRemove}
+                        icon={faTrash}
+                        onClick={() => remove(field.name)}
+                      />
+                    </Col>
+                  </Row>
+                </Form.Item>
+              ))}
+              <Form.Item>
+                <Button
+                  type="dashed"
+                  onClick={() => add()}
+                  block
+                  icon={<FontAwesomeIcon icon={faPlus} />}
+                  text={intl.formatMessage({ id: 'gratitude.form.field.addLink' })}
+                />
+                <Form.ErrorList errors={errors} />
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
       </>
     </FormModal>
   );
