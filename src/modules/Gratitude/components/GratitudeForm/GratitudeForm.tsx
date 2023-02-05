@@ -42,8 +42,6 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
     }
   ];
 
-  console.log(initialValues);
-
   return (
     <FormModal<IGratitudeFormModel>
       modalProps={{ title, onCancel: handleCancel }}
@@ -132,12 +130,15 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
           {(fields, { add, remove }, { errors }) => (
             <>
               {fields.map((field, index) => (
-                <Form.Item label={index === 0 ? intl.formatMessage({ id: 'gratitude.form.field.links' }) : ''}>
+                <Form.Item
+                  key={field.key}
+                  label={index === 0 ? intl.formatMessage({ id: 'gratitude.form.field.links' }) : ''}
+                >
                   <Row gutter={20} align="middle" wrap={false}>
                     <Col flex={1}>
                       <Form.Item
                         {...field}
-                        name={[field.key]}
+                        name={[field.name]}
                         validateTrigger={['onChange', 'onBlur']}
                         rules={[
                           {
