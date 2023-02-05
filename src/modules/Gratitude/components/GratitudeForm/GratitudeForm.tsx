@@ -42,6 +42,17 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
     }
   ];
 
+  const handleOnPaste = (e: any, filedNumber: number) => {
+    const pastedText = e.clipboardData.getData('Text');
+    if (pastedText.includes('https://drive.google.com/file/d/')) {
+      e.preventDefault();
+      const splitText = pastedText.split('/');
+      const convertedUrls = form.getFieldValue('imageURLs');
+      convertedUrls[filedNumber] = `https://drive.google.com/uc?id=${splitText[5]}`;
+      form.setFieldValue('imageURLs', convertedUrls);
+    }
+  };
+
   return (
     <FormModal<IGratitudeFormModel>
       modalProps={{ title, onCancel: handleCancel }}
@@ -153,7 +164,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
                         ]}
                         noStyle
                       >
-                        <Input />
+                        <Input onPaste={(e) => handleOnPaste(e, field.name)} />
                       </Form.Item>
                     </Col>
                     <Col>
