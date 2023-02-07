@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
 const path = require('path');
-const { addWebpackAlias, useBabelRc, override, addLessLoader } = require('customize-cra');
+const { addWebpackAlias, useBabelRc, override, addLessLoader, adjustStyleLoaders } = require('customize-cra');
 const theme = require('./theme');
 
 const supportMjs = () => (webpackConfig) => {
@@ -22,7 +22,13 @@ module.exports = override(
     ['@assets']: path.resolve(__dirname, 'src', 'assets')
   }),
   addLessLoader({
-    javascriptEnabled: true,
-    modifyVars: theme
+    lessOptions: {
+      javascriptEnabled: true,
+      modifyVars: theme
+    }
+  }),
+  adjustStyleLoaders(({ use: [, , postcss] }) => {
+    const postcssOptions = postcss.options;
+    postcss.options = { postcssOptions };
   })
 );

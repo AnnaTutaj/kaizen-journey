@@ -12,14 +12,14 @@
 
 [class^='Dot_'] {
   position: absolute;
-  transition: all 0.5s;
-  animation: dotRotateTwoLaps 2s both infinite;
   transform-origin: 0 250% 0;
+  transition: all 0.5s;
+  animation: dot-rotate-two-laps 2s both infinite;
 }
 
 .SpinnerSmall {
-  height: @spinner-size-small;
   width: @spinner-size-small;
+  height: @spinner-size-small;
 
   [class^='Dot_'] {
     left: calc(@spinner-size-small / 2);
@@ -30,8 +30,8 @@
 }
 
 .SpinnerMiddle {
-  height: @spinner-size-middle;
   width: @spinner-size-middle;
+  height: @spinner-size-middle;
 
   [class^='Dot_'] {
     left: calc(@spinner-size-middle / 2);
@@ -42,8 +42,8 @@
 }
 
 .SpinnerLarge {
-  height: @spinner-size-large;
   width: @spinner-size-large;
+  height: @spinner-size-large;
 
   [class^='Dot_'] {
     left: calc(@spinner-size-large / 2);
@@ -53,7 +53,7 @@
   }
 }
 
-@keyframes dotRotateTwoLaps {
+@keyframes dot-rotate-two-laps {
   0% {
     transform: rotate(0deg);
   }
@@ -63,13 +63,9 @@
   }
 }
 
-.customize-dot(@index) when (@index > 0) {
-  .Dot_@{index} {
+each(range(length(@colors)), {
+  .Dot_@{value} {
     background-color: extract(@colors, @index);
     animation-timing-function: cubic-bezier(0.25, 0.3 * @index, 0.5, 1);
-  }
-
-  .customize-dot(@index - 1);
-}
-
-.customize-dot(4);
+    }
+});
