@@ -63,12 +63,16 @@ const UserAvatar: React.FC = () => {
   return (
     <>
       <Dropdown menuItems={menuItems}>
-        <Avatar
-          className={styles.Avatar}
-          size={40}
-          icon={<FontAwesomeIcon icon={dummyUser} />}
-          src={userProfile.pictureURL}
-        />
+        {userProfile.pictureURL ? (
+          <Avatar
+            className={styles.Avatar}
+            size={40}
+            icon={<FontAwesomeIcon icon={dummyUser} />}
+            src={userProfile.pictureURL}
+          />
+        ) : (
+          <Avatar className={styles.Avatar} size={40} icon={<FontAwesomeIcon icon={dummyUser} />} />
+        )}
       </Dropdown>
 
       {settingsModalConfig ? <SettingsModal {...settingsModalConfig} /> : null}
