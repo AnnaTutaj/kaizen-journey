@@ -12,7 +12,7 @@ module.exports = {
   '@title-grey-color': '#8b8b8b',
 
   //Picker Colors
-  '@default-picker-color': '#25b78b',
+  '@default-picker-color': '#86cfc4',
   '@red-picker-color': '#b94242',
   '@pink-picker-color': '#cf86b6',
   '@fuchsia-picker-color': '#b94290',

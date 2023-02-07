@@ -1,5 +1,5 @@
 export enum CategoryColors {
-  default = '#25b78b',
+  default = '#86cfc4',
   red = '#b94242',
   fuchsia = '#b94290',
   pink = '#cf86b6',
@@ -15,7 +15,7 @@ export enum CategoryColors {
 }
 
 export enum CategoryColorsLighten {
-  default = '#3ed7a9',
+  default = '#9ed8cf',
   red = '#c86666',
   fuchsia = '#c866a6',
   pink = '#d89ec4',
