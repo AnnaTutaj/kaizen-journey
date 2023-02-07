@@ -1,25 +1,26 @@
-.react-calendar-heatmap .color-default {
-  fill: @default-picker-color;
-}
+@set: {
+  default: @default-picker-color;
+  red: @red-picker-color;
+  fuchsia: @fuchsia-picker-color;
+  pink: @pink-picker-color;
+  purple: @purple-picker-color;
+  blue: @blue-picker-color;
+  navy: @navy-picker-color;
+  green: @green-picker-color;
+  olive: @olive-picker-color;
+  yellow: @yellow-picker-color;
+  orange: @orange-picker-color;
+  brown: @brown-picker-color;
+  gray: @gray-picker-color;
+  skipped: @coral-color;
+};
 
-.react-calendar-heatmap .color-red {
-  fill: @red-picker-color;
-}
-
-.react-calendar-heatmap .color-green {
-  fill: @green-picker-color;
-}
-
-.react-calendar-heatmap .color-purple {
-  fill: @purple-picker-color;
-}
-
-.react-calendar-heatmap .color-brown {
-  fill: @brown-picker-color;
-}
-
-.react-calendar-heatmap .color-skipped {
-  fill: @secondary-color;
+.react-calendar-heatmap {
+  each((@set), {
+    .color-@{key} {
+      fill: @value;
+    } 
+});
 }
 
 .react-calendar-heatmap .mark-today {
