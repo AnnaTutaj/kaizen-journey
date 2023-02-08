@@ -1,4 +1,4 @@
-import { Col, Popover, Row, Space, Tooltip } from 'antd';
+import { Col, Grid, Popover, Row, Space, Tooltip } from 'antd';
 import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
@@ -29,6 +29,8 @@ import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import Table, { ITableColumn } from '@common/components/Table/Table';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 
+const { useBreakpoint } = Grid;
+
 interface IProps {
   habits: IHabitModel[];
   setHabits: React.Dispatch<React.SetStateAction<IHabitModel[]>>;
@@ -39,7 +41,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const intl = useIntl();
   const navigate = useNavigate();
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
-
+  const screens = useBreakpoint();
   const range = useSelector(({ habitTracker }: IHabitTrackerOwnState) => habitTracker.rangeLastDays);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -67,6 +69,14 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   useEffect(() => {
     scrollTo();
   }, [scrollTo, range]);
+
+  useEffect(() => {
+    setVisibleColumns(
+      screens.xs
+        ? [ColumnType.currentStreak]
+        : [ColumnType.currentStreak, ColumnType.longestStreak, ColumnType.totalChecks]
+    );
+  }, [screens.xs]);
 
   const refreshHabit = async (habit: IHabitModel) => {
     const updatedHabit = await getHabitById(habit.id);
