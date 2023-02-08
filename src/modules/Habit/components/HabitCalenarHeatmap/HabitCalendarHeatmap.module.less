@@ -1,18 +1,21 @@
+@legend-color-size: 13px;
+@legend-color-border-size: 3px;
+
 .LegendColor {
-  width: 20px;
-  height: 20px;
+  width: @legend-color-size;
+  height: @legend-color-size;
 }
 
 .LegendColorSkipped {
-  width: 20px;
-  height: 20px;
+  width: @legend-color-size;
+  height: @legend-color-size;
   background-color: @coral-color;
 }
 
 .LegendColorToday {
-  width: 23px;
-  height: 23px;
-  border: 3px solid @primary-color;
+  width: @legend-color-size + @legend-color-border-size;
+  height: @legend-color-size + @legend-color-border-size;
+  border: @legend-color-border-size solid @primary-color;
 }
 
 .LegendContainer {
