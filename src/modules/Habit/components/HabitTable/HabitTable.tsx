@@ -277,7 +277,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         fixed: true,
         render: (text, record) => (
           <>
-            <Row wrap={false} className={styles.HabitNameRow} align="middle">
+            <Row wrap={false} align="middle">
               <Col flex={1}>
                 <div className={styles.HabitName}>{text}</div>
               </Col>

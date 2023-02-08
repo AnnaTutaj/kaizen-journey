@@ -73,6 +73,7 @@ const HabitStatistic: React.FC<IProps> = ({ habit }) => {
 
   return (
     <Table<IStatistic>
+      size="small"
       bordered={true}
       columns={columns}
       dataSource={[
