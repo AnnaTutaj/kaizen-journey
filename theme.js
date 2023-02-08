@@ -19,7 +19,7 @@ module.exports = {
   '@purple-picker-color': '#8e86c2',
   '@blue-picker-color': '#2ea8f5',
   '@navy-picker-color': '#2929b9',
-  '@green-picker-color': '#2a931f',
+  '@green-picker-color': '#2b7b23',
   '@olive-picker-color': '#93a738',
   '@yellow-picker-color': '#cda70e',
   '@orange-picker-color': '#d87732',
