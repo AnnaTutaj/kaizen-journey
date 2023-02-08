@@ -9,8 +9,8 @@ export interface IButtonProps extends ButtonProps {
   transparentBackground?: boolean;
 }
 
-const Button: React.FC<IButtonProps> = ({ text, icon, children, transparentBackground, ...props }) => (
-  <AntDButton {...props} className={cn({ [styles.TransparentBackground]: transparentBackground })}>
+const Button: React.FC<IButtonProps> = ({ text, icon, children, transparentBackground, className, ...props }) => (
+  <AntDButton {...props} className={cn(className, { [styles.TransparentBackground]: transparentBackground })}>
     {icon || text ? (
       <Space size={8}>
         {icon ? icon : null}

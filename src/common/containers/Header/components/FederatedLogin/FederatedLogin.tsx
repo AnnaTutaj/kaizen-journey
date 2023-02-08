@@ -22,7 +22,7 @@ const RegisterModal: React.FC<IProps> = ({ closeModal }) => {
           signInWithFacebook();
         }}
         block
-        className={styles.Button}
+        className={styles.ButtonFacebook}
         icon={<FontAwesomeIcon icon={faFacebook} />}
         text={intl.formatMessage({ id: 'federatedLogin.facebook' })}
       />
@@ -33,7 +33,6 @@ const RegisterModal: React.FC<IProps> = ({ closeModal }) => {
           signInWithGoogle();
         }}
         block
-        className={styles.Button}
         icon={<FontAwesomeIcon icon={faGoogle} />}
         text={intl.formatMessage({ id: 'federatedLogin.google' })}
       />
