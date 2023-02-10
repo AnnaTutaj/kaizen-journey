@@ -2,7 +2,6 @@
   #413582;
 @homeHeaderGradient: radial-gradient(circle at 80% 10%, @gradientColors);
 @homeEndingGradient: radial-gradient(circle at 10% 80%, @gradientColors);
-@padding-horizontal: 20px;
 
 .HeaderContainer {
   display: flex;
@@ -42,38 +41,8 @@
   letter-spacing: 0.1em;
 }
 
-.KanjiContainer {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  width: min(100vw, 450px);
-  height: 300px;
-  margin-bottom: 20px;
-  background-position: center;
-}
-
-.KanjiDivContainer {
-  text-align: center;
-}
-
-.Kanji {
-  font-size: 100px;
-  font-family: 'Ma Shan Zheng', cursive;
-}
-
-.KanjiMeaning {
-  text-transform: lowercase;
-}
-
 .ContentDiv {
-  font-size: 17px;
   scroll-margin-top: @header-height;
-}
-
-.SectionHeaderTitle {
-  font-size: 1.25em;
-  text-align: center;
 }
 
 .SectionEndingTitle {
@@ -89,49 +58,8 @@
   margin-bottom: 20px;
 }
 
-.SectionTextContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 @padding-horizontal;
-}
-
 .SectionDivider {
   margin: 50px 0;
-}
-
-.SectionFeatureContainer {
-  padding: 50px @padding-horizontal;
-  background-color: var(--primary-color-bg-color);
-
-  &:global {
-    &.ant-row {
-      margin: 0 !important;
-    }
-  }
-}
-
-.FeatureContainer {
-  text-align: center;
-}
-
-.FeatureIcon {
-  margin-bottom: 20px;
-  color: lighten(@primary-color, 10%);
-  font-size: 50px;
-}
-
-.FeatureDescription {
-  text-align: left;
-
-  strong {
-    color: lighten(@primary-color, 10%);
-  }
-}
-
-.FeatureTitle {
-  font-weight: 600;
-  font-size: 20px;
 }
 
 .CarouselDots {
@@ -141,32 +69,6 @@
       background-color: @primary-color !important;
     }
   }
-}
-
-.Carousel {
-  width: min(100vw, 450px);
-}
-
-.QuoteContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 410px;
-  margin: 0 20px;
-  padding: 30px 30px 50px;
-  background-color: var(--primary-color-bg-color);
-  border-radius: @border-radius-large;
-}
-
-.QuoteMark {
-  margin-bottom: 20px;
-  font-size: 30px;
-}
-
-.QuoteText {
-  margin-bottom: 20px;
-  font-size: 1.2em;
 }
 
 @media (max-width: 767.98px) {

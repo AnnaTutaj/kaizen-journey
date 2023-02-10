@@ -1,0 +1,47 @@
+@import url('../../HomeCommonVariables.module.less');
+
+.KanjiContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  width: min(100vw, 450px);
+  height: 300px;
+  color: var(--light-text-color);
+  background-position: center;
+}
+
+.KanjiDivContainer {
+  text-align: center;
+}
+
+.Kanji {
+  font-size: 100px;
+  font-family: 'Ma Shan Zheng', cursive;
+}
+
+.KanjiMeaning {
+  text-transform: lowercase;
+}
+
+.KaizenMeaningContainer {
+  margin-bottom: 20px;
+  padding: 30px;
+  color: var(--light-text-color);
+  font-size: @home-base-text-size;
+  background-color: @primary-color;
+  clip-path: polygon(
+    4% 8%,
+    26% 1%,
+    70% 7%,
+    90% 6%,
+    96% 17%,
+    100% 64%,
+    95% 89%,
+    83% 98%,
+    67% 92%,
+    14% 100%,
+    4% 91%,
+    0 30%
+  );
+}
