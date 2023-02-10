@@ -1,6 +1,6 @@
 @import url('../../HomeCommonVariables.module.less');
 
-.SectionFeatureContainer {
+.FeatureRow {
   padding: 50px @home-padding-horizontal;
   background-color: var(--primary-color-bg-color);
 
@@ -11,8 +11,20 @@
   }
 }
 
+.FeatureCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .FeatureContainer {
-  text-align: center;
+  max-width: @home-block-max-width;
+  padding: 20px;
+  background-color: var(--layout-body-background);
+  border-radius: @border-radius-large;
+  box-shadow: 0 1px 1px var(--primary-color-bg-color-shadow), 0 2px 2px var(--primary-color-bg-color-shadow),
+    0 4px 4px var(--primary-color-bg-color-shadow), 0 8px 8px var(--primary-color-bg-color-shadow),
+    0 16px 16px var(--primary-color-bg-color-shadow), 0 32px 32px var(--primary-color-bg-color-shadow);
 }
 
 .FeatureIcon {

@@ -50,9 +50,9 @@ const HomeFeature: React.FC = () => {
   };
 
   return (
-    <Row gutter={[50, 50]} justify="center" align="middle" className={styles.SectionFeatureContainer}>
+    <Row gutter={[50, 50]} justify="center" align="top" className={styles.FeatureRow}>
       {features.map((f, index) => (
-        <Col key={index} lg={7}>
+        <Col key={index} lg={7} className={styles.FeatureCol}>
           {renderFeature(f)}
         </Col>
       ))}
