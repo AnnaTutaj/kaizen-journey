@@ -1,9 +1,13 @@
 @import url('../../HomeCommonVariables.module.less');
+@import url('../../HomeCommon.module.less');
+
+.HomeFeatureContainer:extend(.HomeSectionContainer) {
+  padding-top: 40px;
+  padding-bottom: 60px;
+  background-color: var(--primary-color-bg-color);
+}
 
 .FeatureRow {
-  padding: 50px @home-padding-horizontal;
-  background-color: var(--primary-color-bg-color);
-
   &:global {
     &.ant-row {
       margin: 0 !important;

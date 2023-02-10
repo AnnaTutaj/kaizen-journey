@@ -9,7 +9,7 @@ const HomeFeature: React.FC = () => {
 
   return (
     <div className={parentStyles.HomeSectionContainer}>
-      <h2 className={styles.HomeSectionTitle}>{intl.formatMessage({ id: 'home.kaizenMeaning.title' })}</h2>
+      <h2 className={parentStyles.HomeSectionTitle}>{intl.formatMessage({ id: 'home.kaizenMeaning.title' })}</h2>
       <div className={styles.KaizenMeaningContainer}>
         <div>{intl.formatMessage({ id: 'home.kaizenMeaning' })}</div>
         <div>{intl.formatMessage({ id: 'home.kaizenMeaning.description' })}</div>
