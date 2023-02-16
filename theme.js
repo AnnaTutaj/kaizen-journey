@@ -7,9 +7,9 @@ module.exports = {
   '@coral-color': '#ff8484',
   '@error-color': '#c0293b',
   '@white-color': '#ffffff',
-  '@dark-grey-color': '#6b6b6b',
-  '@light-grey-color': '#e6e6e6',
-  '@title-grey-color': '#8b8b8b',
+  '@dark-gray-color': '#6b6b6b',
+  '@light-gray-color': '#e6e6e6',
+  '@title-gray-color': '#8b8b8b',
 
   //Picker Colors
   '@default-picker-color': '#86cfc4',
