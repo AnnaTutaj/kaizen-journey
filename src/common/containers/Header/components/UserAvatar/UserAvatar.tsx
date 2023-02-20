@@ -7,17 +7,19 @@ import SettingsModal from '../SettingsModal';
 import { ISettingsModalProps } from '../SettingsModal/SettingsModal';
 import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
-import { faCog, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faDownload, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faUser as dummyUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
+import ExportGratitudeModal, { IExportGratitudeModalalProps } from '../ExportGratitudeModal/ExportGratitudeModal';
 
 const UserAvatar: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const { logout, userProfile } = useAuth();
   const [settingsModalConfig, setSettingsModalConfig] = useState<ISettingsModalProps>();
+  const [exportGratitudeModalConfig, setExportGratitudeModalConfig] = useState<IExportGratitudeModalalProps>();
 
   const menuItems: DropdownMenuItemProps = [
     {
@@ -45,6 +47,31 @@ const UserAvatar: React.FC = () => {
               handleCancel: () => setSettingsModalConfig(undefined)
             });
           }
+        },
+        {
+          key: 'export',
+          item: {
+            text: intl.formatMessage({ id: 'header.export' }),
+            icon: faDownload
+          },
+          children: [
+            {
+              key: 'exportHabits',
+              label: intl.formatMessage({ id: 'header.habits' })
+            },
+            {
+              key: 'exportGratitudes',
+              label: intl.formatMessage({ id: 'header.gratitude' }),
+              onClick: () => {
+                setExportGratitudeModalConfig({
+                  handleSubmit: () => {
+                    setExportGratitudeModalConfig(undefined);
+                  },
+                  handleCancel: () => setExportGratitudeModalConfig(undefined)
+                });
+              }
+            }
+          ]
         },
         {
           key: 'logout',
@@ -76,6 +103,7 @@ const UserAvatar: React.FC = () => {
       </Dropdown>
 
       {settingsModalConfig ? <SettingsModal {...settingsModalConfig} /> : null}
+      {exportGratitudeModalConfig ? <ExportGratitudeModal {...exportGratitudeModalConfig} /> : null}
     </>
   );
 };

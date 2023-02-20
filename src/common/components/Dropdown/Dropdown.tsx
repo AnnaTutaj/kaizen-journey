@@ -1,7 +1,7 @@
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 import { faBoxArchive, faPen, faRotateLeft, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dropdown as AntDDropdown, Menu, Space } from 'antd';
+import { Dropdown as AntDDropdown, Space } from 'antd';
 import { useIntl } from 'react-intl';
 import styles from './Dropdown.module.less';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
@@ -16,6 +16,7 @@ interface IDropdownMenuItemProps {
   };
   onClick?: () => void;
   visible?: () => boolean;
+  children?: ItemType[];
 }
 
 interface IDropdownMenuGroupItemProps {
@@ -76,7 +77,8 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
           <FontAwesomeIcon icon={data.icon} className={styles.DropdownMenuItemIcon} />
           {data.text}
         </Space>
-      )
+      ),
+      children: menuItem.children
     };
   };
 
@@ -85,7 +87,7 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
   };
 
   const filteredMenuItems = menuItems.filter((menuItem) => menuItem.visible === undefined || menuItem.visible());
- 
+
   const items = filteredMenuItems.map((menuItem) => {
     if (isMenuGroup(menuItem)) {
       const menuGroupItem: IDropdownMenuGroupItemProps = menuItem as IDropdownMenuGroupItemProps;
@@ -105,7 +107,7 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
 
   return (
     <AntDDropdown
-      overlay={<Menu items={items} />}
+      menu={{ items }}
       overlayClassName={styles.DropdownOverlay}
       placement="bottomLeft"
       trigger={['click']}

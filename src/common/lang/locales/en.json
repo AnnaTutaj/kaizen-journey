@@ -11,6 +11,7 @@
   "header.register": "Register",
   "header.logout": "Log out",
   "header.settings": "Settings",
+  "header.export": "Export",
   "header.myProfile": "My profile",
   "footer.credits": "Created with ❤️ by",
   "footer.help": "Help & FAQ",
@@ -34,6 +35,7 @@
   "common.filters": "Filters",
   "common.filters.clear": "Clear",
   "common.form.field.visibility": "Visibility",
+  "common.form.field.limit": "Limit",
   "common.form.field.required.error": "This field is required",
   "common.form.field.requiredOrDelete.error": "Please input this field or delete it",
   "common.form.field.max.error": "Character limit is {max}",
@@ -56,6 +58,11 @@
   "common.color.orange": "Tangerine",
   "common.color.brown": "Caramel",
   "common.color.gray": "Gray",
+
+  "export.limit": "Limit",
+  "export.noLimit": "All",
+  "exportGratitude.form.title": "Export gratitudes",
+  "exportGratitude.form.submit": "Download",
 
   "auth/invalid-email": "The email address is badly formatted",
   "auth/weak-password": "Password should be at least 6 characters",

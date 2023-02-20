@@ -11,6 +11,7 @@
   "header.register": "Zarejestuj się",
   "header.logout": "Wyloguj się",
   "header.settings": "Ustawienia",
+  "header.export": "Eksportuj",
   "header.myProfile": "Mój profil",
   "footer.credits": "Utworzone z ❤️ przez",
   "footer.help": "Pomoc & FAQ",
@@ -34,6 +35,7 @@
   "common.filters": "Filtry",
   "common.filters.clear": "Wyczyść",
   "common.form.field.visibility": "Widoczność",
+  "common.form.field.limit": "Limit",
   "common.form.field.required.error": "To pole jest wymagane",
   "common.form.field.requiredOrDelete.error": "Uzupełnij to pole albo je usuń",
   "common.form.field.max.error": "Limit znaków wynosi {max}",
@@ -56,6 +58,11 @@
   "common.color.orange": "Mandarynkowy",
   "common.color.brown": "Karmelowy",
   "common.color.gray": "Szary",
+
+  "export.limit": "Limit",
+  "export.noLimit": "Wszystkie",
+  "exportGratitude.form.title": "Eksportuj wdzięczności",
+  "exportGratitude.form.submit": "Pobierz",
 
   "auth/invalid-email": "Wprowadź poprawny adres email",
   "auth/weak-password": "Hasło powinno mieć przynajmniej 6 znaków",
