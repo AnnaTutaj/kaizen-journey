@@ -54,14 +54,18 @@ const UserAvatar: React.FC = () => {
             text: intl.formatMessage({ id: 'header.export' }),
             icon: faDownload
           },
-          children: [
+          items: [
             {
               key: 'exportHabits',
-              label: intl.formatMessage({ id: 'header.habits' })
+              item: {
+                text: intl.formatMessage({ id: 'header.habits' })
+              }
             },
             {
               key: 'exportGratitudes',
-              label: intl.formatMessage({ id: 'header.gratitude' }),
+              item: {
+                text: intl.formatMessage({ id: 'header.gratitude' })
+              },
               onClick: () => {
                 setExportGratitudeModalConfig({
                   handleSubmit: () => {

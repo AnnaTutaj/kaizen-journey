@@ -12,13 +12,12 @@
 .DropdownOverlay {
   :global {
     .ant-dropdown-menu {
-      padding: 8px 0;
+      padding: 8px;
     }
 
     .ant-dropdown-menu-item-group-list {
-      margin: 0;
+      margin: 0 !important;
 
-      //todo: more style
       .ant-dropdown-menu-submenu {
         margin: 0;
         padding: 0 !important;
@@ -27,6 +26,14 @@
           padding: 8px;
         }
       }
+    }
+  }
+}
+
+.DropdownSubMenuOverlay {
+  :global {
+    .ant-dropdown-menu {
+      padding: 8px 12px;
     }
   }
 }

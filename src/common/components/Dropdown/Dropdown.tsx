@@ -11,12 +11,12 @@ import cn from 'classnames';
 interface IDropdownMenuItemProps {
   key: DropdownMenuKey.update | DropdownMenuKey.delete | string;
   item?: {
-    icon: IconDefinition;
+    icon?: IconDefinition;
     text: string;
   };
   onClick?: () => void;
   visible?: () => boolean;
-  children?: ItemType[];
+  items?: IDropdownMenuItemProps[];
 }
 
 interface IDropdownMenuGroupItemProps {
@@ -74,11 +74,16 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
       onClick: () => menuItem.onClick?.(),
       label: (
         <Space size={16} className={cn({ [styles.DropdownMenuItemDelete]: menuItem.key === DropdownMenuKey.delete })}>
-          <FontAwesomeIcon icon={data.icon} className={styles.DropdownMenuItemIcon} />
+          {data.icon ? <FontAwesomeIcon icon={data.icon} className={styles.DropdownMenuItemIcon} /> : null}
           {data.text}
         </Space>
       ),
-      children: menuItem.children
+      children: menuItem?.items
+        ? menuItem.items.map((item) => {
+            return renderMenuItem(item);
+          })
+        : undefined,
+      popupClassName: styles.DropdownSubMenuOverlay
     };
   };
 
