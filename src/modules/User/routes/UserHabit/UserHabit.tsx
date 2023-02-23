@@ -17,7 +17,7 @@ const UserHabit: React.FC = () => {
 
   useEffect(() => {
     const fetchHabits = async () => {
-      const loadedHabits = await getHabits({ setLoading, isPublic: true, createdByUid: params.id });
+      const loadedHabits = await getHabits({ setLoading, filters: { isPublic: true }, createdByUid: params.id });
       setHabits(loadedHabits);
       setIsInitialLoaded(true);
     };

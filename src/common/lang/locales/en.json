@@ -34,6 +34,7 @@
   "common.defaultErrorMessage": "Something went wrong... please try again later",
   "common.filters": "Filters",
   "common.filters.clear": "Clear",
+  "common.form.field.color": "Color",
   "common.form.field.visibility": "Visibility",
   "common.form.field.limit": "Limit",
   "common.form.field.required.error": "This field is required",
@@ -63,6 +64,8 @@
   "export.noLimit": "All",
   "exportGratitude.form.title": "Export gratitudes",
   "exportGratitude.form.submit": "Download",
+  "exportHabit.form.title": "Export habits",
+  "exportHabit.form.submit": "Download",
 
   "auth/invalid-email": "The email address is badly formatted",
   "auth/weak-password": "Password should be at least 6 characters",
@@ -132,7 +135,6 @@
   "gratitude.form.field.title": "Title",
   "gratitude.form.field.description": "Description",
   "gratitude.form.field.tags": "Tags",
-  "gratitude.form.field.color": "Color",
   "gratitude.form.field.date": "Date",
   "gratitude.form.field.links": "Links to photos",
   "gratitude.form.field.addLink": "Add link to photo",
@@ -167,7 +169,6 @@
   "habit.form.field.name.placeholder": "E.g. cleaning",
   "habit.form.field.description": "Description",
   "habit.form.field.description.placeholder": "When the habit would be fullfilled? E.g. min 15 min",
-  "habit.form.field.color": "Color",
   "habit.form.field.isArchived": "Archived",
   "habit.form.submit": "Save",
 

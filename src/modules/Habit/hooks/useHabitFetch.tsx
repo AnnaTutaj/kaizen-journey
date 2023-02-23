@@ -11,7 +11,8 @@ import {
   deleteDoc,
   addDoc,
   DocumentReference,
-  DocumentData
+  DocumentData,
+  limit
 } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import HabitModel, { IHabitModel } from '@modules/Habit/models/HabitModel';
@@ -19,6 +20,7 @@ import { useAuth } from '@common/contexts/AuthContext';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import { IHabitFormModelDTO } from '../models/HabitFormModel';
 import { useCallback } from 'react';
+import { IHabitListFiltersModelDTO } from '../models/HabitListFiltersModel';
 
 const useHabitFetch = () => {
   const { userProfile } = useAuth();
@@ -26,29 +28,37 @@ const useHabitFetch = () => {
   const getHabits = useCallback(
     async ({
       setLoading,
-      isArchived,
       createdByUid,
-      isPublic
+      filters,
+      limitCount
     }: {
       setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
-      isArchived?: boolean;
       createdByUid?: string;
-      isPublic?: boolean;
+      filters?: IHabitListFiltersModelDTO | undefined;
+      limitCount?: number;
     }) => {
       if (typeof setLoading === 'function') setLoading(true);
 
-      const whereConditionsByAuthor = where('createdByUid', '==', createdByUid ? createdByUid : userProfile.uid);
-      const whereConditions = [whereConditionsByAuthor];
+      const conditionsByAuthor = where('createdByUid', '==', createdByUid ? createdByUid : userProfile.uid);
+      const conditions = [conditionsByAuthor];
 
-      if (isArchived !== undefined) {
-        whereConditions.push(where('isArchived', '==', isArchived));
+      if (filters?.color) {
+        conditions.push(where('color', '==', filters.color));
       }
 
-      if (isPublic !== undefined) {
-        whereConditions.push(where('isPublic', '==', isPublic));
+      if (filters?.isArchived !== undefined) {
+        conditions.push(where('isArchived', '==', filters.isArchived));
       }
 
-      const q = query(collection(db, 'habits').withConverter(HabitModel.converter), ...whereConditions);
+      if (filters?.isPublic !== undefined) {
+        conditions.push(where('isPublic', '==', filters.isPublic));
+      }
+
+      if (limitCount && limitCount > 0) {
+        conditions.push(limit(limitCount));
+      }
+
+      const q = query(collection(db, 'habits').withConverter(HabitModel.converter), ...conditions);
 
       const querySnap = await getDocs(q);
 

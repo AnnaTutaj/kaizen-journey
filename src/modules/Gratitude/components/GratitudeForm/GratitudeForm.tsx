@@ -102,7 +102,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
           </Select>
         </Form.Item>
 
-        <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.color' })} name="color">
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
           <Select<CategoryColorsDTO>>
             {Object.entries(CategoryColors).map((categoryColor, index) => (
               <Option key={index} value={categoryColor[0]}>

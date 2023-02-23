@@ -34,6 +34,7 @@
   "common.defaultErrorMessage": "Coś poszło nie tak... proszę spróbować później",
   "common.filters": "Filtry",
   "common.filters.clear": "Wyczyść",
+  "common.form.field.color": "Kolor",
   "common.form.field.visibility": "Widoczność",
   "common.form.field.limit": "Limit",
   "common.form.field.required.error": "To pole jest wymagane",
@@ -63,6 +64,8 @@
   "export.noLimit": "Wszystkie",
   "exportGratitude.form.title": "Eksportuj wdzięczności",
   "exportGratitude.form.submit": "Pobierz",
+  "exportHabit.form.title": "Eksportuj nawyki",
+  "exportHabit.form.submit": "Pobierz",
 
   "auth/invalid-email": "Wprowadź poprawny adres email",
   "auth/weak-password": "Hasło powinno mieć przynajmniej 6 znaków",
@@ -131,7 +134,6 @@
   "gratitude.form.field.title": "Tytuł",
   "gratitude.form.field.description": "Opis",
   "gratitude.form.field.tags": "Tagi",
-  "gratitude.form.field.color": "Kolor",
   "gratitude.form.field.date": "Data",
   "gratitude.form.field.links": "Linki do zdjęć",
   "gratitude.form.field.addLink": "Dodaj link do zdjęcia",
@@ -166,7 +168,6 @@
   "habit.form.field.name.placeholder": "Np. sprzątanie",
   "habit.form.field.description": "Opis",
   "habit.form.field.description.placeholder": "Kiedy nawyk będzie spełniony? Np. min 15 min",
-  "habit.form.field.color": "Kolor",
   "habit.form.field.isArchived": "Archiwalny",
   "habit.form.submit": "Zapisz",
 

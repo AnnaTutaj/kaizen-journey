@@ -36,7 +36,7 @@ const HabitTracker: React.FC = () => {
 
   useEffect(() => {
     async function fetchHabits() {
-      const loadedHabits = await getHabits({ setLoading, isArchived: false });
+      const loadedHabits = await getHabits({ setLoading, filters: { isArchived: false } });
       setHabits(loadedHabits);
       setIsInitialLoaded(true);
     }
@@ -45,7 +45,7 @@ const HabitTracker: React.FC = () => {
   }, [getHabits]);
 
   const handleCreateSubmit = async () => {
-    const loadedHabits = await getHabits({ setLoading, isArchived: false });
+    const loadedHabits = await getHabits({ setLoading, filters: { isArchived: false } });
     setHabits(loadedHabits);
   };
 

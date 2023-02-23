@@ -64,7 +64,7 @@ const GratitudeListFilters: React.FC<IProps> = ({ initialValues, onFinish, hideV
           </Form.Item>
         </Col>
         <Col lg={7} span={24}>
-          <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.color' })} name="color">
+          <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
             <Select<CategoryColorsDTO> onChange={() => form.submit()} allowClear>
               {Object.entries(CategoryColors).map((categoryColor, index) => (
                 <Option key={index} value={categoryColor[0]}>

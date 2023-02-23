@@ -86,7 +86,7 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
           />
         </Form.Item>
 
-        <Form.Item label={intl.formatMessage({ id: 'habit.form.field.color' })} name="color">
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
           <Select<CategoryColorsDTO>>
             {Object.entries(CategoryColors).map((categoryColor, index) => (
               <Option key={index} value={categoryColor[0]}>

@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import ExportGratitudeModal, { IExportGratitudeModalalProps } from '../ExportGratitudeModal/ExportGratitudeModal';
+import ExportHabitModal, { IExportHabitModalalProps } from '../ExportHabitModal/ExportHabitModal';
 
 const UserAvatar: React.FC = () => {
   const intl = useIntl();
@@ -20,6 +21,7 @@ const UserAvatar: React.FC = () => {
   const { logout, userProfile } = useAuth();
   const [settingsModalConfig, setSettingsModalConfig] = useState<ISettingsModalProps>();
   const [exportGratitudeModalConfig, setExportGratitudeModalConfig] = useState<IExportGratitudeModalalProps>();
+  const [exportHabitModalConfig, setExportHabitModalConfig] = useState<IExportHabitModalalProps>();
 
   const menuItems: DropdownMenuItemProps = [
     {
@@ -59,6 +61,14 @@ const UserAvatar: React.FC = () => {
               key: 'exportHabits',
               item: {
                 text: intl.formatMessage({ id: 'header.habits' })
+              },
+              onClick: () => {
+                setExportHabitModalConfig({
+                  handleSubmit: () => {
+                    setExportHabitModalConfig(undefined);
+                  },
+                  handleCancel: () => setExportHabitModalConfig(undefined)
+                });
               }
             },
             {
@@ -108,6 +118,7 @@ const UserAvatar: React.FC = () => {
 
       {settingsModalConfig ? <SettingsModal {...settingsModalConfig} /> : null}
       {exportGratitudeModalConfig ? <ExportGratitudeModal {...exportGratitudeModalConfig} /> : null}
+      {exportHabitModalConfig ? <ExportHabitModal {...exportHabitModalConfig} /> : null}
     </>
   );
 };

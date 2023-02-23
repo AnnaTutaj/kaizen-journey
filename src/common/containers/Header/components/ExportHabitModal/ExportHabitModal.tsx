@@ -2,38 +2,34 @@ import { Form, message, Select, Space } from 'antd';
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { FirebaseError } from '@firebase/util';
-import { useAuth } from '@common/contexts/AuthContext';
 import FormModal from '@common/components/FormModal';
 import { Visibility } from '@common/constants/Visibility';
 import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
-import styles from './ExportGratitudeModal.module.less';
+import styles from './ExportHabitModal.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useGratitudeListFetch from '@modules/Gratitude/hooks/useGratitudeListFetch';
+import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { saveAs } from 'file-saver';
 import dayjs from 'dayjs';
-import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
-import GratitudeListFiltersModel, {
-  IGratitudeListFiltersModel
-} from '@modules/Gratitude/models/GratitudeListFiltersModel';
+import { IHabitModel } from '@modules/Habit/models/HabitModel';
+import HabitListFiltersModel, { IHabitListFiltersModel } from '@modules/Habit/models/HabitListFiltersModel';
 import { exportlimit, ExportLimit } from '@common/constants/ExportLimit';
 
 const { Option } = Select;
 
-export interface IExportGratitudeModalalProps {
+export interface IExportHabitModalalProps {
   handleSubmit: () => void;
   handleCancel: () => void;
 }
 
-interface IExportGratitudeModalProps extends IGratitudeListFiltersModel {
+interface IExportHabitModalProps extends IHabitListFiltersModel {
   limit: ExportLimit;
 }
 
-const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSubmit, handleCancel }) => {
+const ExportHabitModal: React.FC<IExportHabitModalalProps> = ({ handleSubmit, handleCancel }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
-  const { getGratitudes } = useGratitudeListFetch();
-  const { userProfile } = useAuth();
+  const { getHabits } = useHabitFetch();
 
   const visibilityOptions = [
     {
@@ -48,22 +44,22 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
     }
   ];
 
-  const handleDownloadJson = useCallback((gratitudes: IGratitudeModel[]) => {
+  const handleDownloadJson = useCallback((habits: IHabitModel[]) => {
     const currentDate = dayjs().format('YYYY-MM-DD');
-    const fileName = `kaizen-journey-gratitude-${currentDate}.json`;
+    const fileName = `kaizen-journey-habit-${currentDate}.json`;
 
-    const fileToSave = new Blob([JSON.stringify(gratitudes, null, 2)], {
+    const fileToSave = new Blob([JSON.stringify(habits, null, 2)], {
       type: 'application/json'
     });
 
     saveAs(fileToSave, fileName);
   }, []);
 
-  const onFinish = async (values: IExportGratitudeModalProps) => {
+  const onFinish = async (values: IExportHabitModalProps) => {
     try {
-      const serializedFilters = GratitudeListFiltersModel.serialize(values);
-      const gratitudes = await getGratitudes({ mode: 'myList', filters: serializedFilters, limitCount: values.limit });
-      handleDownloadJson(gratitudes);
+      const serializedFilters = HabitListFiltersModel.serialize(values);
+      const habits = await getHabits({ filters: serializedFilters, limitCount: values.limit });
+      handleDownloadJson(habits);
       handleSubmit();
     } catch (error) {
       if (error instanceof FirebaseError) {
@@ -77,32 +73,18 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
   };
 
   return (
-    <FormModal<IExportGratitudeModalProps>
+    <FormModal<IExportHabitModalProps>
       modalProps={{
-        title: intl.formatMessage({ id: 'exportGratitude.form.title' }),
+        title: intl.formatMessage({ id: 'exportHabit.form.title' }),
         onCancel: handleCancel,
         width: 400
       }}
       form={form}
       initialValues={{ limit: exportlimit[0] }}
       onFinish={onFinish}
-      submitButtonText={intl.formatMessage({ id: 'exportGratitude.form.submit' })}
+      submitButtonText={intl.formatMessage({ id: 'exportHabit.form.submit' })}
     >
       <>
-        <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
-          <Select<string[]>
-            mode="tags"
-            style={{ width: '100%' }}
-            tokenSeparators={['#', ' ']}
-            onChange={(value) => {
-              form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) });
-            }}
-          >
-            {userProfile.tags.map((tag) => (
-              <Option key={tag}>{tag}</Option>
-            ))}
-          </Select>
-        </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
           <Select<CategoryColorsDTO> allowClear>
             {Object.entries(CategoryColors).map((categoryColor, index) => (
@@ -146,4 +128,4 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
   );
 };
 
-export default ExportGratitudeModal;
+export default ExportHabitModal;
