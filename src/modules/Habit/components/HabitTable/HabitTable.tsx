@@ -28,6 +28,7 @@ import HabitTableColumnSettings, { ColumnType } from './HabitTableColumnSettings
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import Table, { ITableColumn } from '@common/components/Table/Table';
 import useConfirmModal from '@common/hooks/useConfirmModal';
+import Spinner from '@common/components/Spinner';
 
 const { useBreakpoint } = Grid;
 
@@ -44,7 +45,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const screens = useBreakpoint();
   const range = useSelector(({ habitTracker }: IHabitTrackerOwnState) => habitTracker.rangeLastDays);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loadingHabitDate, setLoadingHabitDate] = useState<string[]>([]);
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
   const [visibleColumns, setVisibleColumns] = useState<CheckboxValueType[]>([
@@ -87,11 +88,14 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     }
   };
 
+  const getHabitDateValue = (habitId: string, dateKey: string) => `${habitId}${dateKey}`;
+
   const handleClickDate = async (dateKey: string, habit: IHabitModel, dateStatus: HabitDateStatus) => {
-    setLoading(true);
+    const habitDateValue = getHabitDateValue(habit.id, dateKey);
+    setLoadingHabitDate((prevState) => [...prevState, habitDateValue]);
     await updateHabitDates({ habitId: habit.id, dateStatus, dateKey });
     await refreshHabit(habit);
-    setLoading(false);
+    setLoadingHabitDate((prevState) => [...prevState.filter((i) => i !== habitDateValue)]);
   };
 
   const handleUpdateHabit = (habit: IHabitModel) => {
@@ -198,11 +202,16 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         className: styles.DateCol,
         render: (value, record) => {
           const dateStatus = getDateStatus(record, dateKey);
+          const isLoading: boolean =
+            loadingHabitDate.filter((i) => i === getHabitDateValue(record.id, dateKey)).length > 0;
           const { icon: hoverIcon, text: hoverText } = getHoverInfoByDateStatus(dateStatus);
 
           return (
             <div
               onClick={() => {
+                if (isLoading) {
+                  return;
+                }
                 handleClickDate(dateKey, record, dateStatus);
               }}
               className={cn(styles.DateSelectContainer, { [styles.Skipped]: dateStatus === HabitDateStatus.skipped })}
@@ -211,30 +220,36 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
                 backgroundColor: dateStatus === HabitDateStatus.checked ? record.color.value : 'unset'
               }}
             >
-              <FontAwesomeIcon
-                className={styles.DateHoverIcon}
-                style={{
-                  color: record.colorLighten.value
-                }}
-                icon={hoverIcon}
-              />
-              <small
-                className={styles.DateHoverText}
-                style={{
-                  color: record.colorLighten.value
-                }}
-              >
-                {hoverText}
-              </small>
-              {dateStatus === HabitDateStatus.skipped ? (
-                <FontAwesomeIcon
-                  className={styles.DateInfoIcon}
-                  style={{
-                    color: record.color.value
-                  }}
-                  icon={getIconByDateStatus(dateStatus)}
-                />
-              ) : null}
+              {isLoading ? (
+                <Spinner size="small" />
+              ) : (
+                <>
+                  <FontAwesomeIcon
+                    className={styles.DateHoverIcon}
+                    style={{
+                      color: record.colorLighten.value
+                    }}
+                    icon={hoverIcon}
+                  />
+                  <small
+                    className={styles.DateHoverText}
+                    style={{
+                      color: record.colorLighten.value
+                    }}
+                  >
+                    {hoverText}
+                  </small>
+                  {dateStatus === HabitDateStatus.skipped ? (
+                    <FontAwesomeIcon
+                      className={styles.DateInfoIcon}
+                      style={{
+                        color: record.color.value
+                      }}
+                      icon={getIconByDateStatus(dateStatus)}
+                    />
+                  ) : null}
+                </>
+              )}
             </div>
           );
         }
@@ -341,7 +356,6 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
 
   return (
     <>
-      {loading ? <PageLoading /> : null}
       {habits && habits.length ? (
         <>
           <div className={styles.Header}>
