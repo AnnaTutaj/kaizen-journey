@@ -1,18 +1,16 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, DatePicker, Select, Space, Row, Col } from 'antd';
+import { Form, Input, DatePicker, Row, Col } from 'antd';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
-import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
+import { CategoryColorsDTO } from '@common/constants/CategoryColors';
 import styles from './GratitudeForm.module.less';
-import { useAuth } from '@common/contexts/AuthContext';
-import { faPlus, faGlobe, faLock, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Visibility } from '@common/constants/Visibility';
 import FormModal from '@common/components/FormModal';
 import Button from '@common/components/Button';
+import Select from '@common/components/Select';
 
 const { TextArea } = Input;
-const { Option } = Select;
 
 interface IProps {
   title: string;
@@ -24,23 +22,9 @@ interface IProps {
 const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCancel }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
-  const { userProfile } = useAuth();
 
   const maxTitleLength = 100;
   const maxDescriptionLength = 2000;
-
-  const visibilityOptions = [
-    {
-      type: Visibility.public,
-      icon: faGlobe,
-      value: true
-    },
-    {
-      type: Visibility.private,
-      icon: faLock,
-      value: false
-    }
-  ];
 
   const handleOnPaste = (e: any, filedNumber: number) => {
     const pastedText = e.clipboardData.getData('Text');
@@ -91,33 +75,16 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
           <Select<string[]>
+            type="tag"
             mode="tags"
             style={{ width: '100%' }}
             tokenSeparators={['#', ' ']}
             onChange={(value) => form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) })}
-          >
-            {userProfile.tags.map((tag) => (
-              <Option key={tag}>{tag}</Option>
-            ))}
-          </Select>
+          />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-          <Select<CategoryColorsDTO>>
-            {Object.entries(CategoryColors).map((categoryColor, index) => (
-              <Option key={index} value={categoryColor[0]}>
-                <Space>
-                  <div
-                    className={styles.CategoryColor}
-                    style={{
-                      backgroundColor: categoryColor[1]
-                    }}
-                  ></div>
-                  {intl.formatMessage({ id: `common.color.${categoryColor[0]}` })}
-                </Space>
-              </Option>
-            ))}
-          </Select>
+          <Select<CategoryColorsDTO> type="color" />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.date' })} name="date">
@@ -125,16 +92,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
-          <Select<boolean>>
-            {visibilityOptions.map((visibility, index) => (
-              <Option key={index} value={visibility.value}>
-                <Space>
-                  <FontAwesomeIcon icon={visibility.icon} />
-                  {intl.formatMessage({ id: `common.visibility.${visibility.type}` })}
-                </Space>
-              </Option>
-            ))}
-          </Select>
+          <Select<boolean> type="visibility" />
         </Form.Item>
 
         <Form.List name="imageURLs">

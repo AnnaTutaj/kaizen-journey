@@ -1,4 +1,3 @@
-import { Select } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useIntl } from 'react-intl';
@@ -16,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTrackerInterface';
 import HabitTrackerActions from '@modules/Habit/redux/HabitTracker/HabitTrackerActions';
 import Button from '@common/components/Button';
+import Select from '@common/components/Select';
 
 interface IRangeSelect {
   label: string;

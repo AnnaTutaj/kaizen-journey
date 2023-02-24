@@ -1,21 +1,16 @@
-import { Form, message, Select, Space } from 'antd';
+import { Form, message } from 'antd';
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { FirebaseError } from '@firebase/util';
 import FormModal from '@common/components/FormModal';
-import { Visibility } from '@common/constants/Visibility';
-import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
-import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
-import styles from './ExportHabitModal.module.less';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CategoryColorsDTO } from '@common/constants/CategoryColors';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { saveAs } from 'file-saver';
 import dayjs from 'dayjs';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import HabitListFiltersModel, { IHabitListFiltersModel } from '@modules/Habit/models/HabitListFiltersModel';
 import { exportlimit, ExportLimit } from '@common/constants/ExportLimit';
-
-const { Option } = Select;
+import Select from '@common/components/Select';
 
 export interface IExportHabitModalalProps {
   handleSubmit: () => void;
@@ -30,19 +25,6 @@ const ExportHabitModal: React.FC<IExportHabitModalalProps> = ({ handleSubmit, ha
   const intl = useIntl();
   const [form] = Form.useForm();
   const { getHabits } = useHabitFetch();
-
-  const visibilityOptions = [
-    {
-      type: Visibility.public,
-      icon: faGlobe,
-      value: true
-    },
-    {
-      type: Visibility.private,
-      icon: faLock,
-      value: false
-    }
-  ];
 
   const handleDownloadJson = useCallback((habits: IHabitModel[]) => {
     const currentDate = dayjs().format('YYYY-MM-DD');
@@ -86,42 +68,13 @@ const ExportHabitModal: React.FC<IExportHabitModalalProps> = ({ handleSubmit, ha
     >
       <>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-          <Select<CategoryColorsDTO> allowClear>
-            {Object.entries(CategoryColors).map((categoryColor, index) => (
-              <Option key={index} value={categoryColor[0]}>
-                <Space>
-                  <div
-                    className={styles.CategoryColor}
-                    style={{
-                      backgroundColor: categoryColor[1]
-                    }}
-                  ></div>
-                  {intl.formatMessage({ id: `common.color.${categoryColor[0]}` })}
-                </Space>
-              </Option>
-            ))}
-          </Select>
+          <Select<CategoryColorsDTO> type="color" allowClear />
         </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
-          <Select<boolean> allowClear>
-            {visibilityOptions.map((visibility, index) => (
-              <Option key={index} value={visibility.value}>
-                <Space>
-                  <FontAwesomeIcon icon={visibility.icon} />
-                  {intl.formatMessage({ id: `common.visibility.${visibility.type}` })}
-                </Space>
-              </Option>
-            ))}
-          </Select>
+          <Select<boolean> type="visibility" allowClear />
         </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.limit' })} name="limit">
-          <Select<number>>
-            {exportlimit.map((limit, index) => (
-              <Option key={index} value={limit}>
-                {limit === 0 ? intl.formatMessage({ id: 'export.noLimit' }) : limit}
-              </Option>
-            ))}
-          </Select>
+          <Select<number> type="exportLimit" />
         </Form.Item>
       </>
     </FormModal>

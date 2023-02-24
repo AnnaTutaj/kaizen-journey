@@ -1,11 +1,10 @@
-import { Form, Input, message, Select } from 'antd';
+import { Form, Input, message } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { FirebaseError } from '@firebase/util';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import FormModal from '@common/components/FormModal';
-
-const { Option } = Select;
+import Select, { Option } from '@common/components/Select/Select';
 
 export interface ISettingsModalProps {
   handleCancel: () => void;

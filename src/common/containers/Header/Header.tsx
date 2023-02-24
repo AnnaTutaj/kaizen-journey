@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { Drawer, Grid, Layout, Select, Switch } from 'antd';
+import { Drawer, Grid, Layout, Switch } from 'antd';
 import styles from './Header.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -18,8 +18,8 @@ import { ITranslationConfig } from '@common/lang/config/types';
 import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
+import Select, { Option } from '@common/components/Select/Select';
 
-const { Option } = Select;
 const { useBreakpoint } = Grid;
 
 const Header: React.FC = () => {

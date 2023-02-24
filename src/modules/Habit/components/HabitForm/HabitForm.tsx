@@ -1,17 +1,13 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, Select, Space } from 'antd';
+import { Form, Input } from 'antd';
 import Modal from '@common/components/Modal';
 import { IHabitFormModel } from '@modules/Habit/models/HabitFormModel';
-import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
-import styles from './HabitForm.module.less';
-import { Visibility } from '@common/constants/Visibility';
-import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CategoryColorsDTO } from '@common/constants/CategoryColors';
 import Button from '@common/components/Button';
+import Select from '@common/components/Select';
 
 const { TextArea } = Input;
-const { Option } = Select;
 
 interface IProps {
   title: string;
@@ -26,19 +22,6 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
 
   const maxNameLength = 100;
   const maxDescriptionLength = 250;
-
-  const visibilityOptions = [
-    {
-      type: Visibility.public,
-      icon: faGlobe,
-      value: true
-    },
-    {
-      type: Visibility.private,
-      icon: faLock,
-      value: false
-    }
-  ];
 
   return (
     <Modal title={title} open onCancel={handleCancel} width={500}>
@@ -87,34 +70,11 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-          <Select<CategoryColorsDTO>>
-            {Object.entries(CategoryColors).map((categoryColor, index) => (
-              <Option key={index} value={categoryColor[0]}>
-                <Space>
-                  <div
-                    className={styles.CategoryColor}
-                    style={{
-                      backgroundColor: categoryColor[1]
-                    }}
-                  ></div>
-                  {intl.formatMessage({ id: `common.color.${categoryColor[0]}` })}
-                </Space>
-              </Option>
-            ))}
-          </Select>
+          <Select<CategoryColorsDTO> type="color" />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
-          <Select<boolean>>
-            {visibilityOptions.map((visibility, index) => (
-              <Option key={index} value={visibility.value}>
-                <Space>
-                  <FontAwesomeIcon icon={visibility.icon} />
-                  {intl.formatMessage({ id: `common.visibility.${visibility.type}` })}
-                </Space>
-              </Option>
-            ))}
-          </Select>
+          <Select<boolean> type="visibility" />
         </Form.Item>
 
         <Form.Item>

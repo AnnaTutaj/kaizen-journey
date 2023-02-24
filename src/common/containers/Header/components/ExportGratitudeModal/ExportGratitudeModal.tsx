@@ -1,14 +1,9 @@
-import { Form, message, Select, Space } from 'antd';
+import { Form, message } from 'antd';
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { FirebaseError } from '@firebase/util';
-import { useAuth } from '@common/contexts/AuthContext';
 import FormModal from '@common/components/FormModal';
-import { Visibility } from '@common/constants/Visibility';
-import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
-import { CategoryColors, CategoryColorsDTO } from '@common/constants/CategoryColors';
-import styles from './ExportGratitudeModal.module.less';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CategoryColorsDTO } from '@common/constants/CategoryColors';
 import useGratitudeListFetch from '@modules/Gratitude/hooks/useGratitudeListFetch';
 import { saveAs } from 'file-saver';
 import dayjs from 'dayjs';
@@ -17,9 +12,7 @@ import GratitudeListFiltersModel, {
   IGratitudeListFiltersModel
 } from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import { exportlimit, ExportLimit } from '@common/constants/ExportLimit';
-
-const { Option } = Select;
-
+import Select from '@common/components/Select';
 export interface IExportGratitudeModalalProps {
   handleSubmit: () => void;
   handleCancel: () => void;
@@ -33,20 +26,6 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
   const intl = useIntl();
   const [form] = Form.useForm();
   const { getGratitudes } = useGratitudeListFetch();
-  const { userProfile } = useAuth();
-
-  const visibilityOptions = [
-    {
-      type: Visibility.public,
-      icon: faGlobe,
-      value: true
-    },
-    {
-      type: Visibility.private,
-      icon: faLock,
-      value: false
-    }
-  ];
 
   const handleDownloadJson = useCallback((gratitudes: IGratitudeModel[]) => {
     const currentDate = dayjs().format('YYYY-MM-DD');
@@ -91,55 +70,23 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
       <>
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
           <Select<string[]>
+            type="tag"
             mode="tags"
             style={{ width: '100%' }}
             tokenSeparators={['#', ' ']}
             onChange={(value) => {
               form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) });
             }}
-          >
-            {userProfile.tags.map((tag) => (
-              <Option key={tag}>{tag}</Option>
-            ))}
-          </Select>
+          />
         </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-          <Select<CategoryColorsDTO> allowClear>
-            {Object.entries(CategoryColors).map((categoryColor, index) => (
-              <Option key={index} value={categoryColor[0]}>
-                <Space>
-                  <div
-                    className={styles.CategoryColor}
-                    style={{
-                      backgroundColor: categoryColor[1]
-                    }}
-                  ></div>
-                  {intl.formatMessage({ id: `common.color.${categoryColor[0]}` })}
-                </Space>
-              </Option>
-            ))}
-          </Select>
+          <Select<CategoryColorsDTO> type="color" allowClear />
         </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
-          <Select<boolean> allowClear>
-            {visibilityOptions.map((visibility, index) => (
-              <Option key={index} value={visibility.value}>
-                <Space>
-                  <FontAwesomeIcon icon={visibility.icon} />
-                  {intl.formatMessage({ id: `common.visibility.${visibility.type}` })}
-                </Space>
-              </Option>
-            ))}
-          </Select>
+          <Select<boolean> type="visibility" allowClear />
         </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.limit' })} name="limit">
-          <Select<number>>
-            {exportlimit.map((limit, index) => (
-              <Option key={index} value={limit}>
-                {limit === 0 ? intl.formatMessage({ id: 'export.noLimit' }) : limit}
-              </Option>
-            ))}
-          </Select>
+          <Select<number> type="exportLimit" />
         </Form.Item>
       </>
     </FormModal>
