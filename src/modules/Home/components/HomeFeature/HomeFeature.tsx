@@ -6,8 +6,10 @@ import parentStyles from '@modules/Home/HomeCommon.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain, faHeart, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import cn from 'classnames';
 
 interface IFeature {
+  type: 'habit' | 'gratitude' | 'friends';
   title: string;
   description: string;
   icon: IconProp;
@@ -16,18 +18,21 @@ interface IFeature {
 const HomeFeature: React.FC = () => {
   const intl = useIntl();
 
-  const features = [
+  const features: IFeature[] = [
     {
+      type: 'habit',
       title: intl.formatMessage({ id: 'home.feature.habit.title' }),
       description: intl.formatMessage({ id: 'home.feature.habit.description' }),
       icon: faBrain
     },
     {
+      type: 'gratitude',
       title: intl.formatMessage({ id: 'home.feature.gratitude.title' }),
       description: intl.formatMessage({ id: 'home.feature.gratitude.description' }),
       icon: faHeart
     },
     {
+      type: 'friends',
       title: intl.formatMessage({ id: 'home.feature.friends.title' }),
       description: intl.formatMessage({ id: 'home.feature.friends.description' }),
       icon: faUserGroup
@@ -37,10 +42,15 @@ const HomeFeature: React.FC = () => {
   const renderFeature = (feature: IFeature) => {
     return (
       <div className={styles.FeatureContainer}>
-        <FontAwesomeIcon className={styles.FeatureIcon} icon={feature.icon} />
-        <h2 className={styles.FeatureTitle}>
-          <span className={styles.HomeGradientText}>{feature.title}</span>
-        </h2>
+        <FontAwesomeIcon
+          className={cn(styles.FeatureIcon, {
+            [styles.FeatureIconHabit]: feature.type === 'habit',
+            [styles.FeatureIconGratitude]: feature.type === 'gratitude',
+            [styles.FeatureIconFriends]: feature.type === 'friends'
+          })}
+          icon={feature.icon}
+        />
+        <h2 className={styles.FeatureTitle}>{feature.title}</h2>
         <div
           className={styles.FeatureDescription}
           dangerouslySetInnerHTML={{
