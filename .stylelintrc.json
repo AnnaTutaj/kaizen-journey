@@ -11,7 +11,7 @@
     "selector-class-pattern": null,
     "function-no-unknown": [true, { "ignoreFunctions": ["lighten", "darken"] }],
     "at-rule-no-unknown": null,
-    "value-no-vendor-prefix": [true, { "ignoreValues": ["box"] }],
+    "property-no-vendor-prefix": [true, { "ignoreProperties": ["background-clip"] }],
     "no-descending-specificity": null
   },
   "customSyntax": "postcss-less"

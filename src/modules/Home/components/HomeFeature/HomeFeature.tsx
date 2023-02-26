@@ -38,7 +38,9 @@ const HomeFeature: React.FC = () => {
     return (
       <div className={styles.FeatureContainer}>
         <FontAwesomeIcon className={styles.FeatureIcon} icon={feature.icon} />
-        <h2 className={styles.FeatureTitle}>{feature.title}</h2>
+        <h2 className={styles.FeatureTitle}>
+          <span className={styles.HomeGradientText}>{feature.title}</span>
+        </h2>
         <div
           className={styles.FeatureDescription}
           dangerouslySetInnerHTML={{

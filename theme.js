@@ -2,6 +2,7 @@ module.exports = {
   // Basic Colors
   '@primary-color': '#8236d5',
   '@secondary-color': '#d5b436',
+  '@gradient-colors': ' #d5b436, #ea982c, #f97838, #ff534f, #fd266e, #eb0091, #c50ab5, #8236d5',
   '@straw-color': '#e6e167',
   '@turquoise-color': '#4dccbd',
   '@coral-color': '#ff8484',
