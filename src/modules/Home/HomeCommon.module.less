@@ -9,14 +9,14 @@
 
 .HomeSectionTitle {
   margin-bottom: 16px;
-  font-size: 30px;
+  font-size: 26px;
   text-align: center;
 }
 
 .HomeSectionDescription {
   margin-bottom: 40px;
   color: var(--gray-text-color);
-  font-size: 20px;
+  font-size: 18px;
   text-align: center;
 }
 
@@ -24,4 +24,14 @@
   background: linear-gradient(45deg, @gradient-colors);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@media (min-width: 992px) {
+  .HomeSectionTitle {
+    font-size: 30px;
+  }
+
+  .HomeSectionDescription {
+    font-size: 20px;
+  }
 }

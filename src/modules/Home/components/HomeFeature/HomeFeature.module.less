@@ -23,7 +23,7 @@
 
 .FeatureContainer {
   max-width: @home-block-max-width;
-  padding: 20px;
+  padding: 40px 25px;
   text-align: center;
   background-color: var(--layout-body-background);
   border-radius: @border-radius-large;
@@ -60,6 +60,7 @@
 }
 
 .FeatureTitle {
+  margin-bottom: 30px;
   color: lighten(@primary-color, 10%);
   font-weight: 600;
   font-size: 22px;
@@ -148,5 +149,12 @@
 
   75% {
     transform: translateX(-6px) rotate(-1.2deg);
+  }
+}
+
+@media (min-width: 992px) {
+  .HomeFeatureContainer {
+    padding-top: 60px;
+    padding-bottom: 80px;
   }
 }
