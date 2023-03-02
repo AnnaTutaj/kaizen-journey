@@ -57,7 +57,7 @@ const Home: React.FC = () => {
   return (
     <>
       <div className={styles.HeaderContainer}>
-        <Space className={styles.HeaderKaizenJourney}>
+        <Space className={styles.HeaderKaizenJourney} size={16}>
           <img src={kaizenJourneyLogo} className={styles.LogoImage} alt="Kaizen Journey Logo" />
           <div className={styles.HeaderTitle}>Kaizen Journey</div>
         </Space>
