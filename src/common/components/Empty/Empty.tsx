@@ -1,9 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Empty as AntDEmpty } from 'antd';
 import styles from './Empty.module.less';
-import { faCloudMoonRain } from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
 import HeaderText from '../HeaderText';
+import ant01 from '@assets/ant_01.svg';
 
 export interface IEmptyProps {
   description: string;
@@ -14,7 +13,8 @@ const Empty: React.FC<IEmptyProps> = ({ description }) => {
 
   return (
     <AntDEmpty
-      image={<FontAwesomeIcon icon={faCloudMoonRain} className={styles.EmptyIcon} />}
+      className={styles.Empty}
+      image={<img src={ant01} className={styles.EmptyIcon} alt="Kaizen Journey Mascot" />}
       description={
         <>
           <HeaderText text={intl.formatMessage({ id: 'common.empty' })} className={styles.EmptyTitle} />

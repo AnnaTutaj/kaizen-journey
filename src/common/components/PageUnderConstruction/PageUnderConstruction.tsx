@@ -1,5 +1,5 @@
 import React from 'react';
-import image from '@assets/under_construction.svg';
+import image from '@assets/ant_01.svg';
 import { Image, Space } from 'antd';
 import { Typography } from 'antd';
 import { useIntl } from 'react-intl';
