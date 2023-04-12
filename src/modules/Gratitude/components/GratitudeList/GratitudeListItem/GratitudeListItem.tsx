@@ -1,9 +1,8 @@
-import { Avatar, Col, Row, Tooltip } from 'antd';
+import { Col, Row, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { List, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
