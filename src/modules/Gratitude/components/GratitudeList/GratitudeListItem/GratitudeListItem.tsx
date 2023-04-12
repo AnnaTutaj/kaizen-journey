@@ -16,18 +16,20 @@ import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import { Visibility } from '@common/constants/Visibility';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import ImagePreview from '@common/components/ImagePreview';
+import { useAuth } from '@common/contexts/AuthContext';
 
 const { Title, Paragraph } = Typography;
 
 interface IProps {
   gratitude: IGratitudeModel;
-  hideManageOptions?: boolean;
   removeGratitude?: (id: string) => void;
   updateGratitude?: (gratitude: IGratitudeModel) => void;
 }
 
-const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, removeGratitude, updateGratitude }) => {
+const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updateGratitude }) => {
   const intl = useIntl();
+  const { userProfile } = useAuth();
+
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
   const [dropdownHover, setDropdownHover] = useState<boolean>(false);
@@ -106,16 +108,6 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
               <small className={styles.SmallText}>{weekDayShort}</small>
             </div>
           </Col>
-          {hideManageOptions ? (
-            <Col>
-              <Avatar
-                icon={<FontAwesomeIcon icon={faUser} />}
-                size="large"
-                src={gratitude?.createdByPictureURL}
-                className={styles.Avatar}
-              />
-            </Col>
-          ) : null}
           <Col flex={1}>
             <Title level={5} className={styles.Title}>
               {gratitude.title}
@@ -143,7 +135,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, hideManageOptions, rem
             </div>
           </Col>
 
-          {!hideManageOptions ? (
+          {gratitude.createdByUid === userProfile.uid ? (
             <Col className={styles.DropDownCol}>
               <Dropdown menuItems={menuItems} className={styles.Dropdown}>
                 {dropdownButton}

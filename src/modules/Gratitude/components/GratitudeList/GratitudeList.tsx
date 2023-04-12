@@ -8,7 +8,6 @@ import HeaderText from '@common/components/HeaderText';
 interface IProps {
   gratitudes: IGratitudeModel[];
   headerText: string;
-  hideManageOptions?: boolean;
   removeGratitude?: (id: string) => void;
   updateGratitude?: (item: IGratitudeModel) => void;
 }
@@ -16,7 +15,6 @@ interface IProps {
 const GratitudeList: React.FC<IProps> = ({
   gratitudes,
   headerText,
-  hideManageOptions,
   removeGratitude,
   updateGratitude
 }) => {
@@ -29,7 +27,6 @@ const GratitudeList: React.FC<IProps> = ({
         return (
           <GratitudeListItem
             gratitude={item}
-            hideManageOptions={hideManageOptions}
             removeGratitude={removeGratitude}
             updateGratitude={updateGratitude}
           />
