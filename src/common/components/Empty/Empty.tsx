@@ -14,7 +14,7 @@ const Empty: React.FC<IEmptyProps> = ({ description }) => {
   return (
     <AntDEmpty
       className={styles.Empty}
-      image={<img src={ant01} className={styles.EmptyIcon} alt="Kaizen Journey Mascot" />}
+      image={<img src={ant01} className={styles.EmptyImage} alt="Kaizen Journey Mascot" />}
       description={
         <>
           <HeaderText text={intl.formatMessage({ id: 'common.empty' })} className={styles.EmptyTitle} />
