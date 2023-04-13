@@ -21,11 +21,15 @@
 }
 
 .KanjiMeaning {
+  font-size: @home-base-text-size;
   text-transform: lowercase;
 }
 
 .KaizenMeaningContainer {
-  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(100vw, @home-block-max-width);
   padding: 30px;
   color: var(--light-text-color);
   font-size: @home-base-text-size;

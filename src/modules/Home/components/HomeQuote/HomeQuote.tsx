@@ -22,8 +22,8 @@ const HomeQuote: React.FC = () => {
           onClick={() => setQuoteAutoplay(false)}
         >
           <FontAwesomeIcon className={styles.QuoteMark} icon={faQuoteLeft} />
-          <div className={styles.QuoteText}>{intl.formatMessage({ id: `home.quote.${i}.text` })}</div>
-          <div className={styles.QuoteAuthor}>~ {intl.formatMessage({ id: `home.quote.${i}.author` })}</div>
+          <div>{intl.formatMessage({ id: `home.quote.${i}.text` })}</div>
+          <div>~ {intl.formatMessage({ id: `home.quote.${i}.author` })}</div>
         </div>
       </div>
     );
