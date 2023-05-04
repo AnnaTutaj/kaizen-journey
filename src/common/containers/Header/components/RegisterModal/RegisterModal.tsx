@@ -10,6 +10,7 @@ import Modal from '@common/components/Modal';
 import { useSelector } from 'react-redux';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import Button from '@common/components/Button';
+import MascotWelcomeImage from '../MascotWelcomeImage/MascotWelcomeImage';
 
 export interface IRegisterModalProps {
   handleSubmit: () => void;
@@ -54,6 +55,7 @@ const RegisterModal: React.FC<IRegisterModalProps> = ({ handleSubmit, handleCanc
   return (
     <Modal title={intl.formatMessage({ id: 'register.form.title' })} open={true} onCancel={handleCancel} width={400}>
       <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
+        <MascotWelcomeImage />
         <Form.Item
           label={intl.formatMessage({ id: 'register.form.field.username' })}
           name="username"

@@ -6,6 +6,7 @@ import { FirebaseError } from '@firebase/util';
 import { useAuth } from '@common/contexts/AuthContext';
 import Modal from '@common/components/Modal';
 import Button from '@common/components/Button';
+import MascotWelcomeImage from '../MascotWelcomeImage/MascotWelcomeImage';
 
 export interface ILoginModalProps {
   handleSubmit: () => void;
@@ -42,6 +43,7 @@ const LoginModal: React.FC<ILoginModalProps> = ({ handleSubmit, handleCancel }) 
   return (
     <Modal title={intl.formatMessage({ id: 'login.form.title' })} open={true} onCancel={handleCancel} width={400}>
       <Form name="basic" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
+        <MascotWelcomeImage />
         <Form.Item
           label={intl.formatMessage({ id: 'register.form.field.email' })}
           name="email"
