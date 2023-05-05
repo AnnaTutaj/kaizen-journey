@@ -29,6 +29,7 @@ import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import Table, { ITableColumn } from '@common/components/Table/Table';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import Spinner from '@common/components/Spinner';
+import { MascotImage } from '@common/constants/MascotImage';
 
 const { useBreakpoint } = Grid;
 
@@ -143,7 +144,8 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
       cancelText: intl.formatMessage({ id: 'habit.confirmModal.archive.cancelText' }),
       onOk: async () => {
         await handleArchive(habit);
-      }
+      },
+      imageMascot: MascotImage.map
     });
   };
 

@@ -16,6 +16,7 @@ import HabitUpdateModal, { IHabitUpdateModalProps } from '../../HabitUpdateModal
 import { Visibility } from '@common/constants/Visibility';
 import { useAuth } from '@common/contexts/AuthContext';
 import useConfirmModal from '@common/hooks/useConfirmModal';
+import { MascotImage } from '@common/constants/MascotImage';
 
 const { Title, Paragraph } = Typography;
 
@@ -97,7 +98,8 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
       cancelText: intl.formatMessage({ id: 'habit.confirmModal.archive.cancelText' }),
       onOk: async () => {
         await handleArchive(habit);
-      }
+      },
+      imageMascot: MascotImage.map
     });
   };
 
@@ -111,7 +113,8 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
       cancelText: intl.formatMessage({ id: 'habit.confirmModal.restore.cancelText' }),
       onOk: async () => {
         await handleRestore(habit);
-      }
+      },
+      imageMascot: MascotImage.welcome
     });
   };
 
