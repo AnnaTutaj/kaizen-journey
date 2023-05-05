@@ -10,7 +10,7 @@ import plPL from 'antd/lib/locale/pl_PL';
 import 'dayjs/locale/pl';
 import { ITranslationConfig } from '@common/lang/config/types';
 import { Language, useAuth } from '@common/contexts/AuthContext';
-import { Locale } from 'antd/lib/locale-provider';
+import { Locale } from 'antd/lib/locale';
 import { ErrorBoundary } from 'react-error-boundary';
 import PageError from '@common/components/PageError';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
