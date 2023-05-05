@@ -21,28 +21,25 @@ const useConfirmModal = () => {
       return null;
     }
 
-    let imageParams: { width: number; src: string } = {
-      width: 125,
-      src: mascotTrashImage
-    };
+    let imageSrc: string;
 
     switch (imageMascot) {
       case MascotImage.trash:
-        imageParams = { width: 125, src: mascotTrashImage };
+        imageSrc = mascotTrashImage;
         break;
 
       case MascotImage.map:
-        imageParams = { width: 200, src: mascotMapImage };
+        imageSrc = mascotMapImage;
         break;
 
       case MascotImage.welcome:
-        imageParams = { width: 250, src: mascotWelcomeImage };
+        imageSrc = mascotWelcomeImage;
         break;
     }
 
     return (
       <div className={styles.ImageContainer}>
-        <Image width={imageParams.width} src={imageParams.src} alt="Kaizen Journey Mascot" preview={false} />
+        <Image height={150} src={imageSrc} alt="Kaizen Journey Mascot" preview={false} />
       </div>
     );
   };
