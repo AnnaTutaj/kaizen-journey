@@ -1,5 +1,6 @@
 export enum MascotImage {
   map = 'map',
   welcome = 'welcome',
-  trash = 'trash'
+  trash = 'trash',
+  folder = 'folder'
 }

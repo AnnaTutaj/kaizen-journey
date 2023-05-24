@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import mascotMapImage from '@assets/mascot_map.svg';
 import mascotWelcomeImage from '@assets/mascot_welcome.svg';
 import mascotTrashImage from '@assets/mascot_trash.svg';
+import mascotFolderImage from '@assets/mascot_folder.svg';
 import styles from './useConfirmModal.module.less';
 import Image from '@common/components/Image/Image';
 import { MascotImage } from '@common/constants/MascotImage';
@@ -34,6 +35,10 @@ const useConfirmModal = () => {
 
       case MascotImage.welcome:
         imageSrc = mascotWelcomeImage;
+        break;
+
+      case MascotImage.folder:
+        imageSrc = mascotFolderImage;
         break;
     }
 

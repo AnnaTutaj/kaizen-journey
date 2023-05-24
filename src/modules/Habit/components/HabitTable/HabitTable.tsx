@@ -145,7 +145,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
       onOk: async () => {
         await handleArchive(habit);
       },
-      imageMascot: MascotImage.map
+      imageMascot: MascotImage.folder
     });
   };
 
