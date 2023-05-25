@@ -1,4 +1,4 @@
-import { Space, Divider } from 'antd';
+import { Space } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import styles from './Home.module.less';
@@ -15,6 +15,7 @@ import Button from '@common/components/Button';
 import HomeFeature from './components/HomeFeature/HomeFeature';
 import HomeKaizenMeaning from './components/HomeKaizenMeaning/HomeKaizenMeaning';
 import HomeQuote from './components/HomeQuote/HomeQuote';
+import HomeMascot from './components/HomeMascot/HomeMascot';
 
 const Home: React.FC = () => {
   const intl = useIntl();
@@ -76,14 +77,13 @@ const Home: React.FC = () => {
       </div>
       <div ref={divRef} className={styles.ContentDiv}>
         <HomeFeature />
-        <Divider className={styles.SectionDivider} />
         <HomeKaizenMeaning />
-        <Divider className={styles.SectionDivider} />
+        <HomeMascot />
         <HomeQuote />
-        <Divider className={styles.SectionDivider} />
       </div>
       <div className={styles.EndingContainer}>
         <div className={styles.SectionEndingTitle}>{intl.formatMessage({ id: 'home.ending.title' })}</div>
+
         <Button type="primary" onClick={onClick}>
           {intl.formatMessage({ id: 'home.ending.button' })}
         </Button>

@@ -1,12 +1,6 @@
 @import url('../../HomeCommonVariables.module.less');
 @import url('../../HomeCommon.module.less');
 
-.HomeFeatureContainer:extend(.HomeSectionContainer) {
-  padding-top: 40px;
-  padding-bottom: 60px;
-  background-color: var(--primary-color-bg-color);
-}
-
 .FeatureRow {
   &:global {
     &.ant-row {
@@ -23,10 +17,12 @@
 
 .FeatureContainer {
   max-width: @home-block-max-width;
+  height: 100%;
+  margin-bottom: 32px;
   padding: 40px 25px;
   text-align: center;
   background-color: var(--layout-body-background);
-  border-radius: @border-radius-large;
+  border-radius: @border-radius-x-large;
   box-shadow: 0 1px 1px var(--primary-color-bg-color-shadow), 0 2px 2px var(--primary-color-bg-color-shadow),
     0 4px 4px var(--primary-color-bg-color-shadow), 0 8px 8px var(--primary-color-bg-color-shadow),
     0 16px 16px var(--primary-color-bg-color-shadow), 0 32px 32px var(--primary-color-bg-color-shadow);
@@ -149,12 +145,5 @@
 
   75% {
     transform: translateX(-6px) rotate(-1.2deg);
-  }
-}
-
-@media (min-width: 992px) {
-  .HomeFeatureContainer {
-    padding-top: 60px;
-    padding-bottom: 80px;
   }
 }

@@ -1,46 +1,15 @@
 @import url('./HomeCommonVariables.module.less');
 
-.HomeSectionContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 @home-padding-horizontal;
-}
-
-.HomeSectionTitle {
-  margin-bottom: 16px;
-  font-weight: 600;
-  font-size: 26px;
-  letter-spacing: 0.1em;
-  text-align: center;
-}
-
-.HomeSectionDescription {
-  margin-bottom: 40px;
-  color: var(--gray-text-color);
-  font-size: 18px;
-  text-align: center;
-}
-
 .HomeGradientText {
   background: linear-gradient(45deg, @gradient-colors);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.HonmeContainerTwoSections {
+.HomeContainerTwoSections {
   display: flex;
   flex-wrap: wrap;
   gap: 50px;
   justify-content: center;
 }
 
-@media (min-width: 992px) {
-  .HomeSectionTitle {
-    font-size: 30px;
-  }
-
-  .HomeSectionDescription {
-    font-size: 20px;
-  }
-}

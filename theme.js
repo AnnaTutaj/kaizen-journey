@@ -35,6 +35,7 @@ module.exports = {
   '@border-radius-base': '8px',
   '@border-radius-small': '5px',
   '@border-radius-large': '16px',
+  '@border-radius-x-large': '46px',
 
   //Table
   '@table-row-hover-bg': 'unset'

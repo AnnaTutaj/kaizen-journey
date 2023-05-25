@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import _ from 'lodash';
 import styles from './HomeQuote.module.less';
-import parentStyles from '@modules/Home/HomeCommon.module.less';
 import { Carousel } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
+import HomeSectionWrapper from '../HomeSectionWrapper/HomeSectionWrapper';
 
 const HomeQuote: React.FC = () => {
   const intl = useIntl();
@@ -30,8 +30,7 @@ const HomeQuote: React.FC = () => {
   };
 
   return (
-    <div className={parentStyles.HomeSectionContainer}>
-      <h2 className={parentStyles.HomeSectionTitle}>{intl.formatMessage({ id: 'home.quote.title' })}</h2>
+    <HomeSectionWrapper coloredBg={false} title={intl.formatMessage({ id: 'home.quote.title' })}>
       <Carousel
         className={styles.Carousel}
         dots={{ className: styles.CarouselDots }}
@@ -43,7 +42,7 @@ const HomeQuote: React.FC = () => {
       >
         {_.times(quoteCount, (i) => renderQuote(i))}
       </Carousel>
-    </div>
+    </HomeSectionWrapper>
   );
 };
 
