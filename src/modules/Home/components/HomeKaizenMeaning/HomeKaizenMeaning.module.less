@@ -5,10 +5,11 @@
   gap: 20px;
   align-items: center;
   justify-content: center;
-  width: min(100vw, @home-block-max-width);
+  width: min(90vw, @home-block-max-width);
   height: 300px;
   color: var(--light-text-color);
   background-position: center;
+  border-radius: @border-radius-x-large;
 }
 
 .KanjiDivContainer {
@@ -28,24 +29,8 @@
 .KaizenMeaningContainer {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
   justify-content: center;
-  width: min(100vw, @home-block-max-width);
-  padding: 30px;
-  color: var(--light-text-color);
+  width: min(90vw, @home-block-max-width);
   font-size: @home-base-text-size;
-  background-color: @primary-color;
-  clip-path: polygon(
-    4% 8%,
-    26% 1%,
-    70% 7%,
-    90% 6%,
-    96% 17%,
-    100% 64%,
-    95% 89%,
-    83% 98%,
-    67% 92%,
-    14% 100%,
-    4% 91%,
-    0 30%
-  );
 }

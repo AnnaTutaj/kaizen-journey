@@ -4,8 +4,13 @@ import styles from './HomeKaizenMeaning.module.less';
 import parentStyles from '@modules/Home/HomeCommon.module.less';
 import fuji from '@assets/fuji.jpg';
 import HomeSectionWrapper from '../HomeSectionWrapper/HomeSectionWrapper';
+import Button from '@common/components/Button/Button';
 
-const HomeFeature: React.FC = () => {
+interface IProps {
+  onClick: () => void;
+}
+
+const HomeFeature: React.FC<IProps> = ({ onClick }) => {
   const intl = useIntl();
 
   return (
@@ -14,6 +19,13 @@ const HomeFeature: React.FC = () => {
         <div className={styles.KaizenMeaningContainer}>
           <div>{intl.formatMessage({ id: 'home.kaizenMeaning' })}</div>
           <div>{intl.formatMessage({ id: 'home.kaizenMeaning.description' })}</div>
+          <div>
+            <Button
+              type="primary"
+              onClick={onClick}
+              text={intl.formatMessage({ id: 'home.kaizenMeaning.takeFirstStep.button' })}
+            />
+          </div>
         </div>
         <div className={styles.KanjiContainer} style={{ backgroundImage: `url(${fuji})` }}>
           <div className={styles.KanjiDivContainer}>

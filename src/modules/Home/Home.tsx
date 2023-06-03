@@ -77,7 +77,7 @@ const Home: React.FC = () => {
       </div>
       <div ref={divRef} className={styles.ContentDiv}>
         <HomeFeature />
-        <HomeKaizenMeaning />
+        <HomeKaizenMeaning onClick={onClick}/>
         <HomeMascot />
         <HomeQuote />
       </div>
