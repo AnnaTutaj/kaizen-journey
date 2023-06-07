@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu } from 'antd';
 import styles from './SiteMenu.module.less';
 import { useIntl } from 'react-intl';
 import { User as FirebaseUser } from 'firebase/auth';
 import { Paths } from '@common/constants/Paths';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 export interface ISiteMenuProps {
@@ -18,11 +18,18 @@ export interface ISiteMenuProps {
 const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal, openRegisterModal, hideDrawer }) => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [currentKeys, setCurrentKeys] = useState<string[]>([]);
+
+  useEffect(() => {
+    const pathNameParts = location.pathname.split('/');
+    setCurrentKeys([pathNameParts[1]]);
+  }, [location.pathname]);
 
   const items = userAuth
     ? [
         {
-          key: 'habit',
+          key: 'habits',
           label: intl.formatMessage({ id: 'header.habits' }),
           onClick: () => {
             navigate(Paths.Habit);
@@ -42,7 +49,7 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
           }
         },
         {
-          key: 'friend',
+          key: 'friends',
           label: intl.formatMessage({ id: 'header.friends' }),
           onClick: () => {
             navigate(Paths.Friend);
@@ -81,6 +88,7 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
       className={cn(styles.MenuContainer, { [styles.MenuContainerMobile]: isMobile })}
       items={items}
       disabledOverflow
+      selectedKeys={currentKeys}
     />
   );
 };
