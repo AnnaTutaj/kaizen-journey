@@ -1,5 +1,6 @@
 export const Paths = {
   Home: '/',
+  Welcome: '/welcome',
   Support: '/support',
   AccessDenied: '/access-denied',
   PageNotFound: '/page-not-found',

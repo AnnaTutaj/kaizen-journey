@@ -47,10 +47,7 @@ const Home: React.FC = () => {
       navigate(Paths.Support);
     } else {
       setRegisterModalConfig({
-        handleCancel: () => setRegisterModalConfig(undefined),
-        handleSubmit: () => {
-          setRegisterModalConfig(undefined);
-        }
+        handleCancel: () => setRegisterModalConfig(undefined)
       });
     }
   };
@@ -77,7 +74,7 @@ const Home: React.FC = () => {
       </div>
       <div ref={divRef} className={styles.ContentDiv}>
         <HomeFeature />
-        <HomeKaizenMeaning onClick={onClick}/>
+        <HomeKaizenMeaning onClick={onClick} />
         <HomeMascot />
         <HomeQuote />
       </div>

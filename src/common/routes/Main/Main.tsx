@@ -21,6 +21,7 @@ import UserHabit from '@modules/User/routes/UserHabit';
 import UserGratitude from '@modules/User/routes/UserGratitude';
 import UserFriendFollowing from '@modules/User/routes/UserFriendFollowing';
 import UserFriendFollower from '@modules/User/routes/UserFriendFollower';
+import HomeRoute from '@common/containers/HomeRoute/HomeRoute';
 
 const PageUnderConstruction = lazy(() => import('@common/components/PageUnderConstruction'));
 const Home = lazy(() => import('@modules/Home'));
@@ -52,7 +53,15 @@ const Main: React.FC = () => {
       <Content className={cn(styles.Content, { [styles.ContentNoPadding]: hideContentPadding })}>
         <Suspense fallback={<PageLoading />}>
           <Routes>
-            <Route path={Paths.Home} element={<Home />} />
+            <Route
+              path={Paths.Home}
+              element={
+                <HomeRoute>
+                  <Home />
+                </HomeRoute>
+              }
+            />
+            <Route path={Paths.Welcome} element={<Home />} />
             <Route
               path={Paths.Gratitude}
               element={

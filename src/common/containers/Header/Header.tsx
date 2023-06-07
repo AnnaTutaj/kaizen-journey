@@ -41,19 +41,13 @@ const Header: React.FC = () => {
 
   const openRegisterModal = () => {
     setRegisterModalConfig({
-      handleCancel: () => setRegisterModalConfig(undefined),
-      handleSubmit: () => {
-        setRegisterModalConfig(undefined);
-      }
+      handleCancel: () => setRegisterModalConfig(undefined)
     });
   };
 
   const openLoginModal = () => {
     setLoginModalConfig({
-      handleCancel: () => setLoginModalConfig(undefined),
-      handleSubmit: () => {
-        setLoginModalConfig(undefined);
-      }
+      handleCancel: () => setLoginModalConfig(undefined)
     });
   };
 
@@ -63,7 +57,7 @@ const Header: React.FC = () => {
         <div
           className={styles.LogoContainer}
           onClick={() => {
-            navigate(Paths.Home);
+            navigate(Paths.Welcome);
           }}
         >
           <img src={kaizenJourneyLogo} className={styles.LogoImage} alt="Kaizen Journey Logo" />

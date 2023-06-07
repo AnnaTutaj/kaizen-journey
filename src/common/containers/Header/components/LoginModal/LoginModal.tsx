@@ -7,9 +7,10 @@ import { useAuth } from '@common/contexts/AuthContext';
 import Modal from '@common/components/Modal';
 import Button from '@common/components/Button';
 import MascotWelcomeImage from '../MascotWelcomeImage/MascotWelcomeImage';
+import { useNavigate } from 'react-router-dom';
+import { Paths } from '@common/constants/Paths';
 
 export interface ILoginModalProps {
-  handleSubmit: () => void;
   handleCancel: () => void;
 }
 
@@ -18,8 +19,9 @@ interface ILoginFormProps {
   password: string;
 }
 
-const LoginModal: React.FC<ILoginModalProps> = ({ handleSubmit, handleCancel }) => {
+const LoginModal: React.FC<ILoginModalProps> = ({ handleCancel }) => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const { login } = useAuth();
 
   const onFinish = async (values: ILoginFormProps) => {
@@ -27,8 +29,7 @@ const LoginModal: React.FC<ILoginModalProps> = ({ handleSubmit, handleCancel }) 
       if (login) {
         await login(values.email, values.password);
       }
-
-      handleSubmit();
+      navigate(Paths.Habit);
     } catch (error) {
       if (error instanceof FirebaseError) {
         const errorMessage = intl.formatMessage({
