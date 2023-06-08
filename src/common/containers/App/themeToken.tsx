@@ -1,10 +1,11 @@
 import { AliasToken } from 'antd/es/theme/internal';
+import { ColorPalette } from './ColorPalette';
 
 export const themeToken = (darkMode: boolean): Partial<AliasToken> => {
   return {
     fontFamily: "'Open Sans', sans-serif",
     fontSize: 16,
-    colorPrimary: '#8236d5',
+    colorPrimary: ColorPalette.primaryColor.main,
     colorError: '#c0293b',
     colorWhite: '#ffffff',
     borderRadius: 8,

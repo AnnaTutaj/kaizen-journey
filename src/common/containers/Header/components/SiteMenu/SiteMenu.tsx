@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Menu } from 'antd';
-import styles from './SiteMenu.module.less';
 import { useIntl } from 'react-intl';
 import { User as FirebaseUser } from 'firebase/auth';
 import { Paths } from '@common/constants/Paths';
 import { useLocation, useNavigate } from 'react-router-dom';
-import cn from 'classnames';
+import { StyledMenu } from './styled';
 
 export interface ISiteMenuProps {
   isMobile?: boolean;
@@ -83,9 +81,10 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
       ];
 
   return (
-    <Menu
+    <StyledMenu
+      $isMobile={isMobile}
       mode={isMobile ? 'vertical' : 'horizontal'}
-      className={cn(styles.MenuContainer, { [styles.MenuContainerMobile]: isMobile })}
+      // className={cn(styles.MenuContainer, { [styles.MenuContainerMobile]: isMobile })}
       items={items}
       disabledOverflow
       selectedKeys={currentKeys}

@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { Drawer, Grid, Layout, Switch } from 'antd';
-import styles from './Header.module.less';
+import { Grid, Switch } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import RegisterModal, { IRegisterModalProps } from './components/RegisterModal/RegisterModal';
@@ -19,6 +18,18 @@ import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import Select, { Option } from '@common/components/Select/Select';
+import {
+  StyledAvatarContainer,
+  StyledDarkModeSwitchContainer,
+  StyledHamburgerMenuIcon,
+  StyledHamburgerMenuIconContainer,
+  StyledLayoutHeader,
+  StyledLogoContainer,
+  StyledLogoImage,
+  StyledMenuDrawer,
+  StyledMenuDrawerCloseIcon,
+  StyledMenuDrawerCloseIconContainer
+} from './styled';
 
 const { useBreakpoint } = Grid;
 
@@ -53,30 +64,29 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <Layout.Header className={styles.Container}>
-        <div
-          className={styles.LogoContainer}
+      <StyledLayoutHeader>
+        <StyledLogoContainer
           onClick={() => {
             navigate(Paths.Welcome);
           }}
         >
-          <img src={kaizenJourneyLogo} className={styles.LogoImage} alt="Kaizen Journey Logo" />
-        </div>
+          <StyledLogoImage src={kaizenJourneyLogo} alt="Kaizen Journey Logo" />
+        </StyledLogoContainer>
 
         {isMobile ? (
-          <div className={styles.HamburgerMenuIconContainer} onClick={() => setIsMenuOpen(true)}>
-            <FontAwesomeIcon className={styles.HamburgerMenuIcon} icon={faBars} />
-          </div>
+          <StyledHamburgerMenuIconContainer onClick={() => setIsMenuOpen(true)}>
+            <StyledHamburgerMenuIcon icon={faBars} />
+          </StyledHamburgerMenuIconContainer>
         ) : null}
 
         {userAuth ? (
-          <div className={styles.Avatar}>
+          <StyledAvatarContainer>
             <UserAvatar />
-          </div>
+          </StyledAvatarContainer>
         ) : null}
 
         {!userAuth ? (
-          <div className={styles.Avatar}>
+          <StyledAvatarContainer>
             <Select<ITranslationConfig['locale']>
               style={{ width: 65 }}
               dropdownMatchSelectWidth={120}
@@ -93,27 +103,27 @@ const Header: React.FC = () => {
                 {intl.formatMessage({ id: 'common.language.english' })}
               </Option>
             </Select>
-          </div>
+          </StyledAvatarContainer>
         ) : null}
 
-        <div className={styles.DarkModeSwitchContainer}>
+        <StyledDarkModeSwitchContainer>
           <Switch
             checkedChildren={<FontAwesomeIcon icon={faMoon} />}
             unCheckedChildren={<FontAwesomeIcon icon={faSun} />}
             checked={darkMode}
             onChange={setDarkMode}
           />
-        </div>
+        </StyledDarkModeSwitchContainer>
 
         {!isMobile ? (
           <SiteMenu userAuth={userAuth} openLoginModal={openLoginModal} openRegisterModal={openRegisterModal} />
         ) : null}
-      </Layout.Header>
+      </StyledLayoutHeader>
 
-      <Drawer placement="right" closable={false} open={isMenuOpen} width="100vw" className={styles.MenuDrawer}>
-        <div className={styles.MenuDrawerCloseIconContainer} onClick={() => setIsMenuOpen(false)}>
-          <FontAwesomeIcon className={styles.MenuDrawerCloseIcon} icon={faTimes} />
-        </div>
+      <StyledMenuDrawer placement="right" closable={false} open={isMenuOpen} width="100vw">
+        <StyledMenuDrawerCloseIconContainer onClick={() => setIsMenuOpen(false)}>
+          <StyledMenuDrawerCloseIcon icon={faTimes} />
+        </StyledMenuDrawerCloseIconContainer>
         <SiteMenu
           userAuth={userAuth}
           openLoginModal={openLoginModal}
@@ -121,7 +131,7 @@ const Header: React.FC = () => {
           isMobile
           hideDrawer={() => setIsMenuOpen(false)}
         />
-      </Drawer>
+      </StyledMenuDrawer>
 
       {registerModalConfig ? <RegisterModal {...registerModalConfig} /> : null}
       {loginModalConfig ? <LoginModal {...loginModalConfig} /> : null}

@@ -22,6 +22,8 @@ import minMax from 'dayjs/plugin/minMax';
 import './App.less';
 import { themeToken } from './themeToken';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
+import { ThemeProvider } from 'styled-components';
+import { layout } from './layout';
 
 dayjs.extend(minMax);
 dayjs.extend(isSameOrBefore);
@@ -30,6 +32,7 @@ dayjs.extend(localizedFormat);
 
 const App: React.FC = () => {
   const { userProfile } = useAuth();
+  const { token } = theme.useToken();
   const { darkMode } = useContext(ThemeContext);
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
 
@@ -57,13 +60,20 @@ const App: React.FC = () => {
         algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm
       }}
     >
-      <IntlProvider locale={language} messages={appLocale.messages}>
-        <Layout>
-          <ErrorBoundary FallbackComponent={(props) => <PageError onClick={props.resetErrorBoundary} />}>
-            <Main />
-          </ErrorBoundary>
-        </Layout>
-      </IntlProvider>
+      <ThemeProvider
+        theme={{
+          antd: token,
+          layout: layout(darkMode),
+        }}
+      >
+        <IntlProvider locale={language} messages={appLocale.messages}>
+          <Layout>
+            <ErrorBoundary FallbackComponent={(props) => <PageError onClick={props.resetErrorBoundary} />}>
+              <Main />
+            </ErrorBoundary>
+          </Layout>
+        </IntlProvider>
+      </ThemeProvider>
     </ConfigProvider>
   );
 };
