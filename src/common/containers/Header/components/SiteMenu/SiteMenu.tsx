@@ -84,7 +84,6 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
     <StyledMenu
       $isMobile={isMobile}
       mode={isMobile ? 'vertical' : 'horizontal'}
-      // className={cn(styles.MenuContainer, { [styles.MenuContainerMobile]: isMobile })}
       items={items}
       disabledOverflow
       selectedKeys={currentKeys}

@@ -1,7 +1,7 @@
 import { AliasToken } from 'antd/es/theme/internal';
 import { ColorPalette } from './ColorPalette';
 
-export const themeToken = (darkMode: boolean): Partial<AliasToken> => {
+export const antdThemeToken = (darkMode: boolean): Partial<AliasToken> => {
   return {
     fontFamily: "'Open Sans', sans-serif",
     fontSize: 16,
@@ -11,6 +11,7 @@ export const themeToken = (darkMode: boolean): Partial<AliasToken> => {
     borderRadius: 8,
     borderRadiusSM: 5,
     borderRadiusLG: 16,
-    controlItemBgActive: darkMode ? "#393b3d" : "#e1e5eb"
+    controlItemBgActive: darkMode ? '#393b3d' : '#e1e5eb',
+    colorBgLayout: darkMode ? '#181818' : '#ffffff'
   };
 };

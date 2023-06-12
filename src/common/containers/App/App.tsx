@@ -20,10 +20,9 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import minMax from 'dayjs/plugin/minMax';
 import './App.less';
-import { themeToken } from './themeToken';
+import { antdThemeToken } from './antdThemeToken';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
-import { ThemeProvider } from 'styled-components';
-import { layout } from './layout';
+import StyledTheme from './StyledTheme';
 
 dayjs.extend(minMax);
 dayjs.extend(isSameOrBefore);
@@ -32,7 +31,6 @@ dayjs.extend(localizedFormat);
 
 const App: React.FC = () => {
   const { userProfile } = useAuth();
-  const { token } = theme.useToken();
   const { darkMode } = useContext(ThemeContext);
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
 
@@ -56,16 +54,11 @@ const App: React.FC = () => {
       locale={locale}
       theme={{
         hashed: false,
-        token: themeToken(darkMode),
+        token: antdThemeToken(darkMode),
         algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm
       }}
     >
-      <ThemeProvider
-        theme={{
-          antd: token,
-          layout: layout(darkMode),
-        }}
-      >
+      <StyledTheme>
         <IntlProvider locale={language} messages={appLocale.messages}>
           <Layout>
             <ErrorBoundary FallbackComponent={(props) => <PageError onClick={props.resetErrorBoundary} />}>
@@ -73,7 +66,7 @@ const App: React.FC = () => {
             </ErrorBoundary>
           </Layout>
         </IntlProvider>
-      </ThemeProvider>
+      </StyledTheme>
     </ConfigProvider>
   );
 };

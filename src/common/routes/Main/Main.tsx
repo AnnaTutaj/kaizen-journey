@@ -6,7 +6,6 @@ import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import Header from '@common/containers/Header';
 import Footer from '@common/containers/Footer';
 import { Paths } from '@common/constants/Paths';
-import styles from './Main.module.less';
 import { useAuth } from '@common/contexts/AuthContext';
 import PageLoading from '@common/components/PageLoading';
 import PrivateRoute from '@common/containers/PrivateRoute';
@@ -15,13 +14,13 @@ import HabitArchive from '@modules/Habit/routes/HabitArchive';
 import FriendFollowing from '@modules/Friend/routes/FriendFollowing';
 import FriendFollower from '@modules/Friend/routes/FriendFollower';
 import HabitView from '@modules/Habit/routes/HabitView';
-import cn from 'classnames';
 import { useIntl } from 'react-intl';
 import UserHabit from '@modules/User/routes/UserHabit';
 import UserGratitude from '@modules/User/routes/UserGratitude';
 import UserFriendFollowing from '@modules/User/routes/UserFriendFollowing';
 import UserFriendFollower from '@modules/User/routes/UserFriendFollower';
 import HomeRoute from '@common/containers/HomeRoute/HomeRoute';
+import { StyledContent } from './styled';
 
 const PageUnderConstruction = lazy(() => import('@common/components/PageUnderConstruction'));
 const Home = lazy(() => import('@modules/Home'));
@@ -30,7 +29,6 @@ const Habit = lazy(() => import('@modules/Habit'));
 const Friend = lazy(() => import('@modules/Friend'));
 const User = lazy(() => import('@modules/User'));
 
-const { Content } = Layout;
 //todo add route to PageNotFound, AccessDenied
 
 const RedirectToUser = () => {
@@ -50,7 +48,7 @@ const Main: React.FC = () => {
   return (
     <Layout>
       <Header />
-      <Content className={cn(styles.Content, { [styles.ContentNoPadding]: hideContentPadding })}>
+      <StyledContent $hideContentPadding={hideContentPadding}>
         <Suspense fallback={<PageLoading />}>
           <Routes>
             <Route
@@ -124,7 +122,7 @@ const Main: React.FC = () => {
             <Route path="*" element={<PageUnderConstruction title="Page Not Found" />} />
           </Routes>
         </Suspense>
-      </Content>
+      </StyledContent>
       <Footer />
     </Layout>
   );
