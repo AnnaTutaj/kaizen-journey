@@ -16,6 +16,7 @@ import { Visibility } from '@common/constants/Visibility';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import ImagePreview from '@common/components/ImagePreview';
 import { useAuth } from '@common/contexts/AuthContext';
+import { StyledEllipsisContainer } from '@common/styled';
 
 const { Title, Paragraph } = Typography;
 
@@ -115,9 +116,9 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
             <Paragraph className={styles.Description}>{gratitude.description}</Paragraph>
             <Row gutter={10}>
               {gratitude.tags.map((tag) => (
-                <Col key={tag} className={styles.TagContainer}>
+                <StyledEllipsisContainer as={Col} key={tag}>
                   <small>#{tag}</small>
-                </Col>
+                </StyledEllipsisContainer>
               ))}
             </Row>
           </Col>

@@ -3,10 +3,10 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { IFriendBaseModel } from '@modules/Friend/models/FriendBaseModel';
 import FriendList from '@modules/Friend/components/FriendList';
-import styles from './FriendListScrolled.module.less';
 import { useIntl } from 'react-intl';
 import { FriendListMode } from '@modules/Friend/components/FriendList/FriendListItem/FriendListItem';
 import Button from '@common/components/Button';
+import { StyledFooter } from './styled';
 
 interface IProps {
   friends: IFriendBaseModel[];
@@ -44,7 +44,7 @@ const FriendListScrolled: React.FC<IProps> = ({
               removeFriendFollower={removeFriendFollower}
             />
           </InfiniteScroll>
-          <div className={styles.Footer}>
+          <StyledFooter>
             {!loading && moreFriends ? (
               <Button type="primary" onClick={getNextFriends}>
                 {intl.formatMessage({ id: 'common.list.loadMore' })}
@@ -52,7 +52,7 @@ const FriendListScrolled: React.FC<IProps> = ({
             ) : null}
 
             {loading ? <Spin size="large" /> : null}
-          </div>
+          </StyledFooter>
         </>
       ) : null}
     </>

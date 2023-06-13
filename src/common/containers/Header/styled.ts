@@ -61,12 +61,12 @@ export const StyledMenuDrawer = styled(Drawer)`
   &&& {
     .ant-drawer-body {
       padding-top: 15px;
-      background-color: var(--header-bg-color) !important;
+      background-color: ${({ theme }) => theme.layout.colorHeaderBg};
     }
 
     .ant-menu-item {
-      height: 80px !important;
-      line-height: 80px !important;
+      height: 80px;
+      line-height: 80px;
     }
   }
 `;

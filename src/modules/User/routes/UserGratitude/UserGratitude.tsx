@@ -3,11 +3,9 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import _ from 'lodash';
 import UserGratitudeList from './components/UserGratitudeList';
-import styles from './UserGratitude.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import UserGratitudeListFilters from '@modules/Gratitude/components/GratitudeListFilters/GratitudeListFilters';
-import cn from 'classnames';
 import GratitudeListFiltersModel, {
   IGratitudeListFiltersModelDTO
 } from '@modules/Gratitude/models/GratitudeListFiltersModel';
@@ -19,6 +17,7 @@ import UserGratitudeListModule from '@modules/User/redux/UserGratitudeList/UserG
 import { useParams } from 'react-router-dom';
 import { useAuth } from '@common/contexts/AuthContext';
 import useUserGratitudeHelper from './hooks/useUserGratitudeHelper';
+import { StyledHeaderContainer, StyledHeaderFilterContainer } from '@common/components/Header/styled';
 
 const UserGratitude: React.FC = () => {
   const intl = useIntl();
@@ -60,7 +59,7 @@ const UserGratitude: React.FC = () => {
 
   return (
     <>
-      <div className={styles.Header}>
+      <StyledHeaderContainer>
         <Button
           onClick={() => {
             setShowFilters((prevState) => !prevState);
@@ -68,9 +67,9 @@ const UserGratitude: React.FC = () => {
           icon={<FontAwesomeIcon icon={faFilter} />}
           text={intl.formatMessage({ id: 'common.filters' })}
         />
-      </div>
+      </StyledHeaderContainer>
 
-      <div className={cn(styles.FiltersContainer, { [styles.FiltersContainerVisible]: showFilters })}>
+      <StyledHeaderFilterContainer $showFilters={showFilters}>
         <UserGratitudeListFilters
           initialValues={filters}
           hideVisiblity={userId !== userProfile.uid}
@@ -85,7 +84,7 @@ const UserGratitude: React.FC = () => {
             }
           }}
         />
-      </div>
+      </StyledHeaderFilterContainer>
 
       <UserGratitudeList />
     </>

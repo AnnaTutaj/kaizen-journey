@@ -1,9 +1,8 @@
 import React from 'react';
-import { List } from 'antd';
 import { IFriendBaseModel } from '@modules/Friend/models/FriendBaseModel';
-import styles from '@modules/Friend/components/FriendList/FriendList.module.less';
 import FriendListItem, { FriendListMode } from './FriendListItem/FriendListItem';
 import HeaderText from '@common/components/HeaderText';
+import { StyledList } from './styled';
 
 interface IProps {
   friends: IFriendBaseModel[];
@@ -15,8 +14,7 @@ interface IProps {
 
 const FriendList: React.FC<IProps> = ({ friends, headerText, mode, removeFriendFollowing, removeFriendFollower }) => {
   return (
-    <List
-      className={styles.FriendList}
+    <StyledList
       header={<HeaderText text={headerText} />}
       dataSource={friends}
       renderItem={(item) => {

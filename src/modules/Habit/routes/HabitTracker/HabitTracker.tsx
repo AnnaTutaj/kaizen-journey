@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useIntl } from 'react-intl';
-import styles from './HabitTracker.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import HabitTable from '@modules/Habit/components/HabitTable';
@@ -16,6 +15,7 @@ import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTr
 import HabitTrackerActions from '@modules/Habit/redux/HabitTracker/HabitTrackerActions';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
+import { StyledHeaderContainer } from '@common/components/Header/styled';
 
 interface IRangeSelect {
   label: string;
@@ -73,7 +73,7 @@ const HabitTracker: React.FC = () => {
   return (
     <>
       {loading ? <PageLoading /> : null}
-      <div className={styles.Header}>
+      <StyledHeaderContainer>
         <Select<IRangeSelect['value']>
           options={rangeSelectOptions}
           defaultValue={range}
@@ -85,7 +85,7 @@ const HabitTracker: React.FC = () => {
           icon={<FontAwesomeIcon icon={faPlus} />}
           text={intl.formatMessage({ id: 'habit.create.button' })}
         />
-      </div>
+      </StyledHeaderContainer>
       <HabitTable habits={habits} setHabits={setHabits} isInitialLoaded={isInitialLoaded} />
       {habitCreateModalConfig ? <HabitCreateModal {...habitCreateModalConfig} /> : null}
     </>

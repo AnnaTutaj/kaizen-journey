@@ -3,7 +3,6 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { useAuth } from '@common/contexts/AuthContext';
 import FriendFollowingList from './components/FriendFollowingList';
-import styles from './FriendFollowing.module.less';
 import FriendFollowingCreateModal from '@modules/Friend/components/FriendFollowingCreateModal';
 import { IFriendFollowingCreateModalProps } from '@modules/Friend/components/FriendFollowingCreateModal/FriendFollowingCreateModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +10,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { IFriendFollowingOwnState } from '@modules/Friend/redux/FriendFollowing/FriendFollowingInterface';
 import FriendFollowingActions from '@modules/Friend/redux/FriendFollowing/FriendFollowingActions';
 import Button from '@common/components/Button';
+import { StyledHeaderContainer } from '@common/components/Header/styled';
 
 const FriendFollowing: React.FC = () => {
   const intl = useIntl();
@@ -46,14 +46,14 @@ const FriendFollowing: React.FC = () => {
 
   return (
     <>
-      <div className={styles.Header}>
+      <StyledHeaderContainer $smallMargin $justifyContent="flex-end">
         <Button
           type="primary"
           onClick={() => handleCreateFriendFollowing()}
           icon={<FontAwesomeIcon icon={faPlus} />}
           text={intl.formatMessage({ id: 'friend.following.create.button' })}
         />
-      </div>
+      </StyledHeaderContainer>
       <FriendFollowingList />
       {friendFollowingCreateModalConfig ? <FriendFollowingCreateModal {...friendFollowingCreateModalConfig} /> : null}
     </>

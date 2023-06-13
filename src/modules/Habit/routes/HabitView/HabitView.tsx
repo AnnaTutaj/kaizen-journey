@@ -11,13 +11,20 @@ import PageLoading from '@common/components/PageLoading';
 import HabitCalenarHeatmap from '@modules/Habit/components/HabitCalenarHeatmap';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
-import styles from './HabitView.module.less';
 import HabitStatistic from '@modules/Habit/components/HabitStatistic';
 import Tooltip from 'antd/es/tooltip';
 import { Visibility } from '@common/constants/Visibility';
 import { useAuth } from '@common/contexts/AuthContext';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
+import { StyledHeaderContainer } from '@common/components/Header/styled';
+import {
+  StyledHabitCalenarHeatmapContainer,
+  StyledHabitDescription,
+  StyledHabitViewContainer,
+  StyledHeaderIcon,
+  StyledSummaryContainerSpace
+} from './styled';
 
 interface IYearSelect {
   label: string;
@@ -77,7 +84,7 @@ const HabitView: React.FC = () => {
 
   return (
     <>
-      <div className={styles.Header}>
+      <StyledHeaderContainer $flexWrap="wrap">
         <Button
           onClick={() => handleGoBack()}
           icon={<FontAwesomeIcon icon={faLongArrowLeft} />}
@@ -88,8 +95,8 @@ const HabitView: React.FC = () => {
           defaultValue={year}
           onChange={(value) => setYear(value)}
         />
-      </div>
-      <div className={styles.HabitViewContainer}>
+      </StyledHeaderContainer>
+      <StyledHabitViewContainer>
         <Space size={12}>
           <HeaderText text={habit.name} />
           <div>
@@ -99,7 +106,7 @@ const HabitView: React.FC = () => {
                 id: `common.visibility.${habit.isPublic ? Visibility.public : Visibility.private}`
               })}
             >
-              <FontAwesomeIcon className={styles.HeaderIcon} icon={habit.isPublic ? faGlobe : faLock} />
+              <StyledHeaderIcon icon={habit.isPublic ? faGlobe : faLock} />
             </Tooltip>
           </div>
           {habit.isArchived ? (
@@ -109,22 +116,22 @@ const HabitView: React.FC = () => {
                 id: 'habit.archived'
               })}
             >
-              <FontAwesomeIcon className={styles.HeaderIcon} icon={faBoxArchive} />
+              <StyledHeaderIcon icon={faBoxArchive} />
             </Tooltip>
           ) : null}
         </Space>
-        <div className={styles.HabitDescription}>{habit.description}</div>
-        <div className={styles.HabitCalenarHeatmapContainer}>
+        <StyledHabitDescription>{habit.description}</StyledHabitDescription>
+        <StyledHabitCalenarHeatmapContainer>
           <HabitCalenarHeatmap habit={habit} year={year} />
-        </div>
-        <Space size={8} className={styles.SummaryContainer} align="center">
+        </StyledHabitCalenarHeatmapContainer>
+        <StyledSummaryContainerSpace size={8} align="center">
           <HeaderText text={intl.formatMessage({ id: 'common.summary' })} />
           <Tooltip title={intl.formatMessage({ id: 'common.summary.info' })}>
-            <FontAwesomeIcon className={styles.DateInfoIcon} icon={faInfoCircle} />
+            <StyledHeaderIcon icon={faInfoCircle} />
           </Tooltip>
-        </Space>
+        </StyledSummaryContainerSpace>
         <HabitStatistic habit={habit} />
-      </div>
+      </StyledHabitViewContainer>
     </>
   );
 };

@@ -5,18 +5,17 @@ import _ from 'lodash';
 import { useAuth } from '@common/contexts/AuthContext';
 import GratitudeCreateModal from './components/GratitudeCreateModal';
 import GratitudeMyList from './components/GratitudeMyList';
-import styles from './Gratitude.module.less';
 import { IGratitudeCreateModalProps } from '@modules/Gratitude/components/GratitudeCreateModal/GratitudeCreateModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faPlus } from '@fortawesome/free-solid-svg-icons';
 import GratitudeListFilters from '@modules/Gratitude/components/GratitudeListFilters/GratitudeListFilters';
-import cn from 'classnames';
 import GratitudeListFiltersModel, {
   IGratitudeListFiltersModelDTO
 } from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import GratitudeMyListActions from './redux/GratitudeMyList/GratitudeMyListActions';
 import { IGratitudeMyListOwnState } from './redux/GratitudeMyList/GratitudeMyListInterface';
 import Button from '@common/components/Button';
+import { StyledHeaderContainer, StyledHeaderFilterContainer } from '@common/components/Header/styled';
 
 const Gratitude: React.FC = () => {
   const intl = useIntl();
@@ -68,7 +67,7 @@ const Gratitude: React.FC = () => {
 
   return (
     <>
-      <div className={styles.Header}>
+      <StyledHeaderContainer>
         <Button
           onClick={() => {
             setShowFilters((prevState) => !prevState);
@@ -83,9 +82,9 @@ const Gratitude: React.FC = () => {
           icon={<FontAwesomeIcon icon={faPlus} />}
           text={intl.formatMessage({ id: 'gratitude.create.button' })}
         />
-      </div>
+      </StyledHeaderContainer>
 
-      <div className={cn(styles.FiltersContainer, { [styles.FiltersContainerVisible]: showFilters })}>
+      <StyledHeaderFilterContainer $showFilters={showFilters}>
         <GratitudeListFilters
           initialValues={filters}
           onFinish={(values) => {
@@ -98,7 +97,7 @@ const Gratitude: React.FC = () => {
             }
           }}
         />
-      </div>
+      </StyledHeaderFilterContainer>
 
       <GratitudeMyList />
 

@@ -2,9 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useParams, generatePath } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Col, Grid, message, Row, Space } from 'antd';
+import { Col, Grid, message, Space } from 'antd';
 import { Paths } from '@common/constants/Paths';
-import styles from './User.module.less';
 import UserModel, { IUserModel } from '@common/models/UserModel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faPen, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -21,6 +20,7 @@ import { MenuItemsProps } from '@common/components/Menu/Menu';
 import SettingsModal, { ISettingsModalProps } from '@common/containers/Header/components/SettingsModal/SettingsModal';
 import Button from '@common/components/Button';
 import useConfirmModal from '@common/hooks/useConfirmModal';
+import { StyledHeaderRow, StyledUserDataRow, StyledUserNameContainer } from './styled';
 
 const { useBreakpoint } = Grid;
 
@@ -214,7 +214,7 @@ const User: React.FC = () => {
 
   const renderUserInfo = (
     <>
-      <div className={styles.UserNameContainer}>{user.username}</div>
+      <StyledUserNameContainer>{user.username}</StyledUserNameContainer>
       <div>
         {intl.formatMessage({ id: 'user.joined' })} {cratedAtText}
       </div>
@@ -258,22 +258,22 @@ const User: React.FC = () => {
 
   return (
     <>
-      <Row
+      <StyledHeaderRow
+        $isMobile={isMobile}
         gutter={20}
         wrap={isMobile ? true : false}
         justify={isMobile ? 'center' : 'start'}
-        className={isMobile ? styles.RowHeaderMobile : styles.RowHeader}
       >
         <Col flex={'150px'}>
           <Avatar size={150} icon={<FontAwesomeIcon icon={faUser} />} src={user.pictureURL} />
         </Col>
         <Col flex={'auto'}>
-          <Row justify="space-between" gutter={[10, 10]} className={styles.RowUserData}>
+          <StyledUserDataRow justify="space-between" gutter={[10, 10]}>
             <Col span={isMobile ? 24 : ''}>{renderUserInfo}</Col>
             <Col span={isMobile ? 24 : ''}>{renderButtons}</Col>
-          </Row>
+          </StyledUserDataRow>
         </Col>
-      </Row>
+      </StyledHeaderRow>
 
       <Menu selectedKeys={selectedKeys} items={items} />
 

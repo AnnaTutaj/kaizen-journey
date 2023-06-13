@@ -5,7 +5,6 @@ import { Form, Input } from 'antd';
 import { useAuth } from '@common/contexts/AuthContext';
 import Modal from '@common/components/Modal';
 import { IFriendFormModel } from '@modules/Friend/models/FriendFormModel';
-import styles from './FriendFollowingCreateModal.module.less';
 import UserModel, { IUserModel } from '@common/models/UserModel';
 import Empty from '@common/components/Empty';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +15,7 @@ import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 import Button from '@common/components/Button';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import Alert from '@common/components/Alert';
+import { StyledEllipsisContainer } from '@common/styled';
 
 export interface IFriendFollowingCreateModalProps {
   handleSubmit: () => void;
@@ -198,9 +198,9 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
                     <Col>
                       <Avatar size={40} icon={<FontAwesomeIcon icon={faUser} />} src={searchedUser?.pictureURL} />
                     </Col>
-                    <Col className={styles.UserNameContainer}>
+                    <StyledEllipsisContainer as={Col}>
                       <span>{searchedUser.username}</span>
-                    </Col>
+                    </StyledEllipsisContainer>
                   </Row>
                 </Col>
                 <Col>
