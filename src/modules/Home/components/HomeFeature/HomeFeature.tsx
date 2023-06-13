@@ -1,14 +1,18 @@
 import React from 'react';
-import { Row, Col } from 'antd';
 import { useIntl } from 'react-intl';
-import styles from './HomeFeature.module.less';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrain, faHeart, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import cn from 'classnames';
 import HomeSectionWrapper from '../HomeSectionWrapper/HomeSectionWrapper';
+import {
+  StyledFeatureCol,
+  StyledFeatureContainer,
+  StyledFeatureDescription,
+  StyledFeatureIcon,
+  StyledFeatureRow,
+  StyledFeatureTitle
+} from './styled';
 
-interface IFeature {
+export interface IFeature {
   type: 'habit' | 'gratitude' | 'friends';
   title: string;
   description: string;
@@ -41,23 +45,15 @@ const HomeFeature: React.FC = () => {
 
   const renderFeature = (feature: IFeature) => {
     return (
-      <div className={styles.FeatureContainer}>
-        <FontAwesomeIcon
-          className={cn(styles.FeatureIcon, {
-            [styles.FeatureIconHabit]: feature.type === 'habit',
-            [styles.FeatureIconGratitude]: feature.type === 'gratitude',
-            [styles.FeatureIconFriends]: feature.type === 'friends'
-          })}
-          icon={feature.icon}
-        />
-        <h2 className={styles.FeatureTitle}>{feature.title}</h2>
-        <div
-          className={styles.FeatureDescription}
+      <StyledFeatureContainer>
+        <StyledFeatureIcon $type={feature.type} icon={feature.icon} />
+        <StyledFeatureTitle>{feature.title}</StyledFeatureTitle>
+        <StyledFeatureDescription
           dangerouslySetInnerHTML={{
             __html: feature.description
           }}
         />
-      </div>
+      </StyledFeatureContainer>
     );
   };
 
@@ -72,13 +68,13 @@ const HomeFeature: React.FC = () => {
         </>
       }
     >
-      <Row gutter={[50, 50]} justify="center" className={styles.FeatureRow}>
+      <StyledFeatureRow gutter={[50, 50]} justify="center">
         {features.map((f, index) => (
-          <Col key={index} lg={7} className={styles.FeatureCol}>
+          <StyledFeatureCol key={index} lg={7}>
             {renderFeature(f)}
-          </Col>
+          </StyledFeatureCol>
         ))}
-      </Row>
+      </StyledFeatureRow>
     </HomeSectionWrapper>
   );
 };
