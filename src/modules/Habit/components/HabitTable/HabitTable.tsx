@@ -4,8 +4,6 @@ import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import _ from 'lodash';
-import styles from './HabitTable.module.less';
-import cn from 'classnames';
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 import Dropdown from '@common/components/Dropdown';
 import Empty from '@common/components/Empty';
@@ -26,10 +24,34 @@ import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTr
 import { Visibility } from '@common/constants/Visibility';
 import HabitTableColumnSettings, { ColumnType } from './HabitTableColumnSettings/HabitTableColumnSettings';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import Table, { ITableColumn } from '@common/components/Table/Table';
+import { ITableColumn } from '@common/components/Table/Table';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import Spinner from '@common/components/Spinner';
 import { MascotImage } from '@common/constants/MascotImage';
+import {
+  CnDateCol,
+  CnNameCol,
+  CnStreakCol,
+  StyledDate,
+  StyledDateHeaderContainer,
+  StyledDateHoverIcon,
+  StyledDateHoverText,
+  StyledDateInfoIcon,
+  StyledDateSelectContainer,
+  StyledDropdownCol,
+  StyledDropdownIconContainer,
+  StyledHabitIcon,
+  StyledHabitName,
+  StyledHabitTable,
+  StyledHeader,
+  StyledMonthDay,
+  StyledPopoverTitle,
+  StyledSettingsIcon,
+  StyledSmallText,
+  StyledStreakHeader,
+  StyledStreakValue,
+  StyledVisibilityIconContainer
+} from './styled';
 
 const { useBreakpoint } = Grid;
 
@@ -188,20 +210,17 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
       dateCols.push({
         title: () => {
           return (
-            <div className={styles.DateHeaderContainer}>
-              <div
-                className={cn(styles.Date, { [styles.DateToday]: isToday })}
-                ref={(element) => (isToday ? setScrollContainerRef(element) : null)}
-              >
-                <small className={styles.SmallText}>{monthShort}</small>
-                <div className={styles.MonthDay}>{monthDay}</div>
-                <small className={styles.SmallText}>{weekDayShort}</small>
-              </div>
-            </div>
+            <StyledDateHeaderContainer>
+              <StyledDate $isToday={isToday} ref={(element) => (isToday ? setScrollContainerRef(element) : null)}>
+                <StyledSmallText>{monthShort}</StyledSmallText>
+                <StyledMonthDay>{monthDay}</StyledMonthDay>
+                <StyledSmallText>{weekDayShort}</StyledSmallText>
+              </StyledDate>
+            </StyledDateHeaderContainer>
           );
         },
         key: `date-${i}`,
-        className: styles.DateCol,
+        className: CnDateCol,
         render: (value, record) => {
           const dateStatus = getDateStatus(record, dateKey);
           const isLoading: boolean =
@@ -209,50 +228,29 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           const { icon: hoverIcon, text: hoverText } = getHoverInfoByDateStatus(dateStatus);
 
           return (
-            <div
+            <StyledDateSelectContainer
+              $skipped={dateStatus === HabitDateStatus.skipped}
+              $borderColor={record.colorLighten.value}
+              $backgroundColor={dateStatus === HabitDateStatus.checked ? record.color.value : 'unset'}
               onClick={() => {
                 if (isLoading) {
                   return;
                 }
                 handleClickDate(dateKey, record, dateStatus);
               }}
-              className={cn(styles.DateSelectContainer, { [styles.Skipped]: dateStatus === HabitDateStatus.skipped })}
-              style={{
-                borderColor: record.colorLighten.value,
-                backgroundColor: dateStatus === HabitDateStatus.checked ? record.color.value : 'unset'
-              }}
             >
               {isLoading ? (
                 <Spinner size="small" />
               ) : (
                 <>
-                  <FontAwesomeIcon
-                    className={styles.DateHoverIcon}
-                    style={{
-                      color: record.colorLighten.value
-                    }}
-                    icon={hoverIcon}
-                  />
-                  <small
-                    className={styles.DateHoverText}
-                    style={{
-                      color: record.colorLighten.value
-                    }}
-                  >
-                    {hoverText}
-                  </small>
+                  <StyledDateHoverIcon $color={record.colorLighten.value} icon={hoverIcon} />
+                  <StyledDateHoverText $color={record.colorLighten.value}>{hoverText}</StyledDateHoverText>
                   {dateStatus === HabitDateStatus.skipped ? (
-                    <FontAwesomeIcon
-                      className={styles.DateInfoIcon}
-                      style={{
-                        color: record.color.value
-                      }}
-                      icon={getIconByDateStatus(dateStatus)}
-                    />
+                    <StyledDateInfoIcon $color={record.color.value} icon={getIconByDateStatus(dateStatus)} />
                   ) : null}
                 </>
               )}
-            </div>
+            </StyledDateSelectContainer>
           );
         }
       });
@@ -269,26 +267,26 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
               <Popover
                 placement="bottomLeft"
                 title={
-                  <div className={styles.PopoverTitle}>
+                  <StyledPopoverTitle>
                     <Space size={10}>
                       <FontAwesomeIcon icon={faBrush} />
                       {intl.formatMessage({ id: 'habit.table.popover.columnSettings.title' })}
                     </Space>
-                  </div>
+                  </StyledPopoverTitle>
                 }
                 content={
                   <HabitTableColumnSettings visibleColumns={visibleColumns} setVisibleColumns={setVisibleColumns} />
                 }
                 trigger="click"
               >
-                <div className={styles.DropdownIconContainer}>
-                  <FontAwesomeIcon className={styles.SettingsIcon} icon={faCog} />
-                </div>
+                <StyledDropdownIconContainer>
+                  <StyledSettingsIcon icon={faCog} />
+                </StyledDropdownIconContainer>
               </Popover>
             </Col>
           </Row>
         ),
-        className: styles.NameCol,
+        className: CnNameCol,
         dataIndex: 'name',
         key: 'name',
         fixed: true,
@@ -296,57 +294,57 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           <>
             <Row wrap={false} align="middle">
               <Col flex={1}>
-                <div className={styles.HabitName}>{text}</div>
+                <StyledHabitName>{text}</StyledHabitName>
               </Col>
               <Col>
-                <div className={styles.VisibilityIconContainer}>
+                <StyledVisibilityIconContainer>
                   <Tooltip
                     placement="bottom"
                     title={intl.formatMessage({
                       id: `common.visibility.${record.isPublic ? Visibility.public : Visibility.private}`
                     })}
                   >
-                    <FontAwesomeIcon className={styles.HabitIcon} icon={record.isPublic ? faGlobe : faLock} />
+                    <StyledHabitIcon icon={record.isPublic ? faGlobe : faLock} />
                   </Tooltip>
-                </div>
+                </StyledVisibilityIconContainer>
               </Col>
-              <Col className={styles.DropdownCol}>
-                <Dropdown menuItems={menuItems(record)} className={styles.Dropdown}>
-                  <div className={styles.DropdownIconContainer}>
-                    <FontAwesomeIcon className={styles.HabitIcon} icon={faEllipsisV} />
-                  </div>
+              <StyledDropdownCol>
+                <Dropdown menuItems={menuItems(record)}>
+                  <StyledDropdownIconContainer>
+                    <StyledHabitIcon icon={faEllipsisV} />
+                  </StyledDropdownIconContainer>
                 </Dropdown>
-              </Col>
+              </StyledDropdownCol>
             </Row>
           </>
         )
       },
       ...dateCols,
       {
-        title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.currentStreak' })}</div>,
-        className: styles.StreakCol,
+        title: () => <StyledStreakHeader>{intl.formatMessage({ id: 'habit.currentStreak' })}</StyledStreakHeader>,
+        className: CnStreakCol,
         key: 'currentStreak',
         fixed: 'right',
         align: 'right',
-        render: (record) => <div className={styles.StreakValue}>{record.currentStreak.streakCount}</div>,
+        render: (record) => <StyledStreakValue>{record.currentStreak.streakCount}</StyledStreakValue>,
         visible: () => visibleColumns.includes(ColumnType.currentStreak)
       },
       {
-        title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.longestStreak' })}</div>,
-        className: styles.StreakCol,
+        title: () => <StyledStreakHeader>{intl.formatMessage({ id: 'habit.longestStreak' })}</StyledStreakHeader>,
+        className: CnStreakCol,
         key: 'longestStreak',
         fixed: 'right',
         align: 'right',
-        render: (record) => <div className={styles.StreakValue}>{record.longestStreak.streakCount}</div>,
+        render: (record) => <StyledStreakValue>{record.longestStreak.streakCount}</StyledStreakValue>,
         visible: () => visibleColumns.includes(ColumnType.longestStreak)
       },
       {
-        title: () => <div className={styles.StreakHeader}>{intl.formatMessage({ id: 'habit.totalChecks' })}</div>,
-        className: styles.StreakCol,
+        title: () => <StyledStreakHeader>{intl.formatMessage({ id: 'habit.totalChecks' })}</StyledStreakHeader>,
+        className: CnStreakCol,
         key: 'totalChecks',
         fixed: 'right',
         align: 'right',
-        render: (record) => <div className={styles.StreakValue}>{record.datesChecked.length}</div>,
+        render: (record) => <StyledStreakValue>{record.datesChecked.length}</StyledStreakValue>,
         visible: () => visibleColumns.includes(ColumnType.totalChecks)
       }
     ];
@@ -360,17 +358,15 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     <>
       {habits && habits.length ? (
         <>
-          <div className={styles.Header}>
+          <StyledHeader>
             <HeaderText text={intl.formatMessage({ id: 'habit.table.title' })} />
-          </div>
-          <Table<IHabitModel>
+          </StyledHeader>
+          <StyledHabitTable<IHabitModel>
             bordered={true}
             columns={columns()}
             dataSource={habits}
-            pagination={false}
             scroll={{ x: true }}
             rowKey="id"
-            className={styles.HabitTable}
           />
         </>
       ) : (

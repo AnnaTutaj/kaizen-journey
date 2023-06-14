@@ -20,7 +20,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import minMax from 'dayjs/plugin/minMax';
 import './App.less';
-import { antdThemeToken } from './antdThemeToken';
+import { antdThemeComponents, antdThemeToken } from './antdThemeToken';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import StyledTheme from './StyledTheme';
 
@@ -55,7 +55,8 @@ const App: React.FC = () => {
       theme={{
         hashed: false,
         token: antdThemeToken(darkMode),
-        algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm
+        components: antdThemeComponents(darkMode),
+        algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
     >
       <StyledTheme>

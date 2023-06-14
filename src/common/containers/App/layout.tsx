@@ -1,8 +1,12 @@
-import { rgba } from 'polished';
+import { darken, lighten, rgba } from 'polished';
 import { ColorPalette } from './ColorPalette';
 
 export type ILayout = {
+  devTestColor: string;
+
   colorHeaderBg: string;
+  colorHeaderBgSecondary: string;
+  colorHeaderBgTertiary: string;
   colorPrimaryBg: string;
   colorDarkGray: string;
   colorLightGray: string;
@@ -18,8 +22,16 @@ export type ILayout = {
 };
 
 export const layout = (darkMode: boolean): ILayout => {
+  const colorHeaderBg: string =  darkMode ? '#202020' : '#f0f2f5';
+
   return {
-    colorHeaderBg: darkMode ? '#202020' : '#f0f2f5',
+    devTestColor: darkMode ? 'red' : 'blue',
+
+    colorHeaderBg,
+    colorHeaderBgSecondary: darkMode ? lighten(0.1, colorHeaderBg) : darken(0.1, colorHeaderBg),
+    colorHeaderBgTertiary: darkMode ? lighten(0.01, colorHeaderBg) : '#f7f7f7',
+
+
     colorPrimaryBg: darkMode ? ColorPalette.primaryColor.dark : ColorPalette.primaryColor.light,
     colorDarkGray: '#6b6b6b',
     colorLightGray: '#e6e6e6',
