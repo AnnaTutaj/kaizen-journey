@@ -8,7 +8,7 @@ import styled, { css, keyframes } from 'styled-components';
 
 export const StyledFeatureRow = styled(Row)`
   &.ant-row {
-    margin: 0;
+    margin: 0 !important;
   }
 `;
 
