@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import _ from 'lodash';
-import styles from './HomeQuote.module.less';
-import { Carousel } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
 import HomeSectionWrapper from '../HomeSectionWrapper/HomeSectionWrapper';
 import HomeAuthor from '../HomeAuthor/HomeAuthor';
@@ -13,6 +10,7 @@ import authorImage_2 from '@assets/authors/Helen_Keller.jpg';
 import authorImage_3 from '@assets/authors/Brian_Tracy.jpg';
 import authorImage_4 from '@assets/authors/Mandy_Hale.jpg';
 import authorImage_5 from '@assets/authors/Robert_Collier.jpg';
+import { CarouselDots, StyledCarousel, StyledQuoteContainer, StyledQuoteMark } from './styled';
 
 const HomeQuote: React.FC = () => {
   const intl = useIntl();
@@ -50,28 +48,23 @@ const HomeQuote: React.FC = () => {
   const renderQuote = (i: number) => {
     return (
       <div key={i}>
-        <div
-          className={styles.QuoteContainer}
-          onTouchStart={() => setQuoteAutoplay(false)}
-          onClick={() => setQuoteAutoplay(false)}
-        >
-          <FontAwesomeIcon className={styles.QuoteMark} icon={faQuoteLeft} />
+        <StyledQuoteContainer onTouchStart={() => setQuoteAutoplay(false)} onClick={() => setQuoteAutoplay(false)}>
+          <StyledQuoteMark icon={faQuoteLeft} />
           <div>{intl.formatMessage({ id: `home.quote.${i}.text` })}</div>
           <HomeAuthor
             image={imageList[i].src}
             name={intl.formatMessage({ id: `home.quote.${i}.author` })}
             description={intl.formatMessage({ id: `home.quote.${i}.authorDescription` })}
           />
-        </div>
+        </StyledQuoteContainer>
       </div>
     );
   };
 
   return (
     <HomeSectionWrapper coloredBg={false} title={intl.formatMessage({ id: 'home.quote.title' })}>
-      <Carousel
-        className={styles.Carousel}
-        dots={{ className: styles.CarouselDots }}
+      <StyledCarousel
+        dots={{ className: CarouselDots }}
         autoplay={quoteAutoplay}
         pauseOnFocus
         pauseOnHover
@@ -79,7 +72,7 @@ const HomeQuote: React.FC = () => {
         draggable
       >
         {_.times(quoteCount, (i) => renderQuote(i))}
-      </Carousel>
+      </StyledCarousel>
     </HomeSectionWrapper>
   );
 };

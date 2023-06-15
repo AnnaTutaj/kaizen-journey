@@ -8,6 +8,8 @@ export type ILayout = {
   colorHeaderBgSecondary: string;
   colorHeaderBgTertiary: string;
   colorPrimaryBg: string;
+  colorPrimaryBgSecondary: string;
+  colorSecondary: string;
   colorDarkGray: string;
   colorLightGray: string;
   colorTitleGray: string;
@@ -22,7 +24,7 @@ export type ILayout = {
 };
 
 export const layout = (darkMode: boolean): ILayout => {
-  const colorHeaderBg: string =  darkMode ? '#202020' : '#f0f2f5';
+  const colorHeaderBg: string = darkMode ? '#202020' : '#f0f2f5';
 
   return {
     devTestColor: darkMode ? 'red' : 'blue',
@@ -30,15 +32,15 @@ export const layout = (darkMode: boolean): ILayout => {
     colorHeaderBg,
     colorHeaderBgSecondary: darkMode ? lighten(0.1, colorHeaderBg) : darken(0.1, colorHeaderBg),
     colorHeaderBgTertiary: darkMode ? lighten(0.01, colorHeaderBg) : '#f7f7f7',
-
-
-    colorPrimaryBg: darkMode ? ColorPalette.primaryColor.dark : ColorPalette.primaryColor.light,
+    colorPrimaryBg: darkMode ? ColorPalette.primaryColor[130] : ColorPalette.primaryColor[40],
+    colorPrimaryBgSecondary: darkMode ? ColorPalette.primaryColor[120] : ColorPalette.primaryColor[20],
+    colorSecondary: ColorPalette.secondaryColor.main,
     colorDarkGray: '#6b6b6b',
     colorLightGray: '#e6e6e6',
     colorTitleGray: '#8b8b8b',
     colorBoxShadow: darkMode ? rgba(0, 0, 0, 0.2) : rgba(0, 0, 0, 0.11),
     colorsGradient: '#d5b436, #ea982c, #f97838, #ff534f, #fd266e, #eb0091, #c50ab5, #8236d5',
-    
+
     //Dimensions
     headerHeight: '60px',
     footerHeight: '80px',
