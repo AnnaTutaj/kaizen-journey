@@ -1,8 +1,8 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import styles from './HomeMascot.module.less';
 import image from '@assets/mascot_map.svg';
 import HomeSectionWrapper from '../HomeSectionWrapper/HomeSectionWrapper';
+import { StyledImage } from './styled';
 
 const HomeMascot: React.FC = () => {
   const intl = useIntl();
@@ -18,7 +18,7 @@ const HomeMascot: React.FC = () => {
         </>
       }
     >
-      <img src={image} className={styles.Image} alt="Kaizen Journey Mascot" />
+      <StyledImage src={image} alt="Kaizen Journey Mascot" />
     </HomeSectionWrapper>
   );
 };

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import { Carousel } from 'antd';
-import { homeBaseTextSize, homeBlockMaxWidth } from '@modules/Home/styledHelper';
+import { homeBaseTextSize, homeBlockMaxWidth } from '../styledHelper';
 
 export const CarouselDots = 'CarouselDots';
 

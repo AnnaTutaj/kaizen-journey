@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './HomeAuthor.module.less';
 import Avatar from '@common/components/Avatar/Avatar';
+import { StyledAuthorDescription, StyledContainer } from './styled';
 
 interface IProps {
   image: string;
@@ -10,12 +10,12 @@ interface IProps {
 
 const HomeAuthor: React.FC<IProps> = ({ image, name, description }) => {
   return (
-    <div className={styles.Container}>
+    <StyledContainer>
       <Avatar size={64} src={image} />
       <div>{name}</div>
- 
-      <div className={styles.AuthorDescription}>{description}</div>
-    </div>
+
+      <StyledAuthorDescription>{description}</StyledAuthorDescription>
+    </StyledContainer>
   );
 };
 

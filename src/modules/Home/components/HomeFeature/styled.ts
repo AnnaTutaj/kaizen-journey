@@ -1,7 +1,7 @@
-import { HomeGradientTextStyle } from '@modules/Home/styled';
+import { HomeGradientTextStyle } from '../styled';
 import { IFeature } from './HomeFeature';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { homeBlockMaxWidth } from '@modules/Home/styledHelper';
+import { homeBlockMaxWidth } from '../styledHelper';
 import { Col, Row } from 'antd';
 import { lighten } from 'polished';
 import styled, { css, keyframes } from 'styled-components';

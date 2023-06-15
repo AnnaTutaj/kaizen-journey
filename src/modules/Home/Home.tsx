@@ -1,7 +1,6 @@
 import { Space } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
-import styles from './Home.module.less';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
@@ -16,6 +15,16 @@ import HomeFeature from './components/HomeFeature/HomeFeature';
 import HomeKaizenMeaning from './components/HomeKaizenMeaning/HomeKaizenMeaning';
 import HomeQuote from './components/HomeQuote/HomeQuote';
 import HomeMascot from './components/HomeMascot/HomeMascot';
+import {
+  SectionEndingTitle,
+  StyledContentContainer,
+  StyledEndingContainer,
+  StyledHeaderContainer,
+  StyledHeaderKaizenJourneySpace,
+  StyledHeaderSubtitle,
+  StyledHeaderTitle,
+  StyledLogoImage
+} from './styled';
 
 const Home: React.FC = () => {
   const intl = useIntl();
@@ -54,13 +63,13 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <div className={styles.HeaderContainer}>
-        <Space className={styles.HeaderKaizenJourney} size={16}>
-          <img src={kaizenJourneyLogo} className={styles.LogoImage} alt="Kaizen Journey Logo" />
-          <div className={styles.HeaderTitle}>Kaizen Journey</div>
-        </Space>
+      <StyledHeaderContainer>
+        <StyledHeaderKaizenJourneySpace size={16}>
+          <StyledLogoImage src={kaizenJourneyLogo} alt="Kaizen Journey Logo" />
+          <StyledHeaderTitle>Kaizen Journey</StyledHeaderTitle>
+        </StyledHeaderKaizenJourneySpace>
 
-        <div className={styles.HeaderSubtitle}>{intl.formatMessage({ id: 'home.header.subtitle' })}</div>
+        <StyledHeaderSubtitle>{intl.formatMessage({ id: 'home.header.subtitle' })}</StyledHeaderSubtitle>
         <Space direction="vertical">
           <Button type="primary" onClick={onClick} text={intl.formatMessage({ id: 'home.header.button' })} />
           {intl.formatMessage({ id: 'common.or' }).toLowerCase()}
@@ -71,20 +80,20 @@ const Home: React.FC = () => {
             text={intl.formatMessage({ id: 'home.header.discoverMore' })}
           />
         </Space>
-      </div>
-      <div ref={divRef} className={styles.ContentDiv}>
+      </StyledHeaderContainer>
+      <StyledContentContainer ref={divRef}>
         <HomeFeature />
         <HomeKaizenMeaning onClick={onClick} />
         <HomeMascot />
         <HomeQuote />
-      </div>
-      <div className={styles.EndingContainer}>
-        <div className={styles.SectionEndingTitle}>{intl.formatMessage({ id: 'home.ending.title' })}</div>
+      </StyledContentContainer>
+      <StyledEndingContainer>
+        <SectionEndingTitle>{intl.formatMessage({ id: 'home.ending.title' })}</SectionEndingTitle>
 
         <Button type="primary" onClick={onClick}>
           {intl.formatMessage({ id: 'home.ending.button' })}
         </Button>
-      </div>
+      </StyledEndingContainer>
 
       {registerModalConfig ? <RegisterModal {...registerModalConfig} /> : null}
     </>
