@@ -30,8 +30,10 @@ export const StyledSmallText = styled.small`
 `;
 
 export const StyledTitle = styled(Title)`
-  margin-top: 0;
-  color: ${({ theme }) => theme.antd.colorWhite};
+  && {
+    margin-top: 0;
+    color: ${({ theme }) => theme.antd.colorWhite};
+  }
 `;
 
 export const StyledDescriptionParagraph = styled(Paragraph)`
