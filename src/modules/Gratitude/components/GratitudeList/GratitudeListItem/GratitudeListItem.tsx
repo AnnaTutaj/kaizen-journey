@@ -1,15 +1,12 @@
 import { Col, Row, Tooltip } from 'antd';
-import React, { useState } from 'react';
-import { List, Typography } from 'antd';
+import React from 'react';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
-import styles from '@modules/Gratitude/components/GratitudeList/GratitudeListItem/GratitudeListItem.module.less';
 import { faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
-import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import { Visibility } from '@common/constants/Visibility';
@@ -17,8 +14,19 @@ import useConfirmModal from '@common/hooks/useConfirmModal';
 import ImagePreview from '@common/components/ImagePreview';
 import { useAuth } from '@common/contexts/AuthContext';
 import { StyledEllipsisContainer } from '@common/styled';
-
-const { Title, Paragraph } = Typography;
+import {
+  StyledDate,
+  StyledDescriptionParagraph,
+  StyledDropDownCol,
+  StyledDropdown,
+  StyledDropdownIconContainer,
+  StyledListItem,
+  StyledListItemRow,
+  StyledSmallText,
+  StyledTitle,
+  StyledVisibilityIcon,
+  StyledVisibilityIconContainer
+} from '@common/components/ListItem/styled';
 
 interface IProps {
   gratitude: IGratitudeModel;
@@ -31,8 +39,6 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
   const { userProfile } = useAuth();
 
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
-
-  const [dropdownHover, setDropdownHover] = useState<boolean>(false);
 
   const confirmDelete = async () => {
     confirmModal({
@@ -61,10 +67,6 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
     }
   };
 
-  const dropdownIconContainer = () => ({
-    backgroundColor: dropdownHover ? gratitude.colorLighten.value : 'unset'
-  });
-
   const menuItems: DropdownMenuItemProps = [
     {
       key: DropdownMenuKey.update,
@@ -76,17 +78,6 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
     }
   ];
 
-  const dropdownButton = (
-    <div
-      className={styles.DropdownIconContainer}
-      style={dropdownIconContainer()}
-      onMouseEnter={() => setDropdownHover(true)}
-      onMouseLeave={() => setDropdownHover(false)}
-    >
-      <FontAwesomeIcon icon={faEllipsisV} />
-    </div>
-  );
-
   const miliseconds = gratitude.date.seconds * 1000;
   const monthShort = dayjs(miliseconds).format('MMM');
   const monthDay = dayjs(miliseconds).format('D');
@@ -94,26 +85,19 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
 
   return (
     <>
-      <List.Item
-        className={styles.ListItem}
-        style={{
-          backgroundColor: gratitude.color.value
-        }}
-      >
-        <Row wrap={false} className={styles.ListItemRow}>
+      <StyledListItem $backgroundColor={gratitude.color.value}>
+        <StyledListItemRow wrap={false}>
           <Col>
-            <div className={styles.Date}>
-              <small className={styles.SmallText}>{monthShort}</small>
+            <StyledDate>
+              <StyledSmallText>{monthShort}</StyledSmallText>
               <div>{monthDay}</div>
-              <small className={styles.SmallText}>{weekDayShort}</small>
-            </div>
+              <StyledSmallText>{weekDayShort}</StyledSmallText>
+            </StyledDate>
           </Col>
           <Col flex={1}>
-            <Title level={5} className={styles.Title}>
-              {gratitude.title}
-            </Title>
+            <StyledTitle level={5}>{gratitude.title}</StyledTitle>
             {gratitude.imageURLs.length ? <ImagePreview srcs={gratitude.imageURLs} /> : null}
-            <Paragraph className={styles.Description}>{gratitude.description}</Paragraph>
+            <StyledDescriptionParagraph>{gratitude.description}</StyledDescriptionParagraph>
             <Row gutter={10}>
               {gratitude.tags.map((tag) => (
                 <StyledEllipsisContainer as={Col} key={tag}>
@@ -123,27 +107,29 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
             </Row>
           </Col>
           <Col>
-            <div className={styles.VisibilityIconContainer}>
+            <StyledVisibilityIconContainer>
               <Tooltip
                 placement="left"
                 title={intl.formatMessage({
                   id: `common.visibility.${gratitude.isPublic ? Visibility.public : Visibility.private}`
                 })}
               >
-                <FontAwesomeIcon className={styles.HabitIcon} icon={gratitude.isPublic ? faGlobe : faLock} />
+                <StyledVisibilityIcon icon={gratitude.isPublic ? faGlobe : faLock} />
               </Tooltip>
-            </div>
+            </StyledVisibilityIconContainer>
           </Col>
 
           {gratitude.createdByUid === userProfile.uid ? (
-            <Col className={styles.DropDownCol}>
-              <Dropdown menuItems={menuItems} className={styles.Dropdown}>
-                {dropdownButton}
-              </Dropdown>
-            </Col>
+            <StyledDropDownCol>
+              <StyledDropdown menuItems={menuItems}>
+                <StyledDropdownIconContainer $colorHover={gratitude.colorLighten.value}>
+                  <FontAwesomeIcon icon={faEllipsisV} />
+                </StyledDropdownIconContainer>
+              </StyledDropdown>
+            </StyledDropDownCol>
           ) : null}
-        </Row>
-      </List.Item>
+        </StyledListItemRow>
+      </StyledListItem>
       {confirmModalContextHolder}
     </>
   );

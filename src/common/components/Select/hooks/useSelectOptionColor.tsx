@@ -2,7 +2,7 @@ import { Select, Space } from 'antd';
 import { useIntl } from 'react-intl';
 import { useMemo } from 'react';
 import { CategoryColors } from '@common/constants/CategoryColors';
-import styles from './useSelectOptionColor.module.less';
+import { StyledCategoryColor } from './styled';
 
 const { Option } = Select;
 
@@ -13,8 +13,7 @@ const useSelectOptionColor = () => {
     return Object.entries(CategoryColors).map((categoryColor, index) => (
       <Option key={index} value={categoryColor[0]}>
         <Space>
-          <div
-            className={styles.CategoryColor}
+          <StyledCategoryColor
             style={{
               backgroundColor: categoryColor[1]
             }}

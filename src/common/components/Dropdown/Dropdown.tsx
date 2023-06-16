@@ -1,13 +1,18 @@
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 import { faBoxArchive, faPen, faRotateLeft, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dropdown as AntDDropdown, Space } from 'antd';
 import { useIntl } from 'react-intl';
-import styles from './Dropdown.module.less';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { DropdownButtonProps } from 'antd/lib/dropdown';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
-import cn from 'classnames';
+import {
+  DropdownMenuItem,
+  DropdownOverlay,
+  DropdownSubMenuOverlay,
+  GlobalStyle,
+  StyledDropdown,
+  StyledDropdownMenuItemIcon,
+  StyledDropdownMenuItemSpace
+} from './styled';
 interface IDropdownMenuItemProps {
   key: DropdownMenuKey.update | DropdownMenuKey.delete | string;
   item?: {
@@ -70,20 +75,20 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
 
     return {
       key: menuItem.key,
-      className: styles.DropdownMenuItem,
+      className: DropdownMenuItem,
       onClick: () => menuItem.onClick?.(),
       label: (
-        <Space size={16} className={cn({ [styles.DropdownMenuItemDelete]: menuItem.key === DropdownMenuKey.delete })}>
-          {data.icon ? <FontAwesomeIcon icon={data.icon} className={styles.DropdownMenuItemIcon} /> : null}
+        <StyledDropdownMenuItemSpace size={16} $colorError={menuItem.key === DropdownMenuKey.delete}>
+          {data.icon ? <StyledDropdownMenuItemIcon icon={data.icon} /> : null}
           {data.text}
-        </Space>
+        </StyledDropdownMenuItemSpace>
       ),
       children: menuItem?.items
         ? menuItem.items.map((item) => {
             return renderMenuItem(item);
           })
         : undefined,
-      popupClassName: styles.DropdownSubMenuOverlay
+      popupClassName: DropdownSubMenuOverlay
     };
   };
 
@@ -111,13 +116,16 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
   });
 
   return (
-    <AntDDropdown
-      menu={{ items }}
-      overlayClassName={styles.DropdownOverlay}
-      placement="bottomLeft"
-      trigger={['click']}
-      {...props}
-    />
+    <>
+      <GlobalStyle />
+      <StyledDropdown
+        menu={{ items }}
+        overlayClassName={DropdownOverlay}
+        placement="bottomLeft"
+        trigger={['click']}
+        {...props}
+      />
+    </>
   );
 };
 

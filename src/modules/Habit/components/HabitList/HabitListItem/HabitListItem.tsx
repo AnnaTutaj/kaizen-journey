@@ -2,23 +2,30 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { generatePath, useNavigate } from 'react-router-dom';
-import { Col, Row, List, Typography, Tooltip } from 'antd';
+import { Col, Tooltip } from 'antd';
 import { faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Paths } from '@common/constants/Paths';
-import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
-import styles from '@modules/Habit/components/HabitList/HabitListItem/HabitListItem.module.less';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '../../HabitUpdateModal/HabitUpdateModal';
 import { Visibility } from '@common/constants/Visibility';
 import { useAuth } from '@common/contexts/AuthContext';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import { MascotImage } from '@common/constants/MascotImage';
-
-const { Title, Paragraph } = Typography;
+import {
+  StyledDescriptionParagraph,
+  StyledDropDownCol,
+  StyledDropdown,
+  StyledDropdownIconContainer,
+  StyledListItem,
+  StyledListItemRow,
+  StyledTitle,
+  StyledVisibilityIcon,
+  StyledVisibilityIconContainer
+} from '@common/components/ListItem/styled';
 
 interface IProps {
   habit: IHabitModel;
@@ -32,8 +39,6 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   const { userProfile } = useAuth();
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const { getHabitById, deleteHabit, archiveHabit, restoreHabit } = useHabitFetch();
-
-  const [dropdownHover, setDropdownHover] = useState<boolean>(false);
 
   const refreshHabit = async () => {
     const updatedHabit = await getHabitById(habit.id);
@@ -54,10 +59,6 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
       habit: habit
     });
   };
-
-  const dropdownIconContainer = () => ({
-    backgroundColor: dropdownHover ? habit.colorLighten.value : 'unset'
-  });
 
   const handleDelete = async (habit: IHabitModel) => {
     await deleteHabit(habit.id);
@@ -144,51 +145,35 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
     }
   ];
 
-  const dropdownButton = (
-    <div
-      className={styles.DropdownIconContainer}
-      style={dropdownIconContainer()}
-      onMouseEnter={() => setDropdownHover(true)}
-      onMouseLeave={() => setDropdownHover(false)}
-    >
-      <FontAwesomeIcon icon={faEllipsisV} />
-    </div>
-  );
-
   return (
     <>
-      <List.Item
-        className={styles.ListItem}
-        style={{
-          backgroundColor: habit.color.value
-        }}
-      >
-        <Row wrap={false} className={styles.ListItemRow}>
+      <StyledListItem $backgroundColor={habit.color.value}>
+        <StyledListItemRow wrap={false}>
           <Col flex={1}>
-            <Title level={5} className={styles.Title}>
-              {habit.name}
-            </Title>
-            <Paragraph className={styles.Description}>{habit.description}</Paragraph>
+            <StyledTitle level={5}>{habit.name}</StyledTitle>
+            <StyledDescriptionParagraph>{habit.description}</StyledDescriptionParagraph>
           </Col>
           <Col>
-            <div className={styles.VisibilityIconContainer}>
+            <StyledVisibilityIconContainer>
               <Tooltip
                 placement="bottom"
                 title={intl.formatMessage({
                   id: `common.visibility.${habit.isPublic ? Visibility.public : Visibility.private}`
                 })}
               >
-                <FontAwesomeIcon className={styles.HabitIcon} icon={habit.isPublic ? faGlobe : faLock} />
+                <StyledVisibilityIcon icon={habit.isPublic ? faGlobe : faLock} />
               </Tooltip>
-            </div>
+            </StyledVisibilityIconContainer>
           </Col>
-          <Col className={styles.DropDownCol}>
-            <Dropdown menuItems={menuItems} className={styles.Dropdown}>
-              {dropdownButton}
-            </Dropdown>
-          </Col>
-        </Row>
-      </List.Item>
+          <StyledDropDownCol>
+            <StyledDropdown menuItems={menuItems}>
+              <StyledDropdownIconContainer $colorHover={habit.colorLighten.value}>
+                <FontAwesomeIcon icon={faEllipsisV} />
+              </StyledDropdownIconContainer>
+            </StyledDropdown>
+          </StyledDropDownCol>
+        </StyledListItemRow>
+      </StyledListItem>
       {habitUpdateModalConfig ? <HabitUpdateModal {...habitUpdateModalConfig} /> : null}
       {confirmModalContextHolder}
     </>

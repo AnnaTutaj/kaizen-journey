@@ -1,6 +1,5 @@
-import { Menu as AntDMenu, MenuProps } from 'antd';
-
-import styles from './Menu.module.less';
+import { MenuProps } from 'antd';
+import { StyledMenu } from './styled';
 
 export interface IMenuItemType {
   key: string;
@@ -15,15 +14,7 @@ export interface IMenuProps extends MenuProps {
 }
 
 const Menu: React.FC<Pick<IMenuProps, 'selectedKeys' | 'items'>> = ({ selectedKeys, items }) => {
-  return (
-    <AntDMenu
-      disabledOverflow
-      mode={'horizontal'}
-      className={styles.MenuContainer}
-      selectedKeys={selectedKeys}
-      items={items}
-    />
-  );
+  return <StyledMenu disabledOverflow mode={'horizontal'} selectedKeys={selectedKeys} items={items} />;
 };
 
 export default Menu;

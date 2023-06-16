@@ -29,9 +29,5 @@ module.exports = {
   //Dimensions
   '@header-height': '60px',
   '@footer-height': '80px',
-  '@margin-vertical': '24px',
-  '@border-radius-base': '8px',
-  '@border-radius-small': '5px',
-  '@border-radius-large': '16px',
-  '@border-radius-x-large': '46px',
+  '@margin-vertical': '24px'
 };

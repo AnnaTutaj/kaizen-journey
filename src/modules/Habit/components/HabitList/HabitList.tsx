@@ -1,9 +1,8 @@
 import React from 'react';
-import { List } from 'antd';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
-import styles from '@modules/Habit/components/HabitList/HabitList.module.less';
 import HabitListItem from './HabitListItem/HabitListItem';
 import HeaderText from '@common/components/HeaderText';
+import { StyledList } from '@common/components/List/styled';
 
 interface IProps {
   habits: IHabitModel[];
@@ -13,8 +12,7 @@ interface IProps {
 
 const HabitList: React.FC<IProps> = ({ habits, setHabits, headerText }) => {
   return (
-    <List
-      className={styles.HabitList}
+    <StyledList
       header={<HeaderText text={headerText} />}
       dataSource={habits}
       renderItem={(item) => {

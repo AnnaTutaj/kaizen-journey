@@ -22,9 +22,8 @@ export const antdThemeComponents = (darkMode: boolean): Partial<OverrideToken> =
   return {
     Table: {
       colorFillAlter: layout(darkMode)['colorHeaderBg'],
-      //e.g. when table header has active sorter 
-      colorFillSecondary: layout(darkMode)['colorHeaderBgSecondary'],
-
+      //e.g. when table header has active sorter
+      colorFillSecondary: layout(darkMode)['colorHeaderBgSecondary']
     }
   };
 };
