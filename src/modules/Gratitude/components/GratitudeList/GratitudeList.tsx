@@ -1,8 +1,8 @@
 import React from 'react';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import GratitudeListItem from './GratitudeListItem/GratitudeListItem';
-import HeaderText from '@common/components/HeaderText';
 import { StyledList } from '@common/components/List/styled';
+import { StyledHeaderText } from '@common/components/HeaderText/styled';
 
 interface IProps {
   gratitudes: IGratitudeModel[];
@@ -11,23 +11,14 @@ interface IProps {
   updateGratitude?: (item: IGratitudeModel) => void;
 }
 
-const GratitudeList: React.FC<IProps> = ({
-  gratitudes,
-  headerText,
-  removeGratitude,
-  updateGratitude
-}) => {
+const GratitudeList: React.FC<IProps> = ({ gratitudes, headerText, removeGratitude, updateGratitude }) => {
   return (
     <StyledList
-      header={<HeaderText text={headerText} />}
+      header={<StyledHeaderText>{headerText}</StyledHeaderText>}
       dataSource={gratitudes}
       renderItem={(item) => {
         return (
-          <GratitudeListItem
-            gratitude={item}
-            removeGratitude={removeGratitude}
-            updateGratitude={updateGratitude}
-          />
+          <GratitudeListItem gratitude={item} removeGratitude={removeGratitude} updateGratitude={updateGratitude} />
         );
       }}
     />

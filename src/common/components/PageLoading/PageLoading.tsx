@@ -1,12 +1,12 @@
 import React from 'react';
 import Spinner from '../Spinner';
-import styles from './PageLoading.module.less';
+import { StyledPageLoaderContainer } from './styled';
 
 const PageLoading: React.FC = () => {
   return (
-    <div className={styles.PageLoader}>
+    <StyledPageLoaderContainer>
       <Spinner />
-    </div>
+    </StyledPageLoaderContainer>
   );
 };
 

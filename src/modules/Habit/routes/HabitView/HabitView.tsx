@@ -5,7 +5,6 @@ import { Space } from 'antd';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBoxArchive, faGlobe, faInfoCircle, faLock, faLongArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import HeaderText from '@common/components/HeaderText';
 import { Paths } from '@common/constants/Paths';
 import PageLoading from '@common/components/PageLoading';
 import HabitCalenarHeatmap from '@modules/Habit/components/HabitCalenarHeatmap';
@@ -25,6 +24,7 @@ import {
   StyledHeaderIcon,
   StyledSummaryContainerSpace
 } from './styled';
+import { StyledHeaderText } from '@common/components/HeaderText/styled';
 
 interface IYearSelect {
   label: string;
@@ -98,7 +98,7 @@ const HabitView: React.FC = () => {
       </StyledHeaderContainer>
       <StyledHabitViewContainer>
         <Space size={12}>
-          <HeaderText text={habit.name} />
+          <StyledHeaderText>{habit.name}</StyledHeaderText>
           <div>
             <Tooltip
               placement="bottom"
@@ -125,7 +125,7 @@ const HabitView: React.FC = () => {
           <HabitCalenarHeatmap habit={habit} year={year} />
         </StyledHabitCalenarHeatmapContainer>
         <StyledSummaryContainerSpace size={8} align="center">
-          <HeaderText text={intl.formatMessage({ id: 'common.summary' })} />
+          <StyledHeaderText>{intl.formatMessage({ id: 'common.summary' })}</StyledHeaderText>
           <Tooltip title={intl.formatMessage({ id: 'common.summary.info' })}>
             <StyledHeaderIcon icon={faInfoCircle} />
           </Tooltip>

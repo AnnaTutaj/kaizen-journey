@@ -3,12 +3,12 @@ import { useIntl } from 'react-intl';
 import { Form, Input, DatePicker, Row, Col } from 'antd';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import { CategoryColorsDTO } from '@common/constants/CategoryColors';
-import styles from './GratitudeForm.module.less';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FormModal from '@common/components/FormModal';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
+import { StyledIconImageRemove } from './styled';
 
 const { TextArea } = Input;
 
@@ -126,11 +126,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
                       </Form.Item>
                     </Col>
                     <Col>
-                      <FontAwesomeIcon
-                        className={styles.IconImageRemove}
-                        icon={faTrash}
-                        onClick={() => remove(field.name)}
-                      />
+                      <StyledIconImageRemove icon={faTrash} onClick={() => remove(field.name)} />
                     </Col>
                   </Row>
                 </Form.Item>

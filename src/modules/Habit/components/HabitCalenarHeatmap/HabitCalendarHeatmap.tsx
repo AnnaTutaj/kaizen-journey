@@ -5,10 +5,10 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import { Space, Tooltip } from 'antd';
 import 'react-calendar-heatmap/dist/styles.css';
 import './habit-calendar-heatmap.less';
-import styles from './HabitCalendarHeatmap.module.less';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
+import { StyledLegendColor, StyledLegendColorSkipped, StyledLegendColorToday, StyledLegendContainer } from './styled';
 
 interface IProps {
   habit: IHabitModel;
@@ -92,27 +92,22 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
           return classCell;
         }}
       />
-      <div className={styles.LegendContainer}>
+      <StyledLegendContainer>
         <Space size={20}>
           <Space>
-            <div
-              className={styles.LegendColor}
-              style={{
-                backgroundColor: habit.color.value
-              }}
-            ></div>
+            <StyledLegendColor $backgroundColor={habit.color.value} />
             {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.marked' })}
           </Space>
           <Space>
-            <div className={styles.LegendColorSkipped}></div>
+            <StyledLegendColorSkipped />
             {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.skipped' })}
           </Space>
           <Space>
-            <div className={styles.LegendColorToday}></div>
+            <StyledLegendColorToday />
             {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.today' })}
           </Space>
         </Space>
-      </div>
+      </StyledLegendContainer>
     </>
   );
 };

@@ -13,7 +13,6 @@ import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageLoading from '@common/components/PageLoading';
-import HeaderText from '@common/components/HeaderText';
 import { faBrush, faCog, faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/components/HabitUpdateModal/HabitUpdateModal';
@@ -52,6 +51,7 @@ import {
   StyledStreakValue,
   StyledVisibilityIconContainer
 } from './styled';
+import { StyledHeaderText } from '@common/components/HeaderText/styled';
 
 const { useBreakpoint } = Grid;
 
@@ -359,7 +359,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
       {habits && habits.length ? (
         <>
           <StyledHeader>
-            <HeaderText text={intl.formatMessage({ id: 'habit.table.title' })} />
+            <StyledHeaderText>{intl.formatMessage({ id: 'habit.table.title' })}</StyledHeaderText>
           </StyledHeader>
           <StyledHabitTable<IHabitModel>
             bordered={true}

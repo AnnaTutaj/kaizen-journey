@@ -1,12 +1,12 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { Space, Tooltip } from 'antd';
-import styles from './HabitStatistic.module.less';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong, faCalendarDays, faCheck, faPause } from '@fortawesome/free-solid-svg-icons';
 import Table, { ITableColumn } from '@common/components/Table/Table';
+import { StyledDate } from './styled';
 
 interface IProps {
   habit: IHabitModel;
@@ -57,11 +57,11 @@ const HabitStatistic: React.FC<IProps> = ({ habit }) => {
         <>
           {record.minDate ? (
             <Space size={8} wrap={true}>
-              <span className={styles.Date}>{record.minDate}</span>
+              <StyledDate>{record.minDate}</StyledDate>
               {record.minDate !== record.maxDate ? (
                 <>
                   <FontAwesomeIcon icon={faArrowRightLong} />
-                  <span className={styles.Date}>{record.maxDate}</span>
+                  <StyledDate>{record.maxDate}</StyledDate>
                 </>
               ) : null}
             </Space>

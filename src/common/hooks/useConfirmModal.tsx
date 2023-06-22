@@ -1,14 +1,13 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal, ModalFuncProps } from 'antd';
 import { useCallback } from 'react';
 import mascotMapImage from '@assets/mascot_map.svg';
 import mascotWelcomeImage from '@assets/mascot_welcome.svg';
 import mascotTrashImage from '@assets/mascot_trash.svg';
 import mascotFolderImage from '@assets/mascot_folder.svg';
-import styles from './useConfirmModal.module.less';
 import Image from '@common/components/Image/Image';
 import { MascotImage } from '@common/constants/MascotImage';
+import { StyledCloseIcon, StyledImageContainer } from './styled';
 
 export interface IConfirmModalProps extends ModalFuncProps {
   imageMascot?: MascotImage | null;
@@ -43,17 +42,16 @@ const useConfirmModal = () => {
     }
 
     return (
-      <div className={styles.ImageContainer}>
+      <StyledImageContainer>
         <Image height={150} src={imageSrc} alt="Kaizen Journey Mascot" preview={false} />
-      </div>
+      </StyledImageContainer>
     );
   };
 
   const confirmModal = useCallback(
     ({ imageMascot = MascotImage.trash, ...props }: IConfirmModalProps) => {
       modal.confirm({
-        className: styles.ConfirmModal,
-        closeIcon: <FontAwesomeIcon icon={faTimes} className={styles.CloseIcon} />,
+        closeIcon: <StyledCloseIcon icon={faTimes} />,
         icon: renderIcon(imageMascot),
         ...props
       });

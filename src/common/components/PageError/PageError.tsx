@@ -1,9 +1,9 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import HeaderText from '../HeaderText';
 import { faHeartBroken } from '@fortawesome/free-solid-svg-icons';
 import Button from '@common/components/Button';
 import { StyledPageErrorContainer, StyledPageErrorIcon } from './styled';
+import { StyledHeaderText } from '../HeaderText/styled';
 
 interface IProps {
   onClick: () => void;
@@ -14,7 +14,7 @@ const PageError: React.FC<IProps> = ({ onClick }) => {
   return (
     <StyledPageErrorContainer>
       <StyledPageErrorIcon icon={faHeartBroken} />
-      <HeaderText text={intl.formatMessage({ id: 'pageError.title' })} size="small" />
+      <StyledHeaderText $small>{intl.formatMessage({ id: 'pageError.title' })}</StyledHeaderText>
       <Button type="primary" onClick={onClick}>
         {intl.formatMessage({ id: 'pageError.button' })}
       </Button>

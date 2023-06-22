@@ -1,7 +1,5 @@
-import { Avatar } from 'antd';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import styles from './UserAvatar.module.less';
 import { useAuth } from '@common/contexts/AuthContext';
 import SettingsModal from '../SettingsModal';
 import { ISettingsModalProps } from '../SettingsModal/SettingsModal';
@@ -14,6 +12,7 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import ExportGratitudeModal, { IExportGratitudeModalalProps } from '../ExportGratitudeModal/ExportGratitudeModal';
 import ExportHabitModal, { IExportHabitModalalProps } from '../ExportHabitModal/ExportHabitModal';
+import { StyledAvatar } from './styled';
 
 const UserAvatar: React.FC = () => {
   const intl = useIntl();
@@ -104,16 +103,11 @@ const UserAvatar: React.FC = () => {
   return (
     <>
       <Dropdown menuItems={menuItems}>
-        {userProfile.pictureURL ? (
-          <Avatar
-            className={styles.Avatar}
-            size={40}
-            icon={<FontAwesomeIcon icon={dummyUser} />}
-            src={userProfile.pictureURL}
-          />
-        ) : (
-          <Avatar className={styles.Avatar} size={40} icon={<FontAwesomeIcon icon={dummyUser} />} />
-        )}
+        <StyledAvatar
+          size={40}
+          icon={<FontAwesomeIcon icon={dummyUser} />}
+          src={userProfile.pictureURL ? userProfile.pictureURL : undefined}
+        />
       </Dropdown>
 
       {settingsModalConfig ? <SettingsModal {...settingsModalConfig} /> : null}

@@ -1,12 +1,12 @@
 import Image from '@common/components/Image/Image';
-import styles from './MascotWelcomeImage.module.less';
 import image from '@assets/mascot_welcome.svg';
+import { StyledImageContainer } from './styled';
 
 const MascotWelcomeImage: React.FC = () => {
   return (
-    <div className={styles.ImageContainer}>
+    <StyledImageContainer>
       <Image width={300} src={image} alt="Kaizen Journey Mascot" preview={false} />
-    </div>
+    </StyledImageContainer>
   );
 };
 

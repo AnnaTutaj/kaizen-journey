@@ -13,6 +13,9 @@ export type ILayout = {
   colorDarkGray: string;
   colorLightGray: string;
   colorTitleGray: string;
+  colorStraw: string;
+  colorTurquoise: string,
+  colorCoral: string,
   colorBoxShadow: string;
   colorsGradient: string;
 
@@ -38,6 +41,9 @@ export const layout = (darkMode: boolean): ILayout => {
     colorDarkGray: '#6b6b6b',
     colorLightGray: '#e6e6e6',
     colorTitleGray: '#8b8b8b',
+    colorStraw: '#e6e167',
+    colorTurquoise: '#4dccbd',
+    colorCoral: '#ff8484',
     colorBoxShadow: darkMode ? rgba(0, 0, 0, 0.2) : rgba(0, 0, 0, 0.11),
     colorsGradient: '#d5b436, #ea982c, #f97838, #ff534f, #fd266e, #eb0091, #c50ab5, #8236d5',
 

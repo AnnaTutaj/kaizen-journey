@@ -1,7 +1,5 @@
 import { Button as AntDButton, Space } from 'antd';
 import { ButtonProps } from 'antd/es/button';
-import cn from 'classnames';
-import styles from './Button.module.less';
 
 export interface IButtonProps extends ButtonProps {
   text?: string;
@@ -9,8 +7,8 @@ export interface IButtonProps extends ButtonProps {
   transparentBackground?: boolean;
 }
 
-const Button: React.FC<IButtonProps> = ({ text, icon, children, transparentBackground, className, ...props }) => (
-  <AntDButton {...props} className={cn(className, { [styles.TransparentBackground]: transparentBackground })}>
+const Button: React.FC<IButtonProps> = ({ text, icon, children, ...props }) => (
+  <AntDButton {...props}>
     {icon || text ? (
       <Space size={8}>
         {icon ? icon : null}

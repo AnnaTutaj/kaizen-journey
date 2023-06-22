@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Image from '../Image/Image';
 import { Image as AntDImage } from 'antd';
-import styles from './ImagePreview.module.less';
+import { GlobalStyle, ImagePreviewCn } from './styled';
 
 export interface IImageProps {
   srcs: string[];
@@ -16,8 +16,9 @@ const ImagePreview: React.FC<IImageProps> = ({ srcs }) => {
 
   return (
     <>
+      <GlobalStyle />
       <Image
-        rootClassName={styles.ImagePreview}
+        rootClassName={ImagePreviewCn}
         preview={{ visible: false }}
         src={srcs[0]}
         onClick={() => setVisible(true)}

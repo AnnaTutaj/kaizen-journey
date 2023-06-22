@@ -2,8 +2,8 @@ import Modal, { IModalProps } from '@common/components/Modal/Modal';
 import { Form } from 'antd';
 import { FormProps } from 'antd/es/form';
 import Button from '@common/components/Button';
-import styles from './FormModal.module.less';
 import { useState } from 'react';
+import { StyledFooter } from './styled';
 
 export interface IFormModalProps<T> extends FormProps<T> {
   modalProps: IModalProps;
@@ -37,13 +37,13 @@ const FormModal = <T extends {}>({ modalProps, submitButtonText, children, ...pr
       >
         <>
           {children}
-          <div className={styles.Footer}>
+          <StyledFooter>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={isSubmitting} disabled={isSubmitting}>
                 {submitButtonText}
               </Button>
             </Form.Item>
-          </div>
+          </StyledFooter>
         </>
       </Form>
     </Modal>

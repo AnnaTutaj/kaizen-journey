@@ -3,9 +3,9 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import GratitudeList from '../GratitudeList';
-import styles from './GratitudeListScrolled.module.less';
 import { useIntl } from 'react-intl';
 import Button from '@common/components/Button';
+import { StyledFooter } from './styled';
 
 interface IProps {
   gratitudes: IGratitudeModel[];
@@ -45,7 +45,7 @@ const GratitudeListScrolled: React.FC<IProps> = ({
               updateGratitude={updateGratitude}
             />
           </InfiniteScroll>
-          <div className={styles.Footer}>
+          <StyledFooter>
             {!loading && moreGratitudes ? (
               <Button type="primary" onClick={getNextGratitudes}>
                 {intl.formatMessage({ id: 'common.list.loadMore' })}
@@ -53,7 +53,7 @@ const GratitudeListScrolled: React.FC<IProps> = ({
             ) : null}
 
             {loading ? <Spin size="large" /> : null}
-          </div>
+          </StyledFooter>
         </>
       ) : null}
     </>

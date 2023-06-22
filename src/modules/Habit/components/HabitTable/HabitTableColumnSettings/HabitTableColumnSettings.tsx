@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import styles from './HabitTableColumnSettings.module.less';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { Checkbox, Divider, Space } from 'antd';
+import { Checkbox, Space } from 'antd';
+import { StyledDivider } from './styled';
 
 export enum ColumnType {
   currentStreak = 'currentStreak',
@@ -41,7 +41,7 @@ const HabitTableColumnSettings: React.FC<IProps> = ({ visibleColumns, setVisible
       <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
         {intl.formatMessage({ id: 'common.checkAll' })}
       </Checkbox>
-      <Divider className={styles.Divider} dashed />
+      <StyledDivider dashed />
       <Checkbox.Group value={visibleColumns} onChange={onChange}>
         <Space direction="vertical">
           <Checkbox value="currentStreak">{intl.formatMessage({ id: 'habit.currentStreak' })}</Checkbox>

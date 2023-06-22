@@ -1,11 +1,10 @@
 import React from 'react';
 import image from '@assets/mascot_map.svg';
-import { Image, Space } from 'antd';
 import { Typography } from 'antd';
 import { useIntl } from 'react-intl';
-import styles from './PageUnderConstruction.module.less';
 import PageLoading from '../PageLoading';
 import Spinner from '../Spinner';
+import { StyledImage, StyledSpace } from './styled';
 
 const { Title } = Typography;
 
@@ -17,12 +16,12 @@ const PageUnderConstruction: React.FC<IProps> = ({ title }) => {
 
   return (
     <>
-      <Space align="center" direction="vertical" size={30} className={styles.SpaceContainer}>
-        <PageLoading />
+      <PageLoading />
+      <StyledSpace align="center" direction="vertical" size={30}>
         <Title level={3}>{title}</Title>
-        <Image className={styles.Image} src={image} alt="Under construction" preview={false} />
+        <StyledImage src={image} alt="Under construction" preview={false} />
         <Title level={4}>{intl.formatMessage({ id: 'pageUnderConstruction.title' })}</Title>
-      </Space>
+      </StyledSpace>
       <Spinner />
     </>
   );

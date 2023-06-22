@@ -95,12 +95,12 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
         </Col>
         <Col>
           {mode === 'following' && removeFriendFollowing ? (
-            <Button transparentBackground onClick={() => confirmDeleteFollowing()} size="middle">
+            <Button type="primary" ghost onClick={() => confirmDeleteFollowing()} size="middle">
               {intl.formatMessage({ id: 'friend.following.form.unfollow' })}
             </Button>
           ) : null}
           {mode === 'follower' && removeFriendFollower ? (
-            <Button transparentBackground onClick={() => confirmDeleteFollower()} size="middle">
+            <Button type="primary" ghost onClick={() => confirmDeleteFollower()} size="middle">
               {intl.formatMessage({ id: 'friend.follower.list.delete' })}
             </Button>
           ) : null}
