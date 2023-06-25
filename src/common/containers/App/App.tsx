@@ -19,7 +19,6 @@ import localeData from 'dayjs/plugin/localeData';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import minMax from 'dayjs/plugin/minMax';
-import './App.less';
 import { antdThemeComponents, antdThemeToken } from './antdThemeToken';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import StyledTheme from './StyledTheme';

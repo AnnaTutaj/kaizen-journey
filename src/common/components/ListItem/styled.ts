@@ -51,7 +51,7 @@ export const StyledDropdown = styled(Dropdown)`
 
 export const StyledDropdownIconContainer = styled.div<{ $colorHover: string }>`
   padding: 5px 10px;
-  color: var(--light-text-color);
+  color: ${({ theme }) => theme.antd.colorWhite};
   font-size: 18px;
   text-align: center;
   border-radius: ${({ theme }) => theme.antd.borderRadiusSM}px;

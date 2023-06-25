@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { theme } from 'antd';
-import './App.less';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import { ThemeProvider } from 'styled-components';
 import { layout } from './layout';
