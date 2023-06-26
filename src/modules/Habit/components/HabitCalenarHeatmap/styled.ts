@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
 const legendColorSize: number = 13;
 const legendColorBorderSize: number = 3;
@@ -25,4 +26,48 @@ export const StyledLegendColorToday = styled.div`
 export const StyledLegendContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
+
+export const CalendarHeatmapGlobalStyle = createGlobalStyle`
+.react-calendar-heatmap text {
+  font-size: 10px;
+  fill: ${({ theme }) => theme.antd.colorTextTertiary};
+}
+
+.react-calendar-heatmap rect:hover {
+  stroke: ${({ theme }) => theme.antd.colorTextQuaternary};
+  stroke-width: 1px;
+}
+
+.react-calendar-heatmap .color-empty {
+  fill: ${({ theme }) => theme.antd.colorFill};
+}
+
+.react-calendar-heatmap .mark-today {
+  stroke: ${({ theme }) => theme.antd.colorPrimary};
+  stroke-width: 2px;
+
+  &:hover {
+    stroke: ${({ theme }) => theme.layout.colorPrimaryHover};
+    stroke-width: 2px;
+  }
+}
+
+
+${({ theme }) => {
+  let styles = ``;
+
+  for (const [key, value] of Object.entries(theme.layout.colorsCategory)) {
+    styles += `
+      .react-calendar-heatmap .color-${key} {
+        fill: ${value};
+      }
+    `;
+  }
+
+  styles += `.react-calendar-heatmap .color-skipped {
+    fill: ${theme.layout.colorCoral};
+  }`;
+  return styles;
+}}
 `;

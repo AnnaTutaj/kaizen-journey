@@ -1,3 +1,4 @@
+//todo remove that file
 export enum CategoryColors {
   default = '#86cfc4',
   red = '#b94242',

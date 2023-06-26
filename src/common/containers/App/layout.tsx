@@ -1,5 +1,5 @@
 import { darken, lighten, rgba } from 'polished';
-import { ColorPalette } from './ColorPalette';
+import { ColorPalette, ColorsCategory } from './ColorPalette';
 
 export type ILayout = {
   devTestColor: string;
@@ -9,15 +9,18 @@ export type ILayout = {
   colorHeaderBgTertiary: string;
   colorPrimaryBg: string;
   colorPrimaryBgSecondary: string;
+  colorPrimaryHover: string;
   colorSecondary: string;
   colorDarkGray: string;
   colorLightGray: string;
   colorTitleGray: string;
   colorStraw: string;
-  colorTurquoise: string,
-  colorCoral: string,
+  colorTurquoise: string;
+  colorCoral: string;
   colorBoxShadow: string;
   colorsGradient: string;
+  colorsCategory: ColorsCategory;
+  colorsCategoryHover: ColorsCategory;
 
   headerHeight: string;
   footerHeight: string;
@@ -37,6 +40,7 @@ export const layout = (darkMode: boolean): ILayout => {
     colorHeaderBgTertiary: darkMode ? lighten(0.01, colorHeaderBg) : '#f7f7f7',
     colorPrimaryBg: darkMode ? ColorPalette.primaryColor[130] : ColorPalette.primaryColor[40],
     colorPrimaryBgSecondary: darkMode ? ColorPalette.primaryColor[120] : ColorPalette.primaryColor[20],
+    colorPrimaryHover: ColorPalette.primaryColor[10],
     colorSecondary: ColorPalette.secondaryColor.main,
     colorDarkGray: '#6b6b6b',
     colorLightGray: '#e6e6e6',
@@ -46,6 +50,8 @@ export const layout = (darkMode: boolean): ILayout => {
     colorCoral: '#ff8484',
     colorBoxShadow: darkMode ? rgba(0, 0, 0, 0.2) : rgba(0, 0, 0, 0.11),
     colorsGradient: '#d5b436, #ea982c, #f97838, #ff534f, #fd266e, #eb0091, #c50ab5, #8236d5',
+    colorsCategory: ColorPalette.categoryColors,
+    colorsCategoryHover: ColorPalette.categoryColorsHover,
 
     //Dimensions
     headerHeight: '60px',

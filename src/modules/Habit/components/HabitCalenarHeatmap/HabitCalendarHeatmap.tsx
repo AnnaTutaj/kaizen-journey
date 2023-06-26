@@ -3,12 +3,16 @@ import { useIntl } from 'react-intl';
 import dayjs from 'dayjs';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import { Space, Tooltip } from 'antd';
-import 'react-calendar-heatmap/dist/styles.css';
-import './habit-calendar-heatmap.less';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
-import { StyledLegendColor, StyledLegendColorSkipped, StyledLegendColorToday, StyledLegendContainer } from './styled';
+import {
+  CalendarHeatmapGlobalStyle,
+  StyledLegendColor,
+  StyledLegendColorSkipped,
+  StyledLegendColorToday,
+  StyledLegendContainer
+} from './styled';
 
 interface IProps {
   habit: IHabitModel;
@@ -61,6 +65,7 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
 
   return (
     <>
+      <CalendarHeatmapGlobalStyle />
       <CalendarHeatmap
         startDate={startDate}
         endDate={endDate}
