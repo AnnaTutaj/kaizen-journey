@@ -1,13 +1,16 @@
 import { AliasToken } from 'antd/es/theme/internal';
 import { OverrideToken } from 'antd/es/theme/interface';
-import { ColorPalette } from './ColorPalette';
 import { layout } from './layout';
+import { IUserTheme } from '@common/contexts/AuthContext';
+import { userColorPalette } from './ColorPalette';
 
-export const antdThemeToken = (darkMode: boolean): Partial<AliasToken> => {
+export const antdThemeToken = (darkMode: boolean, userTheme: IUserTheme): Partial<AliasToken> => {
+  const colorPalette = userColorPalette(userTheme);
+
   return {
     fontFamily: "'Open Sans', sans-serif",
     fontSize: 16,
-    colorPrimary: ColorPalette.primaryColor.main,
+    colorPrimary: userTheme.colorPrimary || colorPalette.primaryColor.main,
     colorError: '#c0293b',
     colorWhite: '#ffffff',
     borderRadius: 8,
@@ -18,12 +21,12 @@ export const antdThemeToken = (darkMode: boolean): Partial<AliasToken> => {
   };
 };
 
-export const antdThemeComponents = (darkMode: boolean): Partial<OverrideToken> => {
+export const antdThemeComponents = (darkMode: boolean, userTheme: IUserTheme): Partial<OverrideToken> => {
   return {
     Table: {
-      colorFillAlter: layout(darkMode)['colorHeaderBg'],
+      colorFillAlter: layout(darkMode, userTheme)['colorHeaderBg'],
       //e.g. when table header has active sorter
-      colorFillSecondary: layout(darkMode)['colorHeaderBgSecondary']
+      colorFillSecondary: layout(darkMode, userTheme)['colorHeaderBgSecondary']
     }
   };
 };

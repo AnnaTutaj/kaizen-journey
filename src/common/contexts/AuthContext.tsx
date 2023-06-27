@@ -23,6 +23,12 @@ export enum Language {
   pl = 'pl',
   en = 'en'
 }
+export interface IUserTheme {
+  colorPrimary?: string;
+  secondaryColor?: string;
+  colorCategoryDefault?: string;
+  colorCategoryDefaultHover?: string;
+}
 
 export interface IUserProfile {
   uid: string;
@@ -34,6 +40,7 @@ export interface IUserProfile {
   username: string;
   language: Language | undefined;
   tags: string[];
+  theme: IUserTheme;
 }
 export interface IAuthContext {
   userAuth: FirebaseUser | null;
@@ -56,7 +63,8 @@ const initUserProfile = {
   pictureURL: '',
   username: '',
   language: Language.en,
-  tags: []
+  tags: [],
+  theme: {}
 };
 
 export const AuthContext = createContext<IAuthContext>({
@@ -97,7 +105,8 @@ export default function AuthContextProvider({ children }: any) {
             pictureURL: userSnap.pictureURL || '',
             username: userSnap.username || '',
             language: userSnap?.language || Language.en,
-            tags: userSnap.tags || []
+            tags: userSnap.tags || [],
+            theme: userSnap.theme || {}
           });
         } else {
           setUserProfile({ ...initUserProfile });
@@ -144,7 +153,8 @@ export default function AuthContextProvider({ children }: any) {
           pictureURL: userSnap.pictureURL || '',
           username: userSnap.username || '',
           language: userSnap?.language || Language.en,
-          tags: userSnap.tags || []
+          tags: userSnap.tags || [],
+          theme: userSnap.theme || {}
         });
       }
       setIsUserLoading(false);

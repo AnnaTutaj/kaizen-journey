@@ -53,8 +53,8 @@ const App: React.FC = () => {
       locale={locale}
       theme={{
         hashed: false,
-        token: antdThemeToken(darkMode),
-        components: antdThemeComponents(darkMode),
+        token: antdThemeToken(darkMode, userProfile.theme),
+        components: antdThemeComponents(darkMode, userProfile.theme),
         algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
     >

@@ -1,23 +1,54 @@
+import { IUserTheme } from '@common/contexts/AuthContext';
 import { lighten, darken } from 'polished';
 
-//styles that can be customized in the future
-export const ColorPalette = {
-  primaryColor: {
-    main: '#8236d5',
-    10: lighten(0.1, '#8236d5'),
-    20: lighten(0.2, '#8236d5'),
-    40: lighten(0.4, '#8236d5'),
-    120: darken(0.2, '#8236d5'),
-    130: darken(0.3, '#8236d5')
-  },
-  secondaryColor: {
-    main: '#d5b436',
-    10: lighten(0.1, '#d5b436'),
-    20: lighten(0.2, '#d5b436'),
-    40: lighten(0.4, '#d5b436'),
-    120: darken(0.2, '#d5b436'),
-    130: darken(0.3, '#d5b436')
-  },
+export type ColorsCategory = {
+  default: string;
+  red: string;
+  fuchsia: string;
+  pink: string;
+  purple: string;
+  blue: string;
+  navy: string;
+  green: string;
+  olive: string;
+  yellow: string;
+  orange: string;
+  brown: string;
+  gray: string;
+};
+
+export type CategoryColorsDTO = keyof ColorsCategory;
+
+type ColorShades = {
+  main: string;
+  10: string;
+  20: string;
+  40: string;
+  120: string;
+  130: string;
+};
+
+const generateColorShades = (color: string): ColorShades => {
+  return {
+    main: color,
+    10: lighten(0.1, color),
+    20: lighten(0.2, color),
+    40: lighten(0.4, color),
+    120: darken(0.2, color),
+    130: darken(0.3, color)
+  };
+};
+
+interface IColorPalette {
+  primaryColor: ColorShades;
+  secondaryColor: ColorShades;
+  categoryColors: ColorsCategory;
+  categoryColorsHover: ColorsCategory;
+}
+
+const DefaultColorPalette: IColorPalette = {
+  primaryColor: generateColorShades('#8236d5'),
+  secondaryColor: generateColorShades('#d5b436'),
   categoryColors: {
     default: '#86cfc4',
     red: '#b94242',
@@ -50,20 +81,25 @@ export const ColorPalette = {
   }
 };
 
-export type ColorsCategory = {
-  default: string;
-  red: string;
-  fuchsia: string;
-  pink: string;
-  purple: string;
-  blue: string;
-  navy: string;
-  green: string;
-  olive: string;
-  yellow: string;
-  orange: string;
-  brown: string;
-  gray: string;
+export const userColorPalette = (userTheme: IUserTheme): IColorPalette => {
+  return {
+    primaryColor: userTheme.colorPrimary
+      ? generateColorShades(userTheme.colorPrimary)
+      : DefaultColorPalette.primaryColor,
+    secondaryColor: userTheme.secondaryColor
+      ? generateColorShades(userTheme.secondaryColor)
+      : DefaultColorPalette.secondaryColor,
+    categoryColors: {
+      ...DefaultColorPalette.categoryColors,
+      default: userTheme.colorCategoryDefault
+        ? userTheme.colorCategoryDefault
+        : DefaultColorPalette.categoryColors.default
+    },
+    categoryColorsHover: {
+      ...DefaultColorPalette.categoryColorsHover,
+      default: userTheme.colorCategoryDefaultHover
+        ? userTheme.colorCategoryDefaultHover
+        : DefaultColorPalette.categoryColorsHover.default
+    }
+  };
 };
-
-export type CategoryColorsDTO = keyof typeof ColorPalette.categoryColors;
