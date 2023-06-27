@@ -85,7 +85,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
 
   return (
     <>
-      <StyledListItem $backgroundColor={gratitude.color.value}>
+      <StyledListItem $backgroundColor={gratitude.color}>
         <StyledListItemRow wrap={false}>
           <Col>
             <StyledDate>
@@ -122,7 +122,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
           {gratitude.createdByUid === userProfile.uid ? (
             <StyledDropDownCol>
               <StyledDropdown menuItems={menuItems}>
-                <StyledDropdownIconContainer $colorHover={gratitude.colorLighten.value}>
+                <StyledDropdownIconContainer $colorHover={gratitude.color}>
                   <FontAwesomeIcon icon={faEllipsisV} />
                 </StyledDropdownIconContainer>
               </StyledDropdown>

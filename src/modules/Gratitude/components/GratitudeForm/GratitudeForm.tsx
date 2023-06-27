@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Input, DatePicker, Row, Col } from 'antd';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
-import { CategoryColorsDTO } from '@common/constants/CategoryColors';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FormModal from '@common/components/FormModal';
@@ -84,7 +84,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-          <Select<CategoryColorsDTO> type="color" />
+          <Select<CategoryColorType> type="color" />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.date' })} name="date">

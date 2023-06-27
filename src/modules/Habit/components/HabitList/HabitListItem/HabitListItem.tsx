@@ -147,7 +147,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
 
   return (
     <>
-      <StyledListItem $backgroundColor={habit.color.value}>
+      <StyledListItem $backgroundColor={habit.color}>
         <StyledListItemRow wrap={false}>
           <Col flex={1}>
             <StyledTitle level={5}>{habit.name}</StyledTitle>
@@ -167,7 +167,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
           </Col>
           <StyledDropDownCol>
             <StyledDropdown menuItems={menuItems}>
-              <StyledDropdownIconContainer $colorHover={habit.colorLighten.value}>
+              <StyledDropdownIconContainer $colorHover={habit.color}>
                 <FontAwesomeIcon icon={faEllipsisV} />
               </StyledDropdownIconContainer>
             </StyledDropdown>

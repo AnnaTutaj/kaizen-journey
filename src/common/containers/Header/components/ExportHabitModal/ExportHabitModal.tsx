@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { FirebaseError } from '@firebase/util';
 import FormModal from '@common/components/FormModal';
-import { CategoryColorsDTO } from '@common/constants/CategoryColors';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { saveAs } from 'file-saver';
 import dayjs from 'dayjs';
@@ -68,7 +68,7 @@ const ExportHabitModal: React.FC<IExportHabitModalalProps> = ({ handleSubmit, ha
     >
       <>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-          <Select<CategoryColorsDTO> type="color" allowClear />
+          <Select<CategoryColorType> type="color" allowClear />
         </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
           <Select<boolean> type="visibility" allowClear />

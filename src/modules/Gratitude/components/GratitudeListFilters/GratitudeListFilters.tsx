@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Row, Col, Divider } from 'antd';
 import { IGratitudeListFiltersModel } from '@modules/Gratitude/models/GratitudeListFiltersModel';
-import { CategoryColorsDTO } from '@common/constants/CategoryColors';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEraser } from '@fortawesome/free-solid-svg-icons';
 import Button from '@common/components/Button';
@@ -44,7 +44,7 @@ const GratitudeListFilters: React.FC<IProps> = ({ initialValues, onFinish, hideV
         </Col>
         <Col lg={7} span={24}>
           <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-            <Select<CategoryColorsDTO> type="color" onChange={() => form.submit()} allowClear />
+            <Select<CategoryColorType> type="color" onChange={() => form.submit()} allowClear />
           </Form.Item>
         </Col>
         <Col lg={7} span={24}>

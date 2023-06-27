@@ -1,8 +1,7 @@
-import { CategoryColorsDTO, CategoryColorsLighten } from '@common/constants/CategoryColors';
-import { CategoryColors } from '@common/constants/CategoryColors';
 import { QueryDocumentSnapshot } from '@firebase/firestore';
 import { db } from '@common/util/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 
 export interface IGratitudeModel {
   id: string;
@@ -16,8 +15,7 @@ export interface IGratitudeModel {
   createdByPictureURL: string | undefined;
   createdBy: string | undefined;
   isPublic: boolean;
-  color: { name: CategoryColorsDTO; value: CategoryColors };
-  colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten };
+  color: CategoryColorType;
   tags: string[];
   imageURLs: string[];
 }
@@ -34,7 +32,7 @@ export interface IGratitudeModelDTO {
   createdByPictureURL?: string;
   createdBy?: string;
   isPublic: boolean;
-  color?: CategoryColorsDTO;
+  color?: CategoryColorType;
   tags?: string[];
   imageURLs?: string[];
 }
@@ -52,8 +50,7 @@ class GratitudeModel implements IGratitudeModel {
     public createdByPictureURL: string | undefined,
     public createdBy: string | undefined,
     public isPublic: boolean,
-    public color: { name: CategoryColorsDTO; value: CategoryColors },
-    public colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten },
+    public color: CategoryColorType,
     public tags: string[],
     public imageURLs: string[]
   ) {}
@@ -68,12 +65,7 @@ class GratitudeModel implements IGratitudeModel {
       dto.createdByPictureURL || undefined,
       dto.createdBy || undefined,
       dto.isPublic,
-      dto.color
-        ? { name: dto.color, value: CategoryColors[dto.color] }
-        : { name: 'default', value: CategoryColors.default },
-      dto.color
-        ? { name: dto.color, value: CategoryColorsLighten[dto.color] }
-        : { name: 'default', value: CategoryColorsLighten.default },
+      dto.color || 'default',
       dto.tags || [],
       dto.imageURLs || []
     );

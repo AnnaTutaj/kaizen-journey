@@ -4,14 +4,15 @@ import Title from 'antd/es/typography/Title';
 import styled from 'styled-components';
 import Dropdown from '@common/components/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 
-export const StyledListItem = styled(List.Item)<{ $backgroundColor: string }>`
+export const StyledListItem = styled(List.Item)<{ $backgroundColor: CategoryColorType }>`
   &&& {
     margin-bottom: 16px;
     padding: 10px 16px;
     color: ${({ theme }) => theme.antd.colorWhite};
     border-radius: ${({ theme }) => theme.antd.borderRadiusLG}px;
-    background-color: ${({ $backgroundColor }) => $backgroundColor};
+    background-color: ${({ theme, $backgroundColor }) => theme.layout.colorsCategory[$backgroundColor]};
   }
 `;
 
@@ -49,7 +50,7 @@ export const StyledDropdown = styled(Dropdown)`
   margin-left: 8px;
 `;
 
-export const StyledDropdownIconContainer = styled.div<{ $colorHover: string }>`
+export const StyledDropdownIconContainer = styled.div<{ $colorHover: CategoryColorType }>`
   padding: 5px 10px;
   color: ${({ theme }) => theme.antd.colorWhite};
   font-size: 18px;
@@ -58,7 +59,7 @@ export const StyledDropdownIconContainer = styled.div<{ $colorHover: string }>`
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ $colorHover }) => $colorHover};
+    background-color: ${({ theme, $colorHover }) => theme.layout.colorsCategoryHover[$colorHover]};
   }
 `;
 

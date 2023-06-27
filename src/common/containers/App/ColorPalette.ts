@@ -17,7 +17,7 @@ export type ColorsCategory = {
   gray: string;
 };
 
-export type CategoryColorsDTO = keyof ColorsCategory;
+export type CategoryColorType = keyof ColorsCategory;
 
 type ColorShades = {
   main: string;

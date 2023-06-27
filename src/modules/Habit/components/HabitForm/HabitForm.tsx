@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { Form, Input } from 'antd';
 import Modal from '@common/components/Modal';
 import { IHabitFormModel } from '@modules/Habit/models/HabitFormModel';
-import { CategoryColorsDTO } from '@common/constants/CategoryColors';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
 
@@ -70,7 +70,7 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-          <Select<CategoryColorsDTO> type="color" />
+          <Select<CategoryColorType> type="color" />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">

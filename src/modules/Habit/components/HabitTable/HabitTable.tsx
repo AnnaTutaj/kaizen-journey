@@ -230,8 +230,8 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           return (
             <StyledDateSelectContainer
               $skipped={dateStatus === HabitDateStatus.skipped}
-              $borderColor={record.colorLighten.value}
-              $backgroundColor={dateStatus === HabitDateStatus.checked ? record.color.value : 'unset'}
+              $borderColor={record.color}
+              $backgroundColor={dateStatus === HabitDateStatus.checked ? record.color : 'unset'}
               onClick={() => {
                 if (isLoading) {
                   return;
@@ -243,10 +243,10 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
                 <Spinner size="small" />
               ) : (
                 <>
-                  <StyledDateHoverIcon $color={record.colorLighten.value} icon={hoverIcon} />
-                  <StyledDateHoverText $color={record.colorLighten.value}>{hoverText}</StyledDateHoverText>
+                  <StyledDateHoverIcon $color={record.color} icon={hoverIcon} />
+                  <StyledDateHoverText $color={record.color}>{hoverText}</StyledDateHoverText>
                   {dateStatus === HabitDateStatus.skipped ? (
-                    <StyledDateInfoIcon $color={record.color.value} icon={getIconByDateStatus(dateStatus)} />
+                    <StyledDateInfoIcon $color={record.color} icon={getIconByDateStatus(dateStatus)} />
                   ) : null}
                 </>
               )}

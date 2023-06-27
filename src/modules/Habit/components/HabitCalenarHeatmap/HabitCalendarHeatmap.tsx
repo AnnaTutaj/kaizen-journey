@@ -60,7 +60,7 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
       return 'color-skipped';
     }
 
-    return `color-${habit.color.name}`;
+    return `color-${habit.color}`;
   };
 
   return (
@@ -100,7 +100,7 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
       <StyledLegendContainer>
         <Space size={20}>
           <Space>
-            <StyledLegendColor $backgroundColor={habit.color.value} />
+            <StyledLegendColor $backgroundColor={habit.color} />
             {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.marked' })}
           </Space>
           <Space>

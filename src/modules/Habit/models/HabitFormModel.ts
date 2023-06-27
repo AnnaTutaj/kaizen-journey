@@ -1,11 +1,11 @@
-import { CategoryColorsDTO } from '@common/constants/CategoryColors';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import { IHabitModel } from './HabitModel';
 
 export interface IHabitFormModel {
   name: string;
   description: string;
   isPublic: boolean;
-  color: CategoryColorsDTO;
+  color: CategoryColorType;
 }
 
 export interface IHabitFormModelDTO {
@@ -14,7 +14,7 @@ export interface IHabitFormModelDTO {
   isArchived: boolean;
   isPublic: boolean;
   createdByUid: string;
-  color: CategoryColorsDTO;
+  color: CategoryColorType;
   datesChecked: string[];
   datesSkipped: string[];
 }
@@ -55,7 +55,7 @@ class HabitFormModel {
       name: data.name,
       description: data.description || '',
       isPublic: data.isPublic ?? false,
-      color: data.color ? data.color.name : 'default'
+      color: data.color ? data.color : 'default'
     };
   }
 }

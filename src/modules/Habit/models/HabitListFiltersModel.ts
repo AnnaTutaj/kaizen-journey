@@ -1,13 +1,13 @@
-import { CategoryColorsDTO } from '@common/constants/CategoryColors';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 
 export interface IHabitListFiltersModel {
-  color?: CategoryColorsDTO;
+  color?: CategoryColorType;
   isArchived?: boolean;
   isPublic?: boolean;
 }
 
 export interface IHabitListFiltersModelDTO {
-  color?: CategoryColorsDTO;
+  color?: CategoryColorType;
   isArchived?: boolean;
   isPublic?: boolean;
 }

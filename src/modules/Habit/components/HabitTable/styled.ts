@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import Table from '@common/components/Table/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Col } from 'antd';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 
 const streakColumnsMaxWidth = '400px';
 const hoverIconSize = 12;
@@ -44,27 +45,27 @@ export const StyledHabitTable = styled(Table)`
   }
 ` as typeof Table;
 
-export const StyledDateInfoIcon = styled(FontAwesomeIcon)<{ $color: string }>`
-  color: ${({ $color }) => $color};
+export const StyledDateInfoIcon = styled(FontAwesomeIcon)<{ $color: CategoryColorType }>`
+  color: ${({ theme, $color }) => theme.layout.colorsCategory[$color]};
   font-size: 22px;
 `;
 
-export const StyledDateHoverIcon = styled(FontAwesomeIcon)<{ $color: string }>`
-  color: ${({ $color }) => $color};
+export const StyledDateHoverIcon = styled(FontAwesomeIcon)<{ $color: CategoryColorType }>`
+  color: ${({ theme, $color }) => theme.layout.colorsCategoryHover[$color]};
   font-size: ${hoverIconSize}px;
   display: none;
 `;
 
-export const StyledDateHoverText = styled.small<{ $color: string }>`
+export const StyledDateHoverText = styled.small<{ $color: CategoryColorType }>`
   display: none;
-  color: ${({ $color }) => $color};
+  color: ${({ theme, $color }) => theme.layout.colorsCategoryHover[$color]};
   text-transform: lowercase;
 `;
 
 export const StyledDateSelectContainer = styled.div<{
   $skipped: boolean;
-  $borderColor: string;
-  $backgroundColor: string;
+  $borderColor: CategoryColorType;
+  $backgroundColor: CategoryColorType | 'unset';
 }>`
   display: flex;
   flex-direction: column;
@@ -72,7 +73,8 @@ export const StyledDateSelectContainer = styled.div<{
   justify-content: center;
   height: 100%;
   cursor: pointer;
-  background-color: ${({ $backgroundColor }) => $backgroundColor};
+  background-color: ${({ theme, $backgroundColor }) =>
+    $backgroundColor === 'unset' ? 'unset' : theme.layout.colorsCategory[$backgroundColor]};
 
   @media (hover: hover) {
     &:hover {
@@ -85,7 +87,7 @@ export const StyledDateSelectContainer = styled.div<{
         `}
 
       background-color: unset;
-      border: dashed 1px ${({ $borderColor }) => $borderColor};
+      border: dashed 1px ${({ theme, $borderColor }) => theme.layout.colorsCategory[$borderColor]};
 
       ${StyledDateInfoIcon} {
         display: none;

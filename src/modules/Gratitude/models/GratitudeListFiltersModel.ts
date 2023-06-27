@@ -1,13 +1,13 @@
-import { CategoryColorsDTO } from '@common/constants/CategoryColors';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 
 export interface IGratitudeListFiltersModel {
-  color?: CategoryColorsDTO;
+  color?: CategoryColorType;
   tags?: string[];
   isPublic?: boolean;
 }
 
 export interface IGratitudeListFiltersModelDTO {
-  color?: CategoryColorsDTO;
+  color?: CategoryColorType;
   tags?: string[];
   isPublic?: boolean;
 }

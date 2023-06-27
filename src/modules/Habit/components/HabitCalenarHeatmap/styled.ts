@@ -1,3 +1,4 @@
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 
@@ -5,10 +6,10 @@ const legendColorSize: number = 13;
 const legendColorBorderSize: number = 3;
 const legendColorTodaySize: number = legendColorSize + legendColorBorderSize;
 
-export const StyledLegendColor = styled.div<{ $backgroundColor: string }>`
+export const StyledLegendColor = styled.div<{ $backgroundColor: CategoryColorType }>`
   width: ${legendColorSize}px;
   height: ${legendColorSize}px;
-  background-color: ${({ $backgroundColor }) => $backgroundColor};
+  background-color: ${({ theme, $backgroundColor }) => theme.layout.colorsCategory[$backgroundColor]};
 `;
 
 export const StyledLegendColorSkipped = styled.div`

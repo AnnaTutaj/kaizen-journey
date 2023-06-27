@@ -1,9 +1,8 @@
 import { QueryDocumentSnapshot } from '@firebase/firestore';
 import { db } from '@common/util/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { CategoryColors } from '@common/constants/CategoryColors';
-import { CategoryColorsDTO, CategoryColorsLighten } from '@common/constants/CategoryColors';
 import { getSpecifiedStreaks, IStreak } from '@common/helpers/StreakHelper';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 
 export interface IHabitModel {
   id: string;
@@ -13,8 +12,7 @@ export interface IHabitModel {
   datesSkipped: string[];
   createdByUid: string;
   isArchived: boolean;
-  color: { name: CategoryColorsDTO; value: CategoryColors };
-  colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten };
+  color: CategoryColorType;
   currentStreak: IStreak;
   longestStreak: IStreak;
   isPublic: boolean;
@@ -29,7 +27,7 @@ export interface IHabitModelDTO {
   createdByUid: string;
   isArchived: boolean;
   isPublic: boolean;
-  color?: CategoryColorsDTO;
+  color?: CategoryColorType;
 }
 
 class HabitModel implements IHabitModel {
@@ -42,8 +40,7 @@ class HabitModel implements IHabitModel {
     public createdByUid: string,
     public isArchived: boolean,
     public isPublic: boolean,
-    public color: { name: CategoryColorsDTO; value: CategoryColors },
-    public colorLighten: { name: CategoryColorsDTO; value: CategoryColorsLighten },
+    public color: CategoryColorType,
     public currentStreak: IStreak,
     public longestStreak: IStreak
   ) {}
@@ -60,12 +57,7 @@ class HabitModel implements IHabitModel {
       dto.createdByUid,
       dto.isArchived,
       dto.isPublic,
-      dto.color
-        ? { name: dto.color, value: CategoryColors[dto.color] }
-        : { name: 'default', value: CategoryColors.default },
-      dto.color
-        ? { name: dto.color, value: CategoryColorsLighten[dto.color] }
-        : { name: 'default', value: CategoryColorsLighten.default },
+      dto.color || 'default',
       currentStreak,
       longestStreak
     );

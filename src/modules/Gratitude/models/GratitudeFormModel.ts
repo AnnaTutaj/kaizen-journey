@@ -1,4 +1,4 @@
-import { CategoryColorsDTO } from '@common/constants/CategoryColors';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import { IGratitudeModel } from './GratitudeModel';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -7,7 +7,7 @@ export interface IGratitudeFormModel {
   description: string;
   date: Dayjs;
   isPublic: boolean;
-  color: CategoryColorsDTO;
+  color: CategoryColorType;
   tags: string[];
   imageURLs: string[];
 }
@@ -20,7 +20,7 @@ export interface IGratitudeFormModelDTO {
   createdByUid: string;
   createdBy: string;
   createdByPictureURL: string;
-  color: CategoryColorsDTO;
+  color: CategoryColorType;
   tags: string[];
   imageURLs: string[];
 }
@@ -82,7 +82,7 @@ class GratitudeFormModel {
       description: data.description || '',
       date: dayjs(data.date.seconds * 1000),
       isPublic: data.isPublic ?? false,
-      color: data.color ? data.color.name : 'default',
+      color: data.color ? data.color : 'default',
       tags: data.tags ? data.tags : [],
       imageURLs: data.imageURLs ? data.imageURLs : []
     };
