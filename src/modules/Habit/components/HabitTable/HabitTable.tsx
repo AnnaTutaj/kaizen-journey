@@ -365,6 +365,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
             bordered={true}
             columns={columns()}
             dataSource={habits}
+            pagination={false}
             scroll={{ x: true }}
             rowKey="id"
           />
