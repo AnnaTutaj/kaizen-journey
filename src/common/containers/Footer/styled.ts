@@ -14,5 +14,9 @@ export const StyledFooter = styled(Layout.Footer)`
     .ant-space-item {
       font-size: 14px;
     }
+
+    .ant-layout-footer {
+      padding: 0;
+    }
   }
 `;
