@@ -20,8 +20,6 @@ const ThemeProvider = ({ children }: any) => {
     if (initialValue !== darkMode) {
       localStorage.setItem(DARK_MODE, JSON.stringify(darkMode));
     }
-    //todo: that will be removed after rewrite styles
-    document.body.className = darkMode ? 'dark-theme' : 'light-theme';
   }, [darkMode]);
 
   return <ThemeContext.Provider value={{ darkMode, setDarkMode }}>{children}</ThemeContext.Provider>;
