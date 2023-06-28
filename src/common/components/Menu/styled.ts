@@ -7,7 +7,7 @@ export const StyledMenu = styled(Menu)`
   &.ant-menu {
     margin: 0 -20px 20px;
 
-    @media (max-width: 768px) {
+    @media (width <= 768px) {
       margin: 0 -13px 20px;
     }
   }

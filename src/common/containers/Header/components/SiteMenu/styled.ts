@@ -19,6 +19,7 @@ export const StyledMenu = styled(Menu)<{ $isMobile?: boolean }>`
     background-color: ${({ theme }) => theme.layout.colorHeaderBg};
     border-right: none;
     border-bottom: none;
+
     &.ant-menu-horizontal {
       border-bottom: none;
     }

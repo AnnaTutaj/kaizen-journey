@@ -31,7 +31,7 @@ export const StyledHabitTable = styled(Table)`
     .${CnNameCol} {
       max-width: 400px;
       padding: 16px 8px 16px 10px;
-      @media (max-width: 768px) {
+      @media (width <= 768px) {
         max-width: 140px;
       }
     }
@@ -39,6 +39,7 @@ export const StyledHabitTable = styled(Table)`
     .ant-table-cell-row-hover {
       background-color: ${({ theme }) => theme.layout.colorHeaderBgTertiary};
     }
+
     .ant-table-thead > tr > th {
       font-weight: 500;
     }
@@ -85,7 +86,6 @@ export const StyledDateSelectContainer = styled.div<{
             font-size: ${hoverBiggerIconSize}px;
           }
         `}
-
       background-color: unset;
       border: dashed 1px ${({ theme, $borderColor }) => theme.layout.colorsCategory[$borderColor]};
 

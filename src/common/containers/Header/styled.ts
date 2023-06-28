@@ -12,7 +12,7 @@ export const StyledLayoutHeader = styled(Layout.Header)`
     line-height: ${({ theme }) => theme.layout.headerHeight};
     background-color: ${({ theme }) => theme.layout.colorHeaderBg};
 
-    @media (max-width: 767.98px) {
+    @media (width <= 767.98px) {
       padding: 0 16px;
     }
   }

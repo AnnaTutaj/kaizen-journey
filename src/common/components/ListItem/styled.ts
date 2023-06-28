@@ -11,8 +11,8 @@ export const StyledListItem = styled(List.Item)<{ $backgroundColor: CategoryColo
     margin-bottom: 16px;
     padding: 10px 16px;
     color: ${({ theme }) => theme.antd.colorWhite};
-    border-radius: ${({ theme }) => theme.antd.borderRadiusLG}px;
     background-color: ${({ theme, $backgroundColor }) => theme.layout.colorsCategory[$backgroundColor]};
+    border-radius: ${({ theme }) => theme.antd.borderRadiusLG}px;
   }
 `;
 

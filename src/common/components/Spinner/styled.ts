@@ -16,7 +16,6 @@ export const StyledDot = styled.span<{ $index: number }>`
   transform-origin: 0 250% 0;
   transition: all 0.5s;
   animation: ${dotRotateTwoLaps} 2s both infinite;
-
   background-color: ${({ theme, $index }) => {
     switch ($index) {
       case 1:
@@ -32,7 +31,6 @@ export const StyledDot = styled.span<{ $index: number }>`
         return theme.layout.colorStraw;
     }
   }};
-
   animation-timing-function: ${({ $index }) => `cubic-bezier(0.25, ${0.3 * $index}, 0.5, 1)`};
 `;
 
@@ -64,7 +62,6 @@ const getDotSize = ($size: SpinnerSize) => {
 
 export const StyledSpinner = styled.div<{ $size: SpinnerSize }>`
   position: relative;
-
   width: ${({ $size }) => getSpinnerSize($size)};
   height: ${({ $size }) => getSpinnerSize($size)};
 

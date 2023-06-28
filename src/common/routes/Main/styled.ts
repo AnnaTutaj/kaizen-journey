@@ -11,7 +11,7 @@ export const StyledContent = styled(Content)<{ $hideContentPadding: boolean }>`
     $hideContentPadding ? 0 : `${theme.layout.contentPaddingVertical} 50px`};
   background-color: ${(props) => props.theme.antd.colorBgLayout};
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     padding: ${({ theme, $hideContentPadding }) =>
       $hideContentPadding ? 0 : `${theme.layout.contentPaddingVertical} 16px`};
   }

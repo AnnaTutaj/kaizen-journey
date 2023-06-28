@@ -1,18 +1,17 @@
 {
-  "plugins": ["stylelint-order", "stylelint-declaration-block-no-ignored-properties"],
+  "plugins": ["stylelint-order"],
   "extends": [
     "stylelint-config-standard",
-    "stylelint-config-css-modules",
     "stylelint-config-prettier",
     "stylelint-config-rational-order"
   ],
   "rules": {
-    "plugin/declaration-block-no-ignored-properties": true,
+    "no-empty-source": null,
     "selector-class-pattern": null,
     "function-no-unknown": [true, { "ignoreFunctions": ["lighten", "darken"] }],
     "at-rule-no-unknown": null,
     "property-no-vendor-prefix": [true, { "ignoreProperties": ["background-clip"] }],
     "no-descending-specificity": null
   },
-  "customSyntax": "postcss-less"
+  "customSyntax": "postcss-styled-syntax"
 }

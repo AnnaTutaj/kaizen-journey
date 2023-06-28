@@ -55,7 +55,7 @@ export const SectionEndingTitle = styled.div`
 export const StyledLogoImage = styled.img`
   height: 200px;
 
-  @media (max-width: 768px) {
+  @media (width <= 768px) {
     height: 150px;
   }
 `;

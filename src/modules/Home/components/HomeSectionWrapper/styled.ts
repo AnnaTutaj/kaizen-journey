@@ -20,7 +20,7 @@ export const StyledTitle = styled.h2<{ $description: boolean }>`
   letter-spacing: 0.2em;
   text-align: center;
 
-  @media (min-width: 992px) {
+  @media (width >= 992px) {
     font-size: 2rem;
   }
 `;

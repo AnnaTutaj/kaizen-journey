@@ -13,7 +13,7 @@ export const StyledEmptyImage = styled.img`
   max-height: 400px;
   object-fit: cover;
 
-  @media (max-width: 1600px) {
+  @media (width <= 1600px) {
     max-height: 350px;
   }
 `;
