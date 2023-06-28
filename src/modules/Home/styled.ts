@@ -23,7 +23,7 @@ export const StyledEndingContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: ${({ theme }) => `calc(100vh - ${theme.layout.headerHeight} - ${theme.layout.footerHeight}}`};
+  height: ${({ theme }) => `calc(100vh - ${theme.layout.headerHeight} - ${theme.layout.footerHeight})`};
   min-height: 200px;
   padding: 30px;
   color: ${({ theme }) => theme.antd.colorWhite};
