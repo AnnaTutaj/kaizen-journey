@@ -9,7 +9,7 @@ export const StyledContainer = styled.div<{ $coloredBg: boolean }>`
   ${({ $coloredBg }) =>
     $coloredBg &&
     css`
-      background-color: ${({ theme }) => theme.layout.colorPrimaryBg};
+      background-color: ${({ theme }) => theme.antd.colorPrimaryBgHover};
     `};
 `;
 

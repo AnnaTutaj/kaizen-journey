@@ -6,9 +6,6 @@ export type ILayout = {
   colorHeaderBg: string;
   colorHeaderBgSecondary: string;
   colorHeaderBgTertiary: string;
-  colorPrimaryBg: string;
-  colorPrimaryBgSecondary: string;
-  colorPrimaryHover: string;
   colorSecondary: string;
   colorDarkGray: string;
   colorLightGray: string;
@@ -34,9 +31,6 @@ export const layout = (darkMode: boolean, userTheme: IUserTheme): ILayout => {
     colorHeaderBg,
     colorHeaderBgSecondary: darkMode ? lighten(0.1, colorHeaderBg) : darken(0.1, colorHeaderBg),
     colorHeaderBgTertiary: darkMode ? lighten(0.01, colorHeaderBg) : '#f7f7f7',
-    colorPrimaryBg: darkMode ? colorPalette.primaryColor[130] : colorPalette.primaryColor[40],
-    colorPrimaryBgSecondary: darkMode ? colorPalette.primaryColor[120] : colorPalette.primaryColor[20],
-    colorPrimaryHover: colorPalette.primaryColor[10],
     colorSecondary: colorPalette.secondaryColor.main,
     colorDarkGray: '#6b6b6b',
     colorLightGray: '#e6e6e6',

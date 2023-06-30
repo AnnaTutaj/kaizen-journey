@@ -49,7 +49,7 @@ export const CalendarHeatmapGlobalStyle = createGlobalStyle`
   stroke-width: 2px;
 
   &:hover {
-    stroke: ${({ theme }) => theme.layout.colorPrimaryHover};
+    stroke: ${({ theme }) => theme.antd.colorPrimaryBorder};
     stroke-width: 2px;
   }
 }

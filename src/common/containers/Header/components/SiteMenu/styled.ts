@@ -29,7 +29,7 @@ export const StyledMenu = styled(Menu)<{ $isMobile?: boolean }>`
     }
 
     .ant-menu-item:hover {
-      background-color: ${({ theme }) => theme.layout.colorPrimaryBg};
+      background-color: ${({ theme }) => theme.antd.colorPrimaryBgHover};
     }
   }
 

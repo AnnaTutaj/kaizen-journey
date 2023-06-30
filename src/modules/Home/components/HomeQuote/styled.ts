@@ -30,11 +30,11 @@ export const StyledQuoteContainer = styled.div`
   padding: 40px;
   font-size: ${homeBaseTextSize};
   line-height: ${({ theme }) => theme.antd.lineHeight};
-  background-color: ${({ theme }) => theme.layout.colorPrimaryBg};
+  background-color: ${({ theme }) => theme.antd.colorPrimaryBgHover};
   border-radius: ${({ theme }) => theme.layout.borderRadiusXL};
 `;
 
 export const StyledQuoteMark = styled(FontAwesomeIcon)`
-  color: ${({ theme }) => theme.layout.colorPrimaryBgSecondary};
+  color: ${({ theme }) => theme.antd.colorPrimaryBorderHover};
   font-size: 55px;
 `;
