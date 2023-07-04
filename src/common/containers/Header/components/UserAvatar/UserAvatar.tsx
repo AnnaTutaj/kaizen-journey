@@ -5,7 +5,7 @@ import SettingsModal from '../SettingsModal';
 import { ISettingsModalProps } from '../SettingsModal/SettingsModal';
 import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
-import { faCog, faDownload, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBrush, faCog, faDownload, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faUser as dummyUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generatePath, useNavigate } from 'react-router-dom';
@@ -47,6 +47,16 @@ const UserAvatar: React.FC = () => {
             setSettingsModalConfig({
               handleCancel: () => setSettingsModalConfig(undefined)
             });
+          }
+        },
+        {
+          key: 'customizeTheme',
+          item: {
+            text: intl.formatMessage({ id: 'header.customizeTheme' }),
+            icon: faBrush
+          },
+          onClick: () => {
+            navigate(Paths.CustomizeTheme);
           }
         },
         {

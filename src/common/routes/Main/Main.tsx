@@ -23,6 +23,7 @@ import HomeRoute from '@common/containers/HomeRoute/HomeRoute';
 import { StyledContent } from './styled';
 
 const PageUnderConstruction = lazy(() => import('@common/components/PageUnderConstruction'));
+const CustomizeTheme = lazy(() => import('@modules/CustomizeTheme'));
 const Home = lazy(() => import('@modules/Home'));
 const Gratitude = lazy(() => import('@modules/Gratitude'));
 const Habit = lazy(() => import('@modules/Habit'));
@@ -60,6 +61,14 @@ const Main: React.FC = () => {
               }
             />
             <Route path={Paths.Welcome} element={<Home />} />
+            <Route
+              path={Paths.CustomizeTheme}
+              element={
+                <PrivateRoute>
+                  <CustomizeTheme />
+                </PrivateRoute>
+              }
+            />
             <Route
               path={Paths.Gratitude}
               element={

@@ -51,7 +51,8 @@ export interface IAuthContext {
   login?: (email: string, password: string) => Promise<FirebaseUserCredential>;
   register: (email: string, password: string) => void;
   logout: () => void;
-  updateProfile: (values: Partial<IUserProfile>) => Promise<void>;
+  updateProfileSettings: (values: Partial<IUserProfile>) => Promise<void>;
+  updateProfileTheme: (values: Pick<IUserProfile, 'theme'>) => Promise<void>;
 }
 
 const initUserProfile = {
@@ -75,7 +76,8 @@ export const AuthContext = createContext<IAuthContext>({
   signInWithFacebook: () => {},
   register: () => {},
   logout: () => {},
-  updateProfile: async (values: Partial<IUserProfile>) => {}
+  updateProfileSettings: async () => {},
+  updateProfileTheme: async () => {}
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -130,7 +132,32 @@ export default function AuthContextProvider({ children }: any) {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const updateProfile = async (values: Partial<IUserProfile>) => {
+  const getProfile = async () => {
+    if (!userAuth) {
+      return;
+    }
+
+    setIsUserLoading(true);
+
+    const snap = await getDoc(doc(db, 'users', userAuth.uid));
+
+    if (snap.exists()) {
+      const userSnap = snap.data();
+
+      setUserProfile({
+        uid: userAuth.uid,
+        createdAt: userSnap.createdAt || '',
+        pictureURL: userSnap.pictureURL || '',
+        username: userSnap.username || '',
+        language: userSnap?.language || Language.en,
+        tags: userSnap.tags || [],
+        theme: userSnap.theme || {}
+      });
+    }
+    setIsUserLoading(false);
+  };
+
+  const updateProfileSettings = async (values: Partial<IUserProfile>) => {
     if (userAuth) {
       const userRef = doc(db, 'users', userAuth.uid);
 
@@ -140,24 +167,19 @@ export default function AuthContextProvider({ children }: any) {
         tags: values.tags
       });
 
-      setIsUserLoading(true);
+      getProfile();
+    }
+  };
 
-      const snap = await getDoc(doc(db, 'users', userAuth.uid));
+  const updateProfileTheme = async (values: Pick<IUserProfile, 'theme'>) => {
+    if (userAuth) {
+      const userRef = doc(db, 'users', userAuth.uid);
 
-      if (snap.exists()) {
-        const userSnap = snap.data();
+      await updateDoc(userRef, {
+        theme: values.theme
+      });
 
-        setUserProfile({
-          uid: userAuth.uid,
-          createdAt: userSnap.createdAt || '',
-          pictureURL: userSnap.pictureURL || '',
-          username: userSnap.username || '',
-          language: userSnap?.language || Language.en,
-          tags: userSnap.tags || [],
-          theme: userSnap.theme || {}
-        });
-      }
-      setIsUserLoading(false);
+      getProfile();
     }
   };
 
@@ -219,7 +241,8 @@ export default function AuthContextProvider({ children }: any) {
     login,
     register,
     logout,
-    updateProfile
+    updateProfileSettings,
+    updateProfileTheme
     // forgotPassword,
     // resetPassword
   };

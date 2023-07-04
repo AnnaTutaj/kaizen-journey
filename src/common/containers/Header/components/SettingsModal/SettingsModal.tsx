@@ -19,11 +19,11 @@ interface ISettingsFormProps {
 const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
-  const { updateProfile, userProfile } = useAuth();
+  const { updateProfileSettings, userProfile } = useAuth();
 
   const onFinish = async (values: ISettingsFormProps) => {
     try {
-      await updateProfile(values);
+      await updateProfileSettings(values);
     } catch (error) {
       if (error instanceof FirebaseError) {
         const errorMessage = intl.formatMessage({

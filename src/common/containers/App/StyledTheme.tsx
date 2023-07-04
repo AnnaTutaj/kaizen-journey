@@ -4,12 +4,14 @@ import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import { ThemeProvider } from 'styled-components';
 import { layout } from './layout';
 import GlobalStyle from './GlobalStyle';
-import { useAuth } from '@common/contexts/AuthContext';
+import { IUserTheme, useAuth } from '@common/contexts/AuthContext';
 
 export interface IProps {
   children: JSX.Element;
+  customizeColorsPreview?: IUserTheme;
 }
-const StyledTheme: React.FC<IProps> = ({ children }) => {
+
+const StyledTheme: React.FC<IProps> = ({ children, customizeColorsPreview }) => {
   const { token } = theme.useToken();
   const { darkMode } = useContext(ThemeContext);
   const { userProfile } = useAuth();

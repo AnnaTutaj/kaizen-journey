@@ -2,6 +2,7 @@ export const Paths = {
   Home: '/',
   Welcome: '/welcome',
   Support: '/support',
+  CustomizeTheme: '/customize-theme',
   AccessDenied: '/access-denied',
   PageNotFound: '/page-not-found',
   Gratitude: '/gratitude',
