@@ -5,6 +5,7 @@ export const StyledMenu = styled(Menu)`
   &&& {
     &.ant-menu {
       margin: 0 -20px 20px;
+      background-color: transparent;
 
       @media (width <= 768px) {
         margin: 0 -13px 20px;
