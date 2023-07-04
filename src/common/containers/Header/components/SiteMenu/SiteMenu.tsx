@@ -60,7 +60,7 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
     : [
         {
           key: 'signIn',
-          label: intl.formatMessage({ id: 'header.signIn' }),
+          label: intl.formatMessage({ id: 'header.logIn' }),
           onClick: () => {
             openLoginModal();
             if (hideDrawer) {

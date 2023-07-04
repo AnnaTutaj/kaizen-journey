@@ -4,8 +4,6 @@ import { useIntl } from 'react-intl';
 import { Grid, Switch } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import RegisterModal, { IRegisterModalProps } from './components/RegisterModal/RegisterModal';
-import LoginModal, { ILoginModalProps } from './components/LoginModal/LoginModal';
 import UserAvatar from './components/UserAvatar';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -30,6 +28,7 @@ import {
   StyledMenuDrawerCloseIcon,
   StyledMenuDrawerCloseIconContainer
 } from './styled';
+import AuthModal, { IAuthModalProps, Mode } from './components/AuthModal/AuthModal';
 
 const { useBreakpoint } = Grid;
 
@@ -39,9 +38,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
 
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
-
-  const [registerModalConfig, setRegisterModalConfig] = useState<IRegisterModalProps>();
-  const [loginModalConfig, setLoginModalConfig] = useState<ILoginModalProps>();
+  const [authModalConfig, setAuthModalConfig] = useState<IAuthModalProps>();
 
   const { userAuth } = useAuth();
   const { darkMode, setDarkMode } = useContext(ThemeContext);
@@ -51,14 +48,16 @@ const Header: React.FC = () => {
   const isMobile = !screens.md;
 
   const openRegisterModal = () => {
-    setRegisterModalConfig({
-      handleCancel: () => setRegisterModalConfig(undefined)
+    setAuthModalConfig({
+      initMode: Mode.register,
+      handleCancel: () => setAuthModalConfig(undefined)
     });
   };
 
   const openLoginModal = () => {
-    setLoginModalConfig({
-      handleCancel: () => setLoginModalConfig(undefined)
+    setAuthModalConfig({
+      initMode: Mode.login,
+      handleCancel: () => setAuthModalConfig(undefined)
     });
   };
 
@@ -133,8 +132,7 @@ const Header: React.FC = () => {
         />
       </StyledMenuDrawer>
 
-      {registerModalConfig ? <RegisterModal {...registerModalConfig} /> : null}
-      {loginModalConfig ? <LoginModal {...loginModalConfig} /> : null}
+      {authModalConfig ? <AuthModal {...authModalConfig} /> : null}
     </>
   );
 };

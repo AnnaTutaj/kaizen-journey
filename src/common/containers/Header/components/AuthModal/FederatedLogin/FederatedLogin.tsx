@@ -10,7 +10,7 @@ interface IProps {
   closeModal: () => void;
 }
 
-const RegisterModal: React.FC<IProps> = ({ closeModal }) => {
+const FederatedLogin: React.FC<IProps> = ({ closeModal }) => {
   const intl = useIntl();
   const { signInWithGoogle, signInWithFacebook } = useAuth();
 
@@ -22,7 +22,6 @@ const RegisterModal: React.FC<IProps> = ({ closeModal }) => {
           signInWithFacebook();
         }}
         block
-        // className={styles.ButtonFacebook}
         icon={<FontAwesomeIcon icon={faFacebook} />}
         text={intl.formatMessage({ id: 'federatedLogin.facebook' })}
       />
@@ -40,4 +39,4 @@ const RegisterModal: React.FC<IProps> = ({ closeModal }) => {
   );
 };
 
-export default RegisterModal;
+export default FederatedLogin;

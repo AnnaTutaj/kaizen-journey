@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { useAuth } from '@common/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
-import RegisterModal, { IRegisterModalProps } from '@common/containers/Header/components/RegisterModal/RegisterModal';
 import Button from '@common/components/Button';
 import HomeFeature from './components/HomeFeature/HomeFeature';
 import HomeKaizenMeaning from './components/HomeKaizenMeaning/HomeKaizenMeaning';
@@ -25,13 +24,14 @@ import {
   StyledHeaderTitle,
   StyledLogoImage
 } from './styled';
+import AuthModal, { IAuthModalProps, Mode } from '@common/containers/Header/components/AuthModal/AuthModal';
 
 const Home: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [registerModalConfig, setRegisterModalConfig] = useState<IRegisterModalProps>();
+  const [authModalConfig, setAuthModalConfig] = useState<IAuthModalProps>();
   const divRef = useRef<HTMLDivElement>(null);
 
   const { userProfile } = useAuth();
@@ -55,8 +55,9 @@ const Home: React.FC = () => {
     if (userProfile.uid) {
       navigate(Paths.Support);
     } else {
-      setRegisterModalConfig({
-        handleCancel: () => setRegisterModalConfig(undefined)
+      setAuthModalConfig({
+        initMode: Mode.register,
+        handleCancel: () => setAuthModalConfig(undefined)
       });
     }
   };
@@ -95,7 +96,7 @@ const Home: React.FC = () => {
         </Button>
       </StyledEndingContainer>
 
-      {registerModalConfig ? <RegisterModal {...registerModalConfig} /> : null}
+      {authModalConfig ? <AuthModal {...authModalConfig} /> : null}
     </>
   );
 };
