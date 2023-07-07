@@ -30,7 +30,7 @@ export const StyledHabitTable = styled(Table)`
 
     .${CnNameCol} {
       max-width: 400px;
-      padding: 16px 8px 16px 10px;
+      padding: 16px 4px 16px 10px;
       @media (width <= 768px) {
         max-width: 140px;
       }
@@ -152,13 +152,10 @@ export const StyledHabitName = styled.div`
 `;
 
 export const StyledDropdownCol = styled(Col)`
-  padding-left: 8px;
   text-align: right;
 `;
 
-export const StyledDropdownIconContainer = styled.div`
-  padding: 4px 8px;
-  font-size: 15px;
+const ClickableIconContainerStyle = css`
   text-align: center;
   border-radius: ${({ theme }) => theme.antd.borderRadiusSM}px;
   cursor: pointer;
@@ -167,6 +164,16 @@ export const StyledDropdownIconContainer = styled.div`
     background-color: ${({ theme }) => theme.layout.colorHeaderBgSecondary};
   }
 `;
+export const StyledSettingsIconContainer = styled.div`
+  ${ClickableIconContainerStyle}
+  padding: 4px 8px;
+`;
+
+export const StyledEllipsisIconContainer = styled.div`
+  ${ClickableIconContainerStyle}
+  margin-top: -2px;
+  padding: 2px 8px;
+`;
 
 export const StyledHabitIcon = styled(FontAwesomeIcon)`
   color: ${({ theme }) => theme.antd.colorTextTertiary};
@@ -174,6 +181,7 @@ export const StyledHabitIcon = styled(FontAwesomeIcon)`
 `;
 
 export const StyledSettingsIcon = styled(FontAwesomeIcon)`
+  font-size: 15px;
   color: ${({ theme }) => theme.antd.colorTextTertiary};
 `;
 

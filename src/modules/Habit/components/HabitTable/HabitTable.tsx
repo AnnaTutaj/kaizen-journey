@@ -38,7 +38,7 @@ import {
   StyledDateInfoIcon,
   StyledDateSelectContainer,
   StyledDropdownCol,
-  StyledDropdownIconContainer,
+  StyledEllipsisIconContainer,
   StyledHabitIcon,
   StyledHabitName,
   StyledHabitTable,
@@ -46,9 +46,10 @@ import {
   StyledMonthDay,
   StyledPopoverTitle,
   StyledSettingsIcon,
+  StyledSettingsIconContainer,
   StyledSmallText,
   StyledStreakHeader,
-  StyledStreakValue,
+  StyledStreakValue
 } from './styled';
 import { StyledHeaderText } from '@common/components/HeaderText/styled';
 
@@ -278,9 +279,9 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
                 }
                 trigger="click"
               >
-                <StyledDropdownIconContainer>
+                <StyledSettingsIconContainer>
                   <StyledSettingsIcon icon={faCog} />
-                </StyledDropdownIconContainer>
+                </StyledSettingsIconContainer>
               </Popover>
             </Col>
           </Row>
@@ -291,7 +292,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         fixed: true,
         render: (text, record) => (
           <>
-            <Row wrap={false} align="middle">
+            <Row wrap={false} align="top">
               <Col flex={1}>
                 <Row gutter={10}>
                   <Col>
@@ -311,9 +312,9 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
               </Col>
               <StyledDropdownCol>
                 <Dropdown menuItems={menuItems(record)}>
-                  <StyledDropdownIconContainer>
+                  <StyledEllipsisIconContainer>
                     <StyledHabitIcon icon={faEllipsisV} />
-                  </StyledDropdownIconContainer>
+                  </StyledEllipsisIconContainer>
                 </Dropdown>
               </StyledDropdownCol>
             </Row>
