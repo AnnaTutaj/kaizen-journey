@@ -77,26 +77,24 @@ export const StyledDateSelectContainer = styled.div<{
   background-color: ${({ theme, $backgroundColor }) =>
     $backgroundColor === 'unset' ? 'unset' : theme.layout.colorsCategory[$backgroundColor]};
 
-  @media (hover: hover) {
-    &:hover {
-      ${({ $skipped }) =>
-        $skipped &&
-        css`
-          ${StyledDateHoverIcon} {
-            font-size: ${hoverBiggerIconSize}px;
-          }
-        `}
-      background-color: unset;
-      border: dashed 1px ${({ theme, $borderColor }) => theme.layout.colorsCategory[$borderColor]};
+  &:hover {
+    ${({ $skipped }) =>
+      $skipped &&
+      css`
+        ${StyledDateHoverIcon} {
+          font-size: ${hoverBiggerIconSize}px;
+        }
+      `}
+    background-color: unset;
+    border: dashed 1px ${({ theme, $borderColor }) => theme.layout.colorsCategory[$borderColor]};
 
-      ${StyledDateInfoIcon} {
-        display: none;
-      }
+    ${StyledDateInfoIcon} {
+      display: none;
+    }
 
-      ${StyledDateHoverIcon},
-      ${StyledDateHoverText} {
-        display: block;
-      }
+    ${StyledDateHoverIcon},
+    ${StyledDateHoverText} {
+      display: block;
     }
   }
 `;
@@ -187,4 +185,9 @@ export const StyledSettingsIcon = styled(FontAwesomeIcon)`
 
 export const StyledPopoverTitle = styled.div`
   margin: 8px 0;
+`;
+
+export const StyledTooltipDescription = styled.div`
+  margin-top: 10px;
+  white-space: pre-line;
 `;

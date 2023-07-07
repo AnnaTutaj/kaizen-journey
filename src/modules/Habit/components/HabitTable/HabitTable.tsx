@@ -49,7 +49,8 @@ import {
   StyledSettingsIconContainer,
   StyledSmallText,
   StyledStreakHeader,
-  StyledStreakValue
+  StyledStreakValue,
+  StyledTooltipDescription
 } from './styled';
 import { StyledHeaderText } from '@common/components/HeaderText/styled';
 
@@ -306,7 +307,19 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
                     </Tooltip>
                   </Col>
                   <Col>
-                    <StyledHabitName>{text}</StyledHabitName>
+                    <Tooltip
+                      placement="bottom"
+                      title={
+                        <div>
+                          <div>{text}</div>
+                          {record.description ? (
+                            <StyledTooltipDescription>{record.description}</StyledTooltipDescription>
+                          ) : null}
+                        </div>
+                      }
+                    >
+                      <StyledHabitName>{text}</StyledHabitName>
+                    </Tooltip>
                   </Col>
                 </Row>
               </Col>
