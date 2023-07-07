@@ -168,13 +168,9 @@ export const StyledDropdownIconContainer = styled.div`
   }
 `;
 
-export const StyledVisibilityIconContainer = styled.div`
-  padding: 4px 0 4px 8px;
-`;
-
 export const StyledHabitIcon = styled(FontAwesomeIcon)`
   color: ${({ theme }) => theme.antd.colorTextTertiary};
-  font-size: 13px;
+  font-size: 15px;
 `;
 
 export const StyledSettingsIcon = styled(FontAwesomeIcon)`

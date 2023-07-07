@@ -49,7 +49,6 @@ import {
   StyledSmallText,
   StyledStreakHeader,
   StyledStreakValue,
-  StyledVisibilityIconContainer
 } from './styled';
 import { StyledHeaderText } from '@common/components/HeaderText/styled';
 
@@ -294,19 +293,21 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           <>
             <Row wrap={false} align="middle">
               <Col flex={1}>
-                <StyledHabitName>{text}</StyledHabitName>
-              </Col>
-              <Col>
-                <StyledVisibilityIconContainer>
-                  <Tooltip
-                    placement="bottom"
-                    title={intl.formatMessage({
-                      id: `common.visibility.${record.isPublic ? Visibility.public : Visibility.private}`
-                    })}
-                  >
-                    <StyledHabitIcon icon={record.isPublic ? faGlobe : faLock} />
-                  </Tooltip>
-                </StyledVisibilityIconContainer>
+                <Row gutter={10}>
+                  <Col>
+                    <Tooltip
+                      placement="right"
+                      title={intl.formatMessage({
+                        id: `common.visibility.${record.isPublic ? Visibility.public : Visibility.private}`
+                      })}
+                    >
+                      <StyledHabitIcon icon={record.isPublic ? faGlobe : faLock} />
+                    </Tooltip>
+                  </Col>
+                  <Col>
+                    <StyledHabitName>{text}</StyledHabitName>
+                  </Col>
+                </Row>
               </Col>
               <StyledDropdownCol>
                 <Dropdown menuItems={menuItems(record)}>
