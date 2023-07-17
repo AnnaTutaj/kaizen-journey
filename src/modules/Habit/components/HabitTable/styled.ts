@@ -78,23 +78,25 @@ export const StyledDateSelectContainer = styled.div<{
     $backgroundColor === 'unset' ? 'unset' : theme.layout.colorsCategory[$backgroundColor]};
 
   &:hover {
-    ${({ $skipped }) =>
-      $skipped &&
-      css`
-        ${StyledDateHoverIcon} {
-          font-size: ${hoverBiggerIconSize}px;
-        }
-      `}
-    background-color: unset;
-    border: dashed 1px ${({ theme, $borderColor }) => theme.layout.colorsCategory[$borderColor]};
+    @media (hover: hover) and (pointer: fine) {
+      ${({ $skipped }) =>
+        $skipped &&
+        css`
+          ${StyledDateHoverIcon} {
+            font-size: ${hoverBiggerIconSize}px;
+          }
+        `}
+      background-color: unset;
+      border: dashed 1px ${({ theme, $borderColor }) => theme.layout.colorsCategory[$borderColor]};
 
-    ${StyledDateInfoIcon} {
-      display: none;
-    }
+      ${StyledDateInfoIcon} {
+        display: none;
+      }
 
-    ${StyledDateHoverIcon},
-    ${StyledDateHoverText} {
-      display: block;
+      ${StyledDateHoverIcon},
+      ${StyledDateHoverText} {
+        display: block;
+      }
     }
   }
 `;
