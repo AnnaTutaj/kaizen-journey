@@ -30,7 +30,7 @@ export const StyledHabitTable = styled(Table)`
 
     .${CnNameCol} {
       max-width: 400px;
-      padding: 16px 4px 16px 10px;
+      padding: 8px 4px 8px 10px;
       @media (width <= 768px) {
         max-width: 140px;
       }
@@ -131,8 +131,16 @@ export const StyledMonthDay = styled.div`
   font-size: 22px;
 `;
 
+const mobileFontSizeStyle = css`
+  font-size: ${({ theme }) => theme.antd.fontSizeSM}px;
+`;
+
 export const StyledStreakValue = styled.div`
   padding: 0 10px;
+
+  @media (width <= 768px) {
+    ${mobileFontSizeStyle}
+  }
 `;
 
 export const StyledStreakHeader = styled.div`
@@ -145,10 +153,9 @@ export const StyledStreakHeader = styled.div`
 `;
 
 export const StyledHabitName = styled.div`
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  @media (width <= 768px) {
+    ${mobileFontSizeStyle}
+  }
 `;
 
 export const StyledDropdownCol = styled(Col)`
@@ -171,13 +178,22 @@ export const StyledSettingsIconContainer = styled.div`
 
 export const StyledEllipsisIconContainer = styled.div`
   ${ClickableIconContainerStyle}
-  margin-top: -2px;
+  margin-top: -4px;
   padding: 2px 8px;
 `;
 
 export const StyledHabitIcon = styled(FontAwesomeIcon)`
   color: ${({ theme }) => theme.antd.colorTextTertiary};
   font-size: 15px;
+`;
+
+export const StyledHabitVisibilityIcon = styled(StyledHabitIcon)`
+  font-size: 15px;
+  margin-right: 6px;
+
+  @media (width <= 768px) {
+    font-size: 13px;
+  }
 `;
 
 export const StyledSettingsIcon = styled(FontAwesomeIcon)`

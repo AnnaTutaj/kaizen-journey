@@ -42,6 +42,7 @@ import {
   StyledHabitIcon,
   StyledHabitName,
   StyledHabitTable,
+  StyledHabitVisibilityIcon,
   StyledHeader,
   StyledMonthDay,
   StyledPopoverTitle,
@@ -295,33 +296,30 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           <>
             <Row wrap={false} align="top">
               <Col flex={1}>
-                <Row gutter={10}>
-                  <Col>
-                    <Tooltip
-                      placement="right"
-                      title={intl.formatMessage({
-                        id: `common.visibility.${record.isPublic ? Visibility.public : Visibility.private}`
-                      })}
-                    >
-                      <StyledHabitIcon icon={record.isPublic ? faGlobe : faLock} />
-                    </Tooltip>
-                  </Col>
-                  <Col>
-                    <Tooltip
-                      placement="bottom"
-                      title={
-                        <div>
-                          <div>{text}</div>
-                          {record.description ? (
-                            <StyledTooltipDescription>{record.description}</StyledTooltipDescription>
-                          ) : null}
-                        </div>
-                      }
-                    >
-                      <StyledHabitName>{text}</StyledHabitName>
-                    </Tooltip>
-                  </Col>
-                </Row>
+                <StyledHabitName>
+                  <Tooltip
+                    placement="right"
+                    title={intl.formatMessage({
+                      id: `common.visibility.${record.isPublic ? Visibility.public : Visibility.private}`
+                    })}
+                  >
+                    <StyledHabitVisibilityIcon icon={record.isPublic ? faGlobe : faLock} />
+                  </Tooltip>
+
+                  <Tooltip
+                    placement="bottom"
+                    title={
+                      <div>
+                        <div>{text}</div>
+                        {record.description ? (
+                          <StyledTooltipDescription>{record.description}</StyledTooltipDescription>
+                        ) : null}
+                      </div>
+                    }
+                  >
+                    {text}
+                  </Tooltip>
+                </StyledHabitName>
               </Col>
               <StyledDropdownCol>
                 <Dropdown menuItems={menuItems(record)}>
