@@ -19,7 +19,6 @@ export type ILayout = {
   colorsCategoryHover: ColorsCategory;
   headerHeight: string;
   footerHeight: string;
-  contentPaddingVertical: string;
   borderRadiusXL: string;
 };
 
@@ -44,7 +43,6 @@ export const layout = (darkMode: boolean, userTheme: IUserTheme): ILayout => {
     colorsCategoryHover: colorPalette.categoryColorsHover,
     headerHeight: '60px',
     footerHeight: '80px',
-    contentPaddingVertical: '20px',
     borderRadiusXL: '46px'
   };
 };
