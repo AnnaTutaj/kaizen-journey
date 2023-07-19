@@ -1,4 +1,5 @@
 {
+  "auth/account-exists-with-different-credential": "Account exists with different credential",
   "auth/email-already-in-use": "The email address is already in use by another account",
   "auth/invalid-email": "The email address is badly formatted",
   "auth/requires-recent-login": "This operation is sensitive and requires recent authentication. Log in again before retrying this request",

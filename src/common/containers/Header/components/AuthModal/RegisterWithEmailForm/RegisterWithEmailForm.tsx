@@ -1,10 +1,9 @@
-import { Form, Input, message } from 'antd';
+import { Form, Input } from 'antd';
 import React from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useIntl } from 'react-intl';
 import { serverTimestamp, doc, setDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
-import { FirebaseError } from '@firebase/util';
 import { useSelector } from 'react-redux';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import Button from '@common/components/Button';
@@ -12,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import { StyledContentContainer, StyledTextContainer, StyledTextContainerFooter } from '../styled';
 import { Mode } from '../AuthModal';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 
 export interface IRegisterWithEmailFormProps {
   setMode: React.Dispatch<React.SetStateAction<Mode>>;
@@ -27,6 +27,7 @@ const RegisterWithEmailForm: React.FC<IRegisterWithEmailFormProps> = ({ setMode 
   const intl = useIntl();
   const navigate = useNavigate();
   const auth = getAuth();
+  const { showError } = useErrorMessage();
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
 
   const onFinish = async (values: IRegisterWithEmailFormModelProps) => {
@@ -42,13 +43,7 @@ const RegisterWithEmailForm: React.FC<IRegisterWithEmailFormProps> = ({ setMode 
       await setDoc(doc(db, `users/${createdUser.user.uid}`), { ...newUser });
       navigate(Paths.Habit);
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      }
+      showError(error);
     }
   };
 

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useParams, generatePath } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Col, Grid, message, Space } from 'antd';
+import { Col, Grid, Space } from 'antd';
 import { Paths } from '@common/constants/Paths';
 import UserModel, { IUserModel } from '@common/models/UserModel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +11,6 @@ import Menu from '@common/components/Menu';
 import Avatar from '@common/components/Avatar';
 import { useAuth } from '@common/contexts/AuthContext';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
-import { FirebaseError } from 'firebase/app';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import PageLoading from '@common/components/PageLoading';
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -21,6 +20,7 @@ import SettingsModal, { ISettingsModalProps } from '@common/containers/Header/co
 import Button from '@common/components/Button';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import { StyledHeaderRow, StyledUserDataRow, StyledUserNameContainer } from './styled';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 
 const { useBreakpoint } = Grid;
 
@@ -41,6 +41,7 @@ const User: React.FC = () => {
   const [settingsModalConfig, setSettingsModalConfig] = useState<ISettingsModalProps>();
   const { getFollowingById, followUser, deleteFollowing } = useFriendFollowFetch();
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
+  const { showError } = useErrorMessage();
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -82,16 +83,7 @@ const User: React.FC = () => {
       setIsFollowingLoading(false);
     } catch (error) {
       setIsFollowingLoading(false);
-
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      } else {
-        message.error(intl.formatMessage({ id: 'common.defaultErrorMessage' }));
-      }
+      showError(error);
     }
   };
 
@@ -124,16 +116,7 @@ const User: React.FC = () => {
       setIsFollowingLoading(false);
     } catch (error) {
       setIsFollowingLoading(false);
-
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      } else {
-        message.error(intl.formatMessage({ id: 'common.defaultErrorMessage' }));
-      }
+      showError(error);
     }
   };
 

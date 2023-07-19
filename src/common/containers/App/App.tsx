@@ -9,7 +9,7 @@ import enUS from 'antd/lib/locale/en_US';
 import plPL from 'antd/lib/locale/pl_PL';
 import 'dayjs/locale/pl';
 import { ITranslationConfig } from '@common/lang/config/types';
-import { Language, useAuth } from '@common/contexts/AuthContext';
+import AuthContextProvider, { Language, useAuth } from '@common/contexts/AuthContext';
 import { Locale } from 'antd/lib/locale';
 import { ErrorBoundary } from 'react-error-boundary';
 import PageError from '@common/components/PageError';
@@ -55,16 +55,18 @@ const App: React.FC = () => {
         hashed: false,
         token: antdThemeToken(darkMode, userProfile.theme),
         components: antdThemeComponents(darkMode, userProfile.theme),
-        algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm
       }}
     >
       <StyledTheme>
         <IntlProvider locale={language} messages={appLocale.messages}>
-          <Layout>
-            <ErrorBoundary FallbackComponent={(props) => <PageError onClick={props.resetErrorBoundary} />}>
-              <Main />
-            </ErrorBoundary>
-          </Layout>
+          <AuthContextProvider>
+            <Layout>
+              <ErrorBoundary FallbackComponent={(props) => <PageError onClick={props.resetErrorBoundary} />}>
+                <Main />
+              </ErrorBoundary>
+            </Layout>
+          </AuthContextProvider>
         </IntlProvider>
       </StyledTheme>
     </ConfigProvider>

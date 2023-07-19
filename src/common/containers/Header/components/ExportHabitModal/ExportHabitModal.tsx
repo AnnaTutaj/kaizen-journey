@@ -1,7 +1,6 @@
-import { Form, message } from 'antd';
+import { Form } from 'antd';
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
-import { FirebaseError } from '@firebase/util';
 import FormModal from '@common/components/FormModal';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
@@ -11,6 +10,7 @@ import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import HabitListFiltersModel, { IHabitListFiltersModel } from '@modules/Habit/models/HabitListFiltersModel';
 import { exportlimit, ExportLimit } from '@common/constants/ExportLimit';
 import Select from '@common/components/Select';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 
 export interface IExportHabitModalalProps {
   handleSubmit: () => void;
@@ -25,6 +25,7 @@ const ExportHabitModal: React.FC<IExportHabitModalalProps> = ({ handleSubmit, ha
   const intl = useIntl();
   const [form] = Form.useForm();
   const { getHabits } = useHabitFetch();
+  const { showError } = useErrorMessage();
 
   const handleDownloadJson = useCallback((habits: IHabitModel[]) => {
     const currentDate = dayjs().format('YYYY-MM-DD');
@@ -44,13 +45,7 @@ const ExportHabitModal: React.FC<IExportHabitModalalProps> = ({ handleSubmit, ha
       handleDownloadJson(habits);
       handleSubmit();
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      }
+      showError(error);
     }
   };
 

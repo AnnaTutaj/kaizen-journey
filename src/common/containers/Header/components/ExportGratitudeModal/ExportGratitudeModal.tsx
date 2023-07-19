@@ -1,7 +1,6 @@
-import { Form, message } from 'antd';
+import { Form } from 'antd';
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
-import { FirebaseError } from '@firebase/util';
 import FormModal from '@common/components/FormModal';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import useGratitudeListFetch from '@modules/Gratitude/hooks/useGratitudeListFetch';
@@ -13,6 +12,7 @@ import GratitudeListFiltersModel, {
 } from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import { exportlimit, ExportLimit } from '@common/constants/ExportLimit';
 import Select from '@common/components/Select';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 export interface IExportGratitudeModalalProps {
   handleSubmit: () => void;
   handleCancel: () => void;
@@ -26,6 +26,7 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
   const intl = useIntl();
   const [form] = Form.useForm();
   const { getGratitudes } = useGratitudeListFetch();
+  const { showError } = useErrorMessage();
 
   const handleDownloadJson = useCallback((gratitudes: IGratitudeModel[]) => {
     const currentDate = dayjs().format('YYYY-MM-DD');
@@ -45,13 +46,7 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
       handleDownloadJson(gratitudes);
       handleSubmit();
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      }
+      showError(error);
     }
   };
 

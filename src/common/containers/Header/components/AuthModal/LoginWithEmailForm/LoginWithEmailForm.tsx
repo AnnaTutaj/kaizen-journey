@@ -1,13 +1,13 @@
-import { Form, Input, message } from 'antd';
+import { Form, Input } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { FirebaseError } from '@firebase/util';
 import { useAuth } from '@common/contexts/AuthContext';
 import Button from '@common/components/Button';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import { Mode } from '../AuthModal';
 import { StyledContentContainer, StyledTextContainer, StyledTextContainerFooter } from '../styled';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 
 export interface ILoginWithEmailFormProps {
   setMode: React.Dispatch<React.SetStateAction<Mode>>;
@@ -22,6 +22,7 @@ const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode }) => 
   const intl = useIntl();
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { showError } = useErrorMessage();
 
   const onFinish = async (values: ILoginWithEmailFormModelProps) => {
     try {
@@ -30,13 +31,7 @@ const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode }) => 
       }
       navigate(Paths.Habit);
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      }
+      showError(error);
     }
   };
 

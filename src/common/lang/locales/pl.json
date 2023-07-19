@@ -1,4 +1,5 @@
 {
+  "auth/account-exists-with-different-credential": "Konto istnieje z innymi danymi uwierzytelniającymi",
   "auth/email-already-in-use": "Adres email już jest w użyciu",
   "auth/invalid-email": "Wprowadź poprawny adres email",
   "auth/requires-recent-login": "Wymagane jest ponowne zalogowanie się",

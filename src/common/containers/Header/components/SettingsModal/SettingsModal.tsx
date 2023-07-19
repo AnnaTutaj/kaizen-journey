@@ -1,10 +1,10 @@
-import { Form, Input, message } from 'antd';
+import { Form, Input } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { FirebaseError } from '@firebase/util';
 import { Language, useAuth } from '@common/contexts/AuthContext';
 import FormModal from '@common/components/FormModal';
 import Select, { Option } from '@common/components/Select/Select';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 
 export interface ISettingsModalProps {
   handleCancel: () => void;
@@ -20,18 +20,13 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
   const { updateProfileSettings, userProfile } = useAuth();
+  const { showError } = useErrorMessage();
 
   const onFinish = async (values: ISettingsFormProps) => {
     try {
       await updateProfileSettings(values);
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      }
+      showError(error);
     }
   };
 

@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import UserActions from '@common/redux/UserActions';
 import { useSelector } from 'react-redux';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 
 export enum Language {
   pl = 'pl',
@@ -84,6 +85,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export default function AuthContextProvider({ children }: any) {
   const dispatch = useDispatch();
+  const { showError } = useErrorMessage();
 
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
   const [userAuth, setUserAuth] = useState<FirebaseUser | null>(null);
@@ -217,18 +219,22 @@ export default function AuthContextProvider({ children }: any) {
 
   const signInWithFacebook = async () => {
     const provider = new FacebookAuthProvider();
-    const userCredential = await signInWithPopup(auth, provider);
+    try {
+      const userCredential = await signInWithPopup(auth, provider);
 
-    const details: AdditionalUserInfo | null = getAdditionalUserInfo(userCredential);
-    if (details?.isNewUser) {
-      const newUser = {
-        username: userCredential.user.displayName,
-        pictureURL: userCredential.user.photoURL,
-        language: siteLanguage,
-        createdAt: serverTimestamp()
-      };
+      const details: AdditionalUserInfo | null = getAdditionalUserInfo(userCredential);
+      if (details?.isNewUser) {
+        const newUser = {
+          username: userCredential.user.displayName,
+          pictureURL: userCredential.user.photoURL,
+          language: siteLanguage,
+          createdAt: serverTimestamp()
+        };
 
-      await setDoc(doc(db, `users/${userCredential.user.uid}`), { ...newUser });
+        await setDoc(doc(db, `users/${userCredential.user.uid}`), { ...newUser });
+      }
+    } catch (error) {
+      showError(error);
     }
   };
 

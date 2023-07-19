@@ -1,12 +1,11 @@
-import { message } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
-import { FirebaseError } from '@firebase/util';
 import GratitudeFormModel, { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import GratitudeForm from '@modules/Gratitude/components/GratitudeForm';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 
 export interface IGratitudeUpdateModalProps {
   handleSubmit: () => void;
@@ -16,6 +15,7 @@ export interface IGratitudeUpdateModalProps {
 
 const GratitudeUpdateModal: React.FC<IGratitudeUpdateModalProps> = ({ handleSubmit, handleCancel, gratitude }) => {
   const intl = useIntl();
+  const { showError } = useErrorMessage();
 
   const onFinish = async (values: IGratitudeFormModel) => {
     try {
@@ -27,15 +27,7 @@ const GratitudeUpdateModal: React.FC<IGratitudeUpdateModalProps> = ({ handleSubm
 
       handleSubmit();
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      } else {
-        message.error(intl.formatMessage({ id: 'common.defaultErrorMessage' }));
-      }
+      showError(error);
     }
   };
 

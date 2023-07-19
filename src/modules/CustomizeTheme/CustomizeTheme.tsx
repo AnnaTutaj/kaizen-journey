@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Col, ConfigProvider, Form, Popover, Row, Space, message } from 'antd';
+import { Col, ConfigProvider, Form, Popover, Row, Space } from 'antd';
 import { useIntl } from 'react-intl';
 import { HexColorPicker } from 'react-colorful';
 import {
@@ -17,8 +17,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Button from '@common/components/Button/Button';
 import { useTheme } from 'styled-components';
-import { FirebaseError } from 'firebase/app';
 import FormWrapper from '@common/components/FormWrapper/FormWrapper';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 
 interface ICustomizeThemeFormModel {
   colorPrimary: string;
@@ -28,6 +28,7 @@ const CustomizeTheme: React.FC = () => {
   const intl = useIntl();
   const theme = useTheme();
   const { updateProfileTheme } = useAuth();
+  const { showError } = useErrorMessage();
 
   const [form] = Form.useForm();
   const { darkMode } = useContext(ThemeContext);
@@ -50,13 +51,7 @@ const CustomizeTheme: React.FC = () => {
 
       await updateProfileTheme({ theme: { ...values } });
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      }
+      showError(error);
     }
   };
 console.log("test");

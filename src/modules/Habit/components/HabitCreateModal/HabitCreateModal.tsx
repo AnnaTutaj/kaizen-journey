@@ -1,11 +1,10 @@
-import { message } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { FirebaseError } from '@firebase/util';
 import { useAuth } from '@common/contexts/AuthContext';
 import HabitFormModel, { IHabitFormModel } from '@modules/Habit/models/HabitFormModel';
 import HabitForm from '@modules/Habit/components/HabitForm';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
+import useErrorMessage from '@common/hooks/useErrorMessage';
 
 export interface IHabitCreateModalProps {
   handleSubmit: (habitId: string) => void;
@@ -16,6 +15,7 @@ const HabitCreateModal: React.FC<IHabitCreateModalProps> = ({ handleSubmit, hand
   const intl = useIntl();
   const { userProfile } = useAuth();
   const { createHabit } = useHabitFetch();
+  const { showError } = useErrorMessage();
 
   const onFinish = async (values: IHabitFormModel) => {
     try {
@@ -28,15 +28,7 @@ const HabitCreateModal: React.FC<IHabitCreateModalProps> = ({ handleSubmit, hand
 
       handleSubmit(habitRef?.id);
     } catch (error) {
-      if (error instanceof FirebaseError) {
-        const errorMessage = intl.formatMessage({
-          id: error.code,
-          defaultMessage: intl.formatMessage({ id: 'common.defaultErrorMessage' })
-        });
-        message.error(errorMessage);
-      } else {
-        message.error(intl.formatMessage({ id: 'common.defaultErrorMessage' }));
-      }
+      showError(error);
     }
   };
 
