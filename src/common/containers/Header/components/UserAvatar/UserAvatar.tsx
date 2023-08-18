@@ -13,11 +13,13 @@ import { Paths } from '@common/constants/Paths';
 import ExportGratitudeModal, { IExportGratitudeModalalProps } from '../ExportGratitudeModal/ExportGratitudeModal';
 import ExportHabitModal, { IExportHabitModalalProps } from '../ExportHabitModal/ExportHabitModal';
 import { StyledAvatar } from './styled';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 
 const UserAvatar: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { logout, userProfile } = useAuth();
+  const { logout } = useAuth();
+  const { userProfile } = useUserProfile();
   const [settingsModalConfig, setSettingsModalConfig] = useState<ISettingsModalProps>();
   const [exportGratitudeModalConfig, setExportGratitudeModalConfig] = useState<IExportGratitudeModalalProps>();
   const [exportHabitModalConfig, setExportHabitModalConfig] = useState<IExportHabitModalalProps>();

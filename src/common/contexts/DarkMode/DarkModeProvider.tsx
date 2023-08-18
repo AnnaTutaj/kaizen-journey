@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react';
-import { ThemeContext } from './ThemeContext';
+import { DarkModeContext } from './DarkModeContext';
 
-const ThemeProvider = ({ children }: any) => {
+const DarkModeProvider = ({ children }: any) => {
   const DARK_MODE = 'dark-mode';
 
   const getDarkMode = (): boolean => {
@@ -22,7 +22,7 @@ const ThemeProvider = ({ children }: any) => {
     }
   }, [darkMode]);
 
-  return <ThemeContext.Provider value={{ darkMode, setDarkMode }}>{children}</ThemeContext.Provider>;
+  return <DarkModeContext.Provider value={{ darkMode, setDarkMode }}>{children}</DarkModeContext.Provider>;
 };
 
-export default memo(ThemeProvider) as typeof ThemeProvider;
+export default memo(DarkModeProvider) as typeof DarkModeProvider;

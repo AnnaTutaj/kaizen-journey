@@ -6,7 +6,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import kaizenJourneyLogo from '@assets/kaizen_journey_logo.svg';
 import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
 import { useDispatch } from 'react-redux';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import Button from '@common/components/Button';
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
   const [authModalConfig, setAuthModalConfig] = useState<IAuthModalProps>();
   const divRef = useRef<HTMLDivElement>(null);
 
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
 
   useEffect(() => {
     LayoutActions.setHidePaddingAction(true)(dispatch);

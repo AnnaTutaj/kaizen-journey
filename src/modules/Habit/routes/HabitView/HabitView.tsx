@@ -13,7 +13,7 @@ import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import HabitStatistic from '@modules/Habit/components/HabitStatistic';
 import Tooltip from 'antd/es/tooltip';
 import { Visibility } from '@common/constants/Visibility';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
 import { StyledHeaderContainer } from '@common/components/Header/styled';
@@ -35,7 +35,7 @@ const HabitView: React.FC = () => {
   const intl = useIntl();
   const params = useParams();
   const navigate = useNavigate();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const [habit, setHabit] = useState<IHabitModel | null>(null);
   const [year, setYear] = useState<string>();
   const { getHabitById } = useHabitFetch();

@@ -1,6 +1,6 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-export const ThemeContext = createContext<{
+export const DarkModeContext = createContext<{
   darkMode: boolean;
   setDarkMode: Dispatch<SetStateAction<boolean>>;
 }>({

@@ -9,8 +9,8 @@ import {
   StyledFormItemValue,
   StyledHexColorInput
 } from './styled';
-import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
-import { IUserTheme, useAuth } from '@common/contexts/AuthContext';
+import { DarkModeContext } from '@common/contexts/DarkMode/DarkModeContext';
+import { useAuth } from '@common/contexts/AuthContext';
 import { antdThemeComponents, antdThemeToken } from '@common/containers/App/antdThemeToken';
 import StyledTheme from '@common/containers/App/StyledTheme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,7 +19,7 @@ import Button from '@common/components/Button/Button';
 import { useTheme } from 'styled-components';
 import FormWrapper from '@common/components/FormWrapper/FormWrapper';
 import useErrorMessage from '@common/hooks/useErrorMessage';
-
+import { IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
 interface ICustomizeThemeFormModel {
   colorPrimary: string;
 }
@@ -31,7 +31,7 @@ const CustomizeTheme: React.FC = () => {
   const { showError } = useErrorMessage();
 
   const [form] = Form.useForm();
-  const { darkMode } = useContext(ThemeContext);
+  const { darkMode } = useContext(DarkModeContext);
 
   const colorPrimaryValue = Form.useWatch('colorPrimary', form);
 
@@ -54,7 +54,7 @@ const CustomizeTheme: React.FC = () => {
       showError(error);
     }
   };
-console.log("test");
+
   return (
     <>
       <Row gutter={[20, 20]}>

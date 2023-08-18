@@ -2,7 +2,7 @@ import { Avatar, Col, Divider, Row } from 'antd';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Input } from 'antd';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import Modal from '@common/components/Modal';
 import { IFriendFormModel } from '@modules/Friend/models/FriendFormModel';
 import UserModel, { IUserModel } from '@common/models/UserModel';
@@ -28,7 +28,7 @@ export interface ISearchedUser extends IUserModel {
 
 const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = ({ handleSubmit, handleCancel }) => {
   const intl = useIntl();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const [form] = Form.useForm();
   const [searchedUser, setSearchedUser] = useState<ISearchedUser | null>(null);
   const [notFound, setNotFound] = useState<boolean>(false);

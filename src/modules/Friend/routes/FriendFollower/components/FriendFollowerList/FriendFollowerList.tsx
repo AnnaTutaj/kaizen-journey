@@ -5,13 +5,13 @@ import { useIntl } from 'react-intl';
 import FriendListScrolled from '@modules/Friend/components/FriendListScrolled';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { IFriendFollowerOwnState } from '@modules/Friend/redux/FriendFollower/FriendFollowerInterface';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import FriendFollowerListActions from '@modules/Friend/redux/FriendFollower/FriendFollowerActions';
 
 const FriendFollowerList: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
 
   const { data, isLoaded, isLoadingMore, hasMore } = useSelector(
     ({ friendFollower }: IFriendFollowerOwnState) => friendFollower,

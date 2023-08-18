@@ -16,14 +16,14 @@ import {
 } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import HabitModel, { IHabitModel } from '@modules/Habit/models/HabitModel';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import { IHabitFormModelDTO } from '../models/HabitFormModel';
 import { useCallback } from 'react';
 import { IHabitListFiltersModelDTO } from '../models/HabitListFiltersModel';
 
 const useHabitFetch = () => {
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
 
   const getHabits = useCallback(
     async ({

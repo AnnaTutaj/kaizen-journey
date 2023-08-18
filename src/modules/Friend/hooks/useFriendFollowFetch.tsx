@@ -1,13 +1,13 @@
 import { doc, writeBatch } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import FriendBaseModel, { IFriendBaseModel } from '@modules/Friend/models/FriendBaseModel';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { useCallback } from 'react';
 import FriendFormModel from '../models/FriendFormModel';
 import { IUserModel } from '@common/models/UserModel';
 
 const useFriendFollowFetch = () => {
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
 
   const getFollowingById = useCallback(
     async (userId: string, followingId: string): Promise<IFriendBaseModel | null> => {

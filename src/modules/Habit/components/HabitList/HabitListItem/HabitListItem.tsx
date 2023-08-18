@@ -12,7 +12,7 @@ import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '../../HabitUpdateModal/HabitUpdateModal';
 import { Visibility } from '@common/constants/Visibility';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import { MascotImage } from '@common/constants/MascotImage';
 import {
@@ -36,7 +36,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   const intl = useIntl();
   const navigate = useNavigate();
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const { getHabitById, deleteHabit, archiveHabit, restoreHabit } = useHabitFetch();
 

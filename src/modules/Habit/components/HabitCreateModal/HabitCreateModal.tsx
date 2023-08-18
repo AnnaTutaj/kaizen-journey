@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import HabitFormModel, { IHabitFormModel } from '@modules/Habit/models/HabitFormModel';
 import HabitForm from '@modules/Habit/components/HabitForm';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
@@ -13,7 +13,7 @@ export interface IHabitCreateModalProps {
 
 const HabitCreateModal: React.FC<IHabitCreateModalProps> = ({ handleSubmit, handleCancel }) => {
   const intl = useIntl();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const { createHabit } = useHabitFetch();
   const { showError } = useErrorMessage();
 

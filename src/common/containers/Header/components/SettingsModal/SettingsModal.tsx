@@ -1,10 +1,12 @@
 import { Form, Input } from 'antd';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Language, useAuth } from '@common/contexts/AuthContext';
+import { useAuth } from '@common/contexts/AuthContext';
 import FormModal from '@common/components/FormModal';
 import Select, { Option } from '@common/components/Select/Select';
 import useErrorMessage from '@common/hooks/useErrorMessage';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
+import { Language } from '@common/constants/Language';
 
 export interface ISettingsModalProps {
   handleCancel: () => void;
@@ -19,7 +21,8 @@ interface ISettingsFormProps {
 const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
-  const { updateProfileSettings, userProfile } = useAuth();
+  const { updateProfileSettings } = useAuth();
+  const { userProfile } = useUserProfile();
   const { showError } = useErrorMessage();
 
   const onFinish = async (values: ISettingsFormProps) => {

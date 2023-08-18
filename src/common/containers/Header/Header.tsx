@@ -5,7 +5,7 @@ import { Grid, Switch } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import UserAvatar from './components/UserAvatar';
-import { Language, useAuth } from '@common/contexts/AuthContext';
+import { useAuth } from '@common/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
@@ -14,7 +14,7 @@ import SiteMenu from './components/SiteMenu';
 import { ITranslationConfig } from '@common/lang/config/types';
 import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
-import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
+import { DarkModeContext } from '@common/contexts/DarkMode/DarkModeContext';
 import Select, { Option } from '@common/components/Select/Select';
 import {
   StyledAvatarContainer,
@@ -29,6 +29,7 @@ import {
   StyledMenuDrawerCloseIconContainer
 } from './styled';
 import AuthModal, { IAuthModalProps, Mode } from './components/AuthModal/AuthModal';
+import { Language } from '@common/constants/Language';
 
 const { useBreakpoint } = Grid;
 
@@ -41,7 +42,7 @@ const Header: React.FC = () => {
   const [authModalConfig, setAuthModalConfig] = useState<IAuthModalProps>();
 
   const { userAuth } = useAuth();
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { darkMode, setDarkMode } = useContext(DarkModeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const screens = useBreakpoint();

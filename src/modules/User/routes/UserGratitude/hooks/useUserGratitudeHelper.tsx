@@ -1,9 +1,9 @@
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { IGratitudeListFiltersModel } from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import { useCallback } from 'react';
 
 const useUserGratitudeHelper = () => {
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
 
   const prepareFiltersByUser = useCallback(
     (filters: Partial<IGratitudeListFiltersModel>, userId: string) => {

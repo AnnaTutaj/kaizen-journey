@@ -19,33 +19,11 @@ import UserActions from '@common/redux/UserActions';
 import { useSelector } from 'react-redux';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import useErrorMessage from '@common/hooks/useErrorMessage';
+import { IUserProfile, initUserProfile, useUserProfile } from './UserProfile/UserProfileContext';
+import { Language } from '@common/constants/Language';
 
-export enum Language {
-  pl = 'pl',
-  en = 'en'
-}
-export interface IUserTheme {
-  colorPrimary?: string;
-  secondaryColor?: string;
-  colorCategoryDefault?: string;
-  colorCategoryDefaultHover?: string;
-}
-
-export interface IUserProfile {
-  uid: string;
-  createdAt: {
-    nanoseconds: number;
-    seconds: number;
-  };
-  pictureURL: string;
-  username: string;
-  language: Language | undefined;
-  tags: string[];
-  theme: IUserTheme;
-}
 export interface IAuthContext {
   userAuth: FirebaseUser | null;
-  userProfile: IUserProfile;
   isUserLoading: boolean;
   signInWithGoogle: () => void;
   signInWithFacebook: () => void;
@@ -56,22 +34,8 @@ export interface IAuthContext {
   updateProfileTheme: (values: Pick<IUserProfile, 'theme'>) => Promise<void>;
 }
 
-const initUserProfile = {
-  uid: '',
-  createdAt: {
-    nanoseconds: 0,
-    seconds: 0
-  },
-  pictureURL: '',
-  username: '',
-  language: Language.en,
-  tags: [],
-  theme: {}
-};
-
 export const AuthContext = createContext<IAuthContext>({
   userAuth: null,
-  userProfile: { ...initUserProfile },
   isUserLoading: false,
   signInWithGoogle: () => {},
   signInWithFacebook: () => {},
@@ -86,10 +50,10 @@ export const useAuth = () => useContext(AuthContext);
 export default function AuthContextProvider({ children }: any) {
   const dispatch = useDispatch();
   const { showError } = useErrorMessage();
+  const { setUserProfile } = useUserProfile();
 
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
   const [userAuth, setUserAuth] = useState<FirebaseUser | null>(null);
-  const [userProfile, setUserProfile] = useState<IUserProfile>({ ...initUserProfile });
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -185,16 +149,6 @@ export default function AuthContextProvider({ children }: any) {
     }
   };
 
-  //   function forgotPassword(email) {
-  //     return sendPasswordResetEmail(auth, email, {
-  //       url: `http://localhost:3000/login`
-  //     });
-  //   }
-
-  //   function resetPassword(oobCode, newPassword) {
-  //     return confirmPasswordReset(auth, oobCode, newPassword);
-  //   }
-
   const logout = () => {
     UserActions.userLogoutAction()(dispatch);
     return signOut(auth);
@@ -238,9 +192,8 @@ export default function AuthContextProvider({ children }: any) {
     }
   };
 
-  const value = {
+  const value: IAuthContext = {
     userAuth,
-    userProfile,
     isUserLoading,
     signInWithGoogle,
     signInWithFacebook,
@@ -249,8 +202,6 @@ export default function AuthContextProvider({ children }: any) {
     logout,
     updateProfileSettings,
     updateProfileTheme
-    // forgotPassword,
-    // resetPassword
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

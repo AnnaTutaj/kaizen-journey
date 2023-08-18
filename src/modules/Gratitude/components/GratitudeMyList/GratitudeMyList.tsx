@@ -9,13 +9,13 @@ import GratitudeUpdateModal from '@modules/Gratitude/components/GratitudeUpdateM
 import GratitudeListFiltersModel from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { IGratitudeMyListOwnState } from '@modules/Gratitude/redux/GratitudeMyList/GratitudeMyListInterface';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import GratitudeMyListActions from '@modules/Gratitude/redux/GratitudeMyList/GratitudeMyListActions';
 
 const GratitudeMyList: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
 
   const { data, isLoaded, isLoadingMore, hasMore, filters } = useSelector(
     ({ gratitudeMyList }: IGratitudeMyListOwnState) => gratitudeMyList,

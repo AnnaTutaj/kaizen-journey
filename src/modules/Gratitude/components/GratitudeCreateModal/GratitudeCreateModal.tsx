@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import GratitudeFormModel, { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import GratitudeForm from '@modules/Gratitude/components/GratitudeForm';
 import dayjs from 'dayjs';
@@ -15,7 +15,7 @@ export interface IGratitudeCreateModalProps {
 
 const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubmit, handleCancel }) => {
   const intl = useIntl();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const { showError } = useErrorMessage();
 
   const onFinish = async (values: IGratitudeFormModel) => {

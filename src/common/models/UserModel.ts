@@ -1,11 +1,7 @@
 import { QueryDocumentSnapshot } from '@firebase/firestore';
 import { db } from '@common/util/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-
-export enum Language {
-  pl = 'pl',
-  en = 'en'
-}
+import { Language } from '@common/constants/Language';
 
 export interface IUserModel {
   id: string;

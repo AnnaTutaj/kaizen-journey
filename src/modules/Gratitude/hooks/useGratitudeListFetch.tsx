@@ -1,7 +1,7 @@
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import GratitudeModel from '@modules/Gratitude/models/GratitudeModel';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { IGratitudeListFiltersModelDTO } from '../models/GratitudeListFiltersModel';
 import { useCallback } from 'react';
 
@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const useGratitudeListFetch = () => {
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
 
   const limitFetch = useCallback(({ mode, limitCount }: Pick<IProps, 'mode' | 'limitCount'>): number => {
     if (limitCount) {

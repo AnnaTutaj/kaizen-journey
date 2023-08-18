@@ -1,4 +1,4 @@
-import { IUserTheme } from '@common/contexts/AuthContext';
+import { IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
 import { lighten, darken } from 'polished';
 
 export type ColorsCategory = {

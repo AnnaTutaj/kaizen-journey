@@ -1,5 +1,5 @@
-import { Language } from '@common/contexts/AuthContext';
 import { produce } from 'immer';
+import { Language } from '@common/constants/Language';
 import { LayoutDispatchUnion } from './LayoutActions';
 import { ILayoutState } from './LayoutInterface';
 import { LayoutTypes } from './LayoutTypes';

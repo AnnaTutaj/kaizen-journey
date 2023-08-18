@@ -1,5 +1,5 @@
 import { darken, lighten, rgba } from 'polished';
-import { IUserTheme } from '@common/contexts/AuthContext';
+import { IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
 import { ColorsCategory, userColorPalette } from './ColorPalette';
 
 export type ILayout = {

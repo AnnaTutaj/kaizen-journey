@@ -1,11 +1,11 @@
 import { Select } from 'antd';
 import { useMemo } from 'react';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 
 const { Option } = Select;
 
 const useSelectOptionTag = () => {
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
 
   const selectOptionsTag = useMemo(() => {
     return userProfile.tags.map((tag) => <Option key={tag}>{tag}</Option>);

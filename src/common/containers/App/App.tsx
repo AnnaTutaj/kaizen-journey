@@ -9,7 +9,7 @@ import enUS from 'antd/lib/locale/en_US';
 import plPL from 'antd/lib/locale/pl_PL';
 import 'dayjs/locale/pl';
 import { ITranslationConfig } from '@common/lang/config/types';
-import AuthContextProvider, { Language, useAuth } from '@common/contexts/AuthContext';
+import AuthContextProvider from '@common/contexts/AuthContext';
 import { Locale } from 'antd/lib/locale';
 import { ErrorBoundary } from 'react-error-boundary';
 import PageError from '@common/components/PageError';
@@ -20,8 +20,10 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import minMax from 'dayjs/plugin/minMax';
 import { antdThemeComponents, antdThemeToken } from './antdThemeToken';
-import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
+import { DarkModeContext } from '@common/contexts/DarkMode/DarkModeContext';
 import StyledTheme from './StyledTheme';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
+import { Language } from '@common/constants/Language';
 
 dayjs.extend(minMax);
 dayjs.extend(isSameOrBefore);
@@ -29,8 +31,8 @@ dayjs.extend(localeData);
 dayjs.extend(localizedFormat);
 
 const App: React.FC = () => {
-  const { userProfile } = useAuth();
-  const { darkMode } = useContext(ThemeContext);
+  const { userProfile } = useUserProfile();
+  const { darkMode } = useContext(DarkModeContext);
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
 
   const [language, setLanguage] = useState<ITranslationConfig['locale']>(Language.en);

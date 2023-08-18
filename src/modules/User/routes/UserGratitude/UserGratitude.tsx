@@ -15,7 +15,7 @@ import Button from '@common/components/Button';
 import { DynamicModuleLoader } from 'redux-dynamic-modules';
 import UserGratitudeListModule from '@modules/User/redux/UserGratitudeList/UserGratitudeListModule';
 import { useParams } from 'react-router-dom';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import useUserGratitudeHelper from './hooks/useUserGratitudeHelper';
 import { StyledHeaderContainer, StyledHeaderFilterContainer } from '@common/components/Header/styled';
 
@@ -23,7 +23,7 @@ const UserGratitude: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const params = useParams();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const userId: string = useMemo(() => params.id || '', [params.id]);
   const { prepareFiltersByUser } = useUserGratitudeHelper();
 

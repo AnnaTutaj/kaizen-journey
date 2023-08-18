@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import FriendFollowingList from './components/FriendFollowingList';
 import FriendFollowingCreateModal from '@modules/Friend/components/FriendFollowingCreateModal';
 import { IFriendFollowingCreateModalProps } from '@modules/Friend/components/FriendFollowingCreateModal/FriendFollowingCreateModal';
@@ -16,7 +16,7 @@ const FriendFollowing: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const [friendFollowingCreateModalConfig, setFriendFollowingCreateModalConfig] =
     useState<IFriendFollowingCreateModalProps>();
 

@@ -12,7 +12,7 @@ import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import { Visibility } from '@common/constants/Visibility';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import ImagePreview from '@common/components/ImagePreview';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { StyledEllipsisContainer } from '@common/styled';
 import {
   StyledDate,
@@ -36,7 +36,7 @@ interface IProps {
 
 const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updateGratitude }) => {
   const intl = useIntl();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
 
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 

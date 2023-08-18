@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import _ from 'lodash';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import GratitudeCreateModal from './components/GratitudeCreateModal';
 import GratitudeMyList from './components/GratitudeMyList';
 import { IGratitudeCreateModalProps } from '@modules/Gratitude/components/GratitudeCreateModal/GratitudeCreateModal';
@@ -21,7 +21,7 @@ const Gratitude: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [gratitudeCreateModalConfig, setGratitudeCreateModalConfig] = useState<IGratitudeCreateModalProps>();
 

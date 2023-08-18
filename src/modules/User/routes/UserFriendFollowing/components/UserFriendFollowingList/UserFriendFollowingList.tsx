@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import FriendListScrolled from '@modules/Friend/components/FriendListScrolled';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { IUserFriendFollowingOwnState } from '@modules/User/redux/UserFriendFollowing/UserFriendFollowingInterface';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import UserFriendFollowingListActions from '@modules/User/redux/UserFriendFollowing/UserFriendFollowingActions';
 import { useParams } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const UserFriendFollowingList: React.FC = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const params = useParams();
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const userId: string = useMemo(() => params.id || '', [params.id]);
 
   const { data, isLoaded, isLoadingMore, hasMore } = useSelector(

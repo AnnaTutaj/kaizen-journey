@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faPen, faUser } from '@fortawesome/free-solid-svg-icons';
 import Menu from '@common/components/Menu';
 import Avatar from '@common/components/Avatar';
-import { useAuth } from '@common/contexts/AuthContext';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import PageLoading from '@common/components/PageLoading';
@@ -31,7 +31,7 @@ const User: React.FC = () => {
   const screens = useBreakpoint();
   const isMobile = !screens.md;
 
-  const { userProfile } = useAuth();
+  const { userProfile } = useUserProfile();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [user, setUser] = useState<IUserModel>();
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
