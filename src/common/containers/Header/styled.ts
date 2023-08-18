@@ -65,8 +65,8 @@ export const StyledMenuDrawer = styled(Drawer)`
     }
 
     .ant-menu-item {
-      height: 80px;
-      line-height: 80px;
+      height: 50px;
+      line-height: 50px;
     }
   }
 `;

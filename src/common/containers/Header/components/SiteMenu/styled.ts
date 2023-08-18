@@ -2,15 +2,12 @@ import { Menu } from 'antd';
 import styled, { css } from 'styled-components';
 
 const mobileStyle = css`
-  margin-top: 50px;
-
   .ant-menu-item {
     text-align: center;
   }
 
   .ant-menu-title-content {
-    font-size: 30px;
-    text-transform: uppercase;
+    font-size: ${({ theme }) => theme.antd.fontSizeLG}px;
   }
 `;
 

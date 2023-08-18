@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { Grid, Switch } from 'antd';
+import { Divider, Grid, Switch } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import UserAvatar from './components/UserAvatar';
@@ -30,6 +30,7 @@ import {
 } from './styled';
 import AuthModal, { IAuthModalProps, Mode } from './components/AuthModal/AuthModal';
 import { Language } from '@common/constants/Language';
+import MascotWelcomeImage from './components/MascotWelcomeImage/MascotWelcomeImage';
 
 const { useBreakpoint } = Grid;
 
@@ -120,10 +121,20 @@ const Header: React.FC = () => {
         ) : null}
       </StyledLayoutHeader>
 
-      <StyledMenuDrawer placement="right" closable={false} open={isMenuOpen} width="100vw">
+      <StyledMenuDrawer placement="right" closable={false} open={isMenuOpen} width="80vw">
         <StyledMenuDrawerCloseIconContainer onClick={() => setIsMenuOpen(false)}>
           <StyledMenuDrawerCloseIcon icon={faTimes} />
         </StyledMenuDrawerCloseIconContainer>
+        <div
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate(Paths.Welcome);
+          }}
+          style={{ cursor: 'pointer' }}
+        >
+          <MascotWelcomeImage width={200} />
+        </div>
+        <Divider />
         <SiteMenu
           userAuth={userAuth}
           openLoginModal={openLoginModal}
