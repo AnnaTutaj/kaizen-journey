@@ -3,13 +3,13 @@ import image from '@assets/mascot_welcome.svg';
 import { StyledImageContainer } from './styled';
 
 interface IProps {
-  width?: number;
+  height?: number;
 }
 
-const MascotWelcomeImage: React.FC<IProps> = ({ width }) => {
+const MascotWelcomeImage: React.FC<IProps> = ({ height }) => {
   return (
     <StyledImageContainer>
-      <Image width={width || 300} src={image} alt="Kaizen Journey Mascot" preview={false} />
+      <Image height={height || 180} src={image} alt="Kaizen Journey Mascot" preview={false} />
     </StyledImageContainer>
   );
 };

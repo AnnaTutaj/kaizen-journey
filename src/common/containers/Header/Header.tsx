@@ -132,7 +132,7 @@ const Header: React.FC = () => {
           }}
           style={{ cursor: 'pointer' }}
         >
-          <MascotWelcomeImage width={200} />
+          <MascotWelcomeImage height={100} />
         </div>
         <Divider />
         <SiteMenu
