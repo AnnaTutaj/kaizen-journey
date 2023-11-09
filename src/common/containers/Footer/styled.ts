@@ -1,3 +1,4 @@
+import { StyledColorTextLink } from '@common/components/Link/styled';
 import { Layout } from 'antd';
 import styled from 'styled-components';
 
@@ -18,4 +19,8 @@ export const StyledFooter = styled(Layout.Footer)`
       padding: 0;
     }
   }
+`;
+
+export const StyledAuthorLink = styled(StyledColorTextLink)`
+  white-space: pre;
 `;

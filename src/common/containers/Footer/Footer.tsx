@@ -2,7 +2,7 @@ import React, { useContext, useLayoutEffect, useRef } from 'react';
 import { Space } from 'antd';
 import { useIntl } from 'react-intl';
 import { Paths } from '@common/constants/Paths';
-import { StyledFooter } from './styled';
+import { StyledAuthorLink, StyledFooter } from './styled';
 import { StyledColorTextLink } from '@common/components/Link/styled';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 
@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
       <Space direction="vertical" size={4}>
         <span>
           <span>©2022 - 2023 {intl.formatMessage({ id: 'footer.credits' })} </span>
-          <StyledColorTextLink as="a" href="mailto:tutaj.anna.93@gmail.com">Anna Tutaj—Lamentowicz</StyledColorTextLink>
+          <StyledAuthorLink as="a" href="mailto:tutaj.anna.93@gmail.com">Anna Tutaj—Lamentowicz</StyledAuthorLink>
         </span>
         <Space size={10}>
           <StyledColorTextLink to={Paths.Support}>{intl.formatMessage({ id: 'footer.help' })}</StyledColorTextLink>
