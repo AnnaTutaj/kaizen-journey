@@ -7,7 +7,7 @@ const useUserGratitudeHelper = () => {
 
   const prepareFiltersByUser = useCallback(
     (filters: Partial<IGratitudeListFiltersModel>, userId: string) => {
-      let finalFilters = { ...filters };
+      const finalFilters = { ...filters };
       if (userId !== userProfile.uid) {
         finalFilters.isPublic = true;
       }

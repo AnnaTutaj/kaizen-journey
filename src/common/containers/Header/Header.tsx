@@ -14,7 +14,7 @@ import SiteMenu from './components/SiteMenu';
 import { ITranslationConfig } from '@common/lang/config/types';
 import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
-import { DarkModeContext } from '@common/contexts/DarkMode/DarkModeContext';
+import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import Select, { Option } from '@common/components/Select/Select';
 import {
   StyledAvatarContainer,
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
   const [authModalConfig, setAuthModalConfig] = useState<IAuthModalProps>();
 
   const { userAuth } = useAuth();
-  const { darkMode, setDarkMode } = useContext(DarkModeContext);
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const screens = useBreakpoint();

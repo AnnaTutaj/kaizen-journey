@@ -20,7 +20,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import minMax from 'dayjs/plugin/minMax';
 import { antdThemeComponents, antdThemeToken } from './antdThemeToken';
-import { DarkModeContext } from '@common/contexts/DarkMode/DarkModeContext';
+import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import StyledTheme from './StyledTheme';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { Language } from '@common/constants/Language';
@@ -32,7 +32,7 @@ dayjs.extend(localizedFormat);
 
 const App: React.FC = () => {
   const { userProfile } = useUserProfile();
-  const { darkMode } = useContext(DarkModeContext);
+  const { darkMode } = useContext(ThemeContext);
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
 
   const [language, setLanguage] = useState<ITranslationConfig['locale']>(Language.en);

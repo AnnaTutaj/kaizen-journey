@@ -7,7 +7,6 @@ export const StyledFooter = styled(Layout.Footer)`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: ${({ theme }) => theme.layout.footerHeight};
     text-align: center;
     background-color: ${({ theme }) => theme.layout.colorHeaderBg};
 

@@ -9,7 +9,7 @@ import {
   StyledFormItemValue,
   StyledHexColorInput
 } from './styled';
-import { DarkModeContext } from '@common/contexts/DarkMode/DarkModeContext';
+import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import { useAuth } from '@common/contexts/AuthContext';
 import { antdThemeComponents, antdThemeToken } from '@common/containers/App/antdThemeToken';
 import StyledTheme from '@common/containers/App/StyledTheme';
@@ -31,7 +31,7 @@ const CustomizeTheme: React.FC = () => {
   const { showError } = useErrorMessage();
 
   const [form] = Form.useForm();
-  const { darkMode } = useContext(DarkModeContext);
+  const { darkMode } = useContext(ThemeContext);
 
   const colorPrimaryValue = Form.useWatch('colorPrimary', form);
 

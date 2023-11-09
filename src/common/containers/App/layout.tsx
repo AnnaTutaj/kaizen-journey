@@ -18,11 +18,11 @@ export type ILayout = {
   colorsCategory: ColorsCategory;
   colorsCategoryHover: ColorsCategory;
   headerHeight: string;
-  footerHeight: string;
+  footerHeight: number;
   borderRadiusXL: string;
 };
 
-export const layout = (darkMode: boolean, userTheme: IUserTheme): ILayout => {
+export const layout = (darkMode: boolean, userTheme: IUserTheme): Omit<ILayout, 'footerHeight'> => {
   const colorPalette = userColorPalette(userTheme);
   const colorHeaderBg: string = darkMode ? '#202020' : '#f0f2f5';
 
@@ -42,7 +42,6 @@ export const layout = (darkMode: boolean, userTheme: IUserTheme): ILayout => {
     colorsCategory: colorPalette.categoryColors,
     colorsCategoryHover: colorPalette.categoryColorsHover,
     headerHeight: '60px',
-    footerHeight: '80px',
     borderRadiusXL: '46px'
   };
 };

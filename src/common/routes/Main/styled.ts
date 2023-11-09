@@ -5,7 +5,7 @@ const { Content } = Layout;
 
 export const StyledContent = styled(Content)<{ $hideContentPadding: boolean }>`
   color: ${({ theme }) => theme.antd.colorText};
-  min-height: ${({ theme }) => `calc(100vh - ${theme.layout.headerHeight} - ${theme.layout.footerHeight})`};
+  min-height: ${({ theme }) => `calc(100vh - ${theme.layout.headerHeight} - ${theme.layout.footerHeight}px)`};
   margin-top: ${({ theme }) => theme.layout.headerHeight};
   padding: ${({ theme }) => theme.antd.paddingMD}px 50px;
   background-color: ${(props) => props.theme.antd.colorBgLayout};
