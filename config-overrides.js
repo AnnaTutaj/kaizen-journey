@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable */
 
 const path = require('path');
 const { addWebpackAlias, useBabelRc, override } = require('customize-cra');
@@ -9,6 +9,10 @@ const supportMjs = () => (webpackConfig) => {
     include: /node_modules/,
     type: 'javascript/auto'
   });
+  webpackConfig.resolve.fallback = {
+    buffer: require.resolve('buffer'),
+    stream: require.resolve('stream-browserify')
+  };
   return webpackConfig;
 };
 
