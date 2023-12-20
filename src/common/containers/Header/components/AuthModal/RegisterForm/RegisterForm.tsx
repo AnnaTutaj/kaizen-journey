@@ -3,8 +3,8 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import FederatedLogin from '../FederatedLogin';
 import Button from '@common/components/Button';
-import { StyledContentContainer, StyledTextContainerFooter } from '../styled';
 import { Mode } from '../AuthModal';
+import useStyles from '../useStyles';
 
 export interface IRegisterFormProps {
   handleCancel: () => void;
@@ -13,15 +13,16 @@ export interface IRegisterFormProps {
 
 const RegisterForm: React.FC<IRegisterFormProps> = ({ handleCancel, setMode }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
 
   return (
     <Form name="RegisterForm" layout={'vertical'}>
-      <StyledContentContainer>
+      <div className={styles.contentContainer}>
         <FederatedLogin closeModal={handleCancel} />
         <Button type="link" size="small" onClick={() => setMode(Mode.registerWithEmail)}>
           {intl.formatMessage({ id: 'register.form.registerWithEmailLink' })}
         </Button>
-        <StyledTextContainerFooter>
+        <div className={styles.textContainerFooter}>
           {intl.formatMessage(
             { id: 'register.form.loginText' },
             {
@@ -32,8 +33,8 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ handleCancel, setMode }) =
               )
             }
           )}
-        </StyledTextContainerFooter>
-      </StyledContentContainer>
+        </div>
+      </div>
     </Form>
   );
 };

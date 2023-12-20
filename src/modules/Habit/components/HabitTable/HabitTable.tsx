@@ -23,37 +23,13 @@ import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTr
 import { Visibility } from '@common/constants/Visibility';
 import HabitTableColumnSettings, { ColumnType } from './HabitTableColumnSettings/HabitTableColumnSettings';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import { ITableColumn } from '@common/components/Table/Table';
+import Table, { ITableColumn } from '@common/components/Table/Table';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import Spinner from '@common/components/Spinner';
 import { MascotImage } from '@common/constants/MascotImage';
-import {
-  CnDateCol,
-  CnNameCol,
-  CnStreakCol,
-  StyledDate,
-  StyledDateHeaderContainer,
-  StyledDateHoverIcon,
-  StyledDateHoverText,
-  StyledDateInfoIcon,
-  StyledDateSelectContainer,
-  StyledDropdownCol,
-  StyledEllipsisIconContainer,
-  StyledHabitIcon,
-  StyledHabitName,
-  StyledHabitTable,
-  StyledHabitVisibilityIcon,
-  StyledHeader,
-  StyledMonthDay,
-  StyledPopoverTitle,
-  StyledSettingsIcon,
-  StyledSettingsIconContainer,
-  StyledSmallText,
-  StyledStreakHeader,
-  StyledStreakValue,
-  StyledTooltipDescription
-} from './styled';
-import { StyledHeaderText } from '@common/components/HeaderText/styled';
+import useCommonStyles from '@common/useStyles';
+import { useStyles } from './useStyles';
+import { useTheme } from 'antd-style';
 
 const { useBreakpoint } = Grid;
 
@@ -65,11 +41,13 @@ interface IProps {
 
 const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) => {
   const intl = useIntl();
+  const token = useTheme();
+  const { styles: commonStyles } = useCommonStyles();
+  const { styles, cx } = useStyles();
   const navigate = useNavigate();
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
   const screens = useBreakpoint();
   const range = useSelector(({ habitTracker }: IHabitTrackerOwnState) => habitTracker.rangeLastDays);
-
   const [loadingHabitDate, setLoadingHabitDate] = useState<string[]>([]);
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
@@ -212,17 +190,20 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
       dateCols.push({
         title: () => {
           return (
-            <StyledDateHeaderContainer>
-              <StyledDate $isToday={isToday} ref={(element) => (isToday ? setScrollContainerRef(element) : null)}>
-                <StyledSmallText>{monthShort}</StyledSmallText>
-                <StyledMonthDay>{monthDay}</StyledMonthDay>
-                <StyledSmallText>{weekDayShort}</StyledSmallText>
-              </StyledDate>
-            </StyledDateHeaderContainer>
+            <div className={styles.dateHeaderContainer}>
+              <div
+                className={cx(styles.date, { [styles.dateIsToday]: isToday })}
+                ref={(element) => (isToday ? setScrollContainerRef(element) : null)}
+              >
+                <small className={styles.smallText}>{monthShort}</small>
+                <div className={styles.monthDay}>{monthDay}</div>
+                <small className={styles.smallText}>{weekDayShort}</small>
+              </div>
+            </div>
           );
         },
         key: `date-${i}`,
-        className: CnDateCol,
+        className: styles.dateCol,
         render: (value, record) => {
           const dateStatus = getDateStatus(record, dateKey);
           const isLoading: boolean =
@@ -230,10 +211,15 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           const { icon: hoverIcon, text: hoverText } = getHoverInfoByDateStatus(dateStatus);
 
           return (
-            <StyledDateSelectContainer
-              $skipped={dateStatus === HabitDateStatus.skipped}
-              $borderColor={record.color}
-              $backgroundColor={dateStatus === HabitDateStatus.checked ? record.color : 'unset'}
+            <div
+              className={cx(styles.dateSelectContainer, {
+                [styles.skipped]: dateStatus === HabitDateStatus.skipped
+              })}
+              style={{
+                borderColor: token.layout.colorsCategory[record.color],
+                backgroundColor:
+                  dateStatus === HabitDateStatus.checked ? token.layout.colorsCategory[record.color] : 'unset'
+              }}
               onClick={() => {
                 if (isLoading) {
                   return;
@@ -245,14 +231,27 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
                 <Spinner size="small" />
               ) : (
                 <>
-                  <StyledDateHoverIcon $color={record.color} icon={hoverIcon} />
-                  <StyledDateHoverText $color={record.color}>{hoverText}</StyledDateHoverText>
+                  <FontAwesomeIcon
+                    className={styles.dateHoverIcon}
+                    style={{ color: token.layout.colorsCategoryHover[record.color] }}
+                    icon={hoverIcon}
+                  />
+                  <small
+                    className={styles.dateHoverText}
+                    style={{ color: token.layout.colorsCategoryHover[record.color] }}
+                  >
+                    {hoverText}
+                  </small>
                   {dateStatus === HabitDateStatus.skipped ? (
-                    <StyledDateInfoIcon $color={record.color} icon={getIconByDateStatus(dateStatus)} />
+                    <FontAwesomeIcon
+                      className={styles.dateInfoIcon}
+                      style={{ color: token.layout.colorsCategory[record.color] }}
+                      icon={getIconByDateStatus(dateStatus)}
+                    />
                   ) : null}
                 </>
               )}
-            </StyledDateSelectContainer>
+            </div>
           );
         }
       });
@@ -269,26 +268,26 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
               <Popover
                 placement="bottomLeft"
                 title={
-                  <StyledPopoverTitle>
+                  <div className={styles.popoverTitle}>
                     <Space size={10}>
                       <FontAwesomeIcon icon={faBrush} />
                       {intl.formatMessage({ id: 'habit.table.popover.columnSettings.title' })}
                     </Space>
-                  </StyledPopoverTitle>
+                  </div>
                 }
                 content={
                   <HabitTableColumnSettings visibleColumns={visibleColumns} setVisibleColumns={setVisibleColumns} />
                 }
                 trigger="click"
               >
-                <StyledSettingsIconContainer>
-                  <StyledSettingsIcon icon={faCog} />
-                </StyledSettingsIconContainer>
+                <div className={styles.settingsIconContainer}>
+                  <FontAwesomeIcon className={styles.settingsIcon} icon={faCog} />
+                </div>
               </Popover>
             </Col>
           </Row>
         ),
-        className: CnNameCol,
+        className: styles.nameCol,
         dataIndex: 'name',
         key: 'name',
         fixed: true,
@@ -296,14 +295,14 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           <>
             <Row wrap={false} align="top">
               <Col flex={1}>
-                <StyledHabitName>
+                <div className={styles.habitName}>
                   <Tooltip
                     placement="right"
                     title={intl.formatMessage({
                       id: `common.visibility.${record.isPublic ? Visibility.public : Visibility.private}`
                     })}
                   >
-                    <StyledHabitVisibilityIcon icon={record.isPublic ? faGlobe : faLock} />
+                    <FontAwesomeIcon className={styles.habitVisibilityIcon} icon={record.isPublic ? faGlobe : faLock} />
                   </Tooltip>
 
                   <Tooltip
@@ -312,52 +311,52 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
                       <div>
                         <div>{text}</div>
                         {record.description ? (
-                          <StyledTooltipDescription>{record.description}</StyledTooltipDescription>
+                          <div className={styles.tooltipDescription}>{record.description}</div>
                         ) : null}
                       </div>
                     }
                   >
                     {text}
                   </Tooltip>
-                </StyledHabitName>
+                </div>
               </Col>
-              <StyledDropdownCol>
+              <Col className={styles.dropdownCol}>
                 <Dropdown menuItems={menuItems(record)}>
-                  <StyledEllipsisIconContainer>
-                    <StyledHabitIcon icon={faEllipsisV} />
-                  </StyledEllipsisIconContainer>
+                  <div className={styles.ellipsisIconContainer}>
+                    <FontAwesomeIcon className={styles.habitIcon} icon={faEllipsisV} />
+                  </div>
                 </Dropdown>
-              </StyledDropdownCol>
+              </Col>
             </Row>
           </>
         )
       },
       ...dateCols,
       {
-        title: () => <StyledStreakHeader>{intl.formatMessage({ id: 'habit.currentStreak' })}</StyledStreakHeader>,
-        className: CnStreakCol,
+        title: () => <div className={styles.streakHeader}>{intl.formatMessage({ id: 'habit.currentStreak' })}</div>,
+        className: styles.streakCol,
         key: 'currentStreak',
         fixed: 'right',
         align: 'right',
-        render: (record) => <StyledStreakValue>{record.currentStreak.streakCount}</StyledStreakValue>,
+        render: (record) => <div className={styles.streakValue}>{record.currentStreak.streakCount}</div>,
         visible: () => visibleColumns.includes(ColumnType.currentStreak)
       },
       {
-        title: () => <StyledStreakHeader>{intl.formatMessage({ id: 'habit.longestStreak' })}</StyledStreakHeader>,
-        className: CnStreakCol,
+        title: () => <div className={styles.streakHeader}>{intl.formatMessage({ id: 'habit.longestStreak' })}</div>,
+        className: styles.streakCol,
         key: 'longestStreak',
         fixed: 'right',
         align: 'right',
-        render: (record) => <StyledStreakValue>{record.longestStreak.streakCount}</StyledStreakValue>,
+        render: (record) => <div className={styles.streakValue}>{record.longestStreak.streakCount}</div>,
         visible: () => visibleColumns.includes(ColumnType.longestStreak)
       },
       {
-        title: () => <StyledStreakHeader>{intl.formatMessage({ id: 'habit.totalChecks' })}</StyledStreakHeader>,
-        className: CnStreakCol,
+        title: () => <div className={styles.streakHeader}>{intl.formatMessage({ id: 'habit.totalChecks' })}</div>,
+        className: styles.streakCol,
         key: 'totalChecks',
         fixed: 'right',
         align: 'right',
-        render: (record) => <StyledStreakValue>{record.datesChecked.length}</StyledStreakValue>,
+        render: (record) => <div className={styles.streakValue}>{record.datesChecked.length}</div>,
         visible: () => visibleColumns.includes(ColumnType.totalChecks)
       }
     ];
@@ -371,10 +370,11 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     <>
       {habits && habits.length ? (
         <>
-          <StyledHeader>
-            <StyledHeaderText>{intl.formatMessage({ id: 'habit.table.title' })}</StyledHeaderText>
-          </StyledHeader>
-          <StyledHabitTable<IHabitModel>
+          <div className={styles.header}>
+            <span className={commonStyles.headerText}>{intl.formatMessage({ id: 'habit.table.title' })}</span>
+          </div>
+          <Table<IHabitModel>
+            className={styles.habitTable}
             bordered={true}
             columns={columns()}
             dataSource={habits}

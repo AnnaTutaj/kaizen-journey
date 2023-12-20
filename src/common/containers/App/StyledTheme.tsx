@@ -1,10 +1,22 @@
 import React, { useContext } from 'react';
-import { theme } from 'antd';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider, createStyles } from 'antd-style';
 import { layout } from './layout';
-import GlobalStyle from './GlobalStyle';
 import { IUserTheme, useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
+import { NewToken } from './antdStyle';
+
+const useStyles = createStyles(({ css, token }) => ({
+  customBody: css`
+    margin: 0;
+    color: ${token.colorText};
+    line-height: ${token.lineHeight};
+    background-color: ${token.colorBgLayout};
+
+    h2 {
+      font-weight: 500;
+    }
+  `
+}));
 
 export interface IProps {
   children: JSX.Element;
@@ -12,18 +24,17 @@ export interface IProps {
 }
 
 const StyledTheme: React.FC<IProps> = ({ children }) => {
-  const { token } = theme.useToken();
+  const { styles } = useStyles();
   const { darkMode, footerHeight } = useContext(ThemeContext);
   const { userProfile } = useUserProfile();
 
+  document.body.classList.add(styles.customBody);
+
   return (
-    <ThemeProvider
-      theme={{
-        antd: token,
-        layout: { ...layout(darkMode, userProfile.theme), footerHeight: footerHeight }
-      }}
+    <ThemeProvider<NewToken>
+      customToken={{ layout: { ...layout(darkMode, userProfile.theme), footerHeight: footerHeight } }}
+      appearance={darkMode ? 'dark' : 'light'}
     >
-      <GlobalStyle $darkMode={darkMode} />
       {children}
     </ThemeProvider>
   );

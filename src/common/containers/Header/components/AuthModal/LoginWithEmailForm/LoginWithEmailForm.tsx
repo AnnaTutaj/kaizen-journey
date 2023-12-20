@@ -6,8 +6,8 @@ import Button from '@common/components/Button';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import { Mode } from '../AuthModal';
-import { StyledContentContainer, StyledTextContainer, StyledTextContainerFooter } from '../styled';
 import useErrorMessage from '@common/hooks/useErrorMessage';
+import useStyles from '../useStyles';
 
 export interface ILoginWithEmailFormProps {
   setMode: React.Dispatch<React.SetStateAction<Mode>>;
@@ -20,6 +20,7 @@ interface ILoginWithEmailFormModelProps {
 
 const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
   const navigate = useNavigate();
   const { login } = useAuth();
   const { showError } = useErrorMessage();
@@ -62,8 +63,8 @@ const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode }) => 
           {intl.formatMessage({ id: 'loginWithEmail.form.submit' })}
         </Button>
       </Form.Item>
-      <StyledContentContainer>
-        <StyledTextContainer>
+      <div className={styles.contentContainer}>
+        <div className={styles.textContainer}>
           {intl.formatMessage(
             { id: 'loginWithEmail.form.signUpText' },
             {
@@ -74,8 +75,8 @@ const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode }) => 
               )
             }
           )}
-        </StyledTextContainer>
-        <StyledTextContainerFooter>
+        </div>
+        <div className={styles.textContainerFooter}>
           {intl.formatMessage(
             { id: 'loginWithEmail.form.federatedLoginText' },
             {
@@ -86,8 +87,8 @@ const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode }) => 
               )
             }
           )}
-        </StyledTextContainerFooter>
-      </StyledContentContainer>
+        </div>
+      </div>
     </Form>
   );
 };

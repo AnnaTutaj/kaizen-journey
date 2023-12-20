@@ -8,7 +8,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FormModal from '@common/components/FormModal';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
-import { StyledIconImageRemove } from './styled';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css, token }) => ({
+  iconImageRemove: css`
+    cursor: pointer;
+
+    :hover {
+      color: ${token.colorErrorText};
+    }
+  `
+}));
 
 const { TextArea } = Input;
 
@@ -21,6 +31,7 @@ interface IProps {
 
 const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCancel }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
   const [form] = Form.useForm();
 
   const maxTitleLength = 100;
@@ -126,7 +137,11 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
                       </Form.Item>
                     </Col>
                     <Col>
-                      <StyledIconImageRemove icon={faTrash} onClick={() => remove(field.name)} />
+                      <FontAwesomeIcon
+                        className={styles.iconImageRemove}
+                        icon={faTrash}
+                        onClick={() => remove(field.name)}
+                      />
                     </Col>
                   </Row>
                 </Form.Item>

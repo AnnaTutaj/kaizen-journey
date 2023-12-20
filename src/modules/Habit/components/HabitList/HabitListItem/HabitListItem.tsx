@@ -2,12 +2,12 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { generatePath, useNavigate } from 'react-router-dom';
-import { Col, Tooltip } from 'antd';
+import { Col, List, Row, Tooltip } from 'antd';
 import { faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Paths } from '@common/constants/Paths';
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
-import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
+import Dropdown, { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '../../HabitUpdateModal/HabitUpdateModal';
@@ -15,17 +15,9 @@ import { Visibility } from '@common/constants/Visibility';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import { MascotImage } from '@common/constants/MascotImage';
-import {
-  StyledDescriptionParagraph,
-  StyledDropDownCol,
-  StyledDropdown,
-  StyledDropdownIconContainer,
-  StyledListItem,
-  StyledListItemRow,
-  StyledTitle,
-  StyledVisibilityIcon,
-  StyledVisibilityIconContainer
-} from '@common/components/ListItem/styled';
+import useListItemStyles from '@common/components/ListItem/useStyles';
+import Title from 'antd/es/typography/Title';
+import Paragraph from 'antd/es/typography/Paragraph';
 
 interface IProps {
   habit: IHabitModel;
@@ -34,6 +26,7 @@ interface IProps {
 
 const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   const intl = useIntl();
+  const { styles } = useListItemStyles({ backgroundColor: habit.color, colorHover: habit.color });
   const navigate = useNavigate();
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
   const { userProfile } = useUserProfile();
@@ -147,33 +140,35 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
 
   return (
     <>
-      <StyledListItem $backgroundColor={habit.color}>
-        <StyledListItemRow wrap={false}>
+      <List.Item className={styles.listItem}>
+        <Row className={styles.listItemRow} wrap={false}>
           <Col flex={1}>
-            <StyledTitle level={5}>{habit.name}</StyledTitle>
-            <StyledDescriptionParagraph>{habit.description}</StyledDescriptionParagraph>
+            <Title className={styles.title} level={5}>
+              {habit.name}
+            </Title>
+            <Paragraph className={styles.descriptionParagraph}>{habit.description}</Paragraph>
           </Col>
           <Col>
-            <StyledVisibilityIconContainer>
+            <div className={styles.visibilityIconContainer}>
               <Tooltip
                 placement="bottom"
                 title={intl.formatMessage({
                   id: `common.visibility.${habit.isPublic ? Visibility.public : Visibility.private}`
                 })}
               >
-                <StyledVisibilityIcon icon={habit.isPublic ? faGlobe : faLock} />
+                <FontAwesomeIcon className={styles.visibilityIcon} icon={habit.isPublic ? faGlobe : faLock} />
               </Tooltip>
-            </StyledVisibilityIconContainer>
+            </div>
           </Col>
-          <StyledDropDownCol>
-            <StyledDropdown menuItems={menuItems}>
-              <StyledDropdownIconContainer $colorHover={habit.color}>
+          <Col className={styles.dropDownCol}>
+            <Dropdown className={styles.dropdown} menuItems={menuItems}>
+              <div className={styles.dropdownIconContainer}>
                 <FontAwesomeIcon icon={faEllipsisV} />
-              </StyledDropdownIconContainer>
-            </StyledDropdown>
-          </StyledDropDownCol>
-        </StyledListItemRow>
-      </StyledListItem>
+              </div>
+            </Dropdown>
+          </Col>
+        </Row>
+      </List.Item>
       {habitUpdateModalConfig ? <HabitUpdateModal {...habitUpdateModalConfig} /> : null}
       {confirmModalContextHolder}
     </>

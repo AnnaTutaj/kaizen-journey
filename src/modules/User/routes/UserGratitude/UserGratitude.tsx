@@ -17,7 +17,8 @@ import UserGratitudeListModule from '@modules/User/redux/UserGratitudeList/UserG
 import { useParams } from 'react-router-dom';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import useUserGratitudeHelper from './hooks/useUserGratitudeHelper';
-import { StyledHeaderContainer, StyledHeaderFilterContainer } from '@common/components/Header/styled';
+import FilterContainer from '@common/components/FilterContainer';
+import PageHeader from '@common/components/PageHeader';
 
 const UserGratitude: React.FC = () => {
   const intl = useIntl();
@@ -59,7 +60,7 @@ const UserGratitude: React.FC = () => {
 
   return (
     <>
-      <StyledHeaderContainer>
+      <PageHeader>
         <Button
           onClick={() => {
             setShowFilters((prevState) => !prevState);
@@ -67,9 +68,9 @@ const UserGratitude: React.FC = () => {
           icon={<FontAwesomeIcon icon={faFilter} />}
           text={intl.formatMessage({ id: 'common.filters' })}
         />
-      </StyledHeaderContainer>
+      </PageHeader>
 
-      <StyledHeaderFilterContainer $showFilters={showFilters}>
+      <FilterContainer showFilters={showFilters}>
         <UserGratitudeListFilters
           initialValues={filters}
           hideVisiblity={userId !== userProfile.uid}
@@ -84,7 +85,7 @@ const UserGratitude: React.FC = () => {
             }
           }}
         />
-      </StyledHeaderFilterContainer>
+      </FilterContainer>
 
       <UserGratitudeList />
     </>

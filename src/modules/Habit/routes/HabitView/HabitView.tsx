@@ -16,15 +16,9 @@ import { Visibility } from '@common/constants/Visibility';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
-import { StyledHeaderContainer } from '@common/components/Header/styled';
-import {
-  StyledHabitCalenarHeatmapContainer,
-  StyledHabitDescription,
-  StyledHabitViewContainer,
-  StyledHeaderIcon,
-  StyledSummaryContainerSpace
-} from './styled';
-import { StyledHeaderText } from '@common/components/HeaderText/styled';
+import useCommonStyles from '@common/useStyles';
+import useStyles from './useStyles';
+import PageHeader from '@common/components/PageHeader';
 
 interface IYearSelect {
   label: string;
@@ -33,6 +27,8 @@ interface IYearSelect {
 
 const HabitView: React.FC = () => {
   const intl = useIntl();
+  const { styles } = useStyles();
+  const { styles: commonStyles } = useCommonStyles();
   const params = useParams();
   const navigate = useNavigate();
   const { userProfile } = useUserProfile();
@@ -84,21 +80,23 @@ const HabitView: React.FC = () => {
 
   return (
     <>
-      <StyledHeaderContainer $flexWrap="wrap">
-        <Button
-          onClick={() => handleGoBack()}
-          icon={<FontAwesomeIcon icon={faLongArrowLeft} />}
-          text={intl.formatMessage({ id: 'common.goBack' })}
-        />
-        <Select<IYearSelect['value']>
-          options={yearSelectOptions}
-          defaultValue={year}
-          onChange={(value) => setYear(value)}
-        />
-      </StyledHeaderContainer>
-      <StyledHabitViewContainer>
+      <PageHeader flexWrap="wrap">
+        <>
+          <Button
+            onClick={() => handleGoBack()}
+            icon={<FontAwesomeIcon icon={faLongArrowLeft} />}
+            text={intl.formatMessage({ id: 'common.goBack' })}
+          />
+          <Select<IYearSelect['value']>
+            options={yearSelectOptions}
+            defaultValue={year}
+            onChange={(value) => setYear(value)}
+          />
+        </>
+      </PageHeader>
+      <div className={styles.habitViewContainer}>
         <Space size={12}>
-          <StyledHeaderText>{habit.name}</StyledHeaderText>
+          <span className={commonStyles.headerText}>{habit.name}</span>
           <div>
             <Tooltip
               placement="bottom"
@@ -106,7 +104,7 @@ const HabitView: React.FC = () => {
                 id: `common.visibility.${habit.isPublic ? Visibility.public : Visibility.private}`
               })}
             >
-              <StyledHeaderIcon icon={habit.isPublic ? faGlobe : faLock} />
+              <FontAwesomeIcon className={styles.headerIcon} icon={habit.isPublic ? faGlobe : faLock} />
             </Tooltip>
           </div>
           {habit.isArchived ? (
@@ -116,22 +114,22 @@ const HabitView: React.FC = () => {
                 id: 'habit.archived'
               })}
             >
-              <StyledHeaderIcon icon={faBoxArchive} />
+              <FontAwesomeIcon className={styles.headerIcon} icon={faBoxArchive} />
             </Tooltip>
           ) : null}
         </Space>
-        <StyledHabitDescription>{habit.description}</StyledHabitDescription>
-        <StyledHabitCalenarHeatmapContainer>
+        <div className={styles.habitDescription}>{habit.description}</div>
+        <div className={styles.habitCalenarHeatmapContainer}>
           <HabitCalenarHeatmap habit={habit} year={year} />
-        </StyledHabitCalenarHeatmapContainer>
-        <StyledSummaryContainerSpace size={8} align="center">
-          <StyledHeaderText>{intl.formatMessage({ id: 'common.summary' })}</StyledHeaderText>
+        </div>
+        <Space className={styles.summaryContainerSpace} size={8} align="center">
+          <span className={commonStyles.headerText}>{intl.formatMessage({ id: 'common.summary' })}</span>
           <Tooltip title={intl.formatMessage({ id: 'common.summary.info' })}>
-            <StyledHeaderIcon icon={faInfoCircle} />
+            <FontAwesomeIcon className={styles.headerIcon} icon={faInfoCircle} />
           </Tooltip>
-        </StyledSummaryContainerSpace>
+        </Space>
         <HabitStatistic habit={habit} />
-      </StyledHabitViewContainer>
+      </div>
     </>
   );
 };

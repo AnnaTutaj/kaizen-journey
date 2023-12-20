@@ -1,4 +1,4 @@
-import { Avatar, Col, Row } from 'antd';
+import { Avatar, Col, List, Row } from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,10 +10,9 @@ import { generatePath } from 'react-router-dom';
 import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 import Button from '@common/components/Button';
 import useConfirmModal from '@common/hooks/useConfirmModal';
-import { StyledListItem, StyledListItemRow, StyledTextCol } from './styled';
-import { StyledColorTextLink } from '@common/components/Link/styled';
 import { Link } from 'react-router-dom';
-import { StyledEllipsisContainer } from '@common/styled';
+import useCommonStyles from '@common/useStyles';
+import useStyles from './useStyles';
 
 export type FriendListMode = 'following' | 'follower' | 'viewUser';
 
@@ -26,6 +25,8 @@ interface IProps {
 
 const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing, removeFriendFollower }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
+  const { styles: commonStyles } = useCommonStyles();
   const { deleteFollowing, deleteFollower } = useFriendFollowFetch();
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
@@ -74,8 +75,8 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
   const cratedAtText = dayjs(miliseconds).format('ll');
 
   return (
-    <StyledListItem>
-      <StyledListItemRow justify="space-between" align="middle" wrap={false} gutter={20}>
+    <List.Item className={styles.listItem}>
+      <Row className={styles.listItemRow} justify="space-between" align="middle" wrap={false} gutter={20}>
         <Col flex={1}>
           <Row align="middle" wrap={false} gutter={10}>
             <Col>
@@ -83,14 +84,14 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
                 <Avatar size={40} icon={<FontAwesomeIcon icon={faUser} />} src={friend?.pictureURL} />
               </Link>
             </Col>
-            <StyledTextCol>
-              <StyledColorTextLink to={generatePath(Paths.UserView, { id: friend.id })}>
-                <StyledEllipsisContainer>{friend.username}</StyledEllipsisContainer>
-              </StyledColorTextLink>
+            <Col className={styles.textCol}>
+              <Link className={commonStyles.colorTextLink} to={generatePath(Paths.UserView, { id: friend.id })}>
+                <div className={commonStyles.ellipsisContainer}>{friend.username}</div>
+              </Link>
               <small>
                 {intl.formatMessage({ id: 'common.since' }).toLowerCase()}: {cratedAtText}
               </small>
-            </StyledTextCol>
+            </Col>
           </Row>
         </Col>
         <Col>
@@ -105,9 +106,9 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
             </Button>
           ) : null}
         </Col>
-      </StyledListItemRow>
+      </Row>
       {confirmModalContextHolder}
-    </StyledListItem>
+    </List.Item>
   );
 };
 

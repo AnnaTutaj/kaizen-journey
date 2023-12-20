@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import Button from '@common/components/Button';
-import { StyledFullWidthSpace } from '@common/components/Space/styled';
+import { Space } from 'antd';
 
 interface IProps {
   closeModal: () => void;
@@ -15,7 +15,7 @@ const FederatedLogin: React.FC<IProps> = ({ closeModal }) => {
   const { signInWithGoogle, signInWithFacebook } = useAuth();
 
   return (
-    <StyledFullWidthSpace direction="vertical" size={16}>
+    <Space direction="vertical" size={16}>
       <Button
         onClick={() => {
           closeModal();
@@ -35,7 +35,7 @@ const FederatedLogin: React.FC<IProps> = ({ closeModal }) => {
         icon={<FontAwesomeIcon icon={faGoogle} />}
         text={intl.formatMessage({ id: 'federatedLogin.google' })}
       />
-    </StyledFullWidthSpace>
+    </Space>
   );
 };
 

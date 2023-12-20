@@ -14,20 +14,12 @@ import HomeFeature from './components/HomeFeature/HomeFeature';
 import HomeKaizenMeaning from './components/HomeKaizenMeaning/HomeKaizenMeaning';
 import HomeQuote from './components/HomeQuote/HomeQuote';
 import HomeMascot from './components/HomeMascot/HomeMascot';
-import {
-  SectionEndingTitle,
-  StyledContentContainer,
-  StyledEndingContainer,
-  StyledHeaderContainer,
-  StyledHeaderKaizenJourneySpace,
-  StyledHeaderSubtitle,
-  StyledHeaderTitle,
-  StyledLogoImage
-} from './styled';
 import AuthModal, { IAuthModalProps, Mode } from '@common/containers/Header/components/AuthModal/AuthModal';
+import useStyles from './useStyles';
 
 const Home: React.FC = () => {
   const intl = useIntl();
+  const { styles } = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -64,13 +56,13 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <StyledHeaderContainer>
-        <StyledHeaderKaizenJourneySpace size={16}>
-          <StyledLogoImage src={kaizenJourneyLogo} alt="Kaizen Journey Logo" />
-          <StyledHeaderTitle>Kaizen Journey</StyledHeaderTitle>
-        </StyledHeaderKaizenJourneySpace>
+      <div className={styles.headerContainer}>
+        <Space className={styles.headerKaizenJourneySpace} size={16}>
+          <img className={styles.logoImage} src={kaizenJourneyLogo} alt="Kaizen Journey Logo" />
+          <div className={styles.headerTitle}>Kaizen Journey</div>
+        </Space>
 
-        <StyledHeaderSubtitle>{intl.formatMessage({ id: 'home.header.subtitle' })}</StyledHeaderSubtitle>
+        <div className={styles.headerSubtitle}>{intl.formatMessage({ id: 'home.header.subtitle' })}</div>
         <Space direction="vertical">
           <Button type="primary" onClick={onClick} text={intl.formatMessage({ id: 'home.header.button' })} />
           {intl.formatMessage({ id: 'common.or' }).toLowerCase()}
@@ -81,20 +73,20 @@ const Home: React.FC = () => {
             text={intl.formatMessage({ id: 'home.header.discoverMore' })}
           />
         </Space>
-      </StyledHeaderContainer>
-      <StyledContentContainer ref={divRef}>
+      </div>
+      <div className={styles.contentContainer} ref={divRef}>
         <HomeFeature />
         <HomeKaizenMeaning onClick={onClick} />
         <HomeMascot />
         <HomeQuote />
-      </StyledContentContainer>
-      <StyledEndingContainer>
-        <SectionEndingTitle>{intl.formatMessage({ id: 'home.ending.title' })}</SectionEndingTitle>
+      </div>
+      <div className={styles.endingContainer}>
+        <div className={styles.endingTitle}>{intl.formatMessage({ id: 'home.ending.title' })}</div>
 
         <Button type="primary" onClick={onClick}>
           {intl.formatMessage({ id: 'home.ending.button' })}
         </Button>
-      </StyledEndingContainer>
+      </div>
 
       {authModalConfig ? <AuthModal {...authModalConfig} /> : null}
     </>

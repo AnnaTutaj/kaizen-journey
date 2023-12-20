@@ -3,14 +3,8 @@ import { useIntl } from 'react-intl';
 import fuji from '@assets/fuji.jpg';
 import HomeSectionWrapper from '../HomeSectionWrapper/HomeSectionWrapper';
 import Button from '@common/components/Button/Button';
-import {
-  StyledKaizenMeaningContainer,
-  StyledKanji,
-  StyledKanjiContainer,
-  StyledKanjiDivContainer,
-  StyledKanjiMeaning
-} from './styled';
-import { StyledHomeContainerTwoSections } from '../styled';
+import useStyles from './useStyles';
+import useParentStyles from '../useStyles';
 
 interface IProps {
   onClick: () => void;
@@ -18,11 +12,13 @@ interface IProps {
 
 const HomeFeature: React.FC<IProps> = ({ onClick }) => {
   const intl = useIntl();
+  const { styles } = useStyles({ imageUrl: fuji });
+  const { styles: parentStyles } = useParentStyles();
 
   return (
     <HomeSectionWrapper coloredBg={false} title={intl.formatMessage({ id: 'home.kaizenMeaning.title' })}>
-      <StyledHomeContainerTwoSections>
-        <StyledKaizenMeaningContainer>
+      <div className={parentStyles.homeContainerTwoSections}>
+        <div className={styles.kaizenMeaningContainer}>
           <div>{intl.formatMessage({ id: 'home.kaizenMeaning' })}</div>
           <div>{intl.formatMessage({ id: 'home.kaizenMeaning.description' })}</div>
           <div>
@@ -32,18 +28,18 @@ const HomeFeature: React.FC<IProps> = ({ onClick }) => {
               text={intl.formatMessage({ id: 'home.kaizenMeaning.takeFirstStep.button' })}
             />
           </div>
-        </StyledKaizenMeaningContainer>
-        <StyledKanjiContainer $imageUrl={fuji}>
-          <StyledKanjiDivContainer>
-            <StyledKanji>改</StyledKanji>
-            <StyledKanjiMeaning>Kai = {intl.formatMessage({ id: 'home.change' })}</StyledKanjiMeaning>
-          </StyledKanjiDivContainer>
-          <StyledKanjiDivContainer>
-            <StyledKanji>善</StyledKanji>
-            <StyledKanjiMeaning>Zen = {intl.formatMessage({ id: 'home.forTheBetter' })}</StyledKanjiMeaning>
-          </StyledKanjiDivContainer>
-        </StyledKanjiContainer>
-      </StyledHomeContainerTwoSections>
+        </div>
+        <div className={styles.kanjiContainer}>
+          <div className={styles.kanjiDivContainer}>
+            <div className={styles.kanji}>改</div>
+            <div className={styles.kanjiMeaning}>Kai = {intl.formatMessage({ id: 'home.change' })}</div>
+          </div>
+          <div className={styles.kanjiDivContainer}>
+            <div className={styles.kanji}>善</div>
+            <div className={styles.kanjiMeaning}>Zen = {intl.formatMessage({ id: 'home.forTheBetter' })}</div>
+          </div>
+        </div>
+      </div>
     </HomeSectionWrapper>
   );
 };

@@ -15,7 +15,7 @@ import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTr
 import HabitTrackerActions from '@modules/Habit/redux/HabitTracker/HabitTrackerActions';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
-import { StyledHeaderContainer } from '@common/components/Header/styled';
+import PageHeader from '@common/components/PageHeader';
 
 interface IRangeSelect {
   label: string;
@@ -73,19 +73,21 @@ const HabitTracker: React.FC = () => {
   return (
     <>
       {loading ? <PageLoading /> : null}
-      <StyledHeaderContainer>
-        <Select<IRangeSelect['value']>
-          options={rangeSelectOptions}
-          defaultValue={range}
-          onChange={(value) => HabitTrackerActions.setRangeLastDaysAction(value)(dispatch)}
-        />
-        <Button
-          type="primary"
-          onClick={() => handleCreateHabit()}
-          icon={<FontAwesomeIcon icon={faPlus} />}
-          text={intl.formatMessage({ id: 'habit.create.button' })}
-        />
-      </StyledHeaderContainer>
+      <PageHeader>
+        <>
+          <Select<IRangeSelect['value']>
+            options={rangeSelectOptions}
+            defaultValue={range}
+            onChange={(value) => HabitTrackerActions.setRangeLastDaysAction(value)(dispatch)}
+          />
+          <Button
+            type="primary"
+            onClick={() => handleCreateHabit()}
+            icon={<FontAwesomeIcon icon={faPlus} />}
+            text={intl.formatMessage({ id: 'habit.create.button' })}
+          />
+        </>
+      </PageHeader>
       <HabitTable habits={habits} setHabits={setHabits} isInitialLoaded={isInitialLoaded} />
       {habitCreateModalConfig ? <HabitCreateModal {...habitCreateModalConfig} /> : null}
     </>

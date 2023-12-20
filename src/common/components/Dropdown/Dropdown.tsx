@@ -4,15 +4,10 @@ import { useIntl } from 'react-intl';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { DropdownButtonProps } from 'antd/lib/dropdown';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
-import {
-  DropdownMenuItem,
-  DropdownOverlay,
-  DropdownSubMenuOverlay,
-  GlobalStyle,
-  StyledDropdown,
-  StyledDropdownMenuItemIcon,
-  StyledDropdownMenuItemSpace
-} from './styled';
+import useStyles from './useStyles';
+import { Dropdown as AntDropdown, Space } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 interface IDropdownMenuItemProps {
   key: DropdownMenuKey.update | DropdownMenuKey.delete | string;
   item?: {
@@ -39,6 +34,7 @@ export interface IDropdownMenuProps extends Omit<DropdownButtonProps, 'overlay'>
 
 const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.Element | null => {
   const intl = useIntl();
+  const { styles, cx } = useStyles();
 
   const getDataByKey = (item: IDropdownMenuItemProps): { icon: IconDefinition; text: string } | null => {
     switch (item.key) {
@@ -75,20 +71,23 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
 
     return {
       key: menuItem.key,
-      className: DropdownMenuItem,
+      className: styles.dropdownMenuItem,
       onClick: () => menuItem.onClick?.(),
       label: (
-        <StyledDropdownMenuItemSpace size={16} $colorError={menuItem.key === DropdownMenuKey.delete}>
-          {data.icon ? <StyledDropdownMenuItemIcon icon={data.icon} /> : null}
+        <Space
+          size={16}
+          className={cx({ [styles.dropdownMenuItemSpaceError]: menuItem.key === DropdownMenuKey.delete })}
+        >
+          {data.icon ? <FontAwesomeIcon className={styles.dropdownMenuItemIcon} icon={data.icon} /> : null}
           {data.text}
-        </StyledDropdownMenuItemSpace>
+        </Space>
       ),
       children: menuItem?.items
         ? menuItem.items.map((item) => {
             return renderMenuItem(item);
           })
         : undefined,
-      popupClassName: DropdownSubMenuOverlay
+      popupClassName: styles.dropdownSubMenuOverlay
     };
   };
 
@@ -116,16 +115,13 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
   });
 
   return (
-    <>
-      <GlobalStyle />
-      <StyledDropdown
-        menu={{ items }}
-        overlayClassName={DropdownOverlay}
-        placement="bottomLeft"
-        trigger={['click']}
-        {...props}
-      />
-    </>
+    <AntDropdown
+      menu={{ items }}
+      overlayClassName={styles.dropdownOverlay}
+      placement="bottomLeft"
+      trigger={['click']}
+      {...props}
+    />
   );
 };
 

@@ -12,11 +12,19 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
 import ExportGratitudeModal, { IExportGratitudeModalalProps } from '../ExportGratitudeModal/ExportGratitudeModal';
 import ExportHabitModal, { IExportHabitModalalProps } from '../ExportHabitModal/ExportHabitModal';
-import { StyledAvatar } from './styled';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
+import { createStyles } from 'antd-style';
+import { Avatar } from 'antd';
+
+const useStyles = createStyles(({ css }) => ({
+  avatar: css`
+    cursor: pointer;
+  `
+}));
 
 const UserAvatar: React.FC = () => {
   const intl = useIntl();
+  const { styles } = useStyles();
   const navigate = useNavigate();
   const { logout } = useAuth();
   const { userProfile } = useUserProfile();
@@ -115,7 +123,8 @@ const UserAvatar: React.FC = () => {
   return (
     <>
       <Dropdown menuItems={menuItems}>
-        <StyledAvatar
+        <Avatar
+          className={styles.avatar}
           size={40}
           icon={<FontAwesomeIcon icon={dummyUser} />}
           src={userProfile.pictureURL ? userProfile.pictureURL : undefined}

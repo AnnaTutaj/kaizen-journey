@@ -14,7 +14,7 @@ import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 import Button from '@common/components/Button';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import Alert from '@common/components/Alert';
-import { StyledEllipsisContainer } from '@common/styled';
+import useCommonStyles  from '@common/useStyles';
 import useErrorMessage from '@common/hooks/useErrorMessage';
 
 export interface IFriendFollowingCreateModalProps {
@@ -28,6 +28,7 @@ export interface ISearchedUser extends IUserModel {
 
 const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = ({ handleSubmit, handleCancel }) => {
   const intl = useIntl();
+  const { styles: commonStyles } = useCommonStyles();
   const { userProfile } = useUserProfile();
   const [form] = Form.useForm();
   const [searchedUser, setSearchedUser] = useState<ISearchedUser | null>(null);
@@ -182,9 +183,9 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
                     <Col>
                       <Avatar size={40} icon={<FontAwesomeIcon icon={faUser} />} src={searchedUser?.pictureURL} />
                     </Col>
-                    <StyledEllipsisContainer as={Col}>
+                    <Col className={commonStyles.ellipsisContainer}>
                       <span>{searchedUser.username}</span>
-                    </StyledEllipsisContainer>
+                    </Col>
                   </Row>
                 </Col>
                 <Col>

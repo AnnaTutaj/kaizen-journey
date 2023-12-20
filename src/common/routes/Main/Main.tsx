@@ -20,7 +20,9 @@ import UserGratitude from '@modules/User/routes/UserGratitude';
 import UserFriendFollowing from '@modules/User/routes/UserFriendFollowing';
 import UserFriendFollower from '@modules/User/routes/UserFriendFollower';
 import HomeRoute from '@common/containers/HomeRoute/HomeRoute';
-import { StyledContent } from './styled';
+import useStyles from './useStyles';
+
+const { Content } = Layout;
 
 const PageUnderConstruction = lazy(() => import('@common/components/PageUnderConstruction'));
 const CustomizeTheme = lazy(() => import('@modules/CustomizeTheme'));
@@ -41,6 +43,7 @@ const Main: React.FC = () => {
   const intl = useIntl();
   const { isUserLoading } = useAuth();
   const hideContentPadding = useSelector(({ layout }: ILayoutOwnState) => layout.hideContentPadding);
+  const { styles } = useStyles({ hideContentPadding });
 
   if (isUserLoading) {
     return <PageLoading />;
@@ -49,7 +52,7 @@ const Main: React.FC = () => {
   return (
     <Layout>
       <Header />
-      <StyledContent $hideContentPadding={hideContentPadding}>
+      <Content className={styles.content}>
         <Suspense fallback={<PageLoading />}>
           <Routes>
             <Route
@@ -131,7 +134,7 @@ const Main: React.FC = () => {
             <Route path="*" element={<PageUnderConstruction title="Page Not Found" />} />
           </Routes>
         </Suspense>
-      </StyledContent>
+      </Content>
       <Footer />
     </Layout>
   );

@@ -1,14 +1,7 @@
 import React, { useContext } from 'react';
 import { Col, ConfigProvider, Form, Popover, Row, Space } from 'antd';
 import { useIntl } from 'react-intl';
-import { HexColorPicker } from 'react-colorful';
-import {
-  StyledColorBox,
-  StyledColorContainer,
-  StyledFormContainer,
-  StyledFormItemValue,
-  StyledHexColorInput
-} from './styled';
+import { HexColorInput, HexColorPicker } from 'react-colorful';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import { useAuth } from '@common/contexts/AuthContext';
 import { antdThemeComponents, antdThemeToken } from '@common/containers/App/antdThemeToken';
@@ -16,16 +9,18 @@ import StyledTheme from '@common/containers/App/StyledTheme';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import Button from '@common/components/Button/Button';
-import { useTheme } from 'styled-components';
 import FormWrapper from '@common/components/FormWrapper/FormWrapper';
 import useErrorMessage from '@common/hooks/useErrorMessage';
 import { IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
+import { useTheme } from 'antd-style';
+import useStyles from './useStyles';
 interface ICustomizeThemeFormModel {
   colorPrimary: string;
 }
 
 const CustomizeTheme: React.FC = () => {
   const intl = useIntl();
+  const { styles } = useStyles();
   const theme = useTheme();
   const { updateProfileTheme } = useAuth();
   const { showError } = useErrorMessage();
@@ -59,10 +54,10 @@ const CustomizeTheme: React.FC = () => {
     <>
       <Row gutter={[20, 20]}>
         <Col flex="300px">
-          <StyledFormContainer>
+          <div className={styles.formContainer}>
             <FormWrapper
               name="CustomizeThemeForm"
-              initialValues={{ colorPrimary: theme.antd.colorPrimary }}
+              initialValues={{ colorPrimary: theme.colorPrimary }}
               layout={'horizontal'}
               onFinish={onFinish}
               form={form}
@@ -86,7 +81,8 @@ const CustomizeTheme: React.FC = () => {
                               color={colorPrimaryValue}
                               onChange={(newColor) => setFieldValue('colorPrimary', newColor)}
                             />
-                            <StyledHexColorInput
+                            <HexColorInput
+                              className={styles.hexColorInput}
                               prefixed
                               color={colorPrimaryValue}
                               onChange={(newColor) => setFieldValue('colorPrimary', newColor)}
@@ -95,19 +91,19 @@ const CustomizeTheme: React.FC = () => {
                         }
                         trigger="click"
                       >
-                        <StyledFormItemValue>
-                          <StyledColorContainer>
-                            <StyledColorBox $color={colorPrimaryValue} />
+                        <div className={styles.formItemValue}>
+                          <Space className={styles.colorContainer}>
+                            <div className={styles.colorBox} style={{ backgroundColor: colorPrimaryValue }} />
                             <span>{colorPrimaryValue}</span>
-                          </StyledColorContainer>
-                        </StyledFormItemValue>
+                          </Space>
+                        </div>
                       </Popover>
                     </Form.Item>
                   );
                 }}
               </Form.Item>
             </FormWrapper>
-          </StyledFormContainer>
+          </div>
         </Col>
 
         <Col flex="auto">

@@ -6,7 +6,13 @@ import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong, faCalendarDays, faCheck, faPause } from '@fortawesome/free-solid-svg-icons';
 import Table, { ITableColumn } from '@common/components/Table/Table';
-import { StyledDate } from './styled';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css }) => ({
+  date: css`
+    white-space: nowrap;
+  `
+}));
 
 interface IProps {
   habit: IHabitModel;
@@ -21,6 +27,7 @@ interface IStatistic {
 
 const HabitStatistic: React.FC<IProps> = ({ habit }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
   const { getMinMaxDates } = useHabitHelper();
   const { minDate, maxDate } = getMinMaxDates(habit);
 
@@ -57,11 +64,11 @@ const HabitStatistic: React.FC<IProps> = ({ habit }) => {
         <>
           {record.minDate ? (
             <Space size={8} wrap={true}>
-              <StyledDate>{record.minDate}</StyledDate>
+              <span className={styles.date}>{record.minDate}</span>
               {record.minDate !== record.maxDate ? (
                 <>
                   <FontAwesomeIcon icon={faArrowRightLong} />
-                  <StyledDate>{record.maxDate}</StyledDate>
+                  <span className={styles.date}>{record.maxDate}</span>
                 </>
               ) : null}
             </Space>

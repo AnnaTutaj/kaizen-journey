@@ -5,7 +5,14 @@ import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import GratitudeList from '../GratitudeList';
 import { useIntl } from 'react-intl';
 import Button from '@common/components/Button';
-import { StyledFooter } from './styled';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css }) => ({
+  footer: css`
+    margin-top: 20px;
+    text-align: center;
+  `
+}));
 
 interface IProps {
   gratitudes: IGratitudeModel[];
@@ -27,6 +34,7 @@ const GratitudeListScrolled: React.FC<IProps> = ({
   updateGratitude
 }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
 
   return (
     <>
@@ -45,7 +53,7 @@ const GratitudeListScrolled: React.FC<IProps> = ({
               updateGratitude={updateGratitude}
             />
           </InfiniteScroll>
-          <StyledFooter>
+          <div className={styles.footer}>
             {!loading && moreGratitudes ? (
               <Button type="primary" onClick={getNextGratitudes}>
                 {intl.formatMessage({ id: 'common.list.loadMore' })}
@@ -53,7 +61,7 @@ const GratitudeListScrolled: React.FC<IProps> = ({
             ) : null}
 
             {loading ? <Spin size="large" /> : null}
-          </StyledFooter>
+          </div>
         </>
       ) : null}
     </>

@@ -4,9 +4,9 @@ import Modal from '@common/components/Modal';
 import MascotWelcomeImage from '../MascotWelcomeImage/MascotWelcomeImage';
 import LoginForm from './LoginForm/LoginForm';
 import RegisterForm from './RegisterForm/RegisterForm';
-import { StyledContentContainer } from './styled';
 import LoginWithEmailForm from './LoginWithEmailForm/LoginWithEmailForm';
 import RegisterWithEmailForm from './RegisterWithEmailForm/RegisterWithEmailForm';
+import useStyles from './useStyles';
 
 export enum Mode {
   login = 'login',
@@ -22,6 +22,7 @@ export interface IAuthModalProps {
 
 const AuthModal: React.FC<IAuthModalProps> = ({ initMode, handleCancel }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
   const [mode, setMode] = useState<Mode>(initMode);
 
   const renderContent = () => {
@@ -66,10 +67,10 @@ const AuthModal: React.FC<IAuthModalProps> = ({ initMode, handleCancel }) => {
 
   return (
     <Modal title={title()} open={true} onCancel={handleCancel} width={400}>
-      <StyledContentContainer>
+      <div className={styles.contentContainer}>
         <MascotWelcomeImage />
         {renderContent()}
-      </StyledContentContainer>
+      </div>
     </Modal>
   );
 };

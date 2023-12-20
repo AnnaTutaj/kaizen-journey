@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useParams, generatePath } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Col, Grid, Space } from 'antd';
+import { Col, Grid, Row, Space } from 'antd';
 import { Paths } from '@common/constants/Paths';
 import UserModel, { IUserModel } from '@common/models/UserModel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,8 +19,8 @@ import { MenuItemsProps } from '@common/components/Menu/Menu';
 import SettingsModal, { ISettingsModalProps } from '@common/containers/Header/components/SettingsModal/SettingsModal';
 import Button from '@common/components/Button';
 import useConfirmModal from '@common/hooks/useConfirmModal';
-import { StyledHeaderRow, StyledUserDataRow, StyledUserNameContainer } from './styled';
 import useErrorMessage from '@common/hooks/useErrorMessage';
+import useStyles from './useStyles';
 
 const { useBreakpoint } = Grid;
 
@@ -30,6 +30,7 @@ const User: React.FC = () => {
   const location = useLocation();
   const screens = useBreakpoint();
   const isMobile = !screens.md;
+  const { styles } = useStyles({ isMobile });
 
   const { userProfile } = useUserProfile();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -197,7 +198,7 @@ const User: React.FC = () => {
 
   const renderUserInfo = (
     <>
-      <StyledUserNameContainer>{user.username}</StyledUserNameContainer>
+      <div className={styles.userNameContainer}>{user.username}</div>
       <div>
         {intl.formatMessage({ id: 'user.joined' })} {cratedAtText}
       </div>
@@ -241,8 +242,8 @@ const User: React.FC = () => {
 
   return (
     <>
-      <StyledHeaderRow
-        $isMobile={isMobile}
+      <Row
+        className={styles.headerRow}
         gutter={20}
         wrap={isMobile ? true : false}
         justify={isMobile ? 'center' : 'start'}
@@ -251,12 +252,12 @@ const User: React.FC = () => {
           <Avatar size={150} icon={<FontAwesomeIcon icon={faUser} />} src={user.pictureURL} />
         </Col>
         <Col flex={'auto'}>
-          <StyledUserDataRow justify="space-between" gutter={[10, 10]}>
+          <Row className={styles.userDataRow} justify="space-between" gutter={[10, 10]}>
             <Col span={isMobile ? 24 : ''}>{renderUserInfo}</Col>
             <Col span={isMobile ? 24 : ''}>{renderButtons}</Col>
-          </StyledUserDataRow>
+          </Row>
         </Col>
-      </StyledHeaderRow>
+      </Row>
 
       <Menu selectedKeys={selectedKeys} items={items} />
 

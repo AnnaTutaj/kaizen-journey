@@ -10,10 +10,13 @@ import authorImage_2 from '@assets/authors/Helen_Keller.jpg';
 import authorImage_3 from '@assets/authors/Brian_Tracy.jpg';
 import authorImage_4 from '@assets/authors/Mandy_Hale.jpg';
 import authorImage_5 from '@assets/authors/Robert_Collier.jpg';
-import { CarouselDots, StyledCarousel, StyledQuoteContainer, StyledQuoteMark } from './styled';
+import { Carousel } from 'antd';
+import useStyles from './useStyles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const HomeQuote: React.FC = () => {
   const intl = useIntl();
+  const { styles } = useStyles();
 
   const [quoteAutoplay, setQuoteAutoplay] = useState<boolean>(true);
   const quoteCount = 6;
@@ -48,23 +51,28 @@ const HomeQuote: React.FC = () => {
   const renderQuote = (i: number) => {
     return (
       <div key={i}>
-        <StyledQuoteContainer onTouchStart={() => setQuoteAutoplay(false)} onClick={() => setQuoteAutoplay(false)}>
-          <StyledQuoteMark icon={faQuoteLeft} />
+        <div
+          className={styles.quoteContainer}
+          onTouchStart={() => setQuoteAutoplay(false)}
+          onClick={() => setQuoteAutoplay(false)}
+        >
+          <FontAwesomeIcon className={styles.quoteMark} icon={faQuoteLeft} />
           <div>{intl.formatMessage({ id: `home.quote.${i}.text` })}</div>
           <HomeAuthor
             image={imageList[i].src}
             name={intl.formatMessage({ id: `home.quote.${i}.author` })}
             description={intl.formatMessage({ id: `home.quote.${i}.authorDescription` })}
           />
-        </StyledQuoteContainer>
+        </div>
       </div>
     );
   };
 
   return (
     <HomeSectionWrapper coloredBg={false} title={intl.formatMessage({ id: 'home.quote.title' })}>
-      <StyledCarousel
-        dots={{ className: CarouselDots }}
+      <Carousel
+        className={styles.carousel}
+        dots={{ className: styles.crouselDots }}
         autoplay={quoteAutoplay}
         pauseOnFocus
         pauseOnHover
@@ -72,7 +80,7 @@ const HomeQuote: React.FC = () => {
         draggable
       >
         {_.times(quoteCount, (i) => renderQuote(i))}
-      </StyledCarousel>
+      </Carousel>
     </HomeSectionWrapper>
   );
 };

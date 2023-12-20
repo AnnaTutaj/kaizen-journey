@@ -3,7 +3,8 @@ import { useIntl } from 'react-intl';
 import { User as FirebaseUser } from 'firebase/auth';
 import { Paths } from '@common/constants/Paths';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { StyledMenu } from './styled';
+import { Menu } from 'antd';
+import useStyles from './useStyles';
 
 export interface ISiteMenuProps {
   isMobile?: boolean;
@@ -15,6 +16,7 @@ export interface ISiteMenuProps {
 
 const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal, openRegisterModal, hideDrawer }) => {
   const intl = useIntl();
+  const { styles, cx } = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
   const [currentKeys, setCurrentKeys] = useState<string[]>([]);
@@ -99,8 +101,8 @@ const SiteMenu: React.FC<ISiteMenuProps> = ({ isMobile, userAuth, openLoginModal
   }, [hideDrawer, intl, isMobile, navigate, openLoginModal, openRegisterModal, userAuth]);
 
   return (
-    <StyledMenu
-      $isMobile={isMobile}
+    <Menu
+      className={cx(styles.menu, { [styles.mobileMenu]: isMobile })}
       mode={isMobile ? 'vertical' : 'horizontal'}
       items={items}
       disabledOverflow

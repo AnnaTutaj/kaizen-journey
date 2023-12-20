@@ -4,7 +4,19 @@ import { Typography } from 'antd';
 import { useIntl } from 'react-intl';
 import PageLoading from '../PageLoading';
 import Spinner from '../Spinner';
-import { StyledImage, StyledSpace } from './styled';
+import { Space } from 'antd';
+import Image from '../Image/Image';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css }) => ({
+  space: css`
+    display: block;
+    text-align: center;
+  `,
+  image: css`
+    max-height: 300px;
+  `
+}));
 
 const { Title } = Typography;
 
@@ -13,15 +25,16 @@ interface IProps {
 }
 const PageUnderConstruction: React.FC<IProps> = ({ title }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
 
   return (
     <>
       <PageLoading />
-      <StyledSpace align="center" direction="vertical" size={30}>
+      <Space className={styles.space} align="center" direction="vertical" size={30}>
         <Title level={3}>{title}</Title>
-        <StyledImage src={image} alt="Under construction" preview={false} />
+        <Image className={styles.image} src={image} alt="Under construction" preview={false} />
         <Title level={4}>{intl.formatMessage({ id: 'pageUnderConstruction.title' })}</Title>
-      </StyledSpace>
+      </Space>
       <Spinner />
     </>
   );

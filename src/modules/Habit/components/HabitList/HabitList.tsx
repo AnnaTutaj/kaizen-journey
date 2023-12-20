@@ -1,8 +1,8 @@
 import React from 'react';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import HabitListItem from './HabitListItem/HabitListItem';
-import { StyledList } from '@common/components/List/styled';
-import { StyledHeaderText } from '@common/components/HeaderText/styled';
+import useCommonStyles from '@common/useStyles';
+import List from '@common/components/List/List';
 
 interface IProps {
   habits: IHabitModel[];
@@ -11,9 +11,11 @@ interface IProps {
 }
 
 const HabitList: React.FC<IProps> = ({ habits, setHabits, headerText }) => {
+  const { styles: commonStyles } = useCommonStyles();
+
   return (
-    <StyledList
-      header={<StyledHeaderText>{headerText}</StyledHeaderText>}
+    <List
+      header={<span className={commonStyles.headerText}>{headerText}</span>}
       dataSource={habits}
       renderItem={(item) => {
         return <HabitListItem habit={item} setHabits={setHabits} />;

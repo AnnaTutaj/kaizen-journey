@@ -1,7 +1,16 @@
 import { useState } from 'react';
 import Image from '../Image/Image';
 import { Image as AntDImage } from 'antd';
-import { GlobalStyle, ImagePreviewCn } from './styled';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css, token }) => ({
+  imagePreview: css`
+    min-width: 25px;
+    max-width: 250px;
+    max-height: calc(100vh - ${token.layout.headerHeight} - 10px);
+    object-fit: cover;
+  `
+}));
 
 export interface IImageProps {
   srcs: string[];
@@ -9,6 +18,7 @@ export interface IImageProps {
 
 const ImagePreview: React.FC<IImageProps> = ({ srcs }) => {
   const [visible, setVisible] = useState<boolean>(false);
+  const { styles } = useStyles();
 
   if (!srcs.length) {
     return null;
@@ -16,9 +26,8 @@ const ImagePreview: React.FC<IImageProps> = ({ srcs }) => {
 
   return (
     <>
-      <GlobalStyle />
       <Image
-        rootClassName={ImagePreviewCn}
+        rootClassName={styles.imagePreview}
         preview={{ visible: false }}
         src={srcs[0]}
         onClick={() => setVisible(true)}

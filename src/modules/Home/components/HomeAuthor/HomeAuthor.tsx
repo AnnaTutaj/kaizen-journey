@@ -1,6 +1,19 @@
 import React from 'react';
 import Avatar from '@common/components/Avatar/Avatar';
-import { StyledAuthorDescription, StyledContainer } from './styled';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css }) => ({
+  container: css`
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    text-align: center;
+  `,
+  authorDescription: css`
+    font-size: 0.8rem;
+  `
+}));
 
 interface IProps {
   image: string;
@@ -9,13 +22,15 @@ interface IProps {
 }
 
 const HomeAuthor: React.FC<IProps> = ({ image, name, description }) => {
+  const { styles } = useStyles();
+
   return (
-    <StyledContainer>
+    <div className={styles.container}>
       <Avatar size={64} src={image} />
       <div>{name}</div>
 
-      <StyledAuthorDescription>{description}</StyledAuthorDescription>
-    </StyledContainer>
+      <div className={styles.authorDescription}>{description}</div>
+    </div>
   );
 };
 

@@ -9,9 +9,9 @@ import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import Button from '@common/components/Button';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
-import { StyledContentContainer, StyledTextContainer, StyledTextContainerFooter } from '../styled';
 import { Mode } from '../AuthModal';
 import useErrorMessage from '@common/hooks/useErrorMessage';
+import useStyles from '../useStyles';
 
 export interface IRegisterWithEmailFormProps {
   setMode: React.Dispatch<React.SetStateAction<Mode>>;
@@ -25,6 +25,7 @@ interface IRegisterWithEmailFormModelProps {
 
 const RegisterWithEmailForm: React.FC<IRegisterWithEmailFormProps> = ({ setMode }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
   const navigate = useNavigate();
   const auth = getAuth();
   const { showError } = useErrorMessage();
@@ -79,8 +80,8 @@ const RegisterWithEmailForm: React.FC<IRegisterWithEmailFormProps> = ({ setMode 
         </Button>
       </Form.Item>
 
-      <StyledContentContainer>
-        <StyledTextContainer>
+      <div className={styles.contentContainer}>
+        <div className={styles.textContainer}>
           {intl.formatMessage(
             { id: 'registerWithEmail.form.federatedRegisterText' },
             {
@@ -91,8 +92,8 @@ const RegisterWithEmailForm: React.FC<IRegisterWithEmailFormProps> = ({ setMode 
               )
             }
           )}
-        </StyledTextContainer>
-        <StyledTextContainerFooter>
+        </div>
+        <div className={styles.textContainerFooter}>
           {intl.formatMessage(
             { id: 'registerWithEmail.form.loginText' },
             {
@@ -103,8 +104,8 @@ const RegisterWithEmailForm: React.FC<IRegisterWithEmailFormProps> = ({ setMode 
               )
             }
           )}
-        </StyledTextContainerFooter>
-      </StyledContentContainer>
+        </div>
+      </div>
     </Form>
   );
 };

@@ -2,10 +2,19 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import image from '@assets/mascot_map.svg';
 import HomeSectionWrapper from '../HomeSectionWrapper/HomeSectionWrapper';
-import { StyledImage } from './styled';
+import { homeBlockMaxWidth } from '../styledHelper';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css }) => ({
+  image: css`
+    width: min(100vw, ${homeBlockMaxWidth});
+    object-fit: cover;
+  `
+}));
 
 const HomeMascot: React.FC = () => {
   const intl = useIntl();
+  const { styles } = useStyles();
 
   return (
     <HomeSectionWrapper
@@ -18,7 +27,7 @@ const HomeMascot: React.FC = () => {
         </>
       }
     >
-      <StyledImage src={image} alt="Kaizen Journey Mascot" />
+      <img className={styles.image} src={image} alt="Kaizen Journey Mascot" />
     </HomeSectionWrapper>
   );
 };

@@ -2,7 +2,14 @@ import { Form } from 'antd';
 import { FormProps } from 'antd/es/form';
 import Button from '@common/components/Button';
 import { useState } from 'react';
-import { StyledFooter } from './styled';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css }) => ({
+  footer: css`
+    display: flex;
+    justify-content: flex-end;
+  `
+}));
 
 export interface IForWrapperProps<T> extends FormProps<T> {
   submitButtonText: string;
@@ -11,6 +18,7 @@ export interface IForWrapperProps<T> extends FormProps<T> {
 }
 
 const FormWrapper = <T extends {}>({ submitButtonText, children, ...props }: IForWrapperProps<T>) => {
+  const { styles } = useStyles();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const onFinish = async (values: T) => {
@@ -34,11 +42,11 @@ const FormWrapper = <T extends {}>({ submitButtonText, children, ...props }: IFo
     >
       <>
         {children}
-        <StyledFooter>
+        <div className={styles.footer}>
           <Button type="primary" htmlType="submit" loading={isSubmitting} disabled={isSubmitting}>
             {submitButtonText}
           </Button>
-        </StyledFooter>
+        </div>
       </>
     </Form>
   );

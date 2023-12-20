@@ -3,7 +3,14 @@ import { Form } from 'antd';
 import { FormProps } from 'antd/es/form';
 import Button from '@common/components/Button';
 import { useState } from 'react';
-import { StyledFooter } from './styled';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css }) => ({
+  footer: css`
+    display: flex;
+    justify-content: flex-end;
+  `
+}));
 
 export interface IFormModalProps<T> extends FormProps<T> {
   modalProps: IModalProps;
@@ -13,6 +20,7 @@ export interface IFormModalProps<T> extends FormProps<T> {
 }
 
 const FormModal = <T extends {}>({ modalProps, submitButtonText, children, ...props }: IFormModalProps<T>) => {
+  const { styles } = useStyles();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const onFinish = async (values: T) => {
@@ -37,13 +45,13 @@ const FormModal = <T extends {}>({ modalProps, submitButtonText, children, ...pr
       >
         <>
           {children}
-          <StyledFooter>
+          <div className={styles.footer}>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={isSubmitting} disabled={isSubmitting}>
                 {submitButtonText}
               </Button>
             </Form.Item>
-          </StyledFooter>
+          </div>
         </>
       </Form>
     </Modal>

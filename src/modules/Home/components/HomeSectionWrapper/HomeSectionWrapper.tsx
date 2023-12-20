@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledContainer, StyledDescription, StyledTitle } from './styled';
+import useStyles from './useStyles';
 
 interface IProps {
   coloredBg: boolean;
@@ -9,12 +9,14 @@ interface IProps {
 }
 
 const HomeSectionWrapper: React.FC<IProps> = ({ coloredBg, title, description, children }) => {
+  const { styles } = useStyles({ coloredBg, description: !!description });
+
   return (
-    <StyledContainer $coloredBg={coloredBg}>
-      <StyledTitle $description={!!description}>{title}</StyledTitle>
-      {description ? <StyledDescription>{description}</StyledDescription> : null}
+    <div className={styles.container}>
+      <h2 className={styles.title}>{title}</h2>
+      {description ? <div className={styles.description}>{description}</div> : null}
       {children}
-    </StyledContainer>
+    </div>
   );
 };
 

@@ -6,13 +6,7 @@ import { Space, Tooltip } from 'antd';
 import { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
-import {
-  CalendarHeatmapGlobalStyle,
-  StyledLegendColor,
-  StyledLegendColorSkipped,
-  StyledLegendColorToday,
-  StyledLegendContainer
-} from './styled';
+import useStyles from './useStyles';
 
 interface IProps {
   habit: IHabitModel;
@@ -26,6 +20,7 @@ interface ICalendarHeatMapValue {
 
 const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
   const intl = useIntl();
+  const { styles } = useStyles({ habitColor: habit.color });
   const { getDateStatus } = useHabitHelper();
 
   const selectedYear = dayjs(year).format('YYYY-MM-DD');
@@ -64,8 +59,7 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
   };
 
   return (
-    <>
-      <CalendarHeatmapGlobalStyle />
+    <div className={styles.container}>
       <CalendarHeatmap
         startDate={startDate}
         endDate={endDate}
@@ -97,23 +91,23 @@ const HabitCalendarHeatmap: React.FC<IProps> = ({ habit, year }) => {
           return classCell;
         }}
       />
-      <StyledLegendContainer>
+      <div className={styles.legendContainer}>
         <Space size={20}>
           <Space>
-            <StyledLegendColor $backgroundColor={habit.color} />
+            <div className={styles.legendColor} />
             {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.marked' })}
           </Space>
           <Space>
-            <StyledLegendColorSkipped />
+            <div className={styles.legendColorSkipped} />
             {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.skipped' })}
           </Space>
           <Space>
-            <StyledLegendColorToday />
+            <div className={styles.legendColorToday} />
             {intl.formatMessage({ id: 'habit.calendarHeatmap.legend.today' })}
           </Space>
         </Space>
-      </StyledLegendContainer>
-    </>
+      </div>
+    </div>
   );
 };
 

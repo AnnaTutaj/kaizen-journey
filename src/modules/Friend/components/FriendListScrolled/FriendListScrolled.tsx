@@ -6,7 +6,14 @@ import FriendList from '@modules/Friend/components/FriendList';
 import { useIntl } from 'react-intl';
 import { FriendListMode } from '@modules/Friend/components/FriendList/FriendListItem/FriendListItem';
 import Button from '@common/components/Button';
-import { StyledFooter } from './styled';
+import { createStyles } from 'antd-style';
+
+const useStyles = createStyles(({ css }) => ({
+  footer: css`
+    margin-top: 20px;
+    text-align: center;
+  `
+}));
 
 interface IProps {
   friends: IFriendBaseModel[];
@@ -30,6 +37,7 @@ const FriendListScrolled: React.FC<IProps> = ({
   removeFriendFollower
 }) => {
   const intl = useIntl();
+  const { styles } = useStyles();
 
   return (
     <>
@@ -44,7 +52,7 @@ const FriendListScrolled: React.FC<IProps> = ({
               removeFriendFollower={removeFriendFollower}
             />
           </InfiniteScroll>
-          <StyledFooter>
+          <div className={styles.footer}>
             {!loading && moreFriends ? (
               <Button type="primary" onClick={getNextFriends}>
                 {intl.formatMessage({ id: 'common.list.loadMore' })}
@@ -52,7 +60,7 @@ const FriendListScrolled: React.FC<IProps> = ({
             ) : null}
 
             {loading ? <Spin size="large" /> : null}
-          </StyledFooter>
+          </div>
         </>
       ) : null}
     </>
