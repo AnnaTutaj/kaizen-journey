@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Input, DatePicker, Row, Col } from 'antd';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
@@ -9,6 +9,7 @@ import FormModal from '@common/components/FormModal';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
 import { createStyles } from 'antd-style';
+import { useWatch } from 'antd/es/form/Form';
 
 const useStyles = createStyles(({ css, token }) => ({
   iconImageRemove: css`
@@ -33,20 +34,27 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
   const intl = useIntl();
   const { styles } = useStyles();
   const [form] = Form.useForm();
+  const imageUrls: string[] | undefined = useWatch('imageURLs', form);
+
+  useEffect(() => {
+    if (!imageUrls) {
+      return;
+    }
+
+    const validUrls = imageUrls.map((url) => {
+      if (url.includes('https://drive.google.com/file/d/')) {
+        const splitText = url.split('/');
+        return `https://drive.google.com/uc?id=${splitText[5]}`;
+      }
+
+      return url;
+    });
+
+    form.setFieldValue('imageURLs', validUrls);
+  }, [imageUrls]);
 
   const maxTitleLength = 100;
   const maxDescriptionLength = 2000;
-
-  const handleOnPaste = (e: any, filedNumber: number) => {
-    const pastedText = e.clipboardData.getData('Text');
-    if (pastedText.includes('https://drive.google.com/file/d/')) {
-      e.preventDefault();
-      const splitText = pastedText.split('/');
-      const convertedUrls = form.getFieldValue('imageURLs');
-      convertedUrls[filedNumber] = `https://drive.google.com/uc?id=${splitText[5]}`;
-      form.setFieldValue('imageURLs', convertedUrls);
-    }
-  };
 
   return (
     <FormModal<IGratitudeFormModel>
@@ -133,7 +141,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
                         ]}
                         noStyle
                       >
-                        <Input onPaste={(e) => handleOnPaste(e, field.name)} />
+                        <Input />
                       </Form.Item>
                     </Col>
                     <Col>
@@ -149,7 +157,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
               <Form.Item>
                 <Button
                   type="dashed"
-                  onClick={() => add()}
+                  onClick={() => add('')}
                   block
                   icon={<FontAwesomeIcon icon={faPlus} />}
                   text={intl.formatMessage({ id: 'gratitude.form.field.addLink' })}
