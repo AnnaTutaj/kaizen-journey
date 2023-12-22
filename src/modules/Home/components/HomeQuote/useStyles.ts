@@ -7,7 +7,12 @@ export default createStyles(({ css, cx, token }) => {
   return {
     crouselDots,
     carousel: css`
+      .slick-dots {
+        z-index: 0 !important;
+      }
+
       width: min(100vw, ${homeBlockMaxWidth});
+      margin-bottom: 35px;
       .${crouselDots} {
         bottom: -35px;
 
