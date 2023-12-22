@@ -1,4 +1,4 @@
-import { Col, List, Row, Tooltip } from 'antd';
+import { Col, List, Row, Tag, Tooltip } from 'antd';
 import React from 'react';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +17,8 @@ import useCommonStyles from '@common/useStyles';
 import useListItemStyles from '@common/components/ListItem/useStyles';
 import Title from 'antd/es/typography/Title';
 import Paragraph from 'antd/es/typography/Paragraph';
+import { useTheme } from 'antd-style';
+import { formatTime } from '@common/helpers/TimeHelper';
 
 interface IProps {
   gratitude: IGratitudeModel;
@@ -29,6 +31,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
   const { styles: commonStyles } = useCommonStyles();
   const { styles } = useListItemStyles({ backgroundColor: gratitude.color, colorHover: gratitude.color });
   const { userProfile } = useUserProfile();
+  const token = useTheme();
 
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
@@ -99,6 +102,12 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
                 </Col>
               ))}
             </Row>
+            {gratitude.seconds > 0 ? (
+              <Tag color={token.layout.colorsCategoryHover[gratitude.color]} className={styles.secondsTag}>
+                <span>{intl.formatMessage({ id: 'gratitude.form.field.seconds' })}: </span>
+                {formatTime(gratitude.seconds)}
+              </Tag>
+            ) : null}
           </Col>
           <Col>
             <div className={styles.visibilityIconContainer}>

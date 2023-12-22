@@ -8,3 +8,16 @@ export const secondsToHoursAndMinutes = (seconds: number): { hours: number; minu
 export const hoursAndMinutesToSeconds = (hours: number, minutes: number): number => {
   return hours * 60 * 60 + minutes * 60;
 };
+
+export const formatTime = (seconds: number): string => {
+  const { hours, minutes } = secondsToHoursAndMinutes(seconds);
+  if (!hours) {
+    return `${minutes}m`;
+  }
+
+  if (!minutes) {
+    return `${hours}h`;
+  }
+
+  return `${hours} h ${minutes}m`;
+};

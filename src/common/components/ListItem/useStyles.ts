@@ -60,6 +60,9 @@ export default createStyles(
       visibilityIcon: css`
         color: ${token.colorWhite};
         font-size: 16px;
+      `,
+      secondsTag: css`
+        margin-top: ${token.marginSM}px;
       `
     };
   }
