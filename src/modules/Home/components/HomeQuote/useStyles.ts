@@ -3,7 +3,7 @@ import { homeBaseTextSize, homeBlockMaxWidth } from '../styledHelper';
 
 export default createStyles(({ css, cx, token }) => {
   const crouselDots = cx(css``);
-
+  const dotsMargin = 35;
   return {
     crouselDots,
     carousel: css`
@@ -12,9 +12,9 @@ export default createStyles(({ css, cx, token }) => {
       }
 
       width: min(100vw, ${homeBlockMaxWidth});
-      margin-bottom: 35px;
+      margin-bottom: ${dotsMargin}px;
       .${crouselDots} {
-        bottom: -35px;
+        bottom: -${dotsMargin}px;
 
         li button {
           width: 14px;

@@ -23,7 +23,7 @@ export interface IProps {
   customizeColorsPreview?: IUserTheme;
 }
 
-const StyledTheme: React.FC<IProps> = ({ children }) => {
+const StyledTheme: React.FC<IProps> = ({ children, customizeColorsPreview }) => {
   const { styles } = useStyles();
   const { darkMode, footerHeight } = useContext(ThemeContext);
   const { userProfile } = useUserProfile();
@@ -32,7 +32,12 @@ const StyledTheme: React.FC<IProps> = ({ children }) => {
 
   return (
     <ThemeProvider<NewToken>
-      customToken={{ layout: { ...layout(darkMode, userProfile.theme), footerHeight: footerHeight } }}
+      customToken={{
+        layout: {
+          ...layout(darkMode, customizeColorsPreview || userProfile.theme),
+          footerHeight: footerHeight
+        }
+      }}
       appearance={darkMode ? 'dark' : 'light'}
     >
       {children}

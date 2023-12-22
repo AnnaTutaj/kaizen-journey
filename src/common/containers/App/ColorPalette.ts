@@ -86,8 +86,8 @@ export const userColorPalette = (userTheme: IUserTheme): IColorPalette => {
     primaryColor: userTheme.colorPrimary
       ? generateColorShades(userTheme.colorPrimary)
       : DefaultColorPalette.primaryColor,
-    secondaryColor: userTheme.secondaryColor
-      ? generateColorShades(userTheme.secondaryColor)
+    secondaryColor: userTheme.colorSecondary
+      ? generateColorShades(userTheme.colorSecondary)
       : DefaultColorPalette.secondaryColor,
     categoryColors: {
       ...DefaultColorPalette.categoryColors,

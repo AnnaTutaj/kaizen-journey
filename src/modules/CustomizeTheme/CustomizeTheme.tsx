@@ -1,46 +1,47 @@
 import React, { useContext } from 'react';
-import { Col, ConfigProvider, Form, Popover, Row, Space } from 'antd';
+import { Col, ConfigProvider, Form, Grid, Popover, Row, Space } from 'antd';
 import { useIntl } from 'react-intl';
 import { HexColorInput, HexColorPicker } from 'react-colorful';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import { useAuth } from '@common/contexts/AuthContext';
 import { antdThemeComponents, antdThemeToken } from '@common/containers/App/antdThemeToken';
 import StyledTheme from '@common/containers/App/StyledTheme';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import Button from '@common/components/Button/Button';
 import FormWrapper from '@common/components/FormWrapper/FormWrapper';
 import useErrorMessage from '@common/hooks/useErrorMessage';
-import { IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
-import { useTheme } from 'antd-style';
+import { IUserTheme, useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import useStyles from './useStyles';
+import CustomizeThemePreview from './components/CustomizeThemePreview';
+import { userColorPalette } from '@common/containers/App/ColorPalette';
+
+const { useBreakpoint } = Grid;
+
 interface ICustomizeThemeFormModel {
   colorPrimary: string;
 }
 
 const CustomizeTheme: React.FC = () => {
   const intl = useIntl();
-  const { styles } = useStyles();
-  const theme = useTheme();
+  const { styles, cx } = useStyles();
   const { updateProfileTheme } = useAuth();
   const { showError } = useErrorMessage();
+  const { userProfile } = useUserProfile();
+  const screens = useBreakpoint();
 
   const [form] = Form.useForm();
   const { darkMode } = useContext(ThemeContext);
-
+  const defaultColorPalette = userColorPalette({});
   const colorPrimaryValue = Form.useWatch('colorPrimary', form);
+  const colorSecondaryValue = Form.useWatch('colorSecondary', form);
 
   const customizedStyles: IUserTheme = {
-    colorPrimary: colorPrimaryValue
+    colorPrimary: colorPrimaryValue,
+    colorSecondary: colorSecondaryValue
   };
 
   const onFinish = async (values: ICustomizeThemeFormModel) => {
     try {
       /* todo:
-        - send only changed colors to updateProfileTheme
-        - add "Reset" above changed color
         - add more components to preview + style that view
-        - center label  
         - add more colors to change
       */
 
@@ -50,58 +51,88 @@ const CustomizeTheme: React.FC = () => {
     }
   };
 
+  const reset = async (name: string) => {
+    try {
+      const values = { ...form.getFieldsValue() };
+      delete values[name];
+      await updateProfileTheme({ theme: { ...values } });
+    } catch (error) {
+      showError(error);
+    }
+  };
+
+  const renderFormColor = (name: 'colorPrimary' | 'colorSecondary', value: string, defaultValue: string) => {
+    return (
+      <Form.Item noStyle shouldUpdate={(prevValues, curValues) => prevValues[name] !== curValues[name]}>
+        {({ setFieldValue }) => {
+          return (
+            <Form.Item
+              label={
+                <div className={styles.formItemLabel}>
+                  <div>{intl.formatMessage({ id: `customizeTheme.form.${name}` })}</div>
+                  <a
+                    onClick={() => reset(name)}
+                    className={cx(styles.reset, {
+                      [styles.showReset]: !!userProfile.theme[name] && userProfile.theme[name] !== defaultValue
+                    })}
+                  >
+                    {intl.formatMessage({ id: 'customizeTheme.form.reset' })}
+                  </a>
+                </div>
+              }
+              name={name}
+            >
+              <Popover
+                placement="bottomLeft"
+                content={
+                  <Space size={10} direction="vertical">
+                    <HexColorPicker color={value} onChange={(newColor) => setFieldValue(name, newColor)} />
+                    <HexColorInput
+                      className={styles.hexColorInput}
+                      prefixed
+                      color={value}
+                      onChange={(newColor) => setFieldValue(name, newColor)}
+                    />
+                  </Space>
+                }
+                trigger="click"
+              >
+                <div className={cx({ [styles.formItemValueToRight]: screens.sm })}>
+                  <Space className={styles.colorContainer}>
+                    <div className={styles.colorBox} style={{ backgroundColor: value }} />
+                    <span>{value}</span>
+                  </Space>
+                </div>
+              </Popover>
+            </Form.Item>
+          );
+        }}
+      </Form.Item>
+    );
+  };
+
   return (
     <>
       <Row gutter={[20, 20]}>
-        <Col flex="300px">
+        <Col flex={screens.sm ? '400px' : 1}>
           <div className={styles.formContainer}>
             <FormWrapper
               name="CustomizeThemeForm"
-              initialValues={{ colorPrimary: theme.colorPrimary }}
+              initialValues={{
+                //there can't be theme.colorPrimary beceause on darkMode this color is darker
+                colorPrimary: userProfile.theme.colorPrimary || defaultColorPalette.primaryColor.main,
+                colorSecondary: userProfile.theme.colorSecondary || defaultColorPalette.secondaryColor.main
+              }}
               layout={'horizontal'}
               onFinish={onFinish}
               form={form}
               submitButtonText={intl.formatMessage({ id: 'customizeTheme.form.submitButton' })}
+              className={styles.formWrapper}
             >
-              <Form.Item
-                noStyle
-                shouldUpdate={(prevValues, curValues) => prevValues.colorPrimary !== curValues.colorPrimary}
-              >
-                {({ setFieldValue }) => {
-                  return (
-                    <Form.Item
-                      label={intl.formatMessage({ id: 'customizeTheme.form.colorPrimary' })}
-                      name="colorPrimary"
-                    >
-                      <Popover
-                        placement="bottomLeft"
-                        content={
-                          <Space size={10} direction="vertical">
-                            <HexColorPicker
-                              color={colorPrimaryValue}
-                              onChange={(newColor) => setFieldValue('colorPrimary', newColor)}
-                            />
-                            <HexColorInput
-                              className={styles.hexColorInput}
-                              prefixed
-                              color={colorPrimaryValue}
-                              onChange={(newColor) => setFieldValue('colorPrimary', newColor)}
-                            />
-                          </Space>
-                        }
-                        trigger="click"
-                      >
-                        <div className={styles.formItemValue}>
-                          <Space className={styles.colorContainer}>
-                            <div className={styles.colorBox} style={{ backgroundColor: colorPrimaryValue }} />
-                            <span>{colorPrimaryValue}</span>
-                          </Space>
-                        </div>
-                      </Popover>
-                    </Form.Item>
-                  );
-                }}
-              </Form.Item>
+              <>
+                {renderFormColor('colorPrimary', colorPrimaryValue, defaultColorPalette.primaryColor.main)}
+                {renderFormColor('colorSecondary', colorSecondaryValue, defaultColorPalette.secondaryColor.main)}
+              </>
             </FormWrapper>
           </div>
         </Col>
@@ -115,17 +146,7 @@ const CustomizeTheme: React.FC = () => {
             }}
           >
             <StyledTheme customizeColorsPreview={customizedStyles}>
-              <Space size={[10, 10]} wrap>
-                <Button
-                  type="primary"
-                  icon={<FontAwesomeIcon icon={faPlus} />}
-                  text={intl.formatMessage({ id: 'customizeTheme.primaryButton' })}
-                />
-
-                <Button type="primary" ghost>
-                  {intl.formatMessage({ id: 'customizeTheme.primaryButton' })}
-                </Button>
-              </Space>
+              <CustomizeThemePreview />
             </StyledTheme>
           </ConfigProvider>
         </Col>

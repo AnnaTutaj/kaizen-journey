@@ -3,7 +3,7 @@ import { createContext, Dispatch, SetStateAction, useContext } from 'react';
 
 export interface IUserTheme {
   colorPrimary?: string;
-  secondaryColor?: string;
+  colorSecondary?: string;
   colorCategoryDefault?: string;
   colorCategoryDefaultHover?: string;
 }

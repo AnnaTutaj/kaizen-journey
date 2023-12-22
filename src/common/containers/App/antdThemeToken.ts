@@ -1,7 +1,8 @@
 import { AliasToken } from 'antd/es/theme/internal';
 import { OverrideToken } from 'antd/es/theme/interface';
 import { layout } from './layout';
-import { IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';import { userColorPalette } from './ColorPalette';
+import { IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
+import { userColorPalette } from './ColorPalette';
 
 export const antdThemeToken = (darkMode: boolean, userTheme: IUserTheme): Partial<AliasToken> => {
   const colorPalette = userColorPalette(userTheme);
