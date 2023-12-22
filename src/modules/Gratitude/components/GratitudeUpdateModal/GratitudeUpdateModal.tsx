@@ -19,9 +19,7 @@ const GratitudeUpdateModal: React.FC<IGratitudeUpdateModalProps> = ({ handleSubm
 
   const onFinish = async (values: IGratitudeFormModel) => {
     try {
-      const finalValues = GratitudeFormModel.serializeToUpdate({
-        ...values
-      });
+      const finalValues = GratitudeFormModel.serializeToUpdate(values);
 
       await updateDoc(doc(db, 'gratitude', gratitude.id), finalValues);
 

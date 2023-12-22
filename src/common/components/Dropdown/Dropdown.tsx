@@ -9,7 +9,7 @@ import { Dropdown as AntDropdown, Space } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IDropdownMenuItemProps {
-  key: DropdownMenuKey.update | DropdownMenuKey.delete | string;
+  key: DropdownMenuKey.update | DropdownMenuKey.delete | string | number;
   item?: {
     icon?: IconDefinition;
     text: string;
@@ -20,7 +20,7 @@ interface IDropdownMenuItemProps {
 }
 
 interface IDropdownMenuGroupItemProps {
-  key: string;
+  key: string | number;
   title: string | JSX.Element;
   items: IDropdownMenuItemProps[];
   visible?: () => boolean;

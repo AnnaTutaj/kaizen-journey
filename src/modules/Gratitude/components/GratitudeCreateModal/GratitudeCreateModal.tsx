@@ -42,7 +42,9 @@ const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubm
       initialValues={{
         date: dayjs(),
         color: 'default',
-        isPublic: false
+        isPublic: false,
+        hours: 0,
+        minutes: 0
       }}
     />
   );

@@ -18,6 +18,7 @@ export interface IGratitudeModel {
   color: CategoryColorType;
   tags: string[];
   imageURLs: string[];
+  seconds: number;
 }
 
 export interface IGratitudeModelDTO {
@@ -35,6 +36,7 @@ export interface IGratitudeModelDTO {
   color?: CategoryColorType;
   tags?: string[];
   imageURLs?: string[];
+  seconds?: number;
 }
 
 class GratitudeModel implements IGratitudeModel {
@@ -52,7 +54,8 @@ class GratitudeModel implements IGratitudeModel {
     public isPublic: boolean,
     public color: CategoryColorType,
     public tags: string[],
-    public imageURLs: string[]
+    public imageURLs: string[],
+    public seconds: number
   ) {}
 
   static build(dto: IGratitudeModelDTO): IGratitudeModel {
@@ -67,7 +70,8 @@ class GratitudeModel implements IGratitudeModel {
       dto.isPublic,
       dto.color || 'default',
       dto.tags || [],
-      dto.imageURLs || []
+      dto.imageURLs || [],
+      dto.seconds || 0
     );
   }
 

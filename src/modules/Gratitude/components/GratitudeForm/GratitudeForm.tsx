@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, DatePicker, Row, Col } from 'antd';
+import { Form, Input, DatePicker, Row, Col, InputNumber } from 'antd';
 import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +10,9 @@ import Button from '@common/components/Button';
 import Select from '@common/components/Select';
 import { createStyles } from 'antd-style';
 import { useWatch } from 'antd/es/form/Form';
+import Dropdown from '@common/components/Dropdown';
+import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 const useStyles = createStyles(({ css, token }) => ({
   iconImageRemove: css`
@@ -18,6 +21,13 @@ const useStyles = createStyles(({ css, token }) => ({
     :hover {
       color: ${token.colorErrorText};
     }
+  `,
+  formItemTime: css`
+    width: 120px;
+    margin-bottom: 0;
+  `,
+  timeIcon: css`
+    cursor: pointer;
   `
 }));
 
@@ -55,6 +65,44 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
 
   const maxTitleLength = 100;
   const maxDescriptionLength = 2000;
+
+  const hoursSelect: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const hoursMenuItems: DropdownMenuItemProps = hoursSelect.map((i) => {
+    return {
+      key: i,
+      item: {
+        text: `${i.toString()} h`
+      },
+      onClick: () => {
+        form.setFieldValue('hours', i);
+      }
+    };
+  });
+
+  const minutesSelect: number[] = [0, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+  const minutesMenuItems: DropdownMenuItemProps = minutesSelect.map((i) => {
+    return {
+      key: i,
+      item: {
+        text: `${i.toString()} m`
+      },
+      onClick: () => {
+        form.setFieldValue('minutes', i);
+      }
+    };
+  });
+
+  const hoursAddonAfter = (
+    <Dropdown style={{ width: 60 }} menuItems={hoursMenuItems}>
+      <FontAwesomeIcon icon={faClock} className={styles.timeIcon} />
+    </Dropdown>
+  );
+
+  const minutesAddonAfter = (
+    <Dropdown style={{ width: 60 }} menuItems={minutesMenuItems}>
+      <FontAwesomeIcon icon={faClock} className={styles.timeIcon} />
+    </Dropdown>
+  );
 
   return (
     <FormModal<IGratitudeFormModel>
@@ -108,6 +156,28 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.date' })} name="date">
           <DatePicker allowClear={false} />
+        </Form.Item>
+
+        <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.seconds' })}>
+          <Row gutter={10}>
+            <Col>
+              <Form.Item label="" name="hours" className={styles.formItemTime}>
+                <InputNumber min={0} max={999} suffix="h" type="number" controls={false} addonAfter={hoursAddonAfter} />
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="" name="minutes" className={styles.formItemTime}>
+                <InputNumber
+                  min={0}
+                  max={59}
+                  suffix="m"
+                  type="number"
+                  controls={false}
+                  addonAfter={minutesAddonAfter}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">

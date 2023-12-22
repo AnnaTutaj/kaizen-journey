@@ -1,6 +1,7 @@
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import { IGratitudeModel } from './GratitudeModel';
 import dayjs, { Dayjs } from 'dayjs';
+import { secondsToHoursAndMinutes, hoursAndMinutesToSeconds } from '@common/helpers/TimeHelper';
 
 export interface IGratitudeFormModel {
   title: string;
@@ -10,6 +11,8 @@ export interface IGratitudeFormModel {
   color: CategoryColorType;
   tags: string[];
   imageURLs: string[];
+  hours?: number | undefined;
+  minutes?: number | undefined;
 }
 
 export interface IGratitudeFormModelDTO {
@@ -23,6 +26,7 @@ export interface IGratitudeFormModelDTO {
   color: CategoryColorType;
   tags: string[];
   imageURLs: string[];
+  seconds: number;
 }
 
 class GratitudeFormModel {
@@ -36,7 +40,9 @@ class GratitudeFormModel {
     isPublic,
     color,
     tags,
-    imageURLs
+    imageURLs,
+    hours,
+    minutes
   }: IGratitudeFormModel & {
     createdByUid: string;
     createdBy: string;
@@ -52,7 +58,8 @@ class GratitudeFormModel {
       isPublic: isPublic || false,
       color: color || 'default',
       tags: tags || [],
-      imageURLs: imageURLs || []
+      imageURLs: imageURLs || [],
+      seconds: hoursAndMinutesToSeconds(hours || 0, minutes || 0)
     };
   }
 
@@ -63,7 +70,9 @@ class GratitudeFormModel {
     isPublic,
     color,
     tags,
-    imageURLs
+    imageURLs,
+    hours,
+    minutes
   }: IGratitudeFormModel): Partial<IGratitudeFormModelDTO> {
     return {
       title: title,
@@ -72,11 +81,13 @@ class GratitudeFormModel {
       isPublic: isPublic || false,
       color: color || 'default',
       tags: tags || [],
-      imageURLs: imageURLs || []
+      imageURLs: imageURLs || [],
+      seconds: hoursAndMinutesToSeconds(hours || 0, minutes || 0)
     };
   }
 
   static build(data: IGratitudeModel): IGratitudeFormModel {
+    const { hours, minutes } = secondsToHoursAndMinutes(data.seconds);
     return {
       title: data.title,
       description: data.description || '',
@@ -84,7 +95,9 @@ class GratitudeFormModel {
       isPublic: data.isPublic ?? false,
       color: data.color ? data.color : 'default',
       tags: data.tags ? data.tags : [],
-      imageURLs: data.imageURLs ? data.imageURLs : []
+      imageURLs: data.imageURLs ? data.imageURLs : [],
+      hours: hours,
+      minutes: minutes
     };
   }
 }

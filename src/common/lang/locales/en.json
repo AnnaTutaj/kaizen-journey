@@ -96,6 +96,7 @@
   "gratitude.form.field.date": "Date",
   "gratitude.form.field.description": "Description",
   "gratitude.form.field.links": "Links to photos",
+  "gratitude.form.field.seconds": "Time spent",
   "gratitude.form.field.tags": "Tags",
   "gratitude.form.field.title": "Title",
   "gratitude.form.submit": "Save",
