@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+import { DatePicker, Form } from 'antd';
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import FormModal from '@common/components/FormModal';
@@ -82,6 +82,12 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
         </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.limit' })} name="limit">
           <Select<number> type="exportLimit" />
+        </Form.Item>
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.dateFrom' })} name="dateFrom">
+          <DatePicker allowClear={false} />
+        </Form.Item>
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.dateTo' })} name="dateTo">
+          <DatePicker allowClear={false} />
         </Form.Item>
       </>
     </FormModal>

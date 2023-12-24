@@ -48,6 +48,14 @@ const useGratitudeListFetch = () => {
       conditions.push(limit(_limit));
     }
 
+    if (filters?.dateFrom !== undefined) {
+      conditions.push(where('date', '>=', filters.dateFrom));
+    }
+
+    if (filters?.dateTo !== undefined) {
+      conditions.push(where('date', '<=', filters.dateTo));
+    }
+
     const q = query(
       collection(db, 'gratitude').withConverter(GratitudeModel.converter),
       ...conditions,
