@@ -1,5 +1,5 @@
 import { Col, List, Row, Tag, Tooltip } from 'antd';
-import React from 'react';
+import React, { useMemo } from 'react';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { doc, deleteDoc } from 'firebase/firestore';
@@ -62,6 +62,20 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
     }
   };
 
+  const convertedImageURLs = useMemo(
+    () =>
+      gratitude.imageURLs.map((url) => {
+        if (url.includes('https://drive.google.com/uc?id=')) {
+          const splitText = url.split('/');
+          const imageId = splitText[3].replace('uc?id=', '');
+          return `https://drive.google.com/thumbnail?id=${imageId}&sz=w250`;
+        }
+
+        return url;
+      }),
+    [gratitude]
+  );
+
   const menuItems: DropdownMenuItemProps = [
     {
       key: DropdownMenuKey.update,
@@ -93,7 +107,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
             <Title className={styles.title} level={5}>
               {gratitude.title}
             </Title>
-            {gratitude.imageURLs.length ? <ImagePreview srcs={gratitude.imageURLs} /> : null}
+            {convertedImageURLs.length ? <ImagePreview srcs={convertedImageURLs} /> : null}
             <Paragraph className={styles.descriptionParagraph}>{gratitude.description}</Paragraph>
             <Row gutter={10}>
               {gratitude.tags.map((tag) => (
