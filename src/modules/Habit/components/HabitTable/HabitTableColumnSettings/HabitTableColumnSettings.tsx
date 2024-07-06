@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { Checkbox, Divider, Space } from 'antd';
 import { createStyles } from 'antd-style';
@@ -18,8 +17,8 @@ export enum ColumnType {
 }
 
 interface IProps {
-  visibleColumns: CheckboxValueType[];
-  setVisibleColumns: React.Dispatch<React.SetStateAction<CheckboxValueType[]>>;
+  visibleColumns: ColumnType[];
+  setVisibleColumns: React.Dispatch<React.SetStateAction<ColumnType[]>>;
 }
 
 const HabitTableColumnSettings: React.FC<IProps> = ({ visibleColumns, setVisibleColumns }) => {
@@ -31,7 +30,7 @@ const HabitTableColumnSettings: React.FC<IProps> = ({ visibleColumns, setVisible
   const [indeterminate, setIndeterminate] = useState<boolean>(false);
   const [checkAll, setCheckAll] = useState<boolean>(true);
 
-  const onChange = (list: CheckboxValueType[]) => {
+  const onChange = (list: ColumnType[]) => {
     setVisibleColumns(list);
     setIndeterminate(!!list.length && list.length < plainOptions.length);
     setCheckAll(list.length === plainOptions.length);
@@ -49,7 +48,7 @@ const HabitTableColumnSettings: React.FC<IProps> = ({ visibleColumns, setVisible
         {intl.formatMessage({ id: 'common.checkAll' })}
       </Checkbox>
       <Divider className={styles.divider} dashed />
-      <Checkbox.Group value={visibleColumns} onChange={onChange}>
+      <Checkbox.Group<ColumnType> value={visibleColumns} onChange={onChange}>
         <Space direction="vertical">
           <Checkbox value="currentStreak">{intl.formatMessage({ id: 'habit.currentStreak' })}</Checkbox>
           <Checkbox value="longestStreak">{intl.formatMessage({ id: 'habit.longestStreak' })}</Checkbox>

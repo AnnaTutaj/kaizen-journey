@@ -22,7 +22,6 @@ import { useSelector } from 'react-redux';
 import { IHabitTrackerOwnState } from '@modules/Habit/redux/HabitTracker/HabitTrackerInterface';
 import { Visibility } from '@common/constants/Visibility';
 import HabitTableColumnSettings, { ColumnType } from './HabitTableColumnSettings/HabitTableColumnSettings';
-import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import Table, { ITableColumn } from '@common/components/Table/Table';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import Spinner from '@common/components/Spinner';
@@ -51,7 +50,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const [loadingHabitDate, setLoadingHabitDate] = useState<string[]>([]);
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
-  const [visibleColumns, setVisibleColumns] = useState<CheckboxValueType[]>([
+  const [visibleColumns, setVisibleColumns] = useState<ColumnType[]>([
     ColumnType.currentStreak,
     ColumnType.longestStreak,
     ColumnType.totalChecks

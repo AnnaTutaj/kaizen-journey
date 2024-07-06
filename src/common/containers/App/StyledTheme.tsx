@@ -31,6 +31,7 @@ const StyledTheme: React.FC<IProps> = ({ children, customizeColorsPreview }) => 
   document.body.classList.add(styles.customBody);
 
   return (
+    //@ts-ignore fixme: check how to remove that error
     <ThemeProvider<NewToken>
       customToken={{
         layout: {

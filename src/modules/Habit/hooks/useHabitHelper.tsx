@@ -54,8 +54,8 @@ const useHabitHelper = () => {
     }
 
     const moments = allDates.map((d) => dayjs(d));
-    const maxDate = dayjs.max(moments).format('YYYY-MM-DD');
-    const minDate = dayjs.min(moments).format('YYYY-MM-DD');
+    const maxDate = dayjs.max(moments)?.format('YYYY-MM-DD') || '';
+    const minDate = dayjs.min(moments)?.format('YYYY-MM-DD') || '' ;
 
     return { maxDate, minDate };
   };

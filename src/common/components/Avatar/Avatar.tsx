@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 
 export interface IAvatarProps extends AvatarProps {
   src: string;
+  size?: number;
 }
 
 const Avatar: React.FC<IAvatarProps> = ({ size, src, ...props }) => {

@@ -3,7 +3,7 @@ import { faBoxArchive, faPen, faRotateLeft, faSearch, faTrash } from '@fortaweso
 import { useIntl } from 'react-intl';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { DropdownButtonProps } from 'antd/lib/dropdown';
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import { ItemType } from 'antd/es/menu/interface';
 import useStyles from './useStyles';
 import { Dropdown as AntDropdown, Space } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -97,7 +97,7 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
 
   const filteredMenuItems = menuItems.filter((menuItem) => menuItem.visible === undefined || menuItem.visible());
 
-  const items = filteredMenuItems.map((menuItem) => {
+  const items = filteredMenuItems.map((menuItem): ItemType => {
     if (isMenuGroup(menuItem)) {
       const menuGroupItem: IDropdownMenuGroupItemProps = menuItem as IDropdownMenuGroupItemProps;
 
