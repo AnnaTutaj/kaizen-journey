@@ -44,8 +44,7 @@ const UserGratitude: React.FC = () => {
 
   const refreshListAfterChangeFilters = useCallback(
     (newFilters: IGratitudeListFiltersModelDTO) => {
-      const finalFilters = prepareFiltersByUser(newFilters, userId);
-      UserGratitudeListActions.loadAction({ filters: finalFilters, userProfileUid: userId, reload: true })(dispatch);
+      UserGratitudeListActions.loadAction({ filters: newFilters, userProfileUid: userId, reload: true })(dispatch);
     },
     [dispatch, userId, prepareFiltersByUser]
   );
