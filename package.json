@@ -105,6 +105,6 @@
     "stylelint-config-rational-order": "0.1.2",
     "stylelint-config-standard": "34.0.0",
     "stylelint-order": "6.0.3",
-    "typescript": "5.2.2"
+    "typescript": "5.5.3"
   }
 }
