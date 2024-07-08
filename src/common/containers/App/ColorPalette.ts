@@ -50,7 +50,7 @@ const DefaultColorPalette: IColorPalette = {
   primaryColor: generateColorShades('#8236d5'),
   secondaryColor: generateColorShades('#d5b436'),
   categoryColors: {
-    default: '#86cfc4',
+    default: '#00aa8f',
     red: '#b94242',
     fuchsia: '#b94290',
     pink: '#cf86b6',
