@@ -1,4 +1,5 @@
 import { Language } from '@common/constants/Language';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import { createContext, Dispatch, SetStateAction, useContext } from 'react';
 
 export interface IUserTheme {
@@ -6,6 +7,12 @@ export interface IUserTheme {
   colorSecondary?: string;
   colorCategoryDefault?: string;
   colorCategoryDefaultHover?: string;
+}
+
+export interface IUserCategory {
+  color: CategoryColorType;
+  name: string;
+  isSelected: boolean;
 }
 
 export interface IUserProfile {
@@ -18,6 +25,7 @@ export interface IUserProfile {
   username: string;
   language: Language | undefined;
   tags: string[];
+  categories: IUserCategory[];
   theme: IUserTheme;
 }
 
@@ -31,6 +39,7 @@ export const initUserProfile = {
   username: '',
   language: Language.en,
   tags: [],
+  categories: [],
   theme: {}
 };
 

@@ -12,9 +12,10 @@ interface IProps {
   initialValues?: Partial<IGratitudeListFiltersModel>;
   onFinish: (values: IGratitudeListFiltersModel) => void;
   hideVisiblity?: boolean;
+  colorMode: 'myCategory' | 'color';
 }
 
-const GratitudeListFilters: React.FC<IProps> = ({ initialValues, onFinish, hideVisiblity }) => {
+const GratitudeListFilters: React.FC<IProps> = ({ initialValues, onFinish, hideVisiblity, colorMode }) => {
   const intl = useIntl();
   const [form] = Form.useForm();
 
@@ -43,9 +44,15 @@ const GratitudeListFilters: React.FC<IProps> = ({ initialValues, onFinish, hideV
           </Form.Item>
         </Col>
         <Col lg={7} span={24}>
-          <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-            <Select<CategoryColorType> type="color" onChange={() => form.submit()} allowClear />
-          </Form.Item>
+          {colorMode === 'myCategory' ? (
+            <Form.Item label={intl.formatMessage({ id: 'common.form.field.category' })} name="color">
+              <Select<CategoryColorType> type="category" onChange={() => form.submit()} allowClear />
+            </Form.Item>
+          ) : (
+            <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
+              <Select<CategoryColorType> type="color" onChange={() => form.submit()} allowClear />
+            </Form.Item>
+          )}
         </Col>
         <Col lg={7} span={24}>
           {!hideVisiblity ? (

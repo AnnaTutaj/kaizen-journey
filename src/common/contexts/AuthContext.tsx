@@ -74,6 +74,7 @@ export default function AuthContextProvider({ children }: any) {
             username: userSnap.username || '',
             language: userSnap?.language || Language.en,
             tags: userSnap.tags || [],
+            categories: userSnap.categories || [],
             theme: userSnap.theme || {}
           });
         } else {
@@ -117,6 +118,7 @@ export default function AuthContextProvider({ children }: any) {
         username: userSnap.username || '',
         language: userSnap?.language || Language.en,
         tags: userSnap.tags || [],
+        categories: userSnap.categories || [],
         theme: userSnap.theme || {}
       });
     }
@@ -130,7 +132,8 @@ export default function AuthContextProvider({ children }: any) {
       await updateDoc(userRef, {
         username: values.username,
         language: values.language,
-        tags: values.tags
+        tags: values.tags,
+        categories: values.categories
       });
 
       getProfile();

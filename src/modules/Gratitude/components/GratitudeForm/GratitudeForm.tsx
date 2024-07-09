@@ -36,11 +36,12 @@ const { TextArea } = Input;
 interface IProps {
   title: string;
   initialValues: Partial<IGratitudeFormModel>;
+  showInactiveColors?: CategoryColorType[];
   onFinish: (values: IGratitudeFormModel) => Promise<void>;
   handleCancel: () => void;
 }
 
-const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCancel }) => {
+const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveColors, onFinish, handleCancel }) => {
   const intl = useIntl();
   const { styles } = useStyles();
   const [form] = Form.useForm();
@@ -150,8 +151,8 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, onFinish, handl
           />
         </Form.Item>
 
-        <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-          <Select<CategoryColorType> type="color" />
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.category' })} name="color">
+          <Select<CategoryColorType> type="category" showInactiveColors={showInactiveColors} />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.date' })} name="date">

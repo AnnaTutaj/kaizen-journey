@@ -33,6 +33,7 @@ const GratitudeUpdateModal: React.FC<IGratitudeUpdateModalProps> = ({ handleSubm
     <GratitudeForm
       onFinish={onFinish}
       initialValues={GratitudeFormModel.build(gratitude)}
+      showInactiveColors={[gratitude.color]}
       handleCancel={handleCancel}
       title={intl.formatMessage({ id: 'gratitude.update.title' })}
     />

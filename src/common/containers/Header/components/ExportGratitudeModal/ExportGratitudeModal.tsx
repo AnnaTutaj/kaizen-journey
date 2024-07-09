@@ -74,8 +74,8 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
             }}
           />
         </Form.Item>
-        <Form.Item label={intl.formatMessage({ id: 'common.form.field.color' })} name="color">
-          <Select<CategoryColorType> type="color" allowClear />
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.category' })} name="color">
+          <Select<CategoryColorType> type="category" allowClear />
         </Form.Item>
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
           <Select<boolean> type="visibility" allowClear />

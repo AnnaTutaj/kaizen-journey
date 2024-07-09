@@ -73,6 +73,7 @@ const UserGratitude: React.FC = () => {
         <UserGratitudeListFilters
           initialValues={filters}
           hideVisiblity={userId !== userProfile.uid}
+          colorMode={userId !== userProfile.uid ? 'color' : 'myCategory'}
           onFinish={(values) => {
             const finalFilters = prepareFiltersByUser(values, userId);
             const serializedFilters = GratitudeListFiltersModel.serialize(finalFilters);

@@ -90,6 +90,7 @@ const Gratitude: React.FC = () => {
       <FilterContainer showFilters={showFilters}>
         <GratitudeListFilters
           initialValues={filters}
+          colorMode="myCategory"
           onFinish={(values) => {
             const serializedFilters = GratitudeListFiltersModel.serialize(values);
             const serializedCurrentFilters = GratitudeListFiltersModel.serialize(filters);

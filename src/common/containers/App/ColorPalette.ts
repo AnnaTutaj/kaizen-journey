@@ -1,23 +1,27 @@
 import { IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
 import { lighten, darken } from 'polished';
 
-export type ColorsCategory = {
-  default: string;
-  red: string;
-  fuchsia: string;
-  pink: string;
-  purple: string;
-  blue: string;
-  navy: string;
-  green: string;
-  olive: string;
-  yellow: string;
-  orange: string;
-  brown: string;
-  gray: string;
-};
+export const colorsCategory = <const>[
+  'default',
+  'red',
+  'fuchsia',
+  'pink',
+  'purple',
+  'blue',
+  'navy',
+  'green',
+  'olive',
+  'yellow',
+  'orange',
+  'brown',
+  'gray'
+];
 
-export type CategoryColorType = keyof ColorsCategory;
+export type CategoryColorType = (typeof colorsCategory)[number];
+
+export type ColorsCategory = {
+  [key in CategoryColorType]: string;
+};
 
 type ColorShades = {
   main: string;
