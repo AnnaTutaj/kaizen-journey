@@ -19,17 +19,23 @@ export interface IFormModalProps<T> extends FormProps<T> {
   children: JSX.Element;
 }
 
-const FormModal = <T extends {}>({ modalProps, submitButtonText, children, ...props }: IFormModalProps<T>) => {
+const FormModal = <T extends {}>({
+  modalProps,
+  submitButtonText,
+  children,
+  onFinish,
+  ...props
+}: IFormModalProps<T>) => {
   const { styles } = useStyles();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const onFinish = async (values: T) => {
+  const handleOnFinish = async (values: T) => {
     if (isSubmitting) {
       return;
     }
 
     setIsSubmitting(true);
-    await props.onFinish(values);
+    await onFinish(values);
     setIsSubmitting(false);
   };
 
@@ -39,9 +45,10 @@ const FormModal = <T extends {}>({ modalProps, submitButtonText, children, ...pr
         name="basic"
         form={props.form}
         initialValues={props.initialValues}
-        onFinish={onFinish}
+        onFinish={handleOnFinish}
         autoComplete="off"
         layout={'vertical'}
+        {...props}
       >
         <>
           {children}

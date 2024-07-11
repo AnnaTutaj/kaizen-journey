@@ -1,5 +1,5 @@
 import { Col, Form, Input, Row, Switch } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useAuth } from '@common/contexts/AuthContext';
 import FormModal from '@common/components/FormModal';
@@ -10,6 +10,9 @@ import { Language } from '@common/constants/Language';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import { createStyles, useTheme } from 'antd-style';
 import useCategories from '@common/hooks/useCategories';
+import Button from '@common/components/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 export interface ISettingsModalProps {
   handleCancel: () => void;
@@ -25,12 +28,19 @@ interface ISettingsFormProps {
 const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
   const intl = useIntl();
   const { styles } = useStyles();
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<ISettingsFormProps>();
   const { updateProfileSettings } = useAuth();
   const { userProfile } = useUserProfile();
   const { defaultCategories } = useCategories();
   const { showError } = useErrorMessage();
   const theme = useTheme();
+  const [showInactiveCategories, setShowInactiveCategories] = useState<boolean>(false);
+  const getInactiveCategoryCount = (categories: IUserCategory[]): number => {
+    return categories.reduce((accumulator, currentValue) => accumulator + (currentValue.isSelected ? 0 : 1), 0) || 0;
+  };
+  const [inactiveCategoriesCount, setInactiveCategoriesCount] = useState<number>(
+    getInactiveCategoryCount(userProfile.categories)
+  );
 
   const getUserCategoryColors = (): IUserCategory[] => {
     return defaultCategories.map((categoryColor) => {
@@ -46,6 +56,12 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
     });
   };
 
+  const onValuesChange = (changedValues: any, values: ISettingsFormProps) => {
+    if (changedValues?.categories) {
+      setInactiveCategoriesCount(getInactiveCategoryCount(values.categories));
+    }
+  };
+
   const onFinish = async (values: ISettingsFormProps) => {
     try {
       await updateProfileSettings(values);
@@ -55,7 +71,7 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
   };
 
   return (
-    <FormModal
+    <FormModal<ISettingsFormProps>
       modalProps={{ title: intl.formatMessage({ id: 'settings.form.title' }), onCancel: handleCancel, width: 400 }}
       form={form}
       initialValues={{
@@ -65,6 +81,7 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
         categories: getUserCategoryColors()
       }}
       onFinish={onFinish}
+      onValuesChange={onValuesChange}
       submitButtonText={intl.formatMessage({ id: 'settings.form.submit' })}
     >
       <>
@@ -95,16 +112,16 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
             onChange={(value) => form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) })}
           />
         </Form.Item>
-        <Form.List name="categories">
-          {(fields, _, { errors }) => {
-            return (
+        <Form.Item label={intl.formatMessage({ id: 'settings.form.field.categories' })}>
+          <Form.List name="categories">
+            {(fields) => (
               <>
-                {fields.map((field, index) => {
-                  return (
-                    <Form.Item
-                      key={field.key}
-                      label={index === 0 ? intl.formatMessage({ id: 'settings.form.field.categories' }) : ''}
-                    >
+                {fields
+                  .filter(
+                    (field) => showInactiveCategories || !!form.getFieldValue(['categories', field.name]).isSelected
+                  )
+                  .map((field) => (
+                    <Form.Item key={field.key}>
                       <Row gutter={20} align="middle" wrap={false}>
                         <Col flex="30px">
                           <div
@@ -140,15 +157,25 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
                         </Col>
                       </Row>
                     </Form.Item>
-                  );
-                })}
-                <Form.Item>
-                  <Form.ErrorList errors={errors} />
-                </Form.Item>
+                  ))}
+                {inactiveCategoriesCount ? (
+                  <Button
+                    size="middle"
+                    onClick={() => {
+                      setShowInactiveCategories((prev) => !prev);
+                    }}
+                    icon={<FontAwesomeIcon icon={showInactiveCategories ? faChevronUp : faChevronDown} />}
+                  >
+                    {showInactiveCategories
+                      ? intl.formatMessage({ id: 'settings.form.field.categories.hideInactive' })
+                      : intl.formatMessage({ id: 'settings.form.field.categories.showInactive' })}{' '}
+                    ({inactiveCategoriesCount})
+                  </Button>
+                ) : null}
               </>
-            );
-          }}
-        </Form.List>
+            )}
+          </Form.List>
+        </Form.Item>
       </>
     </FormModal>
   );

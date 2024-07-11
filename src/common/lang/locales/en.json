@@ -250,6 +250,8 @@
   "registerWithEmail.form.submit": "Register",
   "registerWithEmail.form.title": "Sign up with email",
   "settings.form.field.categories": "Gratitude categories",
+  "settings.form.field.categories.hideInactive": "Hide inactive",
+  "settings.form.field.categories.showInactive": "Show inactive",
   "settings.form.field.language": "Language",
   "settings.form.field.tags": "Tags",
   "settings.form.field.username": "Username",

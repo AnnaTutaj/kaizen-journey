@@ -250,6 +250,8 @@
   "registerWithEmail.form.submit": "Zarejestruj się",
   "registerWithEmail.form.title": "Zarejestruj się przez email",
   "settings.form.field.categories": "Kategorie wdzięczności",
+  "settings.form.field.categories.hideInactive": "Ukyj nieaktywne",
+  "settings.form.field.categories.showInactive": "Pokaż nieaktywne",
   "settings.form.field.language": "Język",
   "settings.form.field.tags": "Tagi",
   "settings.form.field.username": "Nazwa użytkownika",
