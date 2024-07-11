@@ -22,11 +22,9 @@ const HomeFeature: React.FC<IProps> = ({ onClick }) => {
           <div>{intl.formatMessage({ id: 'home.kaizenMeaning' })}</div>
           <div>{intl.formatMessage({ id: 'home.kaizenMeaning.description' })}</div>
           <div>
-            <Button
-              type="primary"
-              onClick={onClick}
-              text={intl.formatMessage({ id: 'home.kaizenMeaning.takeFirstStep.button' })}
-            />
+            <Button type="primary" onClick={onClick}>
+              {intl.formatMessage({ id: 'home.kaizenMeaning.takeFirstStep.button' })}
+            </Button>
           </div>
         </div>
         <div className={styles.kanjiContainer}>

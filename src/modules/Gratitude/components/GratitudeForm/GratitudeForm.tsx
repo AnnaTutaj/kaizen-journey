@@ -226,13 +226,9 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
                 </Form.Item>
               ))}
               <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add('')}
-                  block
-                  icon={<FontAwesomeIcon icon={faPlus} />}
-                  text={intl.formatMessage({ id: 'gratitude.form.field.addLink' })}
-                />
+                <Button type="dashed" onClick={() => add('')} block icon={<FontAwesomeIcon icon={faPlus} />}>
+                  {intl.formatMessage({ id: 'gratitude.form.field.addLink' })}
+                </Button>
                 <Form.ErrorList errors={errors} />
               </Form.Item>
             </>

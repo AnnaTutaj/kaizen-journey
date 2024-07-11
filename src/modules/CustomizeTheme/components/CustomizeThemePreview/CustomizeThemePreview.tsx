@@ -22,11 +22,9 @@ const CustomizeThemePreview: React.FC = () => {
   return (
     <div className={styles.container}>
       <Space size={[10, 10]} wrap>
-        <Button
-          type="primary"
-          icon={<FontAwesomeIcon icon={faPlus} />}
-          text={intl.formatMessage({ id: 'customizeTheme.primaryButton' })}
-        />
+        <Button type="primary" icon={<FontAwesomeIcon icon={faPlus} />}>
+          {intl.formatMessage({ id: 'customizeTheme.primaryButton' })}
+        </Button>
         <Button type="primary" ghost>
           {intl.formatMessage({ id: 'customizeTheme.primaryButton' })}
         </Button>

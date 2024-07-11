@@ -1,23 +1,8 @@
-import { Button as AntDButton, Space } from 'antd';
+import { Button as AntDButton } from 'antd';
 import { ButtonProps } from 'antd/es/button';
 
-export interface IButtonProps extends ButtonProps {
-  text?: string;
-  icon?: JSX.Element;
-  transparentBackground?: boolean;
-}
+export interface IButtonProps extends ButtonProps {}
 
-const Button: React.FC<IButtonProps> = ({ text, icon, children, ...props }) => (
-  <AntDButton {...props}>
-    {icon || text ? (
-      <Space size={8}>
-        {icon ? icon : null}
-        {text ? text : null}
-      </Space>
-    ) : (
-      children
-    )}
-  </AntDButton>
-);
+const Button: React.FC<IButtonProps> = ({ children, ...props }) => <AntDButton {...props}>{children}</AntDButton>;
 
 export default Button;

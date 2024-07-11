@@ -75,8 +75,9 @@ const GratitudeListFilters: React.FC<IProps> = ({ initialValues, onFinish, hideV
                 form.submit();
               }}
               icon={<FontAwesomeIcon icon={faEraser} />}
-              text={intl.formatMessage({ id: 'common.filters.clear' })}
-            />
+            >
+              {intl.formatMessage({ id: 'common.filters.clear' })}
+            </Button>
           </Form.Item>
         </Col>
       </Row>

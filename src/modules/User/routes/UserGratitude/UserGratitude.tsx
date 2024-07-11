@@ -65,8 +65,9 @@ const UserGratitude: React.FC = () => {
             setShowFilters((prevState) => !prevState);
           }}
           icon={<FontAwesomeIcon icon={faFilter} />}
-          text={intl.formatMessage({ id: 'common.filters' })}
-        />
+        >
+          {intl.formatMessage({ id: 'common.filters' })}
+        </Button>
       </PageHeader>
 
       <FilterContainer showFilters={showFilters}>

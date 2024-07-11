@@ -75,15 +75,13 @@ const Gratitude: React.FC = () => {
               setShowFilters((prevState) => !prevState);
             }}
             icon={<FontAwesomeIcon icon={faFilter} />}
-            text={intl.formatMessage({ id: 'common.filters' })}
-          />
+          >
+            {intl.formatMessage({ id: 'common.filters' })}
+          </Button>
 
-          <Button
-            type="primary"
-            onClick={() => handleCreateGratitude()}
-            icon={<FontAwesomeIcon icon={faPlus} />}
-            text={intl.formatMessage({ id: 'gratitude.create.button' })}
-          />
+          <Button type="primary" onClick={() => handleCreateGratitude()} icon={<FontAwesomeIcon icon={faPlus} />}>
+            {intl.formatMessage({ id: 'gratitude.create.button' })}
+          </Button>
         </>
       </PageHeader>
 

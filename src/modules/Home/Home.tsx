@@ -64,14 +64,13 @@ const Home: React.FC = () => {
 
         <div className={styles.headerSubtitle}>{intl.formatMessage({ id: 'home.header.subtitle' })}</div>
         <Space direction="vertical">
-          <Button type="primary" onClick={onClick} text={intl.formatMessage({ id: 'home.header.button' })} />
+          <Button type="primary" onClick={onClick}>
+            {intl.formatMessage({ id: 'home.header.button' })}
+          </Button>
           {intl.formatMessage({ id: 'common.or' }).toLowerCase()}
-          <Button
-            type="text"
-            onClick={executeScroll}
-            icon={<FontAwesomeIcon icon={faChevronDown} />}
-            text={intl.formatMessage({ id: 'home.header.discoverMore' })}
-          />
+          <Button type="text" onClick={executeScroll} icon={<FontAwesomeIcon icon={faChevronDown} />}>
+            {intl.formatMessage({ id: 'home.header.discoverMore' })}
+          </Button>
         </Space>
       </div>
       <div className={styles.contentContainer} ref={divRef}>

@@ -23,8 +23,9 @@ const FederatedLogin: React.FC<IProps> = ({ closeModal }) => {
         }}
         block
         icon={<FontAwesomeIcon icon={faFacebook} />}
-        text={intl.formatMessage({ id: 'federatedLogin.facebook' })}
-      />
+      >
+        {intl.formatMessage({ id: 'federatedLogin.facebook' })}
+      </Button>
 
       <Button
         onClick={() => {
@@ -33,8 +34,9 @@ const FederatedLogin: React.FC<IProps> = ({ closeModal }) => {
         }}
         block
         icon={<FontAwesomeIcon icon={faGoogle} />}
-        text={intl.formatMessage({ id: 'federatedLogin.google' })}
-      />
+      >
+        {intl.formatMessage({ id: 'federatedLogin.google' })}
+      </Button>
     </Space>
   );
 };

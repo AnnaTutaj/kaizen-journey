@@ -82,11 +82,9 @@ const HabitView: React.FC = () => {
     <>
       <PageHeader flexWrap="wrap">
         <>
-          <Button
-            onClick={() => handleGoBack()}
-            icon={<FontAwesomeIcon icon={faLongArrowLeft} />}
-            text={intl.formatMessage({ id: 'common.goBack' })}
-          />
+          <Button onClick={() => handleGoBack()} icon={<FontAwesomeIcon icon={faLongArrowLeft} />}>
+            {intl.formatMessage({ id: 'common.goBack' })}
+          </Button>
           <Select<IYearSelect['value']>
             options={yearSelectOptions}
             defaultValue={year}

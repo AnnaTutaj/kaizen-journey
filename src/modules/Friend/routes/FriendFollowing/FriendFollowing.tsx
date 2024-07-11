@@ -47,12 +47,9 @@ const FriendFollowing: React.FC = () => {
   return (
     <>
       <PageHeader smallMargin justifyContent="flex-end">
-        <Button
-          type="primary"
-          onClick={() => handleCreateFriendFollowing()}
-          icon={<FontAwesomeIcon icon={faPlus} />}
-          text={intl.formatMessage({ id: 'friend.following.create.button' })}
-        />
+        <Button type="primary" onClick={() => handleCreateFriendFollowing()} icon={<FontAwesomeIcon icon={faPlus} />}>
+          {intl.formatMessage({ id: 'friend.following.create.button' })}
+        </Button>
       </PageHeader>
       <FriendFollowingList />
       {friendFollowingCreateModalConfig ? <FriendFollowingCreateModal {...friendFollowingCreateModalConfig} /> : null}

@@ -80,12 +80,9 @@ const HabitTracker: React.FC = () => {
             defaultValue={range}
             onChange={(value) => HabitTrackerActions.setRangeLastDaysAction(value)(dispatch)}
           />
-          <Button
-            type="primary"
-            onClick={() => handleCreateHabit()}
-            icon={<FontAwesomeIcon icon={faPlus} />}
-            text={intl.formatMessage({ id: 'habit.create.button' })}
-          />
+          <Button type="primary" onClick={() => handleCreateHabit()} icon={<FontAwesomeIcon icon={faPlus} />}>
+            {intl.formatMessage({ id: 'habit.create.button' })}
+          </Button>
         </>
       </PageHeader>
       <HabitTable habits={habits} setHabits={setHabits} isInitialLoaded={isInitialLoaded} />

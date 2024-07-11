@@ -214,11 +214,9 @@ const User: React.FC = () => {
   const renderButtons = (
     <Space size={10} wrap={true}>
       {userProfile.uid === user.id ? (
-        <Button
-          onClick={handleEditProfile}
-          text={intl.formatMessage({ id: 'user.editProfile' })}
-          icon={<FontAwesomeIcon icon={faPen} />}
-        />
+        <Button onClick={handleEditProfile} icon={<FontAwesomeIcon icon={faPen} />}>
+          {intl.formatMessage({ id: 'user.editProfile' })}
+        </Button>
       ) : (
         <>
           {isFollowing ? (
@@ -232,10 +230,9 @@ const User: React.FC = () => {
       )}
 
       <CopyToClipboard text={user.id} onCopy={() => handleCopy()}>
-        <Button
-          icon={<FontAwesomeIcon icon={showCheckCopiedIcon ? faCheck : faCopy} />}
-          text={intl.formatMessage({ id: 'user.copyIdToClipboard' })}
-        />
+        <Button icon={<FontAwesomeIcon icon={showCheckCopiedIcon ? faCheck : faCopy} />}>
+          {intl.formatMessage({ id: 'user.copyIdToClipboard' })}
+        </Button>
       </CopyToClipboard>
     </Space>
   );
