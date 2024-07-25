@@ -59,7 +59,11 @@ const Home: React.FC = () => {
       <div className={styles.headerContainer}>
         <Space className={styles.headerKaizenJourneySpace} size={16}>
           <img className={styles.logoImage} src={kaizenJourneyLogo} alt="Kaizen Journey Logo" />
-          <div className={styles.headerTitle}>Kaizen Journey</div>
+          <div className={styles.headerTitle}>
+            Kaizen
+            <br />
+            Journey
+          </div>
         </Space>
 
         <div className={styles.headerSubtitle}>{intl.formatMessage({ id: 'home.header.subtitle' })}</div>

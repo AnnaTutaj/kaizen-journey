@@ -35,6 +35,7 @@ export default createStyles(({ css, token }) => {
     font-weight: 900;
     font-size: clamp(40px, min(10vw, 10vh), 90px);
     letter-spacing: 0.1em;
+    line-height: 1;
   `,
   headerSubtitle: css`
     margin-bottom: 40px;
