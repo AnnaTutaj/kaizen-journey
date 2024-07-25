@@ -11,6 +11,7 @@ import useStyles from '../useStyles';
 
 export interface ILoginWithEmailFormProps {
   setMode: React.Dispatch<React.SetStateAction<Mode>>;
+  showResetPassword: (email?: string) => void;
 }
 
 interface ILoginWithEmailFormModelProps {
@@ -18,12 +19,13 @@ interface ILoginWithEmailFormModelProps {
   password: string;
 }
 
-const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode }) => {
+const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode, showResetPassword }) => {
   const intl = useIntl();
   const { styles } = useStyles();
   const navigate = useNavigate();
   const { login } = useAuth();
   const { showError } = useErrorMessage();
+  const [form] = Form.useForm<ILoginWithEmailFormModelProps>();
 
   const onFinish = async (values: ILoginWithEmailFormModelProps) => {
     try {
@@ -37,7 +39,14 @@ const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode }) => 
   };
 
   return (
-    <Form name="LoginWithEmailForm" initialValues={{}} onFinish={onFinish} autoComplete="off" layout={'vertical'}>
+    <Form
+      name="LoginWithEmailForm"
+      initialValues={{}}
+      onFinish={onFinish}
+      autoComplete="off"
+      layout={'vertical'}
+      form={form}
+    >
       <Form.Item
         label={intl.formatMessage({ id: 'loginWithEmail.form.field.email' })}
         name="email"
@@ -53,7 +62,7 @@ const LoginWithEmailForm: React.FC<ILoginWithEmailFormProps> = ({ setMode }) => 
         >
           <Input.Password />
         </Form.Item>
-        <Button type="link" size="small">
+        <Button type="link" size="small" onClick={() => showResetPassword(form.getFieldValue('email'))}>
           {intl.formatMessage({ id: 'loginWithEmail.form.forgotPassowrdLink' })}
         </Button>
       </Form.Item>

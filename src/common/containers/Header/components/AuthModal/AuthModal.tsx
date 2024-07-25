@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import Modal from '@common/components/Modal';
 import MascotWelcomeImage from '../MascotWelcomeImage/MascotWelcomeImage';
@@ -7,12 +7,15 @@ import RegisterForm from './RegisterForm/RegisterForm';
 import LoginWithEmailForm from './LoginWithEmailForm/LoginWithEmailForm';
 import RegisterWithEmailForm from './RegisterWithEmailForm/RegisterWithEmailForm';
 import useStyles from './useStyles';
+import ResetPasswordForm from './ResetPasswordForm';
+import { IResetPasswordFormProps } from './ResetPasswordForm/ResetPasswordForm';
 
 export enum Mode {
   login = 'login',
   register = 'register',
   loginWithEmail = 'loginWithEmail',
-  registerWithEmail = 'registerWithEmail'
+  registerWithEmail = 'registerWithEmail',
+  resetPassword = 'resetPassword'
 }
 
 export interface IAuthModalProps {
@@ -24,6 +27,12 @@ const AuthModal: React.FC<IAuthModalProps> = ({ initMode, handleCancel }) => {
   const intl = useIntl();
   const { styles } = useStyles();
   const [mode, setMode] = useState<Mode>(initMode);
+  const [resetPasswordConfig, setResetPasswordConfig] = useState<IResetPasswordFormProps>();
+
+  const showResetPassword = useCallback((email?: string) => {
+    setMode(Mode.resetPassword);
+    setResetPasswordConfig({ email });
+  }, []);
 
   const renderContent = () => {
     switch (mode) {
@@ -32,7 +41,7 @@ const AuthModal: React.FC<IAuthModalProps> = ({ initMode, handleCancel }) => {
       }
 
       case Mode.loginWithEmail: {
-        return <LoginWithEmailForm setMode={setMode} />;
+        return <LoginWithEmailForm setMode={setMode} showResetPassword={showResetPassword} />;
       }
 
       case Mode.register: {
@@ -62,6 +71,10 @@ const AuthModal: React.FC<IAuthModalProps> = ({ initMode, handleCancel }) => {
       case Mode.registerWithEmail: {
         return intl.formatMessage({ id: 'registerWithEmail.form.title' });
       }
+
+      case Mode.resetPassword: {
+        return intl.formatMessage({ id: 'resetPassword.form.title' });
+      }
     }
   };
 
@@ -70,6 +83,7 @@ const AuthModal: React.FC<IAuthModalProps> = ({ initMode, handleCancel }) => {
       <div className={styles.contentContainer}>
         <MascotWelcomeImage />
         {renderContent()}
+        {resetPasswordConfig ? <ResetPasswordForm {...resetPasswordConfig} /> : null}
       </div>
     </Modal>
   );

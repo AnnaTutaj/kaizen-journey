@@ -9,7 +9,8 @@ import {
   FacebookAuthProvider,
   signOut,
   getAdditionalUserInfo,
-  AdditionalUserInfo
+  AdditionalUserInfo,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { User as FirebaseUser } from 'firebase/auth';
 import { UserCredential as FirebaseUserCredential } from 'firebase/auth';
@@ -29,6 +30,7 @@ export interface IAuthContext {
   signInWithFacebook: () => void;
   login?: (email: string, password: string) => Promise<FirebaseUserCredential>;
   register: (email: string, password: string) => void;
+  resetPassword: (email: string) => Promise<void>;
   logout: () => void;
   updateProfileSettings: (values: Partial<IUserProfile>) => Promise<void>;
   updateProfileTheme: (values: Pick<IUserProfile, 'theme'>) => Promise<void>;
@@ -40,6 +42,7 @@ export const AuthContext = createContext<IAuthContext>({
   signInWithGoogle: () => {},
   signInWithFacebook: () => {},
   register: () => {},
+  resetPassword: async () => {},
   logout: () => {},
   updateProfileSettings: async () => {},
   updateProfileTheme: async () => {}
@@ -97,6 +100,10 @@ export default function AuthContextProvider({ children }: any) {
 
   const register = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const resetPassword = async (email: string) => {
+    return await sendPasswordResetEmail(auth, email);
   };
 
   const getProfile = async () => {
@@ -202,6 +209,7 @@ export default function AuthContextProvider({ children }: any) {
     signInWithFacebook,
     login,
     register,
+    resetPassword,
     logout,
     updateProfileSettings,
     updateProfileTheme
