@@ -93,6 +93,7 @@
     "stylelint-order": "6.0.3",
     "ts-jest": "29.2.3",
     "typescript": "5.5.3",
-    "vite-plugin-mkcert": "1.17.5"
+    "vite-plugin-mkcert": "1.17.5",
+    "vite-plugin-svgr": "4.2.0"
   }
 }

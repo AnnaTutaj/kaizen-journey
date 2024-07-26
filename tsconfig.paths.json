@@ -4,8 +4,7 @@
     "paths": {
       "@common/*": ["common/*"],
       "@modules/*": ["modules/*"],
-      "@assets/*": ["assets/*"],
-      "@themes/*": ["themes/*"]
+      "@assets/*": ["assets/*"]
     }
   }
 }
