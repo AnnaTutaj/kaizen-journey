@@ -21,13 +21,14 @@ export default createStyles(
       `,
       date: css`
         margin-right: 16px;
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       `,
       smallText: css`
         font-size: 10px;
         text-transform: uppercase;
       `,
-
       title: css`
         margin-top: 0;
         color: ${token.colorWhite} !important;

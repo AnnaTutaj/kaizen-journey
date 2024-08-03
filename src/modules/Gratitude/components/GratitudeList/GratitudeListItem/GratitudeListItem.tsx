@@ -91,6 +91,8 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
   const monthShort = dayjs(miliseconds).format('MMM');
   const monthDay = dayjs(miliseconds).format('D');
   const weekDayShort = dayjs(miliseconds).format('ddd');
+  const year = dayjs(miliseconds).format('YYYY');
+  const showYear = year !== dayjs().format('YYYY');
 
   return (
     <>
@@ -99,7 +101,8 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
           <Col>
             <div className={styles.date}>
               <small className={styles.smallText}>{monthShort}</small>
-              <div>{monthDay}</div>
+              {showYear ? <small className={styles.smallText}>{year}</small> : null}
+              <span>{monthDay}</span>
               <small className={styles.smallText}>{weekDayShort}</small>
             </div>
           </Col>
