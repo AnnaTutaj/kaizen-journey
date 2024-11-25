@@ -1,5 +1,6 @@
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import { IHabitModel } from './HabitModel';
+import { FieldValue } from 'firebase/firestore';
 
 export interface IHabitFormModel {
   name: string;
@@ -15,8 +16,8 @@ export interface IHabitFormModelDTO {
   isPublic: boolean;
   createdByUid: string;
   color: CategoryColorType;
-  datesChecked: string[];
-  datesSkipped: string[];
+  datesChecked: string[] | FieldValue;
+  datesSkipped: string[] | FieldValue;
 }
 
 class HabitFormModel {

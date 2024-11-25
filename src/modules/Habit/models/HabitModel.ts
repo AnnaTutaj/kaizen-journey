@@ -1,6 +1,3 @@
-import { QueryDocumentSnapshot } from '@firebase/firestore';
-import { db } from '@common/util/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 import { getSpecifiedStreaks, IStreak } from '@common/helpers/StreakHelper';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
 
@@ -62,15 +59,6 @@ class HabitModel implements IHabitModel {
       longestStreak
     );
   }
-
-  static converter = {
-    toFirestore: (data: IHabitModelDTO) => data,
-    fromFirestore: (snap: QueryDocumentSnapshot) => {
-      return { id: snap.id, ...snap.data() } as IHabitModelDTO;
-    }
-  };
-
-  static fetchById = (id: string) => getDoc(doc(db, 'habits', id).withConverter(HabitModel.converter));
 }
 
 export default HabitModel;

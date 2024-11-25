@@ -1,6 +1,5 @@
 import { Dispatch } from 'redux';
-import { collection, query, where, getDocs, orderBy, limit, startAfter, getDoc, doc } from 'firebase/firestore';
-import { db } from '@common/util/firebase';
+import { where, orderBy, limit, startAfter } from 'firebase/firestore';
 import { ActionsUnion, createAction as createActionHelper } from '@common/helpers/ActionHelper';
 import {
   IGratitudeListFiltersModel,
@@ -8,6 +7,7 @@ import {
 } from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import GratitudeModel, { IGratitudeModel, IGratitudeModelDTO } from '@modules/Gratitude/models/GratitudeModel';
 import { UserGratitudeListTypes } from './UserGratitudeListTypes';
+import GratitudeResource from '@modules/Gratitude/api/GratitudeResource';
 
 const loadAction =
   ({
@@ -30,7 +30,7 @@ const loadAction =
       const limitCount: number = 10;
 
       const startAfterGratitude = lastFetchedGratitude
-        ? await getDoc(doc(db, 'gratitude', lastFetchedGratitude.id))
+        ? await GratitudeResource.fetchById(lastFetchedGratitude.id)
         : null;
 
       const whereConditionByMode = where('createdByUid', '==', userProfileUid);
@@ -47,22 +47,11 @@ const loadAction =
         whereConditions.push(where('isPublic', '==', filters.isPublic));
       }
 
-      const q = startAfterGratitude
-        ? query(
-            collection(db, 'gratitude').withConverter(GratitudeModel.converter),
-            ...whereConditions,
-            orderBy('date', 'desc'),
-            startAfter(startAfterGratitude),
-            limit(limitCount)
-          )
-        : query(
-            collection(db, 'gratitude').withConverter(GratitudeModel.converter),
-            ...whereConditions,
-            orderBy('date', 'desc'),
-            limit(limitCount)
-          );
-
-      const querySnap = await getDocs(q);
+      const querySnap = await GratitudeResource.fetchCollection(
+        startAfterGratitude
+          ? [...whereConditions, orderBy('date', 'desc'), startAfter(startAfterGratitude), limit(limitCount)]
+          : [...whereConditions, orderBy('date', 'desc'), limit(limitCount)]
+      );
 
       if (querySnap.docs.length === 0) {
         dispatch(UserGratitudeListDispatch.load([]));
@@ -78,7 +67,7 @@ const removeAction = (gratitudeId: string) => async (dispatch: Dispatch) => {
 };
 
 const updateAction = (gratitude: IGratitudeModel) => async (dispatch: Dispatch) => {
-  const gratitudeSnap = await GratitudeModel.fetchById(gratitude.id);
+  const gratitudeSnap = await GratitudeResource.fetchById(gratitude.id);
   if (gratitudeSnap.exists()) {
     const updatedGratitude = GratitudeModel.build(gratitudeSnap.data());
     dispatch(UserGratitudeListDispatch.update(gratitude, updatedGratitude));

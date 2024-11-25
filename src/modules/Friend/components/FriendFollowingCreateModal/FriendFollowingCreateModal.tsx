@@ -16,6 +16,7 @@ import useConfirmModal from '@common/hooks/useConfirmModal';
 import Alert from '@common/components/Alert';
 import useCommonStyles  from '@common/useStyles';
 import useErrorMessage from '@common/hooks/useErrorMessage';
+import UserResource from '@common/api/UserResource';
 
 export interface IFriendFollowingCreateModalProps {
   handleSubmit: () => void;
@@ -48,7 +49,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
     setLastSearchedId(values.id);
     setSearchedUser(null);
     setNotFound(false);
-    const userSnap = await UserModel.fetchById(values.id);
+    const userSnap = await UserResource.fetchById(values.id);
     if (userSnap.exists()) {
       const friendFollow = await getFollowingById(userProfile.uid, values.id);
       const isFollowing = friendFollow ? true : false;

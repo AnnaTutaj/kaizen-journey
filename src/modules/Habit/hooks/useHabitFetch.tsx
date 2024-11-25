@@ -1,26 +1,11 @@
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  getDoc,
-  updateDoc,
-  arrayRemove,
-  arrayUnion,
-  deleteDoc,
-  addDoc,
-  DocumentReference,
-  DocumentData,
-  limit
-} from 'firebase/firestore';
-import { db } from '@common/util/firebase';
+import { where, arrayRemove, arrayUnion, DocumentReference, DocumentData, limit } from 'firebase/firestore';
 import HabitModel, { IHabitModel } from '@modules/Habit/models/HabitModel';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { HabitDateStatus } from '@common/constants/HabitDateStatus';
 import { IHabitFormModelDTO } from '../models/HabitFormModel';
 import { useCallback } from 'react';
 import { IHabitListFiltersModelDTO } from '../models/HabitListFiltersModel';
+import HabitResource from '../api/HabitResource';
 
 const useHabitFetch = () => {
   const { userProfile } = useUserProfile();
@@ -58,9 +43,7 @@ const useHabitFetch = () => {
         conditions.push(limit(limitCount));
       }
 
-      const q = query(collection(db, 'habits').withConverter(HabitModel.converter), ...conditions);
-
-      const querySnap = await getDocs(q);
+      const querySnap = await HabitResource.fetchCollection([...conditions]);
 
       if (querySnap.docs.length === 0) {
         if (typeof setLoading === 'function') setLoading(false);
@@ -76,8 +59,7 @@ const useHabitFetch = () => {
   );
 
   const getHabitById = useCallback(async (id: string): Promise<IHabitModel | null> => {
-    const docRef = doc(db, 'habits', id).withConverter(HabitModel.converter);
-    const docSnap = await getDoc(docRef);
+    const docSnap = await HabitResource.fetchById(id);
 
     if (docSnap.exists()) {
       return HabitModel.build(docSnap.data());
@@ -87,25 +69,21 @@ const useHabitFetch = () => {
   }, []);
 
   const createHabit = useCallback(async (values: IHabitFormModelDTO): Promise<DocumentReference<DocumentData>> => {
-    return await addDoc(collection(db, 'habits'), values);
-  }, []);
-
-  const deleteHabit = useCallback(async (id: string): Promise<void> => {
-    await deleteDoc(doc(db, 'habits', id));
+    return await HabitResource.create(values);
   }, []);
 
   const updateHabit = useCallback(async (id: string, values: Partial<IHabitFormModelDTO>): Promise<void> => {
-    await updateDoc(doc(db, 'habits', id), values);
+    return await HabitResource.update(id, values);
   }, []);
 
   const archiveHabit = useCallback(async (id: string): Promise<void> => {
-    await updateDoc(doc(db, 'habits', id), {
+    return await HabitResource.update(id, {
       isArchived: true
     });
   }, []);
 
   const restoreHabit = useCallback(async (id: string): Promise<void> => {
-    await updateDoc(doc(db, 'habits', id), {
+    return await HabitResource.update(id, {
       isArchived: false
     });
   }, []);
@@ -114,21 +92,22 @@ const useHabitFetch = () => {
     async ({ habitId, dateStatus, dateKey }: { habitId: string; dateStatus: HabitDateStatus; dateKey: string }) => {
       switch (dateStatus) {
         case HabitDateStatus.checked:
-          await updateDoc(doc(db, 'habits', habitId), {
+          await HabitResource.update(habitId, {
             datesChecked: arrayRemove(dateKey),
             datesSkipped: arrayUnion(dateKey)
           });
+
           break;
 
         case HabitDateStatus.skipped:
-          await updateDoc(doc(db, 'habits', habitId), {
+          await HabitResource.update(habitId, {
             datesChecked: arrayRemove(dateKey),
             datesSkipped: arrayRemove(dateKey)
           });
           break;
 
         case HabitDateStatus.unchecked:
-          await updateDoc(doc(db, 'habits', habitId), {
+          await HabitResource.update(habitId, {
             datesChecked: arrayUnion(dateKey),
             datesSkipped: arrayRemove(dateKey)
           });
@@ -142,7 +121,6 @@ const useHabitFetch = () => {
     getHabits,
     getHabitById,
     createHabit,
-    deleteHabit,
     updateHabit,
     archiveHabit,
     restoreHabit,

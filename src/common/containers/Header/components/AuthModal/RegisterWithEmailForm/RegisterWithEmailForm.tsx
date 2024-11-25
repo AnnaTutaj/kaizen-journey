@@ -2,7 +2,7 @@ import { Form, Input } from 'antd';
 import React from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useIntl } from 'react-intl';
-import { serverTimestamp, doc, setDoc } from 'firebase/firestore';
+import { serverTimestamp } from 'firebase/firestore';
 import { db } from '@common/util/firebase';
 import { useSelector } from 'react-redux';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
@@ -12,6 +12,7 @@ import { Paths } from '@common/constants/Paths';
 import { Mode } from '../AuthModal';
 import useErrorMessage from '@common/hooks/useErrorMessage';
 import useStyles from '../useStyles';
+import UserResource from '@common/api/UserResource';
 
 export interface IRegisterWithEmailFormProps {
   setMode: React.Dispatch<React.SetStateAction<Mode>>;
@@ -41,7 +42,7 @@ const RegisterWithEmailForm: React.FC<IRegisterWithEmailFormProps> = ({ setMode 
         createdAt: serverTimestamp()
       };
 
-      await setDoc(doc(db, `users/${createdUser.user.uid}`), { ...newUser });
+      await UserResource.setDoc(createdUser.user.uid, { ...newUser });
       navigate(Paths.Habit);
     } catch (error) {
       showError(error);

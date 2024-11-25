@@ -21,6 +21,7 @@ import Button from '@common/components/Button';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import useErrorMessage from '@common/hooks/useErrorMessage';
 import useStyles from './useStyles';
+import UserResource from '@common/api/UserResource';
 
 const { useBreakpoint } = Grid;
 
@@ -51,7 +52,7 @@ const User: React.FC = () => {
       }
 
       setIsUserInfoLoading(true);
-      const userSnap = await UserModel.fetchById(params.id);
+      const userSnap = await UserResource.fetchById(params.id);
       if (userSnap.exists()) {
         setUser(UserModel.build(userSnap.data()));
       } else {

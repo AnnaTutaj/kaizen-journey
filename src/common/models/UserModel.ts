@@ -1,8 +1,5 @@
-import { QueryDocumentSnapshot } from '@firebase/firestore';
-import { db } from '@common/util/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 import { Language } from '@common/constants/Language';
-import { IUserCategory } from '@common/contexts/UserProfile/UserProfileContext';
+import { IUserCategory, IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
 
 export interface IUserModel {
   id: string;
@@ -27,6 +24,7 @@ export interface IUserModelDTO {
   language: Language | undefined;
   tags: string[];
   categories: IUserCategory[];
+  theme?: IUserTheme;
 }
 
 class UserModel implements IUserModel {
@@ -54,15 +52,6 @@ class UserModel implements IUserModel {
       dto.categories
     );
   }
-
-  static converter = {
-    toFirestore: (data: IUserModelDTO) => data,
-    fromFirestore: (snap: QueryDocumentSnapshot) => {
-      return { id: snap.id, ...snap.data() } as IUserModelDTO;
-    }
-  };
-
-  static fetchById = (id: string) => getDoc(doc(db, 'users', id).withConverter(UserModel.converter));
 }
 
 export default UserModel;

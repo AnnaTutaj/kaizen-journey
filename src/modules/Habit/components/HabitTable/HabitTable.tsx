@@ -29,6 +29,7 @@ import { MascotImage } from '@common/constants/MascotImage';
 import useCommonStyles from '@common/useStyles';
 import { useStyles } from './useStyles';
 import { useTheme } from 'antd-style';
+import HabitResource from '@modules/Habit/api/HabitResource';
 
 const { useBreakpoint } = Grid;
 
@@ -57,7 +58,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   ]);
 
   const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
-  const { getHabitById, updateHabitDates, deleteHabit, archiveHabit } = useHabitFetch();
+  const { getHabitById, updateHabitDates, archiveHabit } = useHabitFetch();
 
   const scrollTo = useCallback(() => {
     if (scrollContainerRef) {
@@ -112,7 +113,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   };
 
   const handleDelete = async (habit: IHabitModel) => {
-    await deleteHabit(habit.id);
+    await HabitResource.delete(habit.id);
     setHabits((prevState) => _.remove(prevState, (i) => i.id !== habit.id));
   };
 

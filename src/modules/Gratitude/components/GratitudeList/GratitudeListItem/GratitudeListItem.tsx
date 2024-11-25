@@ -2,8 +2,6 @@ import { Col, List, Row, Tag, Tooltip } from 'antd';
 import React, { useMemo } from 'react';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { doc, deleteDoc } from 'firebase/firestore';
-import { db } from '@common/util/firebase';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useIntl } from 'react-intl';
@@ -19,6 +17,7 @@ import Title from 'antd/es/typography/Title';
 import Paragraph from 'antd/es/typography/Paragraph';
 import { useTheme } from 'antd-style';
 import { formatTime } from '@common/helpers/TimeHelper';
+import GratitudeResource from '@modules/Gratitude/api/GratitudeResource';
 
 interface IProps {
   gratitude: IGratitudeModel;
@@ -51,7 +50,7 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
 
   const handleDelete = async () => {
     if (removeGratitude) {
-      await deleteDoc(doc(db, 'gratitude', gratitude.id));
+      await GratitudeResource.delete(gratitude.id);
       removeGratitude(gratitude.id);
     }
   };

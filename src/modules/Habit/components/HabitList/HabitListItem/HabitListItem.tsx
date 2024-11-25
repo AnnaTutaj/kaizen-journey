@@ -18,6 +18,7 @@ import { MascotImage } from '@common/constants/MascotImage';
 import useListItemStyles from '@common/components/ListItem/useStyles';
 import Title from 'antd/es/typography/Title';
 import Paragraph from 'antd/es/typography/Paragraph';
+import HabitResource from '@modules/Habit/api/HabitResource';
 
 interface IProps {
   habit: IHabitModel;
@@ -31,7 +32,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
   const { userProfile } = useUserProfile();
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
-  const { getHabitById, deleteHabit, archiveHabit, restoreHabit } = useHabitFetch();
+  const { getHabitById, archiveHabit, restoreHabit } = useHabitFetch();
 
   const refreshHabit = async () => {
     const updatedHabit = await getHabitById(habit.id);
@@ -54,7 +55,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
   };
 
   const handleDelete = async (habit: IHabitModel) => {
-    await deleteHabit(habit.id);
+    await HabitResource.delete(habit.id);
     setHabits((prevState) => _.remove(prevState, (i) => i.id !== habit.id));
   };
 

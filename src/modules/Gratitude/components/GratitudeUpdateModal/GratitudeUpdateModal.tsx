@@ -1,11 +1,10 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '@common/util/firebase';
 import GratitudeFormModel, { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import GratitudeForm from '@modules/Gratitude/components/GratitudeForm';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import useErrorMessage from '@common/hooks/useErrorMessage';
+import GratitudeResource from '@modules/Gratitude/api/GratitudeResource';
 
 export interface IGratitudeUpdateModalProps {
   handleSubmit: () => void;
@@ -20,8 +19,7 @@ const GratitudeUpdateModal: React.FC<IGratitudeUpdateModalProps> = ({ handleSubm
   const onFinish = async (values: IGratitudeFormModel) => {
     try {
       const finalValues = GratitudeFormModel.serializeToUpdate(values);
-
-      await updateDoc(doc(db, 'gratitude', gratitude.id), finalValues);
+      await GratitudeResource.update(gratitude.id, finalValues); 
 
       handleSubmit();
     } catch (error) {

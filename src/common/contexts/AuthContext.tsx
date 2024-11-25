@@ -14,7 +14,7 @@ import {
 } from 'firebase/auth';
 import { User as FirebaseUser } from 'firebase/auth';
 import { UserCredential as FirebaseUserCredential } from 'firebase/auth';
-import { serverTimestamp, doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { serverTimestamp } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import UserActions from '@common/redux/UserActions';
 import { useSelector } from 'react-redux';
@@ -22,6 +22,7 @@ import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
 import useErrorMessage from '@common/hooks/useErrorMessage';
 import { IUserProfile, initUserProfile, useUserProfile } from './UserProfile/UserProfileContext';
 import { Language } from '@common/constants/Language';
+import UserResource from '@common/api/UserResource';
 
 export interface IAuthContext {
   userAuth: FirebaseUser | null;
@@ -65,7 +66,7 @@ export default function AuthContextProvider({ children }: any) {
       setUserAuth(user ? user : null);
 
       if (user?.uid) {
-        const snap = await getDoc(doc(db, 'users', user.uid));
+        const snap = await UserResource.fetchById(user.uid);
 
         if (snap.exists()) {
           const userSnap = snap.data();
@@ -113,13 +114,12 @@ export default function AuthContextProvider({ children }: any) {
 
     setIsUserLoading(true);
 
-    const snap = await getDoc(doc(db, 'users', userAuth.uid));
+    const snap = await UserResource.fetchById(userAuth.uid);
 
     if (snap.exists()) {
       const userSnap = snap.data();
-
       setUserProfile({
-        uid: userAuth.uid,
+        uid: userSnap.id,
         createdAt: userSnap.createdAt || '',
         pictureURL: userSnap.pictureURL || '',
         username: userSnap.username || '',
@@ -134,27 +134,21 @@ export default function AuthContextProvider({ children }: any) {
 
   const updateProfileSettings = async (values: Partial<IUserProfile>) => {
     if (userAuth) {
-      const userRef = doc(db, 'users', userAuth.uid);
-
-      await updateDoc(userRef, {
+      await UserResource.update(userAuth.uid, {
         username: values.username,
         language: values.language,
         tags: values.tags,
         categories: values.categories
       });
-
       getProfile();
     }
   };
 
   const updateProfileTheme = async (values: Pick<IUserProfile, 'theme'>) => {
     if (userAuth) {
-      const userRef = doc(db, 'users', userAuth.uid);
-
-      await updateDoc(userRef, {
+      await UserResource.update(userAuth.uid, {
         theme: values.theme
       });
-
       getProfile();
     }
   };
@@ -177,7 +171,7 @@ export default function AuthContextProvider({ children }: any) {
         createdAt: serverTimestamp()
       };
 
-      await setDoc(doc(db, `users/${userCredential.user.uid}`), { ...newUser });
+      await UserResource.setDoc(userCredential.user.uid, { ...newUser });
     }
   };
 
@@ -195,7 +189,8 @@ export default function AuthContextProvider({ children }: any) {
           createdAt: serverTimestamp()
         };
 
-        await setDoc(doc(db, `users/${userCredential.user.uid}`), { ...newUser });
+        //todo: spr gdzie jest polaczene z db i tam przeniesc do resource
+        await UserResource.setDoc(userCredential.user.uid, { ...newUser });
       }
     } catch (error) {
       showError(error);

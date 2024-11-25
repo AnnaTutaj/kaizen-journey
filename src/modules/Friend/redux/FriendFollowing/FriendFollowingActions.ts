@@ -1,8 +1,7 @@
+import { FriendResource } from './../../api/FriendResource';
 import { Dispatch } from 'redux';
-import { collection, query, getDocs, orderBy, limit, startAfter, getDoc, doc } from 'firebase/firestore';
-import { db } from '@common/util/firebase';
+import { orderBy, limit, startAfter } from 'firebase/firestore';
 import { ActionsUnion, createAction as createActionHelper } from '@common/helpers/ActionHelper';
-import FriendBaseModel from '@modules/Friend/models/FriendBaseModel';
 import { IFriendBaseModel, IFriendBaseModelDTO } from '@modules/Friend/models/FriendBaseModel';
 
 import { FriendFollowingTypes } from './FriendFollowingTypes';
@@ -26,23 +25,15 @@ const loadAction =
       const limitCount: number = 10;
 
       const startAfterFriendFollowing = lastFetchedFriendFollowing
-        ? await getDoc(doc(db, 'follows', userProfileUid, 'following', lastFetchedFriendFollowing.id))
+        ? await FriendResource.fetchFollowingById(userProfileUid, lastFetchedFriendFollowing.id)
         : null;
 
-      const q = startAfterFriendFollowing
-        ? query(
-            collection(db, `follows/${userProfileUid}/following`).withConverter(FriendBaseModel.converter),
-            orderBy('createdAt', 'desc'),
-            startAfter(startAfterFriendFollowing),
-            limit(limitCount)
-          )
-        : query(
-            collection(db, `follows/${userProfileUid}/following`).withConverter(FriendBaseModel.converter),
-            orderBy('createdAt', 'desc'),
-            limit(limitCount)
-          );
-
-      const querySnap = await getDocs(q);
+      const querySnap = await FriendResource.fetchFollowingCollection(
+        userProfileUid,
+        startAfterFriendFollowing
+          ? [orderBy('createdAt', 'desc'), startAfter(startAfterFriendFollowing), limit(limitCount)]
+          : [orderBy('createdAt', 'desc'), limit(limitCount)]
+      );
 
       if (querySnap.docs.length === 0) {
         dispatch(FriendFollowingDispatch.load([]));

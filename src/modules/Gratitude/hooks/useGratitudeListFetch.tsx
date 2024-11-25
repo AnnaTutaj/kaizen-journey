@@ -1,9 +1,9 @@
-import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
-import { db } from '@common/util/firebase';
+import { where, orderBy, limit } from 'firebase/firestore';
 import GratitudeModel from '@modules/Gratitude/models/GratitudeModel';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { IGratitudeListFiltersModelDTO } from '../models/GratitudeListFiltersModel';
 import { useCallback } from 'react';
+import GratitudeResource from '../api/GratitudeResource';
 
 interface IProps {
   mode: 'myList' | 'public';
@@ -56,13 +56,7 @@ const useGratitudeListFetch = () => {
       conditions.push(where('date', '<=', filters.dateTo));
     }
 
-    const q = query(
-      collection(db, 'gratitude').withConverter(GratitudeModel.converter),
-      ...conditions,
-      orderBy('date', 'desc')
-    );
-
-    const querySnap = await getDocs(q);
+    const querySnap = await GratitudeResource.fetchCollection([...conditions, orderBy('date', 'desc')]);
 
     if (querySnap.docs.length === 0) {
       return [];

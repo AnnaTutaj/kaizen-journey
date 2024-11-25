@@ -1,6 +1,3 @@
-import { QueryDocumentSnapshot } from '@firebase/firestore';
-import { db } from '@common/util/firebase';
-import { doc, getDoc } from 'firebase/firestore';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
 
 export interface IGratitudeModel {
@@ -74,15 +71,6 @@ class GratitudeModel implements IGratitudeModel {
       dto.seconds || 0
     );
   }
-
-  static converter = {
-    toFirestore: (data: IGratitudeModelDTO) => data,
-    fromFirestore: (snap: QueryDocumentSnapshot) => {
-      return { id: snap.id, ...snap.data() } as IGratitudeModelDTO;
-    }
-  };
-
-  static fetchById = (id: string) => getDoc(doc(db, 'gratitude', id).withConverter(GratitudeModel.converter));
 }
 
 export default GratitudeModel;

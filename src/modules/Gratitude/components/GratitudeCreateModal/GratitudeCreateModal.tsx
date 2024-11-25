@@ -1,12 +1,11 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '@common/util/firebase';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import GratitudeFormModel, { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
 import GratitudeForm from '@modules/Gratitude/components/GratitudeForm';
 import dayjs from 'dayjs';
 import useErrorMessage from '@common/hooks/useErrorMessage';
+import GratitudeResource from '@modules/Gratitude/api/GratitudeResource';
 
 export interface IGratitudeCreateModalProps {
   handleSubmit: () => void;
@@ -26,8 +25,7 @@ const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubm
         createdByPictureURL: userProfile.pictureURL,
         ...values
       });
-
-      await addDoc(collection(db, 'gratitude'), finalValues);
+      await GratitudeResource.create(finalValues);
       handleSubmit();
     } catch (error) {
       showError(error);
