@@ -50,23 +50,20 @@ export default [
 
     settings: {
       react: {
-        version: '18.2'
+        version: 'detect'
       }
     },
 
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
-      '@typescript-eslint/ban-types': [
+      '@typescript-eslint/no-explicit-any': 'off',
+      'no-empty': ['error', { allowEmptyCatch: true }],
+      'prettier/prettier': [
         'error',
         {
-          extendDefaults: true,
-          types: {
-            '{}': false
-          }
+          endOfLine: 'auto'
         }
-      ],
-      '@typescript-eslint/no-explicit-any': 'off',
-      'no-empty': ['error', { allowEmptyCatch: true }]
+      ]
     }
   }
 ];

@@ -102,7 +102,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
         setHabitsInOrder({ habitsToSet: habits.map((i) => (i.id === updatedHabit.id ? updatedHabit : i)) });
       }
     },
-    [setHabitsInOrder, habits]
+    [setHabitsInOrder, habits, getHabitById]
   );
 
   const getHabitDateValue = useCallback((habitId: string, dateKey: string) => `${habitId}${dateKey}`, []);
@@ -115,7 +115,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
       await refreshHabit(habit);
       setLoadingHabitDate((prevState) => [...prevState.filter((i) => i !== habitDateValue)]);
     },
-    [getHabitDateValue, updateHabitDates, refreshHabit]
+    [getHabitDateValue, refreshHabit, updateHabitDates]
   );
 
   const handleUpdateHabit = useCallback(
@@ -173,7 +173,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
         }
       });
     },
-    [intl, handleDelete]
+    [intl, handleDelete, confirmModal]
   );
 
   const confirmArchive = useCallback(
@@ -191,7 +191,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
         imageMascot: MascotImage.folder
       });
     },
-    [intl, handleArchive]
+    [intl, handleArchive, confirmModal]
   );
 
   const menuItems = useCallback(
@@ -218,7 +218,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
         }
       ];
     },
-    [navigate, generatePath, handleUpdateHabit, confirmArchive, confirmDelete]
+    [navigate, handleUpdateHabit, confirmArchive, confirmDelete]
   );
 
   const tableMenuItems: DropdownMenuItemProps = useMemo(

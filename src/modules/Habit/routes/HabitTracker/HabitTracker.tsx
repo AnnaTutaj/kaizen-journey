@@ -41,7 +41,7 @@ const HabitTracker: React.FC = () => {
       if (habitsToSet === undefined && orderToSet === undefined) {
         return;
       }
-   
+
       if (orderToSet) {
         setHabitOrder(orderToSet);
       }
@@ -62,15 +62,16 @@ const HabitTracker: React.FC = () => {
     }
 
     fetchHabits();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCreateSubmit = async () => {
-    const { habits: loadedHabits, order: loadedOrder } = await getHabits({
+  const handleCreateSubmit = useCallback(async () => {
+    const { habits: loadedHabits } = await getHabits({
       setLoading,
       filters: { isArchived: false }
     });
     handleSetHabits({ habitsToSet: loadedHabits });
-  };
+  }, [getHabits, handleSetHabits]);
 
   const handleCreateHabit = useCallback(() => {
     setHabitCreateModalConfig({
