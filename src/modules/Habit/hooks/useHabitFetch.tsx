@@ -6,6 +6,7 @@ import { IHabitFormModelDTO } from '../models/HabitFormModel';
 import { useCallback } from 'react';
 import { IHabitListFiltersModelDTO } from '../models/HabitListFiltersModel';
 import HabitResource from '../api/HabitResource';
+import HabitOrderModel, { IHabitOrderModel } from '../models/HabitOrderModel';
 
 const useHabitFetch = () => {
   const { userProfile } = useUserProfile();
@@ -15,13 +16,16 @@ const useHabitFetch = () => {
       setLoading,
       createdByUid,
       filters,
-      limitCount
+      limitCount,
+      withOrder = false
     }: {
       setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
       createdByUid?: string;
       filters?: IHabitListFiltersModelDTO | undefined;
       limitCount?: number;
-    }) => {
+      withOrder?: boolean;
+    }): Promise<{ habits: IHabitModel[]; order: string[] }> => {
+      const result: { habits: IHabitModel[]; order: string[] } = { habits: [], order: [] };
       if (typeof setLoading === 'function') setLoading(true);
 
       const conditionsByAuthor = where('createdByUid', '==', createdByUid ? createdByUid : userProfile.uid);
@@ -44,16 +48,20 @@ const useHabitFetch = () => {
       }
 
       const querySnap = await HabitResource.fetchCollection([...conditions]);
+      const habits = querySnap.docs.length !== 0 ? querySnap.docs.map((i) => HabitModel.build(i.data())) : [];
+      result.habits = habits;
 
-      if (querySnap.docs.length === 0) {
-        if (typeof setLoading === 'function') setLoading(false);
-        return [];
+      if (withOrder) {
+        const docOrderSnap = await HabitResource.fetchOrder(createdByUid ? createdByUid : userProfile.uid);
+        console.log(docOrderSnap);
+
+        if (docOrderSnap.exists()) {
+          result.order = HabitOrderModel.build(docOrderSnap.data()).order;
+        }
       }
 
-      const habits = querySnap.docs.map((i) => HabitModel.build(i.data()));
       if (typeof setLoading === 'function') setLoading(false);
-
-      return habits;
+      return result;
     },
     [userProfile.uid]
   );
@@ -117,6 +125,16 @@ const useHabitFetch = () => {
     []
   );
 
+  const getHabitsOrder = useCallback(async (userId: string): Promise<IHabitOrderModel | null> => {
+    const docSnap = await HabitResource.fetchOrder(userId);
+
+    if (docSnap.exists()) {
+      return HabitOrderModel.build(docSnap.data());
+    } else {
+      return null;
+    }
+  }, []);
+
   return {
     getHabits,
     getHabitById,
@@ -124,7 +142,8 @@ const useHabitFetch = () => {
     updateHabit,
     archiveHabit,
     restoreHabit,
-    updateHabitDates
+    updateHabitDates,
+    getHabitsOrder
   };
 };
 

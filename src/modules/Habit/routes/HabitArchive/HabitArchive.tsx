@@ -15,7 +15,7 @@ const HabitArchive: React.FC = () => {
 
   useEffect(() => {
     const fetchHabits = async () => {
-      const loadedHabits = await getHabits({ setLoading, filters: { isArchived: true } });
+      const { habits: loadedHabits } = await getHabits({ setLoading, filters: { isArchived: true } });
       setHabits(loadedHabits);
       setIsInitialLoaded(true);
     };

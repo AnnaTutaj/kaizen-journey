@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { Divider, Drawer, Grid, Layout, Switch } from 'antd';
+import { Grid, Layout, Switch } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import UserAvatar from './components/UserAvatar';
@@ -20,6 +20,7 @@ import AuthModal, { IAuthModalProps, Mode } from './components/AuthModal/AuthMod
 import { Language } from '@common/constants/Language';
 import MascotWelcomeImage from './components/MascotWelcomeImage/MascotWelcomeImage';
 import useStyles from './useStyles';
+import Drawer from '@common/components/Drawer/Drawer';
 
 const { useBreakpoint } = Grid;
 
@@ -112,20 +113,23 @@ const Header: React.FC = () => {
         ) : null}
       </Layout.Header>
 
-      <Drawer className={styles.menuDrawer} placement="right" closable={false} open={isMenuOpen} width="80vw">
-        <div className={styles.menuDrawerCloseIconContainer} onClick={() => setIsMenuOpen(false)}>
-          <FontAwesomeIcon className={styles.menuDrawerCloseIcon} icon={faTimes} />
-        </div>
-        <div
-          onClick={() => {
-            setIsMenuOpen(false);
-            navigate(Paths.Welcome);
-          }}
-          style={{ cursor: 'pointer' }}
-        >
-          <MascotWelcomeImage height={100} />
-        </div>
-        <Divider />
+      <Drawer
+        className={styles.menuDrawer}
+        open={isMenuOpen}
+        width="80vw"
+        close={() => setIsMenuOpen(false)}
+        header={
+          <div
+            onClick={() => {
+              setIsMenuOpen(false);
+              navigate(Paths.Welcome);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            <MascotWelcomeImage height={100} />
+          </div>
+        }
+      >
         <SiteMenu
           userAuth={userAuth}
           openLoginModal={openLoginModal}

@@ -4,6 +4,7 @@ import { FormProps } from 'antd/es/form';
 import Button from '@common/components/Button';
 import { useState } from 'react';
 import { createStyles } from 'antd-style';
+import { useIntl } from 'react-intl';
 
 const useStyles = createStyles(({ css }) => ({
   footer: css`
@@ -14,7 +15,7 @@ const useStyles = createStyles(({ css }) => ({
 
 export interface IFormModalProps<T> extends FormProps<T> {
   modalProps: IModalProps;
-  submitButtonText: string;
+  submitButtonText?: string;
   onFinish: (values: T) => Promise<void>;
   children: JSX.Element;
 }
@@ -26,6 +27,7 @@ const FormModal = <T extends {}>({
   onFinish,
   ...props
 }: IFormModalProps<T>) => {
+  const intl = useIntl();
   const { styles } = useStyles();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -53,11 +55,9 @@ const FormModal = <T extends {}>({
         <>
           {children}
           <div className={styles.footer}>
-            <Form.Item>
-              <Button type="primary" htmlType="submit" loading={isSubmitting} disabled={isSubmitting}>
-                {submitButtonText}
-              </Button>
-            </Form.Item>
+            <Button type="primary" htmlType="submit" loading={isSubmitting} disabled={isSubmitting}>
+              {submitButtonText || intl.formatMessage({ id: 'common.save' })}
+            </Button>
           </div>
         </>
       </Form>

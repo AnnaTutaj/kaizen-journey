@@ -82,7 +82,6 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
       }}
       onFinish={onFinish}
       onValuesChange={onValuesChange}
-      submitButtonText={intl.formatMessage({ id: 'settings.form.submit' })}
     >
       <>
         <Form.Item

@@ -41,7 +41,7 @@ const ExportHabitModal: React.FC<IExportHabitModalalProps> = ({ handleSubmit, ha
   const onFinish = async (values: IExportHabitModalProps) => {
     try {
       const serializedFilters = HabitListFiltersModel.serialize(values);
-      const habits = await getHabits({ filters: serializedFilters, limitCount: values.limit });
+      const { habits } = await getHabits({ filters: serializedFilters, limitCount: values.limit });
       handleDownloadJson(habits);
       handleSubmit();
     } catch (error) {

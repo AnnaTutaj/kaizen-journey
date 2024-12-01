@@ -1,5 +1,5 @@
-import { Col, Grid, Popover, Row, Space, Tooltip } from 'antd';
-import React, { useCallback, useState } from 'react';
+import { Col, Grid, Row, Tooltip } from 'antd';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
@@ -13,7 +13,7 @@ import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageLoading from '@common/components/PageLoading';
-import { faBrush, faCog, faEllipsisV, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpWideShort, faCog, faEllipsisV, faEyeSlash, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/components/HabitUpdateModal/HabitUpdateModal';
 import { generatePath, useNavigate } from 'react-router-dom';
@@ -30,16 +30,18 @@ import useCommonStyles from '@common/useStyles';
 import { useStyles } from './useStyles';
 import { useTheme } from 'antd-style';
 import HabitResource from '@modules/Habit/api/HabitResource';
+import Drawer from '@common/components/Drawer/Drawer';
+import HabitReorderModal, { IHabitReorderModalalProps } from '../HabitReorderModal/HabitReorderModal';
 
 const { useBreakpoint } = Grid;
 
 interface IProps {
   habits: IHabitModel[];
-  setHabits: React.Dispatch<React.SetStateAction<IHabitModel[]>>;
+  setHabitsInOrder: ({ habitsToSet, orderToSet }: { habitsToSet?: IHabitModel[]; orderToSet?: string[] }) => void;
   isInitialLoaded: boolean;
 }
 
-const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) => {
+const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoaded }) => {
   const intl = useIntl();
   const token = useTheme();
   const { styles: commonStyles } = useCommonStyles();
@@ -50,7 +52,18 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
   const range = useSelector(({ habitTracker }: IHabitTrackerOwnState) => habitTracker.rangeLastDays);
   const [loadingHabitDate, setLoadingHabitDate] = useState<string[]>([]);
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
+  const [habitReorderModalConfig, setHabitReorderModalConfig] = useState<IHabitReorderModalalProps>();
   const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
+  const [isOpenColumnSettings, setIsOpenColumnSettings] = useState(false);
+
+  const showColumnSettings = useCallback(() => {
+    setIsOpenColumnSettings(true);
+  }, []);
+
+  const hideColumnSettings = useCallback(() => {
+    setIsOpenColumnSettings(false);
+  }, []);
+
   const [visibleColumns, setVisibleColumns] = useState<ColumnType[]>([
     ColumnType.currentStreak,
     ColumnType.longestStreak,
@@ -68,7 +81,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         inline: 'end'
       });
     }
-  }, [scrollContainerRef]);
+  }, []);
 
   useEffect(() => {
     scrollTo();
@@ -82,100 +95,155 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
     );
   }, [screens.xs]);
 
-  const refreshHabit = async (habit: IHabitModel) => {
-    const updatedHabit = await getHabitById(habit.id);
-    if (updatedHabit) {
-      setHabits((prevState) => {
-        return prevState.map((i) => (i.id === updatedHabit.id ? updatedHabit : i));
+  const refreshHabit = useCallback(
+    async (habit: IHabitModel) => {
+      const updatedHabit = await getHabitById(habit.id);
+      if (updatedHabit) {
+        setHabitsInOrder({ habitsToSet: habits.map((i) => (i.id === updatedHabit.id ? updatedHabit : i)) });
+      }
+    },
+    [setHabitsInOrder, habits]
+  );
+
+  const getHabitDateValue = useCallback((habitId: string, dateKey: string) => `${habitId}${dateKey}`, []);
+
+  const handleClickDate = useCallback(
+    async (dateKey: string, habit: IHabitModel, dateStatus: HabitDateStatus) => {
+      const habitDateValue = getHabitDateValue(habit.id, dateKey);
+      setLoadingHabitDate((prevState) => [...prevState, habitDateValue]);
+      await updateHabitDates({ habitId: habit.id, dateStatus, dateKey });
+      await refreshHabit(habit);
+      setLoadingHabitDate((prevState) => [...prevState.filter((i) => i !== habitDateValue)]);
+    },
+    [getHabitDateValue, updateHabitDates, refreshHabit]
+  );
+
+  const handleUpdateHabit = useCallback(
+    (habit: IHabitModel) => {
+      setHabitUpdateModalConfig({
+        handleCancel: () => setHabitUpdateModalConfig(undefined),
+        handleSubmit: async () => {
+          setHabitUpdateModalConfig(undefined);
+          await refreshHabit(habit);
+        },
+        habit
       });
-    }
-  };
+    },
+    [refreshHabit]
+  );
 
-  const getHabitDateValue = (habitId: string, dateKey: string) => `${habitId}${dateKey}`;
-
-  const handleClickDate = async (dateKey: string, habit: IHabitModel, dateStatus: HabitDateStatus) => {
-    const habitDateValue = getHabitDateValue(habit.id, dateKey);
-    setLoadingHabitDate((prevState) => [...prevState, habitDateValue]);
-    await updateHabitDates({ habitId: habit.id, dateStatus, dateKey });
-    await refreshHabit(habit);
-    setLoadingHabitDate((prevState) => [...prevState.filter((i) => i !== habitDateValue)]);
-  };
-
-  const handleUpdateHabit = (habit: IHabitModel) => {
-    setHabitUpdateModalConfig({
-      handleCancel: () => setHabitUpdateModalConfig(undefined),
-      handleSubmit: async () => {
-        setHabitUpdateModalConfig(undefined);
-        await refreshHabit(habit);
+  const handleReorder = useCallback(() => {
+    setHabitReorderModalConfig({
+      handleCancel: () => setHabitReorderModalConfig(undefined),
+      handleSubmit: async (order) => {
+        setHabitReorderModalConfig(undefined);
+        setHabitsInOrder({ orderToSet: order });
       },
-      habit: habit
+      habits
     });
-  };
+  }, [setHabitsInOrder, habits]);
 
-  const handleDelete = async (habit: IHabitModel) => {
-    await HabitResource.delete(habit.id);
-    setHabits((prevState) => _.remove(prevState, (i) => i.id !== habit.id));
-  };
+  const handleDelete = useCallback(
+    async (habit: IHabitModel) => {
+      await HabitResource.delete(habit.id);
+      setHabitsInOrder({ habitsToSet: _.remove(habits, (i) => i.id !== habit.id) });
+    },
+    [setHabitsInOrder, habits]
+  );
 
-  const handleArchive = async (habit: IHabitModel) => {
-    await archiveHabit(habit.id);
-    setHabits((prevState) => _.remove(prevState, (i) => i.id !== habit.id));
-  };
+  const handleArchive = useCallback(
+    async (habit: IHabitModel) => {
+      await archiveHabit(habit.id);
+      setHabitsInOrder({ habitsToSet: _.remove(habits, (i) => i.id !== habit.id) });
+    },
+    [archiveHabit, setHabitsInOrder, habits]
+  );
 
-  const confirmDelete = async (habit: IHabitModel) => {
-    confirmModal({
-      centered: true,
-      closable: true,
-      title: intl.formatMessage({ id: 'habit.confirmModal.delete.title' }),
-      content: intl.formatMessage({ id: 'habit.confirmModal.delete.content' }),
-      okText: intl.formatMessage({ id: 'habit.confirmModal.delete.okText' }),
-      cancelText: intl.formatMessage({ id: 'habit.confirmModal.delete.cancelText' }),
-      onOk: async () => {
-        await handleDelete(habit);
+  const confirmDelete = useCallback(
+    async (habit: IHabitModel) => {
+      confirmModal({
+        centered: true,
+        closable: true,
+        title: intl.formatMessage({ id: 'habit.confirmModal.delete.title' }),
+        content: intl.formatMessage({ id: 'habit.confirmModal.delete.content' }),
+        okText: intl.formatMessage({ id: 'habit.confirmModal.delete.okText' }),
+        cancelText: intl.formatMessage({ id: 'habit.confirmModal.delete.cancelText' }),
+        onOk: async () => {
+          await handleDelete(habit);
+        }
+      });
+    },
+    [intl, handleDelete]
+  );
+
+  const confirmArchive = useCallback(
+    async (habit: IHabitModel) => {
+      confirmModal({
+        centered: true,
+        closable: true,
+        title: intl.formatMessage({ id: 'habit.confirmModal.archive.title' }),
+        content: intl.formatMessage({ id: 'habit.confirmModal.archive.content' }),
+        okText: intl.formatMessage({ id: 'habit.confirmModal.archive.okText' }),
+        cancelText: intl.formatMessage({ id: 'habit.confirmModal.archive.cancelText' }),
+        onOk: async () => {
+          await handleArchive(habit);
+        },
+        imageMascot: MascotImage.folder
+      });
+    },
+    [intl, handleArchive]
+  );
+
+  const menuItems = useCallback(
+    (habit: IHabitModel): DropdownMenuItemProps => {
+      return [
+        {
+          key: DropdownMenuKey.preview,
+          onClick: async () => navigate(generatePath(Paths.HabitView, { id: habit.id }))
+        },
+        {
+          key: DropdownMenuKey.update,
+          onClick: async () => handleUpdateHabit(habit)
+        },
+        {
+          key: DropdownMenuKey.divider
+        },
+        {
+          key: DropdownMenuKey.archive,
+          onClick: () => confirmArchive(habit)
+        },
+        {
+          key: DropdownMenuKey.delete,
+          onClick: () => confirmDelete(habit)
+        }
+      ];
+    },
+    [navigate, generatePath, handleUpdateHabit, confirmArchive, confirmDelete]
+  );
+
+  const tableMenuItems: DropdownMenuItemProps = useMemo(
+    (): DropdownMenuItemProps => [
+      {
+        key: 'manageColumns',
+        item: {
+          icon: faEyeSlash,
+          text: intl.formatMessage({ id: 'habit.table.columnSettings.title' })
+        },
+        onClick: showColumnSettings
+      },
+      {
+        key: 'repder',
+        item: {
+          icon: faArrowUpWideShort,
+          text: intl.formatMessage({ id: 'habit.reorder' })
+        },
+        onClick: handleReorder
       }
-    });
-  };
+    ],
+    [intl, showColumnSettings, handleReorder]
+  );
 
-  const confirmArchive = async (habit: IHabitModel) => {
-    confirmModal({
-      centered: true,
-      closable: true,
-      title: intl.formatMessage({ id: 'habit.confirmModal.archive.title' }),
-      content: intl.formatMessage({ id: 'habit.confirmModal.archive.content' }),
-      okText: intl.formatMessage({ id: 'habit.confirmModal.archive.okText' }),
-      cancelText: intl.formatMessage({ id: 'habit.confirmModal.archive.cancelText' }),
-      onOk: async () => {
-        await handleArchive(habit);
-      },
-      imageMascot: MascotImage.folder
-    });
-  };
-
-  const menuItems = (habit: IHabitModel): DropdownMenuItemProps => {
-    return [
-      {
-        key: DropdownMenuKey.preview,
-        onClick: async () => navigate(generatePath(Paths.HabitView, { id: habit.id }))
-      },
-      {
-        key: DropdownMenuKey.update,
-        onClick: async () => handleUpdateHabit(habit)
-      },
-      {
-        key: DropdownMenuKey.divider
-      },
-      {
-        key: DropdownMenuKey.archive,
-        onClick: () => confirmArchive(habit)
-      },
-      {
-        key: DropdownMenuKey.delete,
-        onClick: () => confirmDelete(habit)
-      }
-    ];
-  };
-
-  const columns = (): ITableColumn<IHabitModel>[] => {
+  const columns = useMemo((): ITableColumn<IHabitModel>[] => {
     const dateCols: ITableColumn<IHabitModel>[] = [];
 
     const today = dayjs();
@@ -265,25 +333,11 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           <Row justify="space-between" align="middle">
             <Col>{intl.formatMessage({ id: 'habit.table.header.habit' })}</Col>
             <Col>
-              <Popover
-                placement="bottomLeft"
-                title={
-                  <div className={styles.popoverTitle}>
-                    <Space size={10}>
-                      <FontAwesomeIcon icon={faBrush} />
-                      {intl.formatMessage({ id: 'habit.table.popover.columnSettings.title' })}
-                    </Space>
-                  </div>
-                }
-                content={
-                  <HabitTableColumnSettings visibleColumns={visibleColumns} setVisibleColumns={setVisibleColumns} />
-                }
-                trigger="click"
-              >
+              <Dropdown menuItems={tableMenuItems}>
                 <div className={styles.settingsIconContainer}>
                   <FontAwesomeIcon className={styles.settingsIcon} icon={faCog} />
                 </div>
-              </Popover>
+              </Dropdown>
             </Col>
           </Row>
         ),
@@ -360,7 +414,19 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
         visible: () => visibleColumns.includes(ColumnType.totalChecks)
       }
     ];
-  };
+  }, [
+    getDateStatus,
+    getHabitDateValue,
+    getHoverInfoByDateStatus,
+    handleClickDate,
+    getIconByDateStatus,
+    intl,
+    visibleColumns,
+    menuItems,
+    tableMenuItems,
+    loadingHabitDate,
+    range
+  ]);
 
   if (!isInitialLoaded) {
     return <PageLoading />;
@@ -376,17 +442,27 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabits, isInitialLoaded }) =>
           <Table<IHabitModel>
             className={styles.habitTable}
             bordered={true}
-            columns={columns()}
+            columns={columns}
             dataSource={habits}
             pagination={false}
             scroll={{ x: true }}
             rowKey="id"
           />
+          <Drawer
+            title={intl.formatMessage({ id: 'habit.table.columnSettings.title' })}
+            placement="right"
+            close={hideColumnSettings}
+            open={isOpenColumnSettings}
+            width="300"
+          >
+            <HabitTableColumnSettings visibleColumns={visibleColumns} setVisibleColumns={setVisibleColumns} />
+          </Drawer>
         </>
       ) : (
         <Empty description={intl.formatMessage({ id: 'habit.table.empty' })} />
       )}
       {habitUpdateModalConfig ? <HabitUpdateModal {...habitUpdateModalConfig} /> : null}
+      {habitReorderModalConfig ? <HabitReorderModal {...habitReorderModalConfig} /> : null}
       {confirmModalContextHolder}
     </>
   );

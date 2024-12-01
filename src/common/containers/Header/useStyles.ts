@@ -49,24 +49,10 @@ export default createStyles(({ css, token }) => {
       margin: 0 20px;
     `,
     menuDrawer: css`
-      .ant-drawer-body {
-        padding-top: 15px;
-        background-color: ${token.layout.colorHeaderBg};
-      }
-
       .ant-menu-item {
         height: 50px;
         line-height: 50px;
       }
-    `,
-    menuDrawerCloseIconContainer: css`
-      float: right;
-      cursor: pointer;
-    `,
-    menuDrawerCloseIcon: css`
-      color: ${token.layout.colorDarkGray};
-      font-size: 40px;
-      vertical-align: -10px;
     `
   };
 });

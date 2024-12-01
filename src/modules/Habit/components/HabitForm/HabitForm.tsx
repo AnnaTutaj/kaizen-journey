@@ -6,13 +6,14 @@ import { IHabitFormModel } from '@modules/Habit/models/HabitFormModel';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
+import FormModal from '@common/components/FormModal';
 
 const { TextArea } = Input;
 
 interface IProps {
   title: string;
   initialValues: Partial<IHabitFormModel>;
-  onFinish: (values: IHabitFormModel) => void;
+  onFinish: (values: IHabitFormModel) => Promise<void>;
   handleCancel: () => void;
 }
 
@@ -24,15 +25,13 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
   const maxDescriptionLength = 250;
 
   return (
-    <Modal title={title} open onCancel={handleCancel} width={500}>
-      <Form
-        name="basic"
-        form={form}
-        initialValues={initialValues}
-        onFinish={onFinish}
-        autoComplete="off"
-        layout={'vertical'}
-      >
+    <FormModal<IHabitFormModel>
+      modalProps={{ title, onCancel: handleCancel }}
+      form={form}
+      initialValues={initialValues}
+      onFinish={onFinish}
+    >
+      <>
         <Form.Item
           label={intl.formatMessage({ id: 'habit.form.field.name' })}
           name="name"
@@ -76,14 +75,8 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
           <Select<boolean> type="visibility" />
         </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            {intl.formatMessage({ id: 'habit.form.submit' })}
-          </Button>
-        </Form.Item>
-      </Form>
-    </Modal>
+      </>
+    </FormModal>
   );
 };
 

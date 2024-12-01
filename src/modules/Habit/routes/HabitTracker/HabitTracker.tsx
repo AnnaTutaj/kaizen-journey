@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +16,7 @@ import HabitTrackerActions from '@modules/Habit/redux/HabitTracker/HabitTrackerA
 import Button from '@common/components/Button';
 import Select from '@common/components/Select';
 import PageHeader from '@common/components/PageHeader';
+import { sortedHabits } from '@common/helpers/HabitHelper';
 
 interface IRangeSelect {
   label: string;
@@ -30,26 +31,48 @@ const HabitTracker: React.FC = () => {
 
   const [habitCreateModalConfig, setHabitCreateModalConfig] = useState<IHabitCreateModalProps>();
   const [habits, setHabits] = useState<IHabitModel[]>([]);
+  const [habitOrder, setHabitOrder] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [isInitialLoaded, setIsInitialLoaded] = useState<boolean>(false);
   const { getHabits } = useHabitFetch();
 
+  const handleSetHabits = useCallback(
+    ({ habitsToSet, orderToSet }: { habitsToSet?: IHabitModel[]; orderToSet?: string[] }) => {
+      if (habitsToSet === undefined && orderToSet === undefined) {
+        return;
+      }
+   
+      if (orderToSet) {
+        setHabitOrder(orderToSet);
+      }
+      setHabits(sortedHabits(habitsToSet || habits, orderToSet || habitOrder));
+    },
+    [habits, habitOrder]
+  );
+
   useEffect(() => {
     async function fetchHabits() {
-      const loadedHabits = await getHabits({ setLoading, filters: { isArchived: false } });
-      setHabits(loadedHabits);
+      const { habits: loadedHabits, order: loadedOrder } = await getHabits({
+        setLoading,
+        filters: { isArchived: false },
+        withOrder: true
+      });
+      handleSetHabits({ habitsToSet: loadedHabits, orderToSet: loadedOrder });
       setIsInitialLoaded(true);
     }
 
     fetchHabits();
-  }, [getHabits]);
+  }, []);
 
   const handleCreateSubmit = async () => {
-    const loadedHabits = await getHabits({ setLoading, filters: { isArchived: false } });
-    setHabits(loadedHabits);
+    const { habits: loadedHabits, order: loadedOrder } = await getHabits({
+      setLoading,
+      filters: { isArchived: false }
+    });
+    handleSetHabits({ habitsToSet: loadedHabits });
   };
 
-  const handleCreateHabit = () => {
+  const handleCreateHabit = useCallback(() => {
     setHabitCreateModalConfig({
       handleCancel: () => setHabitCreateModalConfig(undefined),
       handleSubmit: async () => {
@@ -57,7 +80,7 @@ const HabitTracker: React.FC = () => {
         await handleCreateSubmit();
       }
     });
-  };
+  }, [handleCreateSubmit]);
 
   const rangeSelectOptions = useMemo((): IRangeSelect[] => {
     const range: IRangeSelect[] = [];
@@ -80,12 +103,12 @@ const HabitTracker: React.FC = () => {
             defaultValue={range}
             onChange={(value) => HabitTrackerActions.setRangeLastDaysAction(value)(dispatch)}
           />
-          <Button type="primary" onClick={() => handleCreateHabit()} icon={<FontAwesomeIcon icon={faPlus} />}>
+          <Button type="primary" onClick={handleCreateHabit} icon={<FontAwesomeIcon icon={faPlus} />}>
             {intl.formatMessage({ id: 'habit.create.button' })}
           </Button>
         </>
       </PageHeader>
-      <HabitTable habits={habits} setHabits={setHabits} isInitialLoaded={isInitialLoaded} />
+      <HabitTable habits={habits} setHabitsInOrder={handleSetHabits} isInitialLoaded={isInitialLoaded} />
       {habitCreateModalConfig ? <HabitCreateModal {...habitCreateModalConfig} /> : null}
     </>
   );

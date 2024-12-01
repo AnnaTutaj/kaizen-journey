@@ -75,7 +75,7 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
       onClick: () => menuItem.onClick?.(),
       label: (
         <Space
-          size={16}
+          size={12}
           className={cx({ [styles.dropdownMenuItemSpaceError]: menuItem.key === DropdownMenuKey.delete })}
         >
           {data.icon ? <FontAwesomeIcon className={styles.dropdownMenuItemIcon} icon={data.icon} /> : null}

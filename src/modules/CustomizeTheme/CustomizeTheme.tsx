@@ -126,7 +126,6 @@ const CustomizeTheme: React.FC = () => {
               layout={'horizontal'}
               onFinish={onFinish}
               form={form}
-              submitButtonText={intl.formatMessage({ id: 'customizeTheme.form.submitButton' })}
               className={styles.formWrapper}
             >
               <>

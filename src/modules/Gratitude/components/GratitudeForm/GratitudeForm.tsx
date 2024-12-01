@@ -111,7 +111,6 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
       form={form}
       initialValues={initialValues}
       onFinish={onFinish}
-      submitButtonText={intl.formatMessage({ id: 'gratitude.form.submit' })}
     >
       <>
         <Form.Item

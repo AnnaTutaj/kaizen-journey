@@ -189,7 +189,6 @@ export default function AuthContextProvider({ children }: any) {
           createdAt: serverTimestamp()
         };
 
-        //todo: spr gdzie jest polaczene z db i tam przeniesc do resource
         await UserResource.setDoc(userCredential.user.uid, { ...newUser });
       }
     } catch (error) {
