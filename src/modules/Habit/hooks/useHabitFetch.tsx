@@ -53,8 +53,6 @@ const useHabitFetch = () => {
 
       if (withOrder) {
         const docOrderSnap = await HabitResource.fetchOrder(createdByUid ? createdByUid : userProfile.uid);
-        console.log(docOrderSnap);
-
         if (docOrderSnap.exists()) {
           result.order = HabitOrderModel.build(docOrderSnap.data()).order;
         }

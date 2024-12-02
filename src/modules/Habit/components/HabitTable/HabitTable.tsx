@@ -1,5 +1,5 @@
 import { Col, Grid, Row, Tooltip } from 'antd';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
@@ -53,7 +53,8 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
   const [loadingHabitDate, setLoadingHabitDate] = useState<string[]>([]);
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const [habitReorderModalConfig, setHabitReorderModalConfig] = useState<IHabitReorderModalalProps>();
-  const [scrollContainerRef, setScrollContainerRef] = useState<HTMLDivElement | null>(null);
+  const todayHeaderRef = useRef<HTMLDivElement | null>(null);
+
   const [isOpenColumnSettings, setIsOpenColumnSettings] = useState(false);
 
   const showColumnSettings = useCallback(() => {
@@ -73,9 +74,9 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
   const { getDateStatus, getIconByDateStatus, getHoverInfoByDateStatus } = useHabitHelper();
   const { getHabitById, updateHabitDates, archiveHabit } = useHabitFetch();
 
-  const scrollTo = useCallback(() => {
-    if (scrollContainerRef) {
-      scrollContainerRef.scrollIntoView({
+  const scrollToTodayColumn = useCallback(() => {
+    if (todayHeaderRef.current) {
+      todayHeaderRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'end',
         inline: 'end'
@@ -83,9 +84,19 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
     }
   }, []);
 
-  useEffect(() => {
-    scrollTo();
-  }, [scrollTo, range]);
+  const setTodayHeaderRef = useCallback(
+    (element: HTMLDivElement | null) => {
+      const scrollToTodayColumnEnd = todayHeaderRef.current ? false : true;
+
+      if (element) {
+        todayHeaderRef.current = element;
+        if (scrollToTodayColumnEnd) {
+          scrollToTodayColumn();
+        }
+      }
+    },
+    [scrollToTodayColumn]
+  );
 
   useEffect(() => {
     setVisibleColumns(
@@ -261,7 +272,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
             <div className={styles.dateHeaderContainer}>
               <div
                 className={cx(styles.date, { [styles.dateIsToday]: isToday })}
-                ref={(element) => (isToday ? setScrollContainerRef(element) : null)}
+                ref={(element) => (isToday ? setTodayHeaderRef(element) : null)}
               >
                 <small className={styles.smallText}>{monthShort}</small>
                 <div className={styles.monthDay}>{monthDay}</div>
