@@ -92,7 +92,7 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
       onOk: async () => {
         await handleArchive(habit);
       },
-      imageMascot: MascotImage.map
+      imageMascot: MascotImage.folder
     });
   };
 

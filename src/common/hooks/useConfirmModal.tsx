@@ -68,7 +68,7 @@ const useConfirmModal = () => {
         ...props
       });
     },
-    [modal, renderTitle]
+    [intl, modal, renderTitle]
   );
 
   return {
