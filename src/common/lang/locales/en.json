@@ -149,7 +149,7 @@
   "habit.pause": "Pause",
   "habit.reorder": "Reorder habits",
   "habit.reorder.confirmModal.unsavedChanges.content": "All your changes will be lost. Are you sure you want to cancel?",
-  "habit.reorder.confirmModal.unsavedChanges.okText": "SAve changes",
+  "habit.reorder.confirmModal.unsavedChanges.okText": "Save changes",
   "habit.reorder.confirmModal.unsavedChanges.title": "Cancel your changes?",
   "habit.statistic.check": "Checks",
   "habit.statistic.date": "Dates",
