@@ -178,7 +178,6 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
         title: intl.formatMessage({ id: 'habit.confirmModal.delete.title' }),
         content: intl.formatMessage({ id: 'habit.confirmModal.delete.content' }),
         okText: intl.formatMessage({ id: 'habit.confirmModal.delete.okText' }),
-        cancelText: intl.formatMessage({ id: 'habit.confirmModal.delete.cancelText' }),
         onOk: async () => {
           await handleDelete(habit);
         }
@@ -195,7 +194,6 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
         title: intl.formatMessage({ id: 'habit.confirmModal.archive.title' }),
         content: intl.formatMessage({ id: 'habit.confirmModal.archive.content' }),
         okText: intl.formatMessage({ id: 'habit.confirmModal.archive.okText' }),
-        cancelText: intl.formatMessage({ id: 'habit.confirmModal.archive.cancelText' }),
         onOk: async () => {
           await handleArchive(habit);
         },

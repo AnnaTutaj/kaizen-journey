@@ -76,7 +76,6 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
       title: intl.formatMessage({ id: 'habit.confirmModal.delete.title' }),
       content: intl.formatMessage({ id: 'habit.confirmModal.delete.content' }),
       okText: intl.formatMessage({ id: 'habit.confirmModal.delete.okText' }),
-      cancelText: intl.formatMessage({ id: 'habit.confirmModal.delete.cancelText' }),
       onOk: async () => {
         await handleDelete(habit);
       }
@@ -90,7 +89,6 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
       title: intl.formatMessage({ id: 'habit.confirmModal.archive.title' }),
       content: intl.formatMessage({ id: 'habit.confirmModal.archive.content' }),
       okText: intl.formatMessage({ id: 'habit.confirmModal.archive.okText' }),
-      cancelText: intl.formatMessage({ id: 'habit.confirmModal.archive.cancelText' }),
       onOk: async () => {
         await handleArchive(habit);
       },
@@ -105,7 +103,6 @@ const HabitListItem: React.FC<IProps> = ({ habit, setHabits }) => {
       title: intl.formatMessage({ id: 'habit.confirmModal.restore.title' }),
       content: intl.formatMessage({ id: 'habit.confirmModal.restore.content' }),
       okText: intl.formatMessage({ id: 'habit.confirmModal.restore.okText' }),
-      cancelText: intl.formatMessage({ id: 'habit.confirmModal.restore.cancelText' }),
       onOk: async () => {
         await handleRestore(habit);
       },

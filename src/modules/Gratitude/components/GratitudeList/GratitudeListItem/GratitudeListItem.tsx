@@ -41,7 +41,6 @@ const GratitudeListItem: React.FC<IProps> = ({ gratitude, removeGratitude, updat
       title: intl.formatMessage({ id: 'gratitude.confirmModal.delete.title' }),
       content: intl.formatMessage({ id: 'gratitude.confirmModal.delete.content' }),
       okText: intl.formatMessage({ id: 'gratitude.confirmModal.delete.okText' }),
-      cancelText: intl.formatMessage({ id: 'gratitude.confirmModal.delete.cancelText' }),
       onOk: async () => {
         await handleDelete();
       }

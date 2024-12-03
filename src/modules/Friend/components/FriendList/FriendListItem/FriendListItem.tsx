@@ -36,7 +36,6 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
       closable: true,
       title: intl.formatMessage({ id: 'friend.following.confirmModal.delete.title' }),
       okText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.okText' }),
-      cancelText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.cancelText' }),
       onOk: async () => {
         await handleDeleteFollowing();
       }
@@ -50,7 +49,6 @@ const FriendListItem: React.FC<IProps> = ({ friend, mode, removeFriendFollowing,
       title: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.title' }),
       content: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.content' }),
       okText: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.okText' }),
-      cancelText: intl.formatMessage({ id: 'friend.follower.confirmModal.delete.cancelText' }),
       onOk: async () => {
         await handleDeleteFollower();
       }

@@ -20,7 +20,8 @@ import HabitReorderItemSortable from './components/HabitReorderItemSortable';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import HabitResource from '@modules/Habit/api/HabitResource';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
-
+import useConfirmModal from '@common/hooks/useConfirmModal';
+import _ from 'lodash';
 export interface IHabitReorderModalalProps {
   handleSubmit: (order: string[]) => void;
   handleCancel: () => void;
@@ -37,11 +38,31 @@ const HabitReorderModal: React.FC<IHabitReorderModalalProps> = ({ habits, handle
   const [items, setItems] = useState<IHabitModel[]>(habits);
   const [activeId, setActiveId] = useState<string>();
   const activeItem = useMemo(() => habits.find((i) => i.id === activeId), [activeId]);
+  const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
   const onCancel = useCallback(() => {
-    //todo: show 'Unsaved changes' alert if order is changed and close is clicked 
-    handleCancel();
-  }, []);
+    const newOrder = items.map((i) => i.id);
+    const previousOrder = habits.map((i) => i.id);
+
+    if (_.isEqual(newOrder, previousOrder)) {
+      handleCancel();
+      return;
+    }
+
+    confirmModal({
+      centered: true,
+      closable: true,
+      title: intl.formatMessage({ id: 'habit.reorder.confirmModal.unsavedChanges.title' }),
+      content: intl.formatMessage({ id: 'habit.reorder.confirmModal.unsavedChanges.content' }),
+      okText: intl.formatMessage({ id: 'habit.reorder.confirmModal.unsavedChanges.okText' }),
+      onOk: () => {
+        handleCancel();
+      },
+      onCancel: () => {
+        handleCancel();
+      }
+    });
+  }, [handleCancel, confirmModal, habits, items, intl]);
 
   const onFinish = async () => {
     try {
@@ -52,7 +73,6 @@ const HabitReorderModal: React.FC<IHabitReorderModalalProps> = ({ habits, handle
       showError(error);
     }
   };
-
 
   const handleDragStart = useCallback(({ active }: DragStartEvent) => {
     if (active.id) {
@@ -69,31 +89,34 @@ const HabitReorderModal: React.FC<IHabitReorderModalalProps> = ({ habits, handle
   };
 
   return (
-    <FormModal
-      modalProps={{
-        title: intl.formatMessage({ id: 'habit.reorder' }),
-        onCancel,
-        width: 400
-      }}
-      form={form}
-      onFinish={onFinish}
-    >
-      <DndContext
-        sensors={sensors}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        modifiers={[restrictToVerticalAxis]}
+    <>
+      <FormModal
+        modalProps={{
+          title: intl.formatMessage({ id: 'habit.reorder' }),
+          onCancel,
+          width: 400
+        }}
+        form={form}
+        onFinish={onFinish}
       >
-        <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          <div className={styles.container}>
-            {items.map((item) => (
-              <HabitReorderItemSortable key={item.id} habit={item} />
-            ))}
-          </div>
-        </SortableContext>
-        <DragOverlay>{activeItem ? <HabitReorderItem habit={activeItem} /> : null}</DragOverlay>
-      </DndContext>
-    </FormModal>
+        <DndContext
+          sensors={sensors}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          modifiers={[restrictToVerticalAxis]}
+        >
+          <SortableContext items={items} strategy={verticalListSortingStrategy}>
+            <div className={styles.container}>
+              {items.map((item) => (
+                <HabitReorderItemSortable key={item.id} habit={item} />
+              ))}
+            </div>
+          </SortableContext>
+          <DragOverlay>{activeItem ? <HabitReorderItem habit={activeItem} /> : null}</DragOverlay>
+        </DndContext>
+      </FormModal>
+      {confirmModalContextHolder}
+    </>
   );
 };
 

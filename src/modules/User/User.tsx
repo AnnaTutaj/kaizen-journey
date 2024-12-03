@@ -99,7 +99,6 @@ const User: React.FC = () => {
       closable: true,
       title: intl.formatMessage({ id: 'friend.following.confirmModal.delete.title' }),
       okText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.okText' }),
-      cancelText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.cancelText' }),
       onOk: async () => {
         await handleUnfollow();
       }

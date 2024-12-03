@@ -9,68 +9,66 @@ import Image from '@common/components/Image/Image';
 import { MascotImage } from '@common/constants/MascotImage';
 import { createStyles } from 'antd-style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useIntl } from 'react-intl';
 
 export interface IConfirmModalProps extends ModalFuncProps {
   imageMascot?: MascotImage | null;
 }
 
-const useStyles = createStyles(({ css }) => ({
-  closeIcon: css`
-    font-size: 25px;
-    vertical-align: -6px;
-  `,
-  imageContainer: css`
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 8px;
-  `
-}));
-
 const useConfirmModal = () => {
+  const intl = useIntl();
   const { styles } = useStyles();
   const [modal, confirmModalContextHolder] = Modal.useModal();
-  const renderIcon = (imageMascot: IConfirmModalProps['imageMascot']) => {
-    if (!imageMascot) {
-      return null;
-    }
 
-    let imageSrc: string;
+  const renderTitle = useCallback(
+    (title: IConfirmModalProps['title'], imageMascot: IConfirmModalProps['imageMascot']) => {
+      if (!imageMascot) {
+        return null;
+      }
 
-    switch (imageMascot) {
-      case MascotImage.trash:
-        imageSrc = mascotTrashImage;
-        break;
+      let imageSrc: string;
 
-      case MascotImage.map:
-        imageSrc = mascotMapImage;
-        break;
+      switch (imageMascot) {
+        case MascotImage.trash:
+          imageSrc = mascotTrashImage;
+          break;
 
-      case MascotImage.welcome:
-        imageSrc = mascotWelcomeImage;
-        break;
+        case MascotImage.map:
+          imageSrc = mascotMapImage;
+          break;
 
-      case MascotImage.folder:
-        imageSrc = mascotFolderImage;
-        break;
-    }
+        case MascotImage.welcome:
+          imageSrc = mascotWelcomeImage;
+          break;
 
-    return (
-      <div className={styles.imageContainer}>
-        <Image height={150} src={imageSrc} alt="Kaizen Journey Mascot" preview={false} />
-      </div>
-    );
-  };
+        case MascotImage.folder:
+          imageSrc = mascotFolderImage;
+          break;
+      }
+
+      return (
+        <div className={styles.titleContainer}>
+          <div className={styles.iconContainer}>
+            <Image width={120} src={imageSrc} alt="Kaizen Journey Mascot" preview={false} />
+          </div>
+          <>{title}</>
+        </div>
+      );
+    },
+    []
+  );
 
   const confirmModal = useCallback(
-    ({ imageMascot = MascotImage.trash, ...props }: IConfirmModalProps) => {
+    ({ imageMascot = MascotImage.trash, title, ...props }: IConfirmModalProps) => {
       modal.confirm({
         closeIcon: <FontAwesomeIcon className={styles.closeIcon} icon={faTimes} />,
-        icon: renderIcon(imageMascot),
+        icon: null,
+        cancelText: intl.formatMessage({ id: 'common.cancel' }),
+        title: renderTitle(title, imageMascot),
         ...props
       });
     },
-    [modal]
+    [modal, renderTitle]
   );
 
   return {
@@ -78,5 +76,20 @@ const useConfirmModal = () => {
     confirmModalContextHolder
   };
 };
+
+const useStyles = createStyles(({ css }) => ({
+  closeIcon: css`
+    font-size: 25px;
+    vertical-align: -6px;
+  `,
+  titleContainer: css`
+    display: flex;
+    flex-flow: column;
+  `,
+  iconContainer: css`
+    width: 100%;
+    text-align: center;
+  `
+}));
 
 export default useConfirmModal;

@@ -14,7 +14,7 @@ import useFriendFollowFetch from '@modules/Friend/hooks/useFriendFollowFetch';
 import Button from '@common/components/Button';
 import useConfirmModal from '@common/hooks/useConfirmModal';
 import Alert from '@common/components/Alert';
-import useCommonStyles  from '@common/useStyles';
+import useCommonStyles from '@common/useStyles';
 import useErrorMessage from '@common/hooks/useErrorMessage';
 import UserResource from '@common/api/UserResource';
 
@@ -86,7 +86,6 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
       closable: true,
       title: intl.formatMessage({ id: 'friend.following.confirmModal.delete.title' }),
       okText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.okText' }),
-      cancelText: intl.formatMessage({ id: 'friend.following.confirmModal.delete.cancelText' }),
       onOk: async () => {
         await handleUnfollow(searchedUser);
       }
@@ -120,9 +119,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
       <Modal
         title={intl.formatMessage({ id: 'friend.following.create.title' })}
         open
-        onCancel={() => {
-          closeWithReload ? handleSubmit() : handleCancel();
-        }}
+        onCancel={closeWithReload ? handleSubmit : handleCancel}
         width={500}
       >
         {formDisabled ? <PageLoading /> : null}
