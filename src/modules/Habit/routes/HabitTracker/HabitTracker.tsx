@@ -17,6 +17,7 @@ import Button from '@common/components/Button';
 import Select from '@common/components/Select';
 import PageHeader from '@common/components/PageHeader';
 import { sortedHabits } from '@common/helpers/HabitHelper';
+import _ from 'lodash';
 
 interface IRangeSelect {
   label: string;
@@ -36,7 +37,17 @@ const HabitTracker: React.FC = () => {
   const [isInitialLoaded, setIsInitialLoaded] = useState<boolean>(false);
   const { getHabits } = useHabitFetch();
 
-  const handleSetHabits = useCallback(
+  const handleDeleteHabit = useCallback((id: string) => {
+    setHabits((prevState) => _.remove(prevState, (i) => i.id !== id));
+  }, []);
+
+  const handleUpdateHabit = useCallback((updatedHabit: IHabitModel) => {
+    setHabits((prevState) => {
+      return prevState.map((i) => (i.id === updatedHabit.id ? updatedHabit : i));
+    });
+  }, []);
+
+  const handleSetHabitsInOrder = useCallback(
     ({ habitsToSet, orderToSet }: { habitsToSet?: IHabitModel[]; orderToSet?: string[] }) => {
       if (habitsToSet === undefined && orderToSet === undefined) {
         return;
@@ -57,7 +68,7 @@ const HabitTracker: React.FC = () => {
         filters: { isArchived: false },
         withOrder: true
       });
-      handleSetHabits({ habitsToSet: loadedHabits, orderToSet: loadedOrder });
+      handleSetHabitsInOrder({ habitsToSet: loadedHabits, orderToSet: loadedOrder });
       setIsInitialLoaded(true);
     }
 
@@ -70,8 +81,8 @@ const HabitTracker: React.FC = () => {
       setLoading,
       filters: { isArchived: false }
     });
-    handleSetHabits({ habitsToSet: loadedHabits });
-  }, [getHabits, handleSetHabits]);
+    handleSetHabitsInOrder({ habitsToSet: loadedHabits });
+  }, [getHabits, handleSetHabitsInOrder]);
 
   const handleCreateHabit = useCallback(() => {
     setHabitCreateModalConfig({
@@ -109,7 +120,13 @@ const HabitTracker: React.FC = () => {
           </Button>
         </>
       </PageHeader>
-      <HabitTable habits={habits} setHabitsInOrder={handleSetHabits} isInitialLoaded={isInitialLoaded} />
+      <HabitTable
+        habits={habits}
+        setHabitsInOrder={handleSetHabitsInOrder}
+        updateHabit={handleUpdateHabit}
+        deleteHabit={handleDeleteHabit}
+        isInitialLoaded={isInitialLoaded}
+      />
       {habitCreateModalConfig ? <HabitCreateModal {...habitCreateModalConfig} /> : null}
     </>
   );

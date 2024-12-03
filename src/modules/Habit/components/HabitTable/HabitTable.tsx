@@ -3,7 +3,6 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
-import _ from 'lodash';
 import { DropdownMenuKey } from '@common/constants/DropdownMenuKey';
 import Dropdown from '@common/components/Dropdown';
 import Empty from '@common/components/Empty';
@@ -39,9 +38,11 @@ interface IProps {
   habits: IHabitModel[];
   setHabitsInOrder: ({ habitsToSet, orderToSet }: { habitsToSet?: IHabitModel[]; orderToSet?: string[] }) => void;
   isInitialLoaded: boolean;
+  updateHabit: (updatedHabit: IHabitModel) => void;
+  deleteHabit: (id: string) => void;
 }
 
-const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoaded }) => {
+const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, updateHabit, deleteHabit, isInitialLoaded }) => {
   const intl = useIntl();
   const token = useTheme();
   const { styles: commonStyles } = useCommonStyles();
@@ -110,10 +111,10 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
     async (habit: IHabitModel) => {
       const updatedHabit = await getHabitById(habit.id);
       if (updatedHabit) {
-        setHabitsInOrder({ habitsToSet: habits.map((i) => (i.id === updatedHabit.id ? updatedHabit : i)) });
+        updateHabit(updatedHabit);
       }
     },
-    [setHabitsInOrder, habits, getHabitById]
+    [updateHabit, getHabitById]
   );
 
   const getHabitDateValue = useCallback((habitId: string, dateKey: string) => `${habitId}${dateKey}`, []);
@@ -157,17 +158,17 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
   const handleDelete = useCallback(
     async (habit: IHabitModel) => {
       await HabitResource.delete(habit.id);
-      setHabitsInOrder({ habitsToSet: _.remove(habits, (i) => i.id !== habit.id) });
+      deleteHabit(habit.id);
     },
-    [setHabitsInOrder, habits]
+    [deleteHabit]
   );
 
   const handleArchive = useCallback(
     async (habit: IHabitModel) => {
       await archiveHabit(habit.id);
-      setHabitsInOrder({ habitsToSet: _.remove(habits, (i) => i.id !== habit.id) });
+      deleteHabit(habit.id);
     },
-    [archiveHabit, setHabitsInOrder, habits]
+    [archiveHabit, deleteHabit]
   );
 
   const confirmDelete = useCallback(
@@ -241,7 +242,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, isInitialLoade
         onClick: showColumnSettings
       },
       {
-        key: 'repder',
+        key: 'reorder',
         item: {
           icon: faArrowUpWideShort,
           text: intl.formatMessage({ id: 'habit.reorder' })
