@@ -9,7 +9,6 @@ const useStyles = createStyles(({ css, token }) => ({
   customBody: css`
     margin: 0;
     color: ${token.colorText};
-    line-height: ${token.lineHeight};
     background-color: ${token.colorBgLayout};
 
     h2 {

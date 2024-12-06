@@ -5,19 +5,23 @@ const gradientColors =
 const homeHeaderGradient = `radial-gradient(circle at 80% 10%, ${gradientColors})`;
 const homeEndingGradient = `radial-gradient(circle at 10% 80%, ${gradientColors})`;
 
-export default createStyles(({ css, token }) => {
-  return {
-  headerContainer: css`
+const paddingHorizontal = 30;
+export default createStyles(({ css, token, responsive }) => ({
+  headerWapper: css`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: calc(100vh - ${token.layout.headerHeight});
     min-height: 450px;
-    padding: 30px;
-    color: ${token.colorWhite};
-    text-align: center;
     background: ${homeHeaderGradient};
+    gap: 40px;
+    padding: 0 ${paddingHorizontal}px;
+  `,
+  headerContainer: css`
+    width: 100%;
+    max-width: 1200px;
+    overflow: hidden;
   `,
   endingContainer: css`
     display: flex;
@@ -33,14 +37,20 @@ export default createStyles(({ css, token }) => {
   `,
   headerTitle: css`
     font-weight: 900;
-    font-size: clamp(40px, min(10vw, 10vh), 90px);
-    letter-spacing: 0.1em;
-    line-height: 1;
+    font-size: 4rem;
+    margin-bottom: ${token.marginSM}px;
+
+    ${responsive.md} {
+      font-size: 2.5rem;
+    }
+
+    ${responsive.sm} {
+      font-size: 2rem;
+    }
   `,
   headerSubtitle: css`
-    margin-bottom: 40px;
-    font-size: 1.5rem;
-    letter-spacing: 0.1em;
+    margin-bottom: ${token.marginLG}px;
+    font-size: 1.2rem;
   `,
   contentContainer: css`
     scroll-margin-top: ${token.layout.headerHeight};
@@ -49,14 +59,8 @@ export default createStyles(({ css, token }) => {
     margin-bottom: 20px;
     font-size: 1.7em;
   `,
-  logoImage: css`
-    height: 200px;
-
-    @media (width <= 768px) {
-      height: 150px;
-    }
-  `,
-  headerKaizenJourneySpace: css`
-    margin-bottom: 20px;
+  mascotImage: css`
+    width: 100%;
+    max-height: 290px;
   `
-}});
+}));
