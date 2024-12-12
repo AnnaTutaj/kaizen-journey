@@ -1,10 +1,8 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { Form, Input } from 'antd';
-import Modal from '@common/components/Modal';
 import { IHabitFormModel } from '@modules/Habit/models/HabitFormModel';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
-import Button from '@common/components/Button';
 import Select from '@common/components/Select';
 import FormModal from '@common/components/FormModal';
 
@@ -26,6 +24,7 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
 
   return (
     <FormModal<IHabitFormModel>
+      name="habitForm"
       modalProps={{ title, onCancel: handleCancel }}
       form={form}
       initialValues={initialValues}

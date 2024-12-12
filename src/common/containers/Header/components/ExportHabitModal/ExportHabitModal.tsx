@@ -51,6 +51,7 @@ const ExportHabitModal: React.FC<IExportHabitModalalProps> = ({ handleSubmit, ha
 
   return (
     <FormModal<IExportHabitModalProps>
+      name="exportHabitForm"
       modalProps={{
         title: intl.formatMessage({ id: 'exportHabit.form.title' }),
         onCancel: handleCancel,

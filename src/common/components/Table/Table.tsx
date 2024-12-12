@@ -11,7 +11,7 @@ export interface ITableProps<T> extends TableProps<T> {
   columns: ITableColumn<T>[];
 }
 
-const Table = <T extends {}>({ columns, ...props }: ITableProps<T>) => {
+const Table = <T extends Record<string, any>>({ columns, ...props }: ITableProps<T>) => {
   const filteredColumns = useMemo(
     () => columns.filter((column) => column.visible === undefined || column.visible()),
     [columns]

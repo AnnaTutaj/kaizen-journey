@@ -14,7 +14,7 @@ const useStyles = createStyles(({ css }) => ({
   `
 }));
 
-const List = <T extends {}>(props: ListProps<T>) => {
+const List = <T,>(props: ListProps<T>) => {
   const { styles } = useStyles();
   return <AntdList {...props} className={styles.list} />;
 };

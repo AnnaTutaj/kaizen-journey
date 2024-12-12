@@ -91,6 +91,7 @@ const HabitReorderModal: React.FC<IHabitReorderModalalProps> = ({ habits, handle
   return (
     <>
       <FormModal
+        name="habitReorder"
         modalProps={{
           title: intl.formatMessage({ id: 'habit.reorder' }),
           onCancel,

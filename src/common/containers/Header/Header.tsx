@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { Grid, Layout, Switch } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import UserAvatar from './components/UserAvatar';
 import { useAuth } from '@common/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';

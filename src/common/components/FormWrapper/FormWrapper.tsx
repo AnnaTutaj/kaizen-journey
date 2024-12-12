@@ -18,7 +18,7 @@ export interface IForWrapperProps<T> extends FormProps<T> {
   children: JSX.Element;
 }
 
-const FormWrapper = <T extends {}>({ submitButtonText, children, ...props }: IForWrapperProps<T>) => {
+const FormWrapper = <T extends Record<string, any>>({ submitButtonText, children, ...props }: IForWrapperProps<T>) => {
   const intl = useIntl();
   const { styles } = useStyles();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);

@@ -52,6 +52,7 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
 
   return (
     <FormModal<IExportGratitudeModalProps>
+      name="exportGratitudeForm"
       modalProps={{
         title: intl.formatMessage({ id: 'exportGratitude.form.title' }),
         onCancel: handleCancel,

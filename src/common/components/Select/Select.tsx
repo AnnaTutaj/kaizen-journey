@@ -15,7 +15,7 @@ export interface ISelectProps<T> extends SelectProps<T> {
   showInactiveColors?: CategoryColorType[];
 }
 
-const Select = <T extends {}>({ type, showInactiveColors, children, ...props }: ISelectProps<T>) => {
+const Select = <T,>({ type, showInactiveColors, children, ...props }: ISelectProps<T>) => {
   const { selectOptionsVisibility } = useSelectOptionVisibility();
   const { selectOptionsColor } = useSelectOptionColor();
   const { selectOptionsCategory } = useSelectOptionCategory({ showInactiveColors });

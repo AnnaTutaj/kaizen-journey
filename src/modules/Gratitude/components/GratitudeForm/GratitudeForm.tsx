@@ -107,6 +107,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
 
   return (
     <FormModal<IGratitudeFormModel>
+      name="gratitudeForm"
       modalProps={{ title, onCancel: handleCancel }}
       form={form}
       initialValues={initialValues}

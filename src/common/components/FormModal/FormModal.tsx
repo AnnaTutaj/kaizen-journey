@@ -18,13 +18,15 @@ export interface IFormModalProps<T> extends FormProps<T> {
   submitButtonText?: string;
   onFinish: (values: T) => Promise<void>;
   children: JSX.Element;
+  name: string;
 }
 
-const FormModal = <T extends {}>({
+const FormModal = <T extends Record<string, any>>({
   modalProps,
   submitButtonText,
   children,
   onFinish,
+  name,
   ...props
 }: IFormModalProps<T>) => {
   const intl = useIntl();
@@ -43,15 +45,7 @@ const FormModal = <T extends {}>({
 
   return (
     <Modal open width={500} {...modalProps}>
-      <Form
-        name="basic"
-        form={props.form}
-        initialValues={props.initialValues}
-        onFinish={handleOnFinish}
-        autoComplete="off"
-        layout={'vertical'}
-        {...props}
-      >
+      <Form name={name} onFinish={handleOnFinish} autoComplete="off" layout={'vertical'} {...props}>
         <>
           {children}
           <div className={styles.footer}>

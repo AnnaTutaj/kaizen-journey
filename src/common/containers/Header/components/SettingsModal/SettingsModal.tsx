@@ -72,6 +72,7 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
 
   return (
     <FormModal<ISettingsFormProps>
+      name="settingsForm"
       modalProps={{ title: intl.formatMessage({ id: 'settings.form.title' }), onCancel: handleCancel, width: 400 }}
       form={form}
       initialValues={{
