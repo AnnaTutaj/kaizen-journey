@@ -60,7 +60,7 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
           ]}
         >
           <TextArea
-            rows={2}
+            autoSize
             showCount
             maxLength={maxDescriptionLength}
             placeholder={intl.formatMessage({ id: 'habit.form.field.description.placeholder' })}

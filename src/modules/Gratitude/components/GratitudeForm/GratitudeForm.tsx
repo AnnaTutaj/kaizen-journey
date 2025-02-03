@@ -138,7 +138,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
             }
           ]}
         >
-          <TextArea rows={3} showCount maxLength={maxDescriptionLength} />
+          <TextArea autoSize showCount maxLength={maxDescriptionLength} />
         </Form.Item>
 
         <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
