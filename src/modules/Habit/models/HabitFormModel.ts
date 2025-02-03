@@ -7,6 +7,7 @@ export interface IHabitFormModel {
   description: string;
   isPublic: boolean;
   color: CategoryColorType;
+  tags: string[];
 }
 
 export interface IHabitFormModelDTO {
@@ -18,6 +19,7 @@ export interface IHabitFormModelDTO {
   color: CategoryColorType;
   datesChecked: string[] | FieldValue;
   datesSkipped: string[] | FieldValue;
+  tags: string[];
 }
 
 class HabitFormModel {
@@ -26,7 +28,8 @@ class HabitFormModel {
     name,
     description,
     isPublic,
-    color
+    color,
+    tags
   }: IHabitFormModel & {
     createdByUid: string;
   }): IHabitFormModelDTO {
@@ -38,16 +41,18 @@ class HabitFormModel {
       isPublic: isPublic || false,
       color: color || 'default',
       datesChecked: [],
-      datesSkipped: []
+      datesSkipped: [],
+      tags: tags || []
     };
   }
 
-  static serializeToUpdate({ name, description, color, isPublic }: IHabitFormModel): Partial<IHabitFormModelDTO> {
+  static serializeToUpdate({ name, description, color, isPublic, tags }: IHabitFormModel): Partial<IHabitFormModelDTO> {
     return {
       name: name,
       description: description || '',
       isPublic: isPublic || false,
-      color: color || 'default'
+      color: color || 'default',
+      tags: tags || []
     };
   }
 
@@ -56,7 +61,8 @@ class HabitFormModel {
       name: data.name,
       description: data.description || '',
       isPublic: data.isPublic ?? false,
-      color: data.color ? data.color : 'default'
+      color: data.color ? data.color : 'default',
+      tags: data.tags ? data.tags : []
     };
   }
 }

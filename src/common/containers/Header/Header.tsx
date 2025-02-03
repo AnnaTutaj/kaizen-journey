@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 import { Grid, Layout, Switch } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,13 +21,14 @@ import { Language } from '@common/constants/Language';
 import MascotWelcomeImage from './components/MascotWelcomeImage/MascotWelcomeImage';
 import useStyles from './useStyles';
 import Drawer from '@common/components/Drawer/Drawer';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 
 const { useBreakpoint } = Grid;
 
 const Header: React.FC = () => {
   const intl = useIntl();
   const { styles } = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const navigate = useNavigate();
 
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
@@ -87,7 +88,7 @@ const Header: React.FC = () => {
               optionLabelProp="label"
               size="middle"
               placement="bottomRight"
-              onChange={(value) => LayoutActions.setSiteLanguageAction(value)(dispatch)}
+              onChange={(value) => dispatch(LayoutActions.setSiteLanguageAction(value))}
             >
               <Option value={Language.pl} label={Language.pl.toUpperCase()}>
                 {intl.formatMessage({ id: 'common.language.polish' })}

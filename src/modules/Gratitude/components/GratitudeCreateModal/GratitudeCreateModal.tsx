@@ -6,13 +6,23 @@ import GratitudeForm from '@modules/Gratitude/components/GratitudeForm';
 import dayjs from 'dayjs';
 import useErrorMessage from '@common/hooks/useErrorMessage';
 import GratitudeResource from '@modules/Gratitude/api/GratitudeResource';
+import { CategoryColorType } from '@common/containers/App/ColorPalette';
 
 export interface IGratitudeCreateModalProps {
   handleSubmit: () => void;
   handleCancel: () => void;
+  title?: string;
+  tags?: string[];
+  color?: CategoryColorType;
 }
 
-const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubmit, handleCancel }) => {
+const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({
+  handleSubmit,
+  handleCancel,
+  title,
+  tags,
+  color
+}) => {
   const intl = useIntl();
   const { userProfile } = useUserProfile();
   const { showError } = useErrorMessage();
@@ -39,10 +49,12 @@ const GratitudeCreateModal: React.FC<IGratitudeCreateModalProps> = ({ handleSubm
       title={intl.formatMessage({ id: 'gratitude.create.title' })}
       initialValues={{
         date: dayjs(),
-        color: 'default',
+        color: color || 'default',
         isPublic: false,
         hours: 0,
-        minutes: 0
+        minutes: 0,
+        title,
+        tags
       }}
     />
   );

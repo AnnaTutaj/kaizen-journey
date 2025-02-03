@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import { useIntl } from 'react-intl';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import FriendFollowingList from './components/FriendFollowingList';
@@ -14,7 +15,7 @@ import PageHeader from '@common/components/PageHeader';
 
 const FriendFollowing: React.FC = () => {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
 
   const { userProfile } = useUserProfile();
   const [friendFollowingCreateModalConfig, setFriendFollowingCreateModalConfig] =
@@ -23,7 +24,7 @@ const FriendFollowing: React.FC = () => {
   const { isLoaded } = useSelector(({ friendFollowing }: IFriendFollowingOwnState) => friendFollowing, shallowEqual);
 
   const resetList = useCallback(() => {
-    FriendFollowingActions.loadAction({ userProfileUid: userProfile.uid, reload: true })(dispatch);
+    dispatch(FriendFollowingActions.loadAction({ userProfileUid: userProfile.uid, reload: true }));
   }, [dispatch, userProfile]);
 
   const handleCreateFriendFollowing = () => {

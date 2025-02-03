@@ -7,7 +7,8 @@ import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { IGratitudeUpdateModalProps } from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
 import GratitudeUpdateModal from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
 import GratitudeListFiltersModel from '@modules/Gratitude/models/GratitudeListFiltersModel';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import { IUserGratitudeListOwnState } from '@modules/User/redux/UserGratitudeList/UserGratitudeListInterface';
 import UserGratitudeListActions from '@modules/User/redux/UserGratitudeList/UserGratitudeListActions';
 import { useParams } from 'react-router-dom';
@@ -15,7 +16,7 @@ import useUserGratitudeHelper from '../../hooks/useUserGratitudeHelper';
 
 const UserGratitudeList: React.FC = () => {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const params = useParams();
   const userId: string = useMemo(() => params.id || '', [params.id]);
   const { prepareFiltersByUser } = useUserGratitudeHelper();
@@ -36,19 +37,21 @@ const UserGratitudeList: React.FC = () => {
     const finalFilters = prepareFiltersByUser(filters, userId);
     const serializedFilters = GratitudeListFiltersModel.serialize(finalFilters);
 
-    UserGratitudeListActions.loadAction({
-      filters: serializedFilters,
-      userProfileUid: userId,
-      lastFetchedGratitude
-    })(dispatch);
+    dispatch(
+      UserGratitudeListActions.loadAction({
+        filters: serializedFilters,
+        userProfileUid: userId,
+        lastFetchedGratitude
+      })
+    );
   };
 
   const removeGratitude = (id: string) => {
-    UserGratitudeListActions.removeAction(id)(dispatch);
+    dispatch(UserGratitudeListActions.removeAction(id));
   };
 
   const handleUpdateSubmit = async (gratitude: IGratitudeModel) => {
-    UserGratitudeListActions.updateAction(gratitude)(dispatch);
+    dispatch(UserGratitudeListActions.updateAction(gratitude));
   };
 
   const updateGratitude = (item: IGratitudeModel) => {

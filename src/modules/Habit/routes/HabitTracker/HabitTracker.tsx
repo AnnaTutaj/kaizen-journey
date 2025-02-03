@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import { useIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -26,7 +26,7 @@ interface IRangeSelect {
 
 const HabitTracker: React.FC = () => {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
 
   const range = useSelector(({ habitTracker }: IHabitTrackerOwnState) => habitTracker.rangeLastDays);
 
@@ -113,7 +113,7 @@ const HabitTracker: React.FC = () => {
           <Select<IRangeSelect['value']>
             options={rangeSelectOptions}
             defaultValue={range}
-            onChange={(value) => HabitTrackerActions.setRangeLastDaysAction(value)(dispatch)}
+            onChange={(value) => dispatch(HabitTrackerActions.setRangeLastDaysAction(value))}
           />
           <Button type="primary" onClick={handleCreateHabit} icon={<FontAwesomeIcon icon={faPlus} />}>
             {intl.formatMessage({ id: 'habit.create.button' })}

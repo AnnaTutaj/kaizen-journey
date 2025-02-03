@@ -64,7 +64,7 @@ const ExportGratitudeModal: React.FC<IExportGratitudeModalalProps> = ({ handleSu
       submitButtonText={intl.formatMessage({ id: 'exportGratitude.form.submit' })}
     >
       <>
-        <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.tags' })} name="tags">
           <Select<string[]>
             type="tag"
             mode="tags"

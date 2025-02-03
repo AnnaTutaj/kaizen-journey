@@ -13,6 +13,7 @@ export interface IHabitModel {
   currentStreak: IStreak;
   longestStreak: IStreak;
   isPublic: boolean;
+  tags: string[];
 }
 
 export interface IHabitModelDTO {
@@ -25,6 +26,7 @@ export interface IHabitModelDTO {
   isArchived: boolean;
   isPublic: boolean;
   color?: CategoryColorType;
+  tags?: string[];
 }
 
 class HabitModel implements IHabitModel {
@@ -39,7 +41,8 @@ class HabitModel implements IHabitModel {
     public isPublic: boolean,
     public color: CategoryColorType,
     public currentStreak: IStreak,
-    public longestStreak: IStreak
+    public longestStreak: IStreak,
+    public tags: string[]
   ) {}
 
   static build(dto: IHabitModelDTO): IHabitModel {
@@ -56,7 +59,8 @@ class HabitModel implements IHabitModel {
       dto.isPublic,
       dto.color || 'default',
       currentStreak,
-      longestStreak
+      longestStreak,
+      dto.tags || []
     );
   }
 }

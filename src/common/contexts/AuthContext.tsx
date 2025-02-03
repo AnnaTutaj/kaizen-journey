@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { auth, db } from '@common/util/firebase';
+import { auth } from '@common/util/firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -15,7 +15,7 @@ import {
 import { User as FirebaseUser } from 'firebase/auth';
 import { UserCredential as FirebaseUserCredential } from 'firebase/auth';
 import { serverTimestamp } from 'firebase/firestore';
-import { useDispatch } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import UserActions from '@common/redux/UserActions';
 import { useSelector } from 'react-redux';
 import { ILayoutOwnState } from '@common/redux/modules/Layout/LayoutInterface';
@@ -52,7 +52,7 @@ export const AuthContext = createContext<IAuthContext>({
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthContextProvider({ children }: any) {
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const { showError } = useErrorMessage();
   const { setUserProfile } = useUserProfile();
 
@@ -154,7 +154,7 @@ export default function AuthContextProvider({ children }: any) {
   };
 
   const logout = () => {
-    UserActions.userLogoutAction()(dispatch);
+    dispatch(UserActions.userLogoutAction());
     return signOut(auth);
   };
 

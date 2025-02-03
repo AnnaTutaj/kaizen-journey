@@ -4,5 +4,6 @@ export enum DropdownMenuKey {
   update = 'update',
   delete = 'delete',
   archive = 'archive',
-  restore = 'restore'
+  restore = 'restore',
+  gratitude = 'gratitude'
 }

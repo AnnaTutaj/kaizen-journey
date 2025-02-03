@@ -104,7 +104,7 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
           </Select>
         </Form.Item>
 
-        <Form.Item label={intl.formatMessage({ id: 'settings.form.field.tags' })} name="tags">
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.tags' })} name="tags">
           <Select<string[]>
             mode="tags"
             style={{ width: '100%' }}

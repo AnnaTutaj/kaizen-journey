@@ -6,18 +6,18 @@ import GratitudeListScrolled from '../GratitudeListScrolled';
 import { IGratitudeModel } from '@modules/Gratitude/models/GratitudeModel';
 import { IGratitudeUpdateModalProps } from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
 import GratitudeUpdateModal from '@modules/Gratitude/components/GratitudeUpdateModal/GratitudeUpdateModal';
-import GratitudeListFiltersModel from '@modules/Gratitude/models/GratitudeListFiltersModel';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import { IGratitudeMyListOwnState } from '@modules/Gratitude/redux/GratitudeMyList/GratitudeMyListInterface';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import GratitudeMyListActions from '@modules/Gratitude/redux/GratitudeMyList/GratitudeMyListActions';
 
 const GratitudeMyList: React.FC = () => {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const { userProfile } = useUserProfile();
 
-  const { data, isLoaded, isLoadingMore, hasMore, filters } = useSelector(
+  const { data, isLoaded, isLoadingMore, hasMore } = useSelector(
     ({ gratitudeMyList }: IGratitudeMyListOwnState) => gratitudeMyList,
     shallowEqual
   );
@@ -30,21 +30,21 @@ const GratitudeMyList: React.FC = () => {
 
   const getNextGratitudes = async () => {
     const lastFetchedGratitude = getLastFetchedGratitude();
-    const serializedFilters = GratitudeListFiltersModel.serialize(filters);
 
-    GratitudeMyListActions.loadAction({
-      filters: serializedFilters,
-      userProfileUid: userProfile.uid,
-      lastFetchedGratitude
-    })(dispatch);
+    dispatch(
+      GratitudeMyListActions.loadAction({
+        userProfileUid: userProfile.uid,
+        lastFetchedGratitude
+      })
+    );
   };
 
   const removeGratitude = (id: string) => {
-    GratitudeMyListActions.removeAction(id)(dispatch);
+    dispatch(GratitudeMyListActions.removeAction(id));
   };
 
   const handleUpdateSubmit = async (gratitude: IGratitudeModel) => {
-    GratitudeMyListActions.updateAction(gratitude)(dispatch);
+    dispatch(GratitudeMyListActions.updateAction(gratitude));
   };
 
   const updateGratitude = (item: IGratitudeModel) => {

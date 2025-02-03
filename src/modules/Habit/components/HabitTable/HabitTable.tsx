@@ -12,7 +12,15 @@ import useHabitHelper from '@modules/Habit/hooks/useHabitHelper';
 import useHabitFetch from '@modules/Habit/hooks/useHabitFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageLoading from '@common/components/PageLoading';
-import { faArrowUpWideShort, faCog, faEllipsisV, faEyeSlash, faGlobe, faLock } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowUpWideShort,
+  faCog,
+  faEllipsisV,
+  faEyeSlash,
+  faGlobe,
+  faLock,
+  faSpa
+} from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import HabitUpdateModal, { IHabitUpdateModalProps } from '@modules/Habit/components/HabitUpdateModal/HabitUpdateModal';
 import { generatePath, useNavigate } from 'react-router-dom';
@@ -31,6 +39,12 @@ import { useTheme } from 'antd-style';
 import HabitResource from '@modules/Habit/api/HabitResource';
 import Drawer from '@common/components/Drawer/Drawer';
 import HabitReorderModal, { IHabitReorderModalalProps } from '../HabitReorderModal/HabitReorderModal';
+import GratitudeCreateModal, {
+  IGratitudeCreateModalProps
+} from '@modules/Gratitude/components/GratitudeCreateModal/GratitudeCreateModal';
+import GratitudeMyListActions from '@modules/Gratitude/redux/GratitudeMyList/GratitudeMyListActions';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 
 const { useBreakpoint } = Grid;
 
@@ -44,10 +58,12 @@ interface IProps {
 
 const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, updateHabit, deleteHabit, isInitialLoaded }) => {
   const intl = useIntl();
+  const dispatch = useThunkDispatch();
   const token = useTheme();
   const { styles: commonStyles } = useCommonStyles();
   const { styles, cx } = useStyles();
   const navigate = useNavigate();
+  const { userProfile } = useUserProfile();
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
   const screens = useBreakpoint();
   const range = useSelector(({ habitTracker }: IHabitTrackerOwnState) => habitTracker.rangeLastDays);
@@ -55,6 +71,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, updateHabit, d
   const [habitUpdateModalConfig, setHabitUpdateModalConfig] = useState<IHabitUpdateModalProps>();
   const [habitReorderModalConfig, setHabitReorderModalConfig] = useState<IHabitReorderModalalProps>();
   const todayHeaderRef = useRef<HTMLDivElement | null>(null);
+  const [gratitudeCreateModalConfig, setGratitudeCreateModalConfig] = useState<IGratitudeCreateModalProps>();
 
   const [isOpenColumnSettings, setIsOpenColumnSettings] = useState(false);
 
@@ -171,6 +188,22 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, updateHabit, d
     [archiveHabit, deleteHabit]
   );
 
+  const addGratitude = useCallback(
+    (habit: IHabitModel) => {
+      setGratitudeCreateModalConfig({
+        title: habit.name,
+        tags: habit.tags,
+        color: habit.color,
+        handleCancel: () => setGratitudeCreateModalConfig(undefined),
+        handleSubmit: async () => {
+          dispatch(GratitudeMyListActions.loadAction({ userProfileUid: userProfile.uid, reload: true }));
+          setGratitudeCreateModalConfig(undefined);
+        }
+      });
+    },
+    [dispatch, userProfile]
+  );
+
   const confirmDelete = useCallback(
     async (habit: IHabitModel) => {
       confirmModal({
@@ -219,6 +252,17 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, updateHabit, d
           key: DropdownMenuKey.divider
         },
         {
+          key: 'addGratitude',
+          item: {
+            icon: faSpa,
+            text: intl.formatMessage({ id: 'habit.addGratitude' })
+          },
+          onClick: () => addGratitude(habit)
+        },
+        {
+          key: DropdownMenuKey.divider
+        },
+        {
           key: DropdownMenuKey.archive,
           onClick: () => confirmArchive(habit)
         },
@@ -228,7 +272,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, updateHabit, d
         }
       ];
     },
-    [navigate, handleUpdateHabit, confirmArchive, confirmDelete]
+    [navigate, handleUpdateHabit, confirmArchive, confirmDelete, addGratitude]
   );
 
   const tableMenuItems: DropdownMenuItemProps = useMemo(
@@ -473,6 +517,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, updateHabit, d
       )}
       {habitUpdateModalConfig ? <HabitUpdateModal {...habitUpdateModalConfig} /> : null}
       {habitReorderModalConfig ? <HabitReorderModal {...habitReorderModalConfig} /> : null}
+      {gratitudeCreateModalConfig ? <GratitudeCreateModal {...gratitudeCreateModalConfig} /> : null}
       {confirmModalContextHolder}
     </>
   );

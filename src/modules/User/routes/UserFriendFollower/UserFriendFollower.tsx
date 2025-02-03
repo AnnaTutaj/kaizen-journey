@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import UserFriendFollowerList from './components/UserFriendFollowerList';
 import { IUserFriendFollowerOwnState } from '@modules/User/redux/UserFriendFollower/UserFriendFollowerInterface';
 import UserFriendFollowerActions from '@modules/User/redux/UserFriendFollower/UserFriendFollowerActions';
@@ -8,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import UserFriendFollowerModule from '@modules/User/redux/UserFriendFollower/UserFriendFollowerModule';
 
 const UserFriendFollower: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const params = useParams();
   const userId: string = useMemo(() => params.id || '', [params.id]);
 
@@ -18,7 +19,7 @@ const UserFriendFollower: React.FC = () => {
   );
 
   const resetList = useCallback(() => {
-    UserFriendFollowerActions.loadAction({ userProfileUid: userId, reload: true })(dispatch);
+    dispatch(UserFriendFollowerActions.loadAction({ userProfileUid: userId, reload: true }));
   }, [dispatch, userId]);
 
   //init

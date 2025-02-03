@@ -30,7 +30,7 @@ const GratitudeListFilters: React.FC<IProps> = ({ initialValues, onFinish, hideV
     >
       <Row gutter={30} align="bottom">
         <Col lg={10} span={24}>
-          <Form.Item label={intl.formatMessage({ id: 'gratitude.form.field.tags' })} name="tags">
+          <Form.Item label={intl.formatMessage({ id: 'common.form.field.tags' })} name="tags">
             <Select<string[]>
               type="tag"
               mode="tags"

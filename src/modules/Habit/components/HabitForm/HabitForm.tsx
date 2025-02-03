@@ -71,6 +71,16 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
           <Select<CategoryColorType> type="color" />
         </Form.Item>
 
+        <Form.Item label={intl.formatMessage({ id: 'common.form.field.tags' })} name="tags">
+          <Select<string[]>
+            type="tag"
+            mode="tags"
+            style={{ width: '100%' }}
+            tokenSeparators={['#', ' ']}
+            onChange={(value) => form.setFieldsValue({ tags: value.map((i) => i.toLowerCase()) })}
+          />
+        </Form.Item>
+
         <Form.Item label={intl.formatMessage({ id: 'common.form.field.visibility' })} name="isPublic">
           <Select<boolean> type="visibility" />
         </Form.Item>

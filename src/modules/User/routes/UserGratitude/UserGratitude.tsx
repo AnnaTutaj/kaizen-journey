@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import { useIntl } from 'react-intl';
 import _ from 'lodash';
 import UserGratitudeList from './components/UserGratitudeList';
@@ -22,7 +23,7 @@ import PageHeader from '@common/components/PageHeader';
 
 const UserGratitude: React.FC = () => {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const params = useParams();
   const { userProfile } = useUserProfile();
   const userId: string = useMemo(() => params.id || '', [params.id]);
@@ -39,14 +40,14 @@ const UserGratitude: React.FC = () => {
     const finalFilters = prepareFiltersByUser(filters, userId);
     const serializedFilters = GratitudeListFiltersModel.serialize(finalFilters);
 
-    UserGratitudeListActions.loadAction({ filters: serializedFilters, userProfileUid: userId, reload: true })(dispatch);
+    dispatch(UserGratitudeListActions.loadAction({ filters: serializedFilters, userProfileUid: userId, reload: true }));
   }, [dispatch, filters, userId, prepareFiltersByUser]);
 
   const refreshListAfterChangeFilters = useCallback(
     (newFilters: IGratitudeListFiltersModelDTO) => {
-      UserGratitudeListActions.loadAction({ filters: newFilters, userProfileUid: userId, reload: true })(dispatch);
+      dispatch(UserGratitudeListActions.loadAction({ filters: newFilters, userProfileUid: userId, reload: true }));
     },
-    [dispatch, userId, prepareFiltersByUser]
+    [dispatch, userId]
   );
 
   //init
@@ -81,7 +82,7 @@ const UserGratitude: React.FC = () => {
             const serializedCurrentFilters = GratitudeListFiltersModel.serialize(filters);
 
             if (!_.isEqual(serializedFilters, serializedCurrentFilters)) {
-              UserGratitudeListActions.setFiltersAction(values)(dispatch);
+              dispatch(UserGratitudeListActions.setFiltersAction(values));
               refreshListAfterChangeFilters(serializedFilters);
             }
           }}

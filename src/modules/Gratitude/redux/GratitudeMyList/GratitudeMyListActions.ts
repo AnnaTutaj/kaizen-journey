@@ -1,27 +1,30 @@
 import { Dispatch } from 'redux';
 import { where, orderBy, limit, startAfter } from 'firebase/firestore';
 import { ActionsUnion, createAction as createActionHelper } from '@common/helpers/ActionHelper';
-import {
+import GratitudeListFiltersModel, {
   IGratitudeListFiltersModel,
   IGratitudeListFiltersModelDTO
 } from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import GratitudeModel, { IGratitudeModel, IGratitudeModelDTO } from '@modules/Gratitude/models/GratitudeModel';
 import { GratitudeMyListTypes } from './GratitudeMyListTypes';
 import GratitudeResource from '@modules/Gratitude/api/GratitudeResource';
+import { IGratitudeMyListOwnState } from './GratitudeMyListInterface';
 
 const loadAction =
   ({
     lastFetchedGratitude,
-    filters,
     userProfileUid,
     reload
   }: {
     lastFetchedGratitude?: IGratitudeModel;
-    filters: IGratitudeListFiltersModelDTO | undefined;
     userProfileUid: string;
     reload?: boolean;
   }) =>
-  async (dispatch: Dispatch) => {
+  async (dispatch: Dispatch, getState: () => IGratitudeMyListOwnState) => {
+    let filters: IGratitudeListFiltersModelDTO | undefined;
+    if (getState().gratitudeMyList && getState().gratitudeMyList.filters) {
+      filters = GratitudeListFiltersModel.serialize(getState().gratitudeMyList.filters);
+    }
     try {
       if (reload) {
         dispatch(GratitudeMyListDispatch.reload());

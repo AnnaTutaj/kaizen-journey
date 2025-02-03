@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import { useIntl } from 'react-intl';
 import _ from 'lodash';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
@@ -9,9 +10,7 @@ import { IGratitudeCreateModalProps } from '@modules/Gratitude/components/Gratit
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faPlus } from '@fortawesome/free-solid-svg-icons';
 import GratitudeListFilters from '@modules/Gratitude/components/GratitudeListFilters/GratitudeListFilters';
-import GratitudeListFiltersModel, {
-  IGratitudeListFiltersModelDTO
-} from '@modules/Gratitude/models/GratitudeListFiltersModel';
+import GratitudeListFiltersModel from '@modules/Gratitude/models/GratitudeListFiltersModel';
 import GratitudeMyListActions from './redux/GratitudeMyList/GratitudeMyListActions';
 import { IGratitudeMyListOwnState } from './redux/GratitudeMyList/GratitudeMyListInterface';
 import Button from '@common/components/Button';
@@ -20,7 +19,7 @@ import FilterContainer from '@common/components/FilterContainer';
 
 const Gratitude: React.FC = () => {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
 
   const { userProfile } = useUserProfile();
   const [showFilters, setShowFilters] = useState<boolean>(false);
@@ -32,21 +31,8 @@ const Gratitude: React.FC = () => {
   );
 
   const resetList = useCallback(() => {
-    const serializedFilters = GratitudeListFiltersModel.serialize(filters);
-
-    GratitudeMyListActions.loadAction({ filters: serializedFilters, userProfileUid: userProfile.uid, reload: true })(
-      dispatch
-    );
-  }, [dispatch, filters, userProfile]);
-
-  const refreshListAfterChangeFilters = useCallback(
-    (newFilters: IGratitudeListFiltersModelDTO) => {
-      GratitudeMyListActions.loadAction({ filters: newFilters, userProfileUid: userProfile.uid, reload: true })(
-        dispatch
-      );
-    },
-    [dispatch, userProfile]
-  );
+    dispatch(GratitudeMyListActions.loadAction({ userProfileUid: userProfile.uid, reload: true }));
+  }, [dispatch, userProfile]);
 
   const handleCreateGratitude = () => {
     setGratitudeCreateModalConfig({
@@ -94,8 +80,8 @@ const Gratitude: React.FC = () => {
             const serializedCurrentFilters = GratitudeListFiltersModel.serialize(filters);
 
             if (!_.isEqual(serializedFilters, serializedCurrentFilters)) {
-              GratitudeMyListActions.setFiltersAction(values)(dispatch);
-              refreshListAfterChangeFilters(serializedFilters);
+              dispatch(GratitudeMyListActions.setFiltersAction(values));
+              resetList();
             }
           }}
         />

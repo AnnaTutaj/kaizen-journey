@@ -3,14 +3,15 @@ import Empty from '@common/components/Empty';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import FriendListScrolled from '@modules/Friend/components/FriendListScrolled';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import { IFriendFollowerOwnState } from '@modules/Friend/redux/FriendFollower/FriendFollowerInterface';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import FriendFollowerListActions from '@modules/Friend/redux/FriendFollower/FriendFollowerActions';
 
 const FriendFollowerList: React.FC = () => {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const { userProfile } = useUserProfile();
 
   const { data, isLoaded, isLoadingMore, hasMore } = useSelector(
@@ -25,14 +26,16 @@ const FriendFollowerList: React.FC = () => {
   const getNextFriendFollowers = async () => {
     const lastFetchedFriendFollower = getLastFetchedFriendFollower();
 
-    FriendFollowerListActions.loadAction({
-      userProfileUid: userProfile.uid,
-      lastFetchedFriendFollower
-    })(dispatch);
+    dispatch(
+      FriendFollowerListActions.loadAction({
+        userProfileUid: userProfile.uid,
+        lastFetchedFriendFollower
+      })
+    );
   };
 
   const removeFriendFollower = (id: string) => {
-    FriendFollowerListActions.removeAction(id)(dispatch);
+    dispatch(FriendFollowerListActions.removeAction(id));
   };
 
   if (!isLoaded) {

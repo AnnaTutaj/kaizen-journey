@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import imageMascotWelcome from '@assets/mascot_welcome.svg';
 import LayoutActions from '@common/redux/modules/Layout/LayoutActions';
-import { useDispatch } from 'react-redux';
+import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '@common/constants/Paths';
@@ -22,17 +22,17 @@ const Home: React.FC = () => {
   const screens = useBreakpoint();
 
   const { styles } = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const navigate = useNavigate();
 
   const [authModalConfig, setAuthModalConfig] = useState<IAuthModalProps>();
   const { userProfile } = useUserProfile();
 
   useEffect(() => {
-    LayoutActions.setHidePaddingAction(true)(dispatch);
+    dispatch(LayoutActions.setHidePaddingAction(true));
 
     return () => {
-      LayoutActions.setHidePaddingAction(false)(dispatch);
+      dispatch(LayoutActions.setHidePaddingAction(false));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
