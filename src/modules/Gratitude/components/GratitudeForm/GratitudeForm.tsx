@@ -65,7 +65,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
   }, [imageUrls]);
 
   const maxTitleLength = 100;
-  const maxDescriptionLength = 3500;
+  const maxDescriptionLength = 10000;
 
   const hoursSelect: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const hoursMenuItems: DropdownMenuItemProps = hoursSelect.map((i) => {
