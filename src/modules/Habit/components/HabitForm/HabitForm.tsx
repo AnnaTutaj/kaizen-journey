@@ -20,7 +20,7 @@ const HabitForm: React.FC<IProps> = ({ title, initialValues, onFinish, handleCan
   const [form] = Form.useForm();
 
   const maxNameLength = 100;
-  const maxDescriptionLength = 250;
+  const maxDescriptionLength = 10000;
 
   return (
     <FormModal<IHabitFormModel>
