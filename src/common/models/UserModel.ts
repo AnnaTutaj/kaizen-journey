@@ -1,5 +1,5 @@
 import { Language } from '@common/constants/Language';
-import { IUserCategory, IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
+import { IGratitudeTemplate, IUserCategory, IUserTheme } from '@common/contexts/UserProfile/UserProfileContext';
 
 export interface IUserModel {
   id: string;
@@ -24,6 +24,7 @@ export interface IUserModelDTO {
   language: Language | undefined;
   tags: string[];
   categories: IUserCategory[];
+  gratitudeTemplates?: IGratitudeTemplate[];
   theme?: IUserTheme;
 }
 
@@ -38,7 +39,8 @@ class UserModel implements IUserModel {
     public username: string,
     public language: Language | undefined,
     public tags: string[],
-    public categories: IUserCategory[]
+    public categories: IUserCategory[],
+    public gratitudeTemplates: IGratitudeTemplate[]
   ) {}
 
   static build(dto: IUserModelDTO): IUserModel {
@@ -49,7 +51,8 @@ class UserModel implements IUserModel {
       dto.username,
       dto.language,
       dto.tags,
-      dto.categories
+      dto.categories,
+      dto.gratitudeTemplates || []
     );
   }
 }

@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, DatePicker, Row, Col, InputNumber } from 'antd';
-import { IGratitudeFormModel } from '@modules/Gratitude/models/GratitudeFormModel';
+import { Form, Input, DatePicker, Row, Col, InputNumber, Flex } from 'antd';
+import {
+  IGratitudeFormModel,
+  maxDescriptionLength,
+  maxTitleLength
+} from '@modules/Gratitude/models/GratitudeFormModel';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FormModal from '@common/components/FormModal';
 import Button from '@common/components/Button';
@@ -13,6 +17,7 @@ import { useWatch } from 'antd/es/form/Form';
 import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 
 const useStyles = createStyles(({ css, token }) => ({
   iconImageRemove: css`
@@ -28,6 +33,20 @@ const useStyles = createStyles(({ css, token }) => ({
   `,
   timeIcon: css`
     cursor: pointer;
+  `,
+  titleFormItem: css`
+    label {
+      width: 100%;
+      ::after {
+        content: none !important;
+      }
+    }
+  `,
+  titleLabel: css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   `
 }));
 
@@ -44,6 +63,8 @@ interface IProps {
 const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveColors, onFinish, handleCancel }) => {
   const intl = useIntl();
   const { styles } = useStyles();
+  const { userProfile } = useUserProfile();
+
   const [form] = Form.useForm();
   const imageUrls: string[] | undefined = useWatch('imageURLs', form);
 
@@ -63,9 +84,6 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
 
     form.setFieldValue('imageURLs', validUrls);
   }, [imageUrls]);
-
-  const maxTitleLength = 100;
-  const maxDescriptionLength = 2500;
 
   const hoursSelect: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const hoursMenuItems: DropdownMenuItemProps = hoursSelect.map((i) => {
@@ -105,6 +123,28 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
     </Dropdown>
   );
 
+  const templateMenuItems: DropdownMenuItemProps = useMemo(
+    () =>
+      userProfile.gratitudeTemplates.map((gratitudeTemplate) => {
+        return {
+          key: gratitudeTemplate.id,
+          item: {
+            text: gratitudeTemplate.templateName
+          },
+          onClick: () => {
+            form.setFieldsValue({
+              ...(gratitudeTemplate.title && { title: gratitudeTemplate.title }),
+              ...(gratitudeTemplate.description && { description: gratitudeTemplate.description }),
+              ...(gratitudeTemplate.isPublic !== undefined && { isPublic: gratitudeTemplate.isPublic }),
+              ...(gratitudeTemplate.color && { color: gratitudeTemplate.color }),
+              ...(gratitudeTemplate.tags && { tags: gratitudeTemplate.tags })
+            });
+          }
+        };
+      }),
+    [userProfile.gratitudeTemplates, form]
+  );
+
   return (
     <FormModal<IGratitudeFormModel>
       name="gratitudeForm"
@@ -115,7 +155,19 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
     >
       <>
         <Form.Item
-          label={intl.formatMessage({ id: 'gratitude.form.field.title' })}
+          className={styles.titleFormItem}
+          label={
+            <div className={styles.titleLabel}>
+              <div>{intl.formatMessage({ id: 'gratitude.form.field.title' })}</div>
+              {templateMenuItems.length ? (
+                <Dropdown menuItems={templateMenuItems}>
+                  <Button size="middle" icon={<FontAwesomeIcon icon={faChevronDown} />} iconPosition="end">
+                    {intl.formatMessage({ id: 'common.form.field.selectTemplate' })}
+                  </Button>
+                </Dropdown>
+              ) : null}
+            </div>
+          }
           name="title"
           rules={[
             { required: true, message: intl.formatMessage({ id: 'common.form.field.required.error' }) },

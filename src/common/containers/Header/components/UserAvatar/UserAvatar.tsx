@@ -5,7 +5,7 @@ import SettingsModal from '../SettingsModal';
 import { ISettingsModalProps } from '../SettingsModal/SettingsModal';
 import Dropdown from '@common/components/Dropdown';
 import { DropdownMenuItemProps } from '@common/components/Dropdown/Dropdown';
-import { faBrush, faCog, faDownload, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBrush, faCog, faDownload, faFileImport, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faUser as dummyUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { generatePath, useNavigate } from 'react-router-dom';
@@ -15,6 +15,8 @@ import ExportHabitModal, { IExportHabitModalalProps } from '../ExportHabitModal/
 import { useUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
 import { createStyles } from 'antd-style';
 import { Avatar } from 'antd';
+import { IGratitudeTemplateModalProps } from '../GratitudeTemplateModal/GratitudeTemplateModal';
+import GratitudeTemplateModal from '../GratitudeTemplateModal';
 
 const useStyles = createStyles(({ css }) => ({
   avatar: css`
@@ -31,7 +33,7 @@ const UserAvatar: React.FC = () => {
   const [settingsModalConfig, setSettingsModalConfig] = useState<ISettingsModalProps>();
   const [exportGratitudeModalConfig, setExportGratitudeModalConfig] = useState<IExportGratitudeModalalProps>();
   const [exportHabitModalConfig, setExportHabitModalConfig] = useState<IExportHabitModalalProps>();
-
+  const [gratitudeTemplateModalConfig, setGratitudeTemplateModalConfig] = useState<IGratitudeTemplateModalProps>();
   const menuItems: DropdownMenuItemProps = [
     {
       key: 'userProfileGroup',
@@ -56,6 +58,18 @@ const UserAvatar: React.FC = () => {
           onClick: () => {
             setSettingsModalConfig({
               handleCancel: () => setSettingsModalConfig(undefined)
+            });
+          }
+        },
+        {
+          key: 'template',
+          item: {
+            text: intl.formatMessage({ id: 'header.gratitudeTemplates' }),
+            icon: faFileImport
+          },
+          onClick: () => {
+            setGratitudeTemplateModalConfig({
+              handleCancel: () => setGratitudeTemplateModalConfig(undefined)
             });
           }
         },
@@ -134,6 +148,7 @@ const UserAvatar: React.FC = () => {
       {settingsModalConfig ? <SettingsModal {...settingsModalConfig} /> : null}
       {exportGratitudeModalConfig ? <ExportGratitudeModal {...exportGratitudeModalConfig} /> : null}
       {exportHabitModalConfig ? <ExportHabitModal {...exportHabitModalConfig} /> : null}
+      {gratitudeTemplateModalConfig ? <GratitudeTemplateModal {...gratitudeTemplateModalConfig} /> : null}
     </>
   );
 };

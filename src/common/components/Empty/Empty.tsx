@@ -5,10 +5,10 @@ import useStyles from './useStyles';
 import useCommonStyles from '@common/useStyles';
 
 export interface IEmptyProps {
-  description: string;
+  description?: string;
 }
 
-const Empty: React.FC<IEmptyProps> = ({ description }) => {
+const Empty = ({ description }: IEmptyProps) => {
   const intl = useIntl();
   const { styles, cx } = useStyles();
   const { styles: commonStyles } = useCommonStyles();
@@ -22,7 +22,7 @@ const Empty: React.FC<IEmptyProps> = ({ description }) => {
           <span className={cx(commonStyles.headerText, styles.emptyHeaderText)}>
             {intl.formatMessage({ id: 'common.empty' })}
           </span>
-          <div>{description}</div>
+          {description ? <div>{description}</div> : null}
         </>
       }
     />

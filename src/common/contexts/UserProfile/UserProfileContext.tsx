@@ -1,5 +1,6 @@
 import { Language } from '@common/constants/Language';
 import { CategoryColorType } from '@common/containers/App/ColorPalette';
+import { FieldValue } from 'firebase/firestore';
 import { createContext, Dispatch, SetStateAction, useContext } from 'react';
 
 export interface IUserTheme {
@@ -15,6 +16,31 @@ export interface IUserCategory {
   isSelected: boolean;
 }
 
+export interface IGratitudeTemplate {
+  id: string;
+  templateName: string;
+  title?: string;
+  description?: string;
+  isPublic?: boolean;
+  color?: CategoryColorType;
+  tags?: string[];
+}
+
+export interface IUserProfileDTO {
+  uid: string;
+  createdAt: {
+    nanoseconds: number;
+    seconds: number;
+  };
+  pictureURL: string;
+  username: string;
+  language: Language | undefined;
+  tags: string[];
+  categories: IUserCategory[];
+  gratitudeTemplates: IGratitudeTemplate[] | FieldValue;
+  theme: IUserTheme;
+}
+
 export interface IUserProfile {
   uid: string;
   createdAt: {
@@ -26,6 +52,7 @@ export interface IUserProfile {
   language: Language | undefined;
   tags: string[];
   categories: IUserCategory[];
+  gratitudeTemplates: IGratitudeTemplate[];
   theme: IUserTheme;
 }
 
@@ -40,6 +67,7 @@ export const initUserProfile = {
   language: Language.en,
   tags: [],
   categories: [],
+  gratitudeTemplates: [],
   theme: {}
 };
 

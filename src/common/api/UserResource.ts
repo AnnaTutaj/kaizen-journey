@@ -1,4 +1,4 @@
-import { IUserProfile } from '@common/contexts/UserProfile/UserProfileContext';
+import { IUserProfileDTO } from '@common/contexts/UserProfile/UserProfileContext';
 import { IUserModelDTO } from '@common/models/UserModel';
 import { db } from '@common/util/firebase';
 import { doc, FieldValue, getDoc, QueryDocumentSnapshot, setDoc, updateDoc } from 'firebase/firestore';
@@ -11,7 +11,7 @@ const converter = {
 };
 
 export const UserResource = {
-  update: (id: string, values: Partial<IUserProfile>) => updateDoc(doc(db, 'users', id), values),
+  update: (id: string, values: Partial<IUserProfileDTO>) => updateDoc(doc(db, 'users', id), values),
   fetchById: (id: string) => getDoc(doc(db, 'users', id).withConverter(converter)),
   setDoc: (
     id: string,

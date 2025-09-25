@@ -14,7 +14,7 @@ import {
 } from 'firebase/auth';
 import { User as FirebaseUser } from 'firebase/auth';
 import { UserCredential as FirebaseUserCredential } from 'firebase/auth';
-import { serverTimestamp } from 'firebase/firestore';
+import { arrayUnion, serverTimestamp } from 'firebase/firestore';
 import { useThunkDispatch } from '@common/redux/useThunkDispatch';
 import UserActions from '@common/redux/UserActions';
 import { useSelector } from 'react-redux';
@@ -23,6 +23,7 @@ import useErrorMessage from '@common/hooks/useErrorMessage';
 import { IUserProfile, initUserProfile, useUserProfile } from './UserProfile/UserProfileContext';
 import { Language } from '@common/constants/Language';
 import UserResource from '@common/api/UserResource';
+import { IGratitudeTemplateCreateFormDTO } from '@common/models/GratitudeTemplateModel';
 
 export interface IAuthContext {
   userAuth: FirebaseUser | null;
@@ -34,6 +35,8 @@ export interface IAuthContext {
   resetPassword: (email: string) => Promise<void>;
   logout: () => void;
   updateProfileSettings: (values: Partial<IUserProfile>) => Promise<void>;
+  createProfileGratitudeTemplate: (values: IGratitudeTemplateCreateFormDTO) => Promise<void>;
+  deleteProfileGratitudeTemplate: (id: string) => Promise<void>;
   updateProfileTheme: (values: Pick<IUserProfile, 'theme'>) => Promise<void>;
 }
 
@@ -46,6 +49,8 @@ export const AuthContext = createContext<IAuthContext>({
   resetPassword: async () => {},
   logout: () => {},
   updateProfileSettings: async () => {},
+  createProfileGratitudeTemplate: async () => {},
+  deleteProfileGratitudeTemplate: async () => {},
   updateProfileTheme: async () => {}
 });
 
@@ -54,7 +59,7 @@ export const useAuth = () => useContext(AuthContext);
 export default function AuthContextProvider({ children }: any) {
   const dispatch = useThunkDispatch();
   const { showError } = useErrorMessage();
-  const { setUserProfile } = useUserProfile();
+  const { userProfile, setUserProfile } = useUserProfile();
 
   const siteLanguage = useSelector(({ layout }: ILayoutOwnState) => layout.siteLanguage);
   const [userAuth, setUserAuth] = useState<FirebaseUser | null>(null);
@@ -79,6 +84,7 @@ export default function AuthContextProvider({ children }: any) {
             language: userSnap?.language || Language.en,
             tags: userSnap.tags || [],
             categories: userSnap.categories || [],
+            gratitudeTemplates: userSnap.gratitudeTemplates || [],
             theme: userSnap.theme || {}
           });
         } else {
@@ -107,12 +113,13 @@ export default function AuthContextProvider({ children }: any) {
     return await sendPasswordResetEmail(auth, email);
   };
 
-  const getProfile = async () => {
+  const getProfile = async (showLoading: boolean = true) => {
     if (!userAuth) {
       return;
     }
-
-    setIsUserLoading(true);
+    if (showLoading) {
+      setIsUserLoading(true);
+    }
 
     const snap = await UserResource.fetchById(userAuth.uid);
 
@@ -126,10 +133,13 @@ export default function AuthContextProvider({ children }: any) {
         language: userSnap?.language || Language.en,
         tags: userSnap.tags || [],
         categories: userSnap.categories || [],
+        gratitudeTemplates: userSnap.gratitudeTemplates || [],
         theme: userSnap.theme || {}
       });
     }
-    setIsUserLoading(false);
+    if (showLoading) {
+      setIsUserLoading(false);
+    }
   };
 
   const updateProfileSettings = async (values: Partial<IUserProfile>) => {
@@ -141,6 +151,27 @@ export default function AuthContextProvider({ children }: any) {
         categories: values.categories
       });
       getProfile();
+    }
+  };
+
+  const createProfileGratitudeTemplate = async (values: IGratitudeTemplateCreateFormDTO) => {
+    if (userAuth) {
+      await UserResource.update(userAuth.uid, {
+        gratitudeTemplates: arrayUnion(values)
+      });
+      getProfile(false);
+    }
+  };
+
+  const deleteProfileGratitudeTemplate = async (id: string) => {
+    if (userAuth) {
+      const currentTemplates = userProfile.gratitudeTemplates || [];
+      const updatedTemplates = currentTemplates.filter((i) => i.id !== id);
+
+      await UserResource.update(userAuth.uid, {
+        gratitudeTemplates: updatedTemplates
+      });
+      getProfile(false);
     }
   };
 
@@ -206,6 +237,8 @@ export default function AuthContextProvider({ children }: any) {
     resetPassword,
     logout,
     updateProfileSettings,
+    createProfileGratitudeTemplate,
+    deleteProfileGratitudeTemplate,
     updateProfileTheme
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

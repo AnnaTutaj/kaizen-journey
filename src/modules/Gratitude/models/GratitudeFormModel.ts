@@ -3,6 +3,9 @@ import { IGratitudeModel } from './GratitudeModel';
 import dayjs, { Dayjs } from 'dayjs';
 import { secondsToHoursAndMinutes, hoursAndMinutesToSeconds } from '@common/helpers/TimeHelper';
 
+export const maxTitleLength = 100;
+export const maxDescriptionLength = 2500;
+
 export interface IGratitudeFormModel {
   title: string;
   description: string;

@@ -15,7 +15,7 @@ const useCategories = () => {
         color: categoryColor
       };
     });
-  }, []);
+  }, [intl]);
 
   return {
     defaultCategories
