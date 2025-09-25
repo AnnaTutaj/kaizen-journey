@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, DatePicker, Row, Col, InputNumber, Flex } from 'antd';
+import { Form, Input, DatePicker, Row, Col, InputNumber } from 'antd';
 import {
   IGratitudeFormModel,
   maxDescriptionLength,
