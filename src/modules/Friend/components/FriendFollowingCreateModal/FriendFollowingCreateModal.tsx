@@ -160,7 +160,7 @@ const FriendFollowingCreateModal: React.FC<IFriendFollowingCreateModalProps> = (
           <Alert
             showIcon
             closable
-            message={intl.formatMessage({ id: 'friend.following.form.field.id.info.title' })}
+            title={intl.formatMessage({ id: 'friend.following.form.field.id.info.title' })}
             description={intl.formatMessage({ id: 'friend.following.form.field.id.info.description' })}
             type="info"
           />

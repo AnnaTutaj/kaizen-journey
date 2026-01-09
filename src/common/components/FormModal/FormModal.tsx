@@ -2,7 +2,7 @@ import Modal, { IModalProps } from '@common/components/Modal/Modal';
 import { Form } from 'antd';
 import { FormProps } from 'antd/es/form';
 import Button from '@common/components/Button';
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { createStyles } from 'antd-style';
 import { useIntl } from 'react-intl';
 

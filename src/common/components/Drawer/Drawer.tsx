@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { createStyles } from 'antd-style';
 import cn from 'classnames';
-import { useMemo } from 'react';
+import { JSX, useMemo } from 'react';
 
 export interface IDrawerProps extends DrawerProps {
   header?: JSX.Element;

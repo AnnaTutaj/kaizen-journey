@@ -1,5 +1,6 @@
 import { Paths } from '@common/constants/Paths';
 import { useAuth } from '@common/contexts/AuthContext';
+import { JSX } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 interface IProps {

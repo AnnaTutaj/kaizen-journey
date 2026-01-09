@@ -142,6 +142,7 @@ const User: React.FC = () => {
       {
         label: <div> {intl.formatMessage({ id: 'header.friends' })}</div>,
         key: 'friends',
+        type: 'group',
         children: [
           {
             key: Paths.UserViewFollowing,

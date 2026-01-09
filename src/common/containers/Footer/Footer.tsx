@@ -48,9 +48,9 @@ const Footer: React.FC = () => {
 
   return (
     <Layout.Footer className={styles.footer} ref={contentRef}>
-      <Space direction="vertical" size={4}>
+      <Space orientation="vertical" size={4}>
         <span>
-          <span>©2022 - 2025 {intl.formatMessage({ id: 'footer.credits' })} </span>
+          <span>©2022 - 2026 {intl.formatMessage({ id: 'footer.credits' })} </span>
           <a className={cx(commonStyles.colorTextLink, styles.authorLink)} href="mailto:tutaj.anna.93@gmail.com">
             Anna Tutaj—Lamentowicz
           </a>

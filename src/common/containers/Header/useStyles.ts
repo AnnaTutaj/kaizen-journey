@@ -4,7 +4,7 @@ export default createStyles(({ css, token }) => {
   return {
     layoutHeader: css`
       position: fixed;
-      z-index: 3;
+      z-index: 30;
       width: 100%;
       height: ${token.layout.headerHeight};
       padding: 0 50px;

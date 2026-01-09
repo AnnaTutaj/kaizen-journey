@@ -1,5 +1,5 @@
 import { Select as AntDSelect, SelectProps } from 'antd';
-import { useCallback } from 'react';
+import { JSX, useCallback } from 'react';
 import useSelectOptionColor from './hooks/useSelectOptionColor';
 import useSelectOptionExportLimit from './hooks/useSelectOptionExportLimit';
 import useSelectOptionTag from './hooks/useSelectOptionTag';

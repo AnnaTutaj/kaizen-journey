@@ -1,6 +1,7 @@
 import { createStyles } from 'antd-style';
 import { homeBaseTextSize, homeBlockMaxWidth } from '../styledHelper';
 
+//todo: nie dzialaja te style z kropkami
 export default createStyles(({ css, cx, token }) => {
   const crouselDots = cx(css``);
   const dotsMargin = 35;

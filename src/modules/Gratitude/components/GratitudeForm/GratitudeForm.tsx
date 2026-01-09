@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
-import { Form, Input, DatePicker, Row, Col, InputNumber } from 'antd';
+import { Form, Input, DatePicker, Row, Col, InputNumber, Space } from 'antd';
 import {
   IGratitudeFormModel,
   maxDescriptionLength,
@@ -161,7 +161,7 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
               <div>{intl.formatMessage({ id: 'gratitude.form.field.title' })}</div>
               {templateMenuItems.length ? (
                 <Dropdown menuItems={templateMenuItems}>
-                  <Button size="middle" icon={<FontAwesomeIcon icon={faChevronDown} />} iconPosition="end">
+                  <Button size="middle" icon={<FontAwesomeIcon icon={faChevronDown} />} iconPlacement="end">
                     {intl.formatMessage({ id: 'common.form.field.selectTemplate' })}
                   </Button>
                 </Dropdown>
@@ -215,19 +215,18 @@ const GratitudeForm: React.FC<IProps> = ({ title, initialValues, showInactiveCol
           <Row gutter={10}>
             <Col>
               <Form.Item label="" name="hours" className={styles.formItemTime}>
-                <InputNumber min={0} max={999} suffix="h" type="number" controls={false} addonAfter={hoursAddonAfter} />
+                <Space.Compact block>
+                  <InputNumber min={0} max={999} suffix="h" type="number" controls={false} />
+                  <Space.Addon>{hoursAddonAfter}</Space.Addon>
+                </Space.Compact>
               </Form.Item>
             </Col>
             <Col>
               <Form.Item label="" name="minutes" className={styles.formItemTime}>
-                <InputNumber
-                  min={0}
-                  max={59}
-                  suffix="m"
-                  type="number"
-                  controls={false}
-                  addonAfter={minutesAddonAfter}
-                />
+                <Space.Compact block>
+                  <InputNumber min={0} max={59} suffix="m" type="number" controls={false} />
+                  <Space.Addon>{minutesAddonAfter}</Space.Addon>
+                </Space.Compact>
               </Form.Item>
             </Col>
           </Row>

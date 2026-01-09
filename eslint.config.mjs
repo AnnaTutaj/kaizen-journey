@@ -57,6 +57,7 @@ export default [
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      'react/prop-types': 'off',
       'no-empty': ['error', { allowEmptyCatch: true }],
       'prettier/prettier': [
         'error',

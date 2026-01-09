@@ -30,7 +30,7 @@ const PageUnderConstruction: React.FC<IProps> = ({ title }) => {
   return (
     <>
       <PageLoading />
-      <Space className={styles.space} align="center" direction="vertical" size={30}>
+      <Space className={styles.space} align="center" orientation="vertical" size={30}>
         <Title level={3}>{title}</Title>
         <Image className={styles.image} src={image} alt="Under construction" preview={false} />
         <Title level={4}>{intl.formatMessage({ id: 'pageUnderConstruction.title' })}</Title>
