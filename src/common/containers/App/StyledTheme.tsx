@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { JSX, useContext } from 'react';
 import { ThemeContext } from '@common/contexts/Theme/ThemeContext';
 import { ThemeProvider, createStyles } from 'antd-style';
 import { layout } from './layout';

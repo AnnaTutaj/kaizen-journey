@@ -1,4 +1,5 @@
 import { createStyles } from 'antd-style';
+import { JSX } from 'react';
 
 const useStyles = createStyles(({ css }, props: IFilterContainerStyleProps) => ({
   container: css`

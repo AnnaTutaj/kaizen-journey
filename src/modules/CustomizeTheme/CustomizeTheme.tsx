@@ -85,7 +85,7 @@ const CustomizeTheme: React.FC = () => {
               <Popover
                 placement="bottomLeft"
                 content={
-                  <Space size={10} direction="vertical">
+                  <Space size={10} orientation="vertical">
                     <HexColorPicker color={value} onChange={(newColor) => setFieldValue(name, newColor)} />
                     <HexColorInput
                       className={styles.hexColorInput}

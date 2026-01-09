@@ -15,7 +15,7 @@ const FederatedLogin: React.FC<IProps> = ({ closeModal }) => {
   const { signInWithGoogle, signInWithFacebook } = useAuth();
 
   return (
-    <Space direction="vertical" size={16}>
+    <Space orientation="vertical" size={16}>
       <Button
         onClick={() => {
           closeModal();

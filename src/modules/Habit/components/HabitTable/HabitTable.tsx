@@ -315,7 +315,9 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, updateHabit, d
             <div className={styles.dateHeaderContainer}>
               <div
                 className={cx(styles.date, { [styles.dateIsToday]: isToday })}
-                ref={(element) => (isToday ? setTodayHeaderRef(element) : null)}
+                ref={(element) => {
+                  if (isToday) setTodayHeaderRef(element);
+                }}
               >
                 <small className={styles.smallText}>{monthShort}</small>
                 <div className={styles.monthDay}>{monthDay}</div>
@@ -507,7 +509,7 @@ const HabitTable: React.FC<IProps> = ({ habits, setHabitsInOrder, updateHabit, d
             placement="right"
             close={hideColumnSettings}
             open={isOpenColumnSettings}
-            width="300"
+            size={300}
           >
             <HabitTableColumnSettings visibleColumns={visibleColumns} setVisibleColumns={setVisibleColumns} />
           </Drawer>

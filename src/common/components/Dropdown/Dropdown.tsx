@@ -7,6 +7,7 @@ import { ItemType } from 'antd/es/menu/interface';
 import useStyles from './useStyles';
 import { Dropdown as AntDropdown, Space } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { JSX } from 'react';
 
 interface IDropdownMenuItemProps {
   key: DropdownMenuKey.update | DropdownMenuKey.delete | string | number;
@@ -117,7 +118,7 @@ const Dropdown: React.FC<IDropdownMenuProps> = ({ menuItems, ...props }): JSX.El
   return (
     <AntDropdown
       menu={{ items }}
-      overlayClassName={styles.dropdownOverlay}
+      classNames={{ root: styles.dropdownOverlay }}
       placement="bottomLeft"
       trigger={['click']}
       {...props}

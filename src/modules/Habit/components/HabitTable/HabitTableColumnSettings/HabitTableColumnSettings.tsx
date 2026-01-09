@@ -49,7 +49,7 @@ const HabitTableColumnSettings: React.FC<IProps> = ({ visibleColumns, setVisible
       </Checkbox>
       <Divider className={styles.divider} dashed />
       <Checkbox.Group<ColumnType> value={visibleColumns} onChange={onChange}>
-        <Space direction="vertical">
+        <Space orientation="vertical">
           <Checkbox value="currentStreak">{intl.formatMessage({ id: 'habit.currentStreak' })}</Checkbox>
           <Checkbox value="longestStreak">{intl.formatMessage({ id: 'habit.longestStreak' })}</Checkbox>
           <Checkbox value="totalChecks">{intl.formatMessage({ id: 'habit.totalChecks' })}</Checkbox>
