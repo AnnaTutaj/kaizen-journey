@@ -9,7 +9,9 @@ import {
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
+  MouseSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors
 } from '@dnd-kit/core';
@@ -34,10 +36,10 @@ const HabitReorderModal: React.FC<IHabitReorderModalalProps> = ({ habits, handle
   const { styles } = useStyles();
   const [form] = Form.useForm();
   const { showError } = useErrorMessage();
-  const sensors = useSensors(useSensor(PointerSensor));
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor), useSensor(PointerSensor));
   const [items, setItems] = useState<IHabitModel[]>(habits);
   const [activeId, setActiveId] = useState<string>();
-  const activeItem = useMemo(() => habits.find((i) => i.id === activeId), [activeId]);
+  const activeItem = useMemo(() => habits.find((i) => i.id === activeId), [habits, activeId]);
   const { confirmModal, confirmModalContextHolder } = useConfirmModal();
 
   const onCancel = useCallback(() => {

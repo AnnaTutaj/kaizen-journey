@@ -39,6 +39,7 @@ const HabitReorderItemSortable: React.FC<IProps> = ({ habit }) => {
 const useStyles = createStyles(({ css }) => ({
   draggable: css`
     cursor: grab;
+    touch-action: none;
   `,
   isDragging: css`
     cursor: grabbing;
