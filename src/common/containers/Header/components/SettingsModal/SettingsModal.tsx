@@ -116,12 +116,13 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
           <Form.List name="categories">
             {(fields) => (
               <>
-                {fields
-                  .filter(
-                    (field) => showInactiveCategories || !!form.getFieldValue(['categories', field.name]).isSelected
-                  )
-                  .map((field) => (
-                    <Form.Item key={field.key}>
+                {fields.map((field) => {
+                  const isSelected = form.getFieldValue(['categories', field.name])?.isSelected;
+                  const hidden = !showInactiveCategories && !isSelected;
+
+                  return (
+                    <Form.Item key={field.key} hidden={hidden}>
+                      <Form.Item name={[field.name, 'color']} hidden />
                       <Row gutter={20} align="middle" wrap={false}>
                         <Col flex="30px">
                           <div
@@ -157,7 +158,8 @@ const SettingsModal: React.FC<ISettingsModalProps> = ({ handleCancel }) => {
                         </Col>
                       </Row>
                     </Form.Item>
-                  ))}
+                  );
+                })}
                 {inactiveCategoriesCount ? (
                   <Button
                     size="middle"
